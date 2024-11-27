@@ -1,0 +1,29 @@
+keys:
+  age:
+    - &marisa age1sfnct03u4cvfj98x4yjrcrrnu5gg8qgxrwk4uqq8w4e6wveeaedq97rn44
+    - &flandre age166kxtrcx99fxlgtvz5mvyt5ctvk3dt09f42gvm94ngnkyztmmelsyzdn77
+    - &reisen age1uf2h3hlv373ppdstjlngyuu7q5mee3u3ww3674lsj9rlt9ax7vqsv7wpe8
+creation_rules:
+  - path_regex: infra/.*
+    key_groups:
+      - age:
+          - *marisa
+  - path_regex: secrets/local.*
+    key_groups:
+      - age:
+          - *marisa
+          - *flandre
+  - path_regex: secrets/hosts/(opentofu/)?marisa-.*
+    key_groups:
+      - age:
+          - *marisa
+  - path_regex: secrets/hosts/(opentofu/)?flandre-.*
+    key_groups:
+      - age:
+          - *marisa
+          - *flandre
+  - path_regex: secrets/hosts/(opentofu/)?reisen-.*
+    key_groups:
+      - age:
+          - *marisa
+          - *reisen

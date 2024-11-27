@@ -1,0 +1,78 @@
+{
+  description = "a nixos configuration collection by rebmit";
+
+  outputs =
+    inputs@{ flake-parts, rebmit, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      inherit (rebmit.lib) systems;
+      imports = [
+        inputs.devshell.flakeModule
+        inputs.git-hooks-nix.flakeModule
+        inputs.treefmt-nix.flakeModule
+        inputs.rebmit.flakeModule
+      ] ++ rebmit.lib.path.buildModuleList ./flake;
+    };
+
+  inputs = {
+    # flake-parts
+
+    flake-parts.follows = "rebmit/flake-parts";
+
+    # nixpkgs
+
+    nixpkgs.follows = "rebmit/nixpkgs";
+    nixpkgs-unstable.follows = "rebmit/nixpkgs-unstable";
+
+    # flake modules
+
+    devshell.follows = "rebmit/devshell";
+    git-hooks-nix.follows = "rebmit/git-hooks-nix";
+    treefmt-nix.follows = "rebmit/treefmt-nix";
+
+    # nixos modules
+
+    impermanence.url = "github:nix-community/impermanence";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko/v1.9.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.pre-commit-hooks-nix.follows = "git-hooks-nix";
+    };
+
+    # programs
+
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
+    };
+    ranet = {
+      url = "github:NickCao/ranet";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    # libraries
+
+    rebmit.url = "github:rebmit/nix-exprs";
+    flake-utils.url = "github:numtide/flake-utils";
+
+    # misc
+
+    flake-compat.follows = "rebmit/flake-compat";
+  };
+}

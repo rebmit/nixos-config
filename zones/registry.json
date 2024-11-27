@@ -1,0 +1,82 @@
+[
+  {
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA8Oqlkh1JAW6IbMOVlhdlVKC9xQ75hzBeWHklcdJENFE=\n-----END PUBLIC KEY-----",
+    "organization": "rebmit's core network",
+    "nodes": [
+      {
+        "common_name": "reisen-sin0",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "reisen-sin0.rebmit.link",
+            "port": 13000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "reisen-sin0.rebmit.link",
+            "port": 13000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "public_key": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAXaBaGumao95/j4M7nWNNytd8u8r1KAGSbKDs0aT2mVU=\n-----END PUBLIC KEY-----",
+    "organization": "rebmit's edge network",
+    "nodes": [
+      {
+        "common_name": "flandre-m5p",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "flandre-m5p.rebmit.link",
+            "port": 13000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "flandre-m5p.rebmit.link",
+            "port": 13000
+          }
+        ]
+      },
+      {
+        "common_name": "marisa-7d76",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "marisa-7d76.rebmit.link",
+            "port": 13000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "marisa-7d76.rebmit.link",
+            "port": 13000
+          }
+        ]
+      },
+      {
+        "common_name": "marisa-a7s",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "marisa-a7s.rebmit.link",
+            "port": 13000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "marisa-a7s.rebmit.link",
+            "port": 13000
+          }
+        ]
+      }
+    ]
+  }
+]
