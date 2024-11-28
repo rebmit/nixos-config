@@ -32,4 +32,9 @@ in
       ${config.systemd.user.systemctlPath} --user restart darkman
     fi
   '';
+
+  systemd.user.services.darkman.Unit = {
+    After = [ "graphical-session.target" ];
+    Requisite = [ "graphical-session.target" ];
+  };
 }
