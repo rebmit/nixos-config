@@ -8,4 +8,6 @@
   };
 
   security.pam.services.swaylock = { };
+
+  environment.pathsToLink = lib.singleton "/share/xdg-desktop-portal";
 }
