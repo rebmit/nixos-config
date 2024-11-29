@@ -6,12 +6,18 @@ let
   overlays = [
     inputs.ranet.overlays.default
 
-    (_final: prev: {
+    (final: prev: {
       libadwaita = prev.libadwaita.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ../patches/libadwaita-without-adwaita-theme.patch
         ];
         doCheck = false;
+      });
+      # TODO: wait for https://nixpkgs-tracker.ocfox.me/?pr=360101
+      xdg-desktop-portal-gnome = prev.xdg-desktop-portal-gnome.overrideAttrs (_old: {
+        propagatedUserEnvPkgs = [
+          final.nautilus
+        ];
       });
     })
   ];
