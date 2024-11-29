@@ -263,15 +263,15 @@ in
           xdg-desktop-portal-gtk
           xdg-desktop-portal-gnome
         ];
-        config = {
-          common = {
-            "default" = [
-              "gnome"
-              "gtk"
-            ];
-            "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-          };
+        config.niri = {
+          "default" = [
+            "gnome"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Access" = [ "gtk" ];
+          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         };
+        xdgOpenUsePortal = true;
       };
 
       home.packages = with pkgs; [
