@@ -20,6 +20,10 @@
     text = config.gtk.gtk4.extraCss;
   };
 
+  systemd.user.sessionVariables = {
+    GTK_USE_PORTAL = "1";
+  };
+
   services.darkman =
     let
       mkScript =
