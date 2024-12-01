@@ -18,21 +18,21 @@ in
     prefix = mkOption {
       type = types.str;
       description = ''
-        Prefix to be announced for the local node.
+        Prefix to be announced for the local node in the enthalpy network.
+      '';
+    };
+    address = mkOption {
+      type = types.str;
+      default = cidr.host 1 cfg.prefix;
+      description = ''
+        Address to be added into the enthalpy network as source address.
       '';
     };
     netns = mkOption {
       type = types.str;
       default = "enthalpy";
       description = ''
-        Name of the network namespace for interfaces.
-      '';
-    };
-    interface = mkOption {
-      type = types.str;
-      default = "enthalpy";
-      description = ''
-        Name of the interface to connect to the network namespace.
+        Name of the network namespace for enthalpy interfaces.
       '';
     };
     network = mkOption {
@@ -44,6 +44,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    systemd.network.networks."50-enthalpy" = {
+      matchConfig.Name = "enthalpy";
+      linkConfig.RequiredForOnline = false;
+    };
+
     systemd.services.enthalpy = {
       path = with pkgs; [
         iproute2
@@ -52,34 +57,29 @@ in
       ];
       script = ''
         ip netns add ${cfg.netns}
-        ip link add ${cfg.interface} mtu 1400 address 02:00:00:00:00:01 type veth peer enthalpy mtu 1400 address 02:00:00:00:00:00 netns ${cfg.netns}
-        ip link set ${cfg.interface} up
+        ip link add enthalpy mtu 1400 address 02:00:00:00:00:01 type veth peer enthalpy mtu 1400 address 02:00:00:00:00:00 netns ${cfg.netns}
         ip -n ${cfg.netns} link set lo up
         ip -n ${cfg.netns} link set enthalpy up
-        ip -n ${cfg.netns} addr add ${cidr.host 0 cfg.prefix}/127 dev enthalpy
+        ip -n ${cfg.netns} addr add ${cfg.address}/128 dev enthalpy
         ip netns exec ${cfg.netns} sysctl -w net.ipv6.conf.default.forwarding=1
         ip netns exec ${cfg.netns} sysctl -w net.ipv6.conf.all.forwarding=1
+        ip netns exec ${cfg.netns} sysctl -w net.ipv4.conf.default.forwarding=0
+        ip netns exec ${cfg.netns} sysctl -w net.ipv4.conf.all.forwarding=0
       '';
       preStop = ''
-        ip link del ${cfg.interface}
         ip netns del ${cfg.netns}
       '';
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
+      wants = [ "network.target" ];
+      after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
     };
 
-    systemd.network.networks."50-enthalpy" = {
-      matchConfig.Name = cfg.interface;
-      networkConfig.Address = "${cidr.host 1 cfg.prefix}/127";
-      routes = singleton {
-        Destination = cfg.network;
-        Gateway = "fe80::ff:fe00:0";
-      };
-    };
+    environment.etc."netns/enthalpy/resolv.conf".text = lib.mkDefault ''
+      nameserver 2606:4700:4700::1111
+    '';
   };
 }

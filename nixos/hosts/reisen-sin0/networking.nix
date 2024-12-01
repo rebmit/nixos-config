@@ -1,4 +1,9 @@
-{ profiles, ... }:
+{
+  profiles,
+  data,
+  lib,
+  ...
+}:
 {
   imports = with profiles; [
     services.enthalpy
@@ -8,7 +13,13 @@
     ipsec.interfaces = [ "enp3s0" ];
     exit = {
       enable = true;
-      prefix = [ "::/0" ];
+      prefix = [
+        {
+          type = "bird";
+          destination = "::/0";
+          source = data.enthalpy_network_prefix;
+        }
+      ];
     };
     srv6.enable = true;
     nat64.enable = true;
@@ -45,6 +56,12 @@
         dhcpV4Config.RouteMetric = 1024;
         dhcpV6Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
+      };
+      "50-enthalpy" = {
+        routes = lib.singleton {
+          Destination = data.enthalpy_network_prefix;
+          Gateway = "fe80::ff:fe00:0";
+        };
       };
     };
   };

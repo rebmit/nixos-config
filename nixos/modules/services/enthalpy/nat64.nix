@@ -60,21 +60,34 @@ in
 
     systemd.services.enthalpy-nat64 = {
       serviceConfig = {
-        ExecStart = "${pkgs.tayga}/bin/tayga -d --config ${pkgs.writeText "tayga.conf" ''
+        Type = "forking";
+        Restart = "on-failure";
+        RestartSec = 5;
+        DynamicUser = true;
+        RuntimeDirectory = "enthalpy";
+        ExecStart = "${pkgs.tayga}/bin/tayga --config ${pkgs.writeText "tayga.conf" ''
           tun-device nat64
           ipv6-addr fc00::
           ipv4-addr 100.127.0.1
           prefix ${cfg.nat64.prefix}
           dynamic-pool ${cfg.nat64.dynamicPool}
         ''}";
+        CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];
+        AmbientCapabilities = [ "CAP_NET_ADMIN" ];
+        ProtectSystem = "full";
+        ProtectHome = "yes";
+        ProtectKernelTunables = true;
+        ProtectControlGroups = true;
+        PrivateTmp = true;
+        SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
+        MemoryDenyWriteExecute = "yes";
       };
-      partOf = [ "enthalpy.service" ];
+      wants = [ "network.target" ];
       after = [
         "enthalpy.service"
         "network.target"
       ];
       requires = [ "enthalpy.service" ];
-      requiredBy = [ "enthalpy.service" ];
       wantedBy = [ "multi-user.target" ];
     };
 

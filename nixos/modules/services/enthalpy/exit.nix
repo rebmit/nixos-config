@@ -4,21 +4,39 @@
   config,
   lib,
   pkgs,
-  mylib,
   ...
 }:
 with lib;
 let
-  inherit (mylib.network) cidr;
   cfg = config.services.enthalpy;
-  internalPrefix = filter (p: cidr.child p cfg.prefix) cfg.exit.prefix;
-  externalPrefix = subtractLists internalPrefix cfg.exit.prefix;
+  birdPrefix = filter (p: p.type == "bird") cfg.exit.prefix;
+  staticPrefix = subtractLists birdPrefix cfg.exit.prefix;
+  staticRoutes = map (
+    p: "${p.destination} from ${p.source} via fe80::ff:fe00:1 dev enthalpy"
+  ) staticPrefix;
 in
 {
   options.services.enthalpy.exit = {
     enable = mkEnableOption "netns route leaking";
     prefix = mkOption {
-      type = types.listOf types.str;
+      type = types.listOf (
+        types.submodule {
+          options = {
+            type = mkOption {
+              type = types.enum [
+                "bird"
+                "static"
+              ];
+              default = "static";
+            };
+            destination = mkOption { type = types.str; };
+            source = mkOption {
+              type = types.str;
+              default = "::/0";
+            };
+          };
+        }
+      );
       default = [ ];
       description = ''
         Prefixes to be announced from the default netns to the enthalpy network.
@@ -32,32 +50,24 @@ in
         ipv6 sadr;
         ${
           concatMapStringsSep "\n" (p: ''
-            route ${p} from ${cfg.network} via fe80::ff:fe00:1 dev "enthalpy";
-          '') externalPrefix
+            route ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev "enthalpy";
+          '') birdPrefix
         }
       }
     '';
 
-    systemd.services.enthalpy-exit =
-      let
-        routes = map (p: "${p} via fe80::ff:fe00:1 dev enthalpy") internalPrefix;
-      in
-      mkIf (routes != [ ]) {
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          ExecStart = builtins.map (route: "${pkgs.iproute2}/bin/ip -n ${cfg.netns} -6 r a ${route}") routes;
-          ExecStop = builtins.map (route: "${pkgs.iproute2}/bin/ip -n ${cfg.netns} -6 r d ${route}") routes;
-        };
-        partOf = [ "enthalpy.service" ];
-        after = [
-          "enthalpy.service"
-          "network-online.target"
-        ];
-        requires = [ "enthalpy.service" ];
-        requiredBy = [ "enthalpy.service" ];
-        wants = [ "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
+    systemd.services.enthalpy-exit = mkIf (staticRoutes != [ ]) {
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 route add ${route}") staticRoutes;
+        ExecStop = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 route del ${route}") staticRoutes;
       };
+      after = [ "network.target" ];
+      wants = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+    };
+
+    services.enthalpy.services.enthalpy-exit = mkIf (staticRoutes != [ ]) { };
   };
 }

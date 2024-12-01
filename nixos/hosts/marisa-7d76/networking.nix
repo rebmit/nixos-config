@@ -5,14 +5,13 @@
   ];
 
   services.enthalpy = {
+    users.rebmit = { };
     ipsec.interfaces = [ "enp14s0" ];
-    sing-box = {
+    clat = {
       enable = true;
-      clat = {
-        enable = true;
-        segment = lib.singleton "fde3:3be3:a244:2676::2";
-      };
+      segment = lib.singleton "fde3:3be3:a244:2676::2";
     };
+    gost.enable = true;
   };
 
   systemd.network = {

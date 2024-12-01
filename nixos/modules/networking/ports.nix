@@ -13,8 +13,8 @@ in
       ssh = 2222;
 
       # enthalpy
-      sing-box = 1080;
       enthalpy-ipsec = 13000;
+      enthalpy-gost = 1080;
     };
     readOnly = true;
     description = ''

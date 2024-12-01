@@ -53,7 +53,6 @@ in
 
     systemd.services.enthalpy-bird2 = {
       serviceConfig = {
-        NetworkNamespacePath = "/run/netns/${cfg.netns}";
         Type = "forking";
         Restart = "on-failure";
         RestartSec = 5;
@@ -81,13 +80,11 @@ in
         SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
         MemoryDenyWriteExecute = "yes";
       };
-      partOf = [ "enthalpy.service" ];
-      after = [ "enthalpy.service" ];
-      requires = [ "enthalpy.service" ];
-      requiredBy = [ "enthalpy.service" ];
       wantedBy = [ "multi-user.target" ];
       reloadTriggers = [ config.environment.etc."enthalpy/bird2.conf".source ];
     };
+
+    services.enthalpy.services.enthalpy-bird2 = { };
 
     services.enthalpy.bird.config = mkBefore ''
       router id ${toString cfg.bird.routerId};

@@ -28,7 +28,6 @@ in
         # enthalpy
         localsid = 300;
         nat64 = 301;
-        sing-box = 302;
       };
       readOnly = true;
       description = ''
@@ -37,10 +36,7 @@ in
     };
     routingMarks = mkOption {
       type = with types; attrsOf int;
-      default = {
-        # enthalpy
-        sing-box = 1300;
-      };
+      default = { };
       readOnly = true;
       description = ''
         A mapping of routing marks, each identified by a unique name.
@@ -56,7 +52,6 @@ in
 
         # enthalpy
         localsid = 500;
-        sing-box = 13000;
       };
       readOnly = true;
       description = ''

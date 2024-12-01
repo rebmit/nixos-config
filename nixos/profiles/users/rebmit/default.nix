@@ -1,11 +1,13 @@
 { config, pkgs, ... }:
 let
+  uid = config.ids.uids.rebmit;
   homeDirectory = "/home/rebmit";
 in
 {
   programs.fish.enable = true;
 
   users.users.rebmit = {
+    inherit uid;
     hashedPasswordFile = config.sops.secrets."user-password/rebmit".path;
     isNormalUser = true;
     shell = pkgs.fish;
