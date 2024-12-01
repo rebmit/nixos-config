@@ -53,5 +53,7 @@ in
       destination = "fc00::/128";
       source = "${cfg.address}/128";
     };
+
+    networking.hosts."fc00::" = singleton "enthalpy-gost";
   };
 }
