@@ -6,5 +6,8 @@ terraform {
     tls = {
       source = "registry.terraform.io/hashicorp/tls"
     }
+    cloudflare = {
+      source = "registry.terraform.io/cloudflare/cloudflare"
+    }
   }
 }

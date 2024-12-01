@@ -16,6 +16,7 @@
             ps: with ps; [
               sops
               tls
+              cloudflare
             ]
           ))
         ];
