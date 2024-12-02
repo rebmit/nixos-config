@@ -88,7 +88,7 @@ in
   config = mkIf (cfg.enable && cfg.ipsec.enable) {
     assertions = [
       {
-        assertion = builtins.all (lib.id) [
+        assertion = builtins.all id [
           (cfg.ipsec.blacklist != null -> cfg.ipsec.whitelist == null)
           (cfg.ipsec.whitelist != null -> cfg.ipsec.blacklist == null)
         ];

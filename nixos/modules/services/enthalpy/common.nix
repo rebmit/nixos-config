@@ -77,9 +77,5 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
     };
-
-    environment.etc."netns/enthalpy/resolv.conf".text = lib.mkDefault ''
-      nameserver 2606:4700:4700::1111
-    '';
   };
 }
