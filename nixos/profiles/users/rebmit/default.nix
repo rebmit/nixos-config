@@ -1,7 +1,14 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   uid = config.ids.uids.rebmit;
   homeDirectory = "/home/rebmit";
+  groupNameIfPresent =
+    name: lib.optional (config.users.groups ? ${name}) config.users.groups.${name}.name;
 in
 {
   programs.fish.enable = true;
@@ -12,9 +19,12 @@ in
     isNormalUser = true;
     shell = pkgs.fish;
     home = homeDirectory;
-    extraGroups = with config.users.groups; [
-      wheel.name
-    ];
+    extraGroups =
+      with config.users.groups;
+      [
+        wheel.name
+      ]
+      ++ groupNameIfPresent "pipewire";
     openssh.authorizedKeys.keyFiles = config.users.users.root.openssh.authorizedKeys.keyFiles;
   };
 

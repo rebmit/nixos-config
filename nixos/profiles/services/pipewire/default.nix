@@ -7,9 +7,6 @@
     pulse.enable = true;
     jack.enable = true;
     alsa.enable = true;
+    systemWide = true;
   };
-
-  environment.globalPersistence.user.directories = [
-    ".local/state/wireplumber"
-  ];
 }
