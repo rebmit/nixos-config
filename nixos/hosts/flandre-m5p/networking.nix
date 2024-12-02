@@ -28,6 +28,7 @@
         dhcpServerConfig = {
           ServerAddress = "100.64.0.1/20";
           EmitDNS = true;
+          DNS = "10.10.0.21";
         };
         ipv6Prefixes = lib.singleton {
           Prefix = "fdce:2962:c3c1:130c::/64";
