@@ -64,7 +64,6 @@ in
         Restart = "on-failure";
         RestartSec = 5;
         DynamicUser = true;
-        RuntimeDirectory = "enthalpy";
         ExecStart = "${pkgs.tayga}/bin/tayga --config ${pkgs.writeText "tayga.conf" ''
           tun-device nat64
           ipv6-addr fc00::

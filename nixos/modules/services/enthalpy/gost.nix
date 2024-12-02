@@ -27,7 +27,6 @@ in
         Restart = "on-failure";
         RestartSec = 5;
         DynamicUser = true;
-        RuntimeDirectory = "enthalpy";
         ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[fc00::]:${toString config.networking.ports.enthalpy-gost}";
         ProtectSystem = "full";
         ProtectHome = "yes";

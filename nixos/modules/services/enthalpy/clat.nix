@@ -63,7 +63,6 @@ in
         Restart = "on-failure";
         RestartSec = 5;
         DynamicUser = true;
-        RuntimeDirectory = "enthalpy";
         CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];
         AmbientCapabilities = [ "CAP_NET_ADMIN" ];
         ProtectSystem = "full";

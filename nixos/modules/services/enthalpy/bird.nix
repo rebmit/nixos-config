@@ -15,7 +15,7 @@ in
     enable = mkEnableOption "bird for site-scope connectivity";
     socket = mkOption {
       type = types.str;
-      default = "/run/enthalpy/bird.ctl";
+      default = "/run/enthalpy/bird2/bird.ctl";
       description = ''
         Path to the bird control socket.
       '';
@@ -57,7 +57,7 @@ in
         Restart = "on-failure";
         RestartSec = 5;
         DynamicUser = true;
-        RuntimeDirectory = "enthalpy";
+        RuntimeDirectory = "enthalpy/bird2";
         ExecStart = "${pkgs.bird}/bin/bird -s ${cfg.bird.socket} -c /etc/enthalpy/bird2.conf";
         ExecReload = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} configure";
         ExecStop = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} down";
