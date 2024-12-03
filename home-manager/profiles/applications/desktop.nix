@@ -11,6 +11,8 @@
     seahorse
     tdesktop
     thunderbird
+    virt-manager
+    virt-viewer
     zotero-beta
     # keep-sorted end
   ];

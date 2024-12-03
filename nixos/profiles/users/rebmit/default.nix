@@ -24,6 +24,7 @@ in
       [
         wheel.name
       ]
+      ++ groupNameIfPresent "libvirtd"
       ++ groupNameIfPresent "pipewire";
     openssh.authorizedKeys.keyFiles = config.users.users.root.openssh.authorizedKeys.keyFiles;
   };
