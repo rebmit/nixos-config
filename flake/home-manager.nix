@@ -56,6 +56,7 @@ let
         fuzzel
         mako
         niri
+        polkit-gnome
         swaylock
         swww
         waybar.niri
