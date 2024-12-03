@@ -118,5 +118,17 @@ in
         wantedBy = [ "multi-user.target" ];
       };
     })
+
+    (mkIf (cfg.users != { }) {
+      environment.systemPackages = with pkgs; [
+        (pkgs.writeShellApplication {
+          name = "netns-run-default";
+          runtimeInputs = with pkgs; [ util-linux ];
+          text = ''
+            pkexec nsenter -t $$ -e --mount=/proc/1/ns/mnt --net=/proc/1/ns/net -S "$(id -u)" -G "$(id -g)" --wdns="$PWD" "$@"
+          '';
+        })
+      ];
+    })
   ]);
 }
