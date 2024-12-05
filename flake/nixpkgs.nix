@@ -4,6 +4,7 @@
 }:
 let
   overlays = [
+    inputs.rebmit.overlays.default
     inputs.ranet.overlays.default
 
     (final: prev: {
