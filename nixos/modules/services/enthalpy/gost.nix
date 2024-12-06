@@ -10,7 +10,6 @@
 with lib;
 let
   cfg = config.services.enthalpy;
-  gostPort = config.networking.ports.enthalpy-gost;
 in
 {
   options.services.enthalpy.gost = {
@@ -21,22 +20,24 @@ in
     systemd.services.enthalpy-gost = {
       serviceConfig = mylib.misc.serviceHardened // {
         Type = "simple";
-        Restart = "always";
+        Restart = "on-failure";
         RestartSec = 5;
         DynamicUser = true;
-        ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[::1]:${toString gostPort}";
+        ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[::1]:${toString config.networking.ports.enthalpy-gost}";
       };
-      after = [ "network-online.target" ];
-      wantedBy = [ "network-online.target" ];
+      after = [ "netns-${cfg.netns}.service" ];
+      partOf = [ "netns-${cfg.netns}.service" ];
+      wantedBy = [
+        "multi-user.target"
+        "netns-${cfg.netns}.service"
+      ];
     };
 
-    networking.netns."${cfg.netns}".forwardPorts = [
-      {
-        protocol = "tcp";
-        netns = "default";
-        source = "[::1]:${toString gostPort}";
-        target = "[::1]:${toString gostPort}";
-      }
-    ];
+    networking.netns."${cfg.netns}".forwardPorts = singleton {
+      protocol = "tcp";
+      netns = "default";
+      source = "[::1]:${toString config.networking.ports.enthalpy-gost}";
+      target = "[::1]:${toString config.networking.ports.socks}";
+    };
   };
 }

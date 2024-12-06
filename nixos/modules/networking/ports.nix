@@ -8,13 +8,17 @@ in
   options.networking.ports = mkOption {
     type = with types; attrsOf port;
     default = {
+      # standard ports
       http = 80;
       https = 443;
+      socks = 1080;
       ssh = 2222;
 
-      # enthalpy
+      # local ports
+      enthalpy-gost = 3000;
+
+      # public ports
       enthalpy-ipsec = 13000;
-      enthalpy-gost = 1080;
     };
     readOnly = true;
     description = ''

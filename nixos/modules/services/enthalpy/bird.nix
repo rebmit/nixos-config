@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 with lib;
@@ -15,7 +16,7 @@ in
     enable = mkEnableOption "bird for site-scope connectivity";
     socket = mkOption {
       type = types.str;
-      default = "/run/enthalpy/bird2/bird.ctl";
+      default = "/run/netns-${cfg.netns}/bird/bird.ctl";
       description = ''
         Path to the bird control socket.
       '';
@@ -42,49 +43,53 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
-    environment.etc."enthalpy/bird2.conf".source = pkgs.writeTextFile {
-      name = "bird2";
+    environment.etc."netns/${cfg.netns}/bird.conf".source = pkgs.writeTextFile {
+      name = "bird";
       text = cfg.bird.config;
       checkPhase = optionalString cfg.bird.checkConfig ''
-        ln -s $out bird2.conf
-        ${pkgs.buildPackages.bird}/bin/bird -d -p -c bird2.conf
+        ln -s $out bird.conf
+        ${pkgs.buildPackages.bird}/bin/bird -d -p -c bird.conf
       '';
     };
 
-    systemd.services.enthalpy-bird2 = {
-      serviceConfig = {
-        Type = "forking";
-        Restart = "on-failure";
-        RestartSec = 5;
-        DynamicUser = true;
-        RuntimeDirectory = "enthalpy/bird2";
-        ExecStart = "${pkgs.bird}/bin/bird -s ${cfg.bird.socket} -c /etc/enthalpy/bird2.conf";
-        ExecReload = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} configure";
-        ExecStop = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} down";
-        CapabilityBoundingSet = [
-          "CAP_NET_ADMIN"
-          "CAP_NET_BIND_SERVICE"
-          "CAP_NET_RAW"
-        ];
-        AmbientCapabilities = [
-          "CAP_NET_ADMIN"
-          "CAP_NET_BIND_SERVICE"
-          "CAP_NET_RAW"
-        ];
-        ProtectSystem = "full";
-        ProtectHome = "yes";
-        ProtectKernelTunables = true;
-        ProtectControlGroups = true;
-        PrivateTmp = true;
-        PrivateDevices = true;
-        SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
-        MemoryDenyWriteExecute = "yes";
-      };
-      wantedBy = [ "multi-user.target" ];
-      reloadTriggers = [ config.environment.etc."enthalpy/bird2.conf".source ];
+    systemd.services.enthalpy-bird = {
+      serviceConfig =
+        mylib.misc.serviceHardened
+        // config.networking.netns.${cfg.netns}.serviceConfig
+        // {
+          Type = "forking";
+          Restart = "on-failure";
+          RestartSec = 5;
+          DynamicUser = true;
+          RuntimeDirectory = "netns-${cfg.netns}/bird";
+          ExecStart = "${pkgs.bird}/bin/bird -s ${cfg.bird.socket} -c /etc/netns/${cfg.netns}/bird.conf";
+          ExecReload = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} configure";
+          ExecStop = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} down";
+          CapabilityBoundingSet = [
+            "CAP_NET_ADMIN"
+            "CAP_NET_BIND_SERVICE"
+            "CAP_NET_RAW"
+          ];
+          AmbientCapabilities = [
+            "CAP_NET_ADMIN"
+            "CAP_NET_BIND_SERVICE"
+            "CAP_NET_RAW"
+          ];
+          RestrictAddressFamilies = [
+            "AF_UNIX"
+            "AF_INET"
+            "AF_INET6"
+            "AF_NETLINK"
+          ];
+        };
+      after = [ "netns-${cfg.netns}.service" ];
+      partOf = [ "netns-${cfg.netns}.service" ];
+      wantedBy = [
+        "multi-user.target"
+        "netns-${cfg.netns}.service"
+      ];
+      reloadTriggers = [ config.environment.etc."netns/${cfg.netns}/bird.conf".source ];
     };
-
-    services.enthalpy.services.enthalpy-bird2 = { };
 
     services.enthalpy.bird.config = mkBefore ''
       router id ${toString cfg.bird.routerId};

@@ -11,6 +11,7 @@ with lib;
 let
   inherit (mylib.network) cidr;
   cfg = config.services.enthalpy;
+  interface = config.networking.netns.${cfg.netns}.interface;
 in
 {
   options.services.enthalpy.clat = {
@@ -38,7 +39,7 @@ in
       ];
       preStart = ''
         ip -6 route replace 64:ff9b::/96 from ${cfg.clat.address} encap seg6 mode encap \
-          segs ${concatStringsSep "," cfg.clat.segment} dev enthalpy mtu 1280
+          segs ${concatStringsSep "," cfg.clat.segment} dev ${interface} mtu 1280
       '';
       script = ''
         exec tayga --config ${pkgs.writeText "tayga.conf" ''
@@ -56,28 +57,32 @@ in
       '';
       preStop = ''
         ip -6 route del 64:ff9b::/96 from ${cfg.clat.address} encap seg6 mode encap \
-          segs ${concatStringsSep "," cfg.clat.segment} dev enthalpy mtu 1280
+          segs ${concatStringsSep "," cfg.clat.segment} dev ${interface} mtu 1280
       '';
-      serviceConfig = {
-        Type = "forking";
-        Restart = "on-failure";
-        RestartSec = 5;
-        DynamicUser = true;
-        CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];
-        AmbientCapabilities = [ "CAP_NET_ADMIN" ];
-        ProtectSystem = "full";
-        ProtectHome = "yes";
-        ProtectKernelTunables = true;
-        ProtectControlGroups = true;
-        PrivateTmp = true;
-        SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
-        MemoryDenyWriteExecute = "yes";
-      };
-      wants = [ "network.target" ];
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
+      serviceConfig =
+        mylib.misc.serviceHardened
+        // config.networking.netns.${cfg.netns}.serviceConfig
+        // {
+          Type = "forking";
+          Restart = "on-failure";
+          RestartSec = 5;
+          DynamicUser = true;
+          CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];
+          AmbientCapabilities = [ "CAP_NET_ADMIN" ];
+          RestrictAddressFamilies = [
+            "AF_UNIX"
+            "AF_INET"
+            "AF_INET6"
+            "AF_NETLINK"
+          ];
+          PrivateDevices = false;
+        };
+      after = [ "netns-${cfg.netns}.service" ];
+      partOf = [ "netns-${cfg.netns}.service" ];
+      wantedBy = [
+        "multi-user.target"
+        "netns-${cfg.netns}.service"
+      ];
     };
-
-    services.enthalpy.services.enthalpy-clat = { };
   };
 }
