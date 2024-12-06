@@ -422,7 +422,7 @@ in
           _name: cfg:
           (imap (
             index: fp:
-            nameValuePair "netns-${cfg.netns}-port-forward-${fp.netns}-${fp.protocol}-${toString index}" (
+            nameValuePair "netns-${cfg.netns}-port-forward-${toString index}-${fp.netns}-${fp.protocol}" (
               mkPortForwardService cfg fp
             )
           ) cfg.forwardPorts)
@@ -433,7 +433,7 @@ in
           _name: cfg:
           (imap (
             index: ev:
-            nameValuePair "netns-${cfg.netns}-extra-veth-${ev.netns}-${toString index}" (
+            nameValuePair "netns-${cfg.netns}-extra-veth-${toString index}-${ev.netns}" (
               mkExtraVethService cfg ev
             )
           ) cfg.extraVeths)

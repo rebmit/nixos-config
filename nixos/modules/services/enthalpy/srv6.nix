@@ -72,10 +72,10 @@ in
         ];
       };
       after = [
-        "enthalpy.service"
+        "netns-enthalpy.service"
         "network-online.target"
       ];
-      requires = [ "enthalpy.service" ];
+      requires = [ "netns-enthalpy.service" ];
       wants = [ "network-online.target" ];
       wantedBy = [ "multi-user.target" ];
     };

@@ -190,12 +190,12 @@ in
           "strongswan-swanctl.service"
         ];
         requires = [
-          "enthalpy.service"
+          "netns-enthalpy.service"
         ];
         after = [
           "network-online.target"
           "strongswan-swanctl.service"
-          "enthalpy.service"
+          "netns-enthalpy.service"
         ];
         wantedBy = [ "multi-user.target" ];
         reloadTriggers = [ config.environment.etc."ranet/config.json".source ];

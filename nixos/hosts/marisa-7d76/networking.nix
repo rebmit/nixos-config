@@ -6,6 +6,7 @@
 
   services.enthalpy = {
     users.rebmit = { };
+    services.nix-daemon = { };
     ipsec.interfaces = [ "enp14s0" ];
     clat = {
       enable = true;

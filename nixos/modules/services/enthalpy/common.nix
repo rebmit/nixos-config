@@ -44,38 +44,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.network.networks."50-enthalpy" = {
-      matchConfig.Name = "enthalpy";
-      linkConfig.RequiredForOnline = false;
-    };
-
-    systemd.services.enthalpy = {
-      path = with pkgs; [
-        iproute2
-        coreutils
-        procps
-      ];
-      script = ''
-        ip netns add ${cfg.netns}
-        ip link add enthalpy mtu 1400 address 02:00:00:00:00:01 type veth peer enthalpy mtu 1400 address 02:00:00:00:00:00 netns ${cfg.netns}
-        ip -n ${cfg.netns} link set lo up
-        ip -n ${cfg.netns} link set enthalpy up
-        ip -n ${cfg.netns} addr add ${cfg.address}/128 dev enthalpy
-        ip netns exec ${cfg.netns} sysctl -w net.ipv6.conf.default.forwarding=1
-        ip netns exec ${cfg.netns} sysctl -w net.ipv6.conf.all.forwarding=1
-        ip netns exec ${cfg.netns} sysctl -w net.ipv4.conf.default.forwarding=0
-        ip netns exec ${cfg.netns} sysctl -w net.ipv4.conf.all.forwarding=0
-      '';
-      preStop = ''
-        ip netns del ${cfg.netns}
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-      };
-      wants = [ "network.target" ];
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
+    networking.netns."${cfg.netns}" = {
+      interface = cfg.netns;
+      address = singleton "${cfg.address}/128";
+      enableIPv4Forwarding = false;
+      enableIPv6Forwarding = true;
     };
   };
 }

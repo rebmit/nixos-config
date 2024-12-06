@@ -6,6 +6,7 @@
 
   services.enthalpy = {
     users.rebmit = { };
+    services.nix-daemon = { };
     ipsec = {
       interfaces = [ "wlan0" ];
       whitelist = [ "rebmit's edge network" ];

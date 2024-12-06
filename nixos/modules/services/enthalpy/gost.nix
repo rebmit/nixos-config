@@ -4,11 +4,13 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 with lib;
 let
   cfg = config.services.enthalpy;
+  gostPort = config.networking.ports.enthalpy-gost;
 in
 {
   options.services.enthalpy.gost = {
@@ -16,43 +18,25 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.gost.enable) {
-    systemd.network.networks."50-enthalpy" = {
-      address = singleton "fc00::";
-      routes = singleton { Destination = cfg.address; };
-    };
-
     systemd.services.enthalpy-gost = {
-      serviceConfig = {
+      serviceConfig = mylib.misc.serviceHardened // {
         Type = "simple";
-        Restart = "on-failure";
+        Restart = "always";
         RestartSec = 5;
         DynamicUser = true;
-        ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[fc00::]:${toString config.networking.ports.enthalpy-gost}";
-        ProtectSystem = "full";
-        ProtectHome = "yes";
-        ProtectKernelTunables = true;
-        ProtectControlGroups = true;
-        PrivateTmp = true;
-        PrivateDevices = true;
-        SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
-        MemoryDenyWriteExecute = "yes";
+        ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[::1]:${toString gostPort}";
       };
-      wants = [ "network-online.target" ];
-      after = [
-        "enthalpy.service"
-        "network-online.target"
-      ];
-      requires = [ "enthalpy.service" ];
-      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "network-online.target" ];
     };
 
-    services.enthalpy.exit.enable = true;
-    services.enthalpy.exit.prefix = singleton {
-      type = "static";
-      destination = "fc00::/128";
-      source = "${cfg.address}/128";
-    };
-
-    networking.hosts."fc00::" = singleton "enthalpy-gost";
+    networking.netns."${cfg.netns}".forwardPorts = [
+      {
+        protocol = "tcp";
+        netns = "default";
+        source = "[::1]:${toString gostPort}";
+        target = "[::1]:${toString gostPort}";
+      }
+    ];
   };
 }
