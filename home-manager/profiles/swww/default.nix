@@ -38,11 +38,11 @@ in
         pkgs.writeShellApplication {
           name = "darkman-switch-swww-${mode}";
           text = ''
+            ln --force --symbolic --verbose "${config.theme.${mode}.wallpaper}" "$HOME/.config/swww/wallpaper"
             if ! ${config.systemd.user.systemctlPath} --user is-active swww-daemon; then
               echo "swww-daemon is not active"
               exit 1
             fi
-            ln --force --symbolic --verbose "${config.theme.${mode}.wallpaper}" "$HOME/.config/swww/wallpaper"
             ${swww}/bin/swww img ~/.config/swww/wallpaper
           '';
         };
