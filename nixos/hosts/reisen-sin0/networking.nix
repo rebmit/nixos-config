@@ -1,28 +1,10 @@
-{
-  profiles,
-  data,
-  ...
-}:
+{ profiles, ... }:
 {
   imports = with profiles; [
-    services.enthalpy
+    services.enthalpy.transit-dualstack
   ];
 
-  services.enthalpy = {
-    ipsec.interfaces = [ "enp3s0" ];
-    exit = {
-      enable = true;
-      prefix = [
-        {
-          type = "bird";
-          destination = "::/0";
-          source = data.enthalpy_network_prefix;
-        }
-      ];
-    };
-    srv6.enable = true;
-    nat64.enable = true;
-  };
+  services.enthalpy.ipsec.interfaces = [ "enp3s0" ];
 
   networking.nftables.tables.nat = {
     family = "inet";

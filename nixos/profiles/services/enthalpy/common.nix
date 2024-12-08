@@ -3,6 +3,7 @@
   data,
   hostData,
   self,
+  lib,
   ...
 }:
 {
@@ -37,4 +38,13 @@
       routerId = hostData.enthalpy_node_id;
     };
   };
+
+  networking.netns.enthalpy.forwardPorts = lib.optionals config.services.openssh.enable [
+    {
+      protocol = "tcp";
+      netns = "default";
+      source = "[::]:${toString config.networking.ports.ssh}";
+      target = "[::]:${toString config.networking.ports.ssh}";
+    }
+  ];
 }

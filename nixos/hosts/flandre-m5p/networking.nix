@@ -6,19 +6,10 @@
 }:
 {
   imports = with profiles; [
-    services.enthalpy
+    services.enthalpy.customer
   ];
 
   services.enthalpy.ipsec.interfaces = [ "enp2s0" ];
-
-  networking.netns.enthalpy.forwardPorts = [
-    {
-      protocol = "tcp";
-      netns = "default";
-      source = "[::]:${toString config.networking.ports.ssh}";
-      target = "[::]:${toString config.networking.ports.ssh}";
-    }
-  ];
 
   systemd.network = {
     enable = true;

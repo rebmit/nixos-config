@@ -73,7 +73,7 @@ in
 
     networking.nftables = {
       enable = true;
-      tables.enthalpy4 = {
+      tables.enthalpy-nat64 = {
         family = "ip";
         content = ''
           chain forward {
