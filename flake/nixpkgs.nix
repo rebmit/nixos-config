@@ -5,7 +5,6 @@
 let
   overlays = [
     inputs.rebmit.overlays.default
-    inputs.ranet.overlays.default
 
     (final: prev: {
       libadwaita = prev.libadwaita.overrideAttrs (old: {
