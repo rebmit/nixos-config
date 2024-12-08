@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 with lib;
@@ -13,14 +14,6 @@ in
 {
   options.services.enthalpy.nat64 = {
     enable = mkEnableOption "NAT64";
-    table = mkOption {
-      type = types.int;
-      default = config.networking.routingTables.nat64;
-      readOnly = true;
-      description = ''
-        Routing table used for NAT64 entries.
-      '';
-    };
     prefix = mkOption {
       type = types.str;
       default = "64:ff9b::/96";
@@ -38,19 +31,14 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.nat64.enable) {
-    systemd.network.config = {
-      networkConfig = {
-        IPv6Forwarding = true;
-        ManageForeignRoutes = false;
-      };
-    };
+    systemd.network.config.networkConfig.IPv6Forwarding = true;
 
     systemd.network.networks."70-nat64" = {
       matchConfig.Name = "nat64";
       routes = [
         {
           Destination = cfg.nat64.prefix;
-          Table = cfg.nat64.table;
+          Table = config.networking.routingTables.nat64;
         }
         { Destination = cfg.nat64.dynamicPool; }
       ];
@@ -59,7 +47,7 @@ in
     };
 
     systemd.services.enthalpy-nat64 = {
-      serviceConfig = {
+      serviceConfig = mylib.misc.serviceHardened // {
         Type = "forking";
         Restart = "on-failure";
         RestartSec = 5;
@@ -73,32 +61,27 @@ in
         ''}";
         CapabilityBoundingSet = [ "CAP_NET_ADMIN" ];
         AmbientCapabilities = [ "CAP_NET_ADMIN" ];
-        ProtectSystem = "full";
-        ProtectHome = "yes";
-        ProtectKernelTunables = true;
-        ProtectControlGroups = true;
-        PrivateTmp = true;
-        SystemCallFilter = "~@cpu-emulation @debug @keyring @module @mount @obsolete @raw-io";
-        MemoryDenyWriteExecute = "yes";
+        PrivateDevices = false;
       };
-      wants = [ "network.target" ];
-      after = [
+      after = [ "netns-enthalpy.service" ];
+      partOf = [ "netns-enthalpy.service" ];
+      wantedBy = [
+        "multi-user.target"
         "netns-enthalpy.service"
-        "network.target"
       ];
-      requires = [ "netns-enthalpy.service" ];
-      wantedBy = [ "multi-user.target" ];
     };
 
-    networking.nftables.enable = true;
-    networking.nftables.tables.enthalpy4 = {
-      family = "ip";
-      content = ''
-        chain forward {
-          type filter hook forward priority 0;
-          tcp flags syn tcp option maxseg size set 1200
-        }
-      '';
+    networking.nftables = {
+      enable = true;
+      tables.enthalpy4 = {
+        family = "ip";
+        content = ''
+          chain forward {
+            type filter hook forward priority 0;
+            tcp flags syn tcp option maxseg size set 1200
+          }
+        '';
+      };
     };
   };
 }

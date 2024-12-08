@@ -1,7 +1,6 @@
 {
   profiles,
   data,
-  lib,
   ...
 }:
 {
@@ -56,12 +55,6 @@
         dhcpV4Config.RouteMetric = 1024;
         dhcpV6Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
-      };
-      "50-enthalpy" = {
-        routes = lib.singleton {
-          Destination = data.enthalpy_network_prefix;
-          Gateway = "fe80::ff:fe00:0";
-        };
       };
     };
   };

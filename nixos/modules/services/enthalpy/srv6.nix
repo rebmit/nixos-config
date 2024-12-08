@@ -24,10 +24,13 @@ in
     };
     actions = mkOption {
       type = types.listOf types.str;
-      default = [
-        "${cidr.host 1 cfg.srv6.prefix} encap seg6local action End.DT6 table main  dev enthalpy table localsid"
-        "${cidr.host 2 cfg.srv6.prefix} encap seg6local action End.DT6 table nat64 dev enthalpy table localsid"
-      ];
+      default =
+        [
+          "${cidr.host 1 cfg.srv6.prefix} encap seg6local action End.DT6 table main  dev enthalpy table localsid"
+        ]
+        ++ optionals cfg.nat64.enable [
+          "${cidr.host 2 cfg.srv6.prefix} encap seg6local action End.DT6 table nat64 dev enthalpy table localsid"
+        ];
       description = ''
         List of SRv6 actions configured in the default network namespace.
       '';
@@ -57,27 +60,34 @@ in
       };
     };
 
+    services.enthalpy.exit = {
+      enable = true;
+      prefix = singleton {
+        type = "static";
+        destination = cfg.srv6.prefix;
+        source = cfg.network;
+      };
+    };
+
     systemd.services.enthalpy-srv6 = {
-      path = with pkgs; [ iproute2 ];
+      path = with pkgs; [
+        iproute2
+      ];
+      script = concatMapStringsSep "\n" (p: "ip -6 route add ${p}") cfg.srv6.actions;
+      preStop = concatMapStringsSep "\n" (p: "ip -6 route del ${p}") cfg.srv6.actions;
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStartPre = [
-          "${pkgs.iproute2}/bin/ip -n ${cfg.netns} -6 r a ${cfg.srv6.prefix} from ${cfg.network} via fe80::ff:fe00:1 dev enthalpy"
-        ];
-        ExecStart = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 r a ${route}") cfg.srv6.actions;
-        ExecStop = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 r d ${route}") cfg.srv6.actions;
-        ExecStopPost = [
-          "${pkgs.iproute2}/bin/ip -n ${cfg.netns} -6 r d ${cfg.srv6.prefix} from ${cfg.network} via fe80::ff:fe00:1 dev enthalpy"
-        ];
       };
-      after = [
+      after = [ "netns-enthalpy.service" ];
+      partOf = [
         "netns-enthalpy.service"
-        "network-online.target"
+        "enthalpy-exit.service"
       ];
-      requires = [ "netns-enthalpy.service" ];
-      wants = [ "network-online.target" ];
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = [
+        "multi-user.target"
+        "netns-enthalpy.service"
+      ];
     };
   };
 }

@@ -25,15 +25,15 @@ in
         DynamicUser = true;
         ExecStart = "${pkgs.gost}/bin/gost -L=socks5://[::1]:${toString config.networking.ports.enthalpy-gost}";
       };
-      after = [ "netns-${cfg.netns}.service" ];
-      partOf = [ "netns-${cfg.netns}.service" ];
+      after = [ "netns-enthalpy.service" ];
+      partOf = [ "netns-enthalpy.service" ];
       wantedBy = [
         "multi-user.target"
-        "netns-${cfg.netns}.service"
+        "netns-enthalpy.service"
       ];
     };
 
-    networking.netns."${cfg.netns}".forwardPorts = singleton {
+    networking.netns.enthalpy.forwardPorts = singleton {
       protocol = "tcp";
       netns = "default";
       source = "[::1]:${toString config.networking.ports.enthalpy-gost}";

@@ -1,12 +1,15 @@
-{ profiles, lib, ... }:
+{
+  config,
+  profiles,
+  lib,
+  ...
+}:
 {
   imports = with profiles; [
     services.enthalpy
   ];
 
   services.enthalpy = {
-    users.rebmit = { };
-    services.nix-daemon = { };
     ipsec = {
       interfaces = [ "wlan0" ];
       whitelist = [ "rebmit's edge network" ];
@@ -16,6 +19,19 @@
       segment = lib.singleton "fde3:3be3:a244:2676::2";
     };
     gost.enable = true;
+  };
+
+  systemd.services.nix-daemon = {
+    serviceConfig = config.networking.netns.enthalpy.serviceConfig;
+    after = [ "netns-enthalpy.service" ];
+    requires = [ "netns-enthalpy.service" ];
+  };
+
+  systemd.services."user@${toString config.users.users.rebmit.uid}" = {
+    overrideStrategy = "asDropin";
+    serviceConfig = config.networking.netns.enthalpy.serviceConfig;
+    after = [ "netns-enthalpy.service" ];
+    requires = [ "netns-enthalpy.service" ];
   };
 
   systemd.network = {

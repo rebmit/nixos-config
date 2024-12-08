@@ -10,10 +10,7 @@ with lib;
 let
   cfg = config.services.enthalpy;
   birdPrefix = filter (p: p.type == "bird") cfg.exit.prefix;
-  staticPrefix = subtractLists birdPrefix cfg.exit.prefix;
-  staticRoutes = map (
-    p: "${p.destination} from ${p.source} via fe80::ff:fe00:1 dev enthalpy"
-  ) staticPrefix;
+  staticPrefix = filter (p: p.type == "static") cfg.exit.prefix;
 in
 {
   options.services.enthalpy.exit = {
@@ -45,29 +42,53 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.exit.enable) {
+    systemd.network.networks."50-enthalpy" = {
+      matchConfig.Name = "enthalpy";
+      routes = singleton {
+        Destination = cfg.network;
+        Gateway = "fe80::ff:fe00:2";
+      };
+      linkConfig.RequiredForOnline = false;
+    };
+
     services.enthalpy.bird.config = ''
       protocol static {
         ipv6 sadr;
         ${
           concatMapStringsSep "\n" (p: ''
-            route ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev "enthalpy";
+            route ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev "host";
           '') birdPrefix
         }
       }
     '';
 
-    systemd.services.enthalpy-exit = mkIf (staticRoutes != [ ]) {
+    systemd.services.enthalpy-exit = {
+      path = with pkgs; [
+        coreutils
+        iproute2
+      ];
+      script = ''
+        ip link add enthalpy mtu 1400 address 02:00:00:00:00:01 type veth \
+          peer host mtu 1400 address 02:00:00:00:00:02 netns enthalpy
+        ip link set enthalpy up
+        ip -n enthalpy link set host up
+        ${concatMapStringsSep "\n" (
+          p: "ip -n enthalpy -6 route add ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev host"
+        ) staticPrefix}
+      '';
+      preStop = ''
+        ip link del enthalpy
+      '';
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 route add ${route}") staticRoutes;
-        ExecStop = builtins.map (route: "${pkgs.iproute2}/bin/ip -6 route del ${route}") staticRoutes;
       };
-      after = [ "network.target" ];
-      wants = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
+      after = [ "netns-enthalpy.service" ];
+      partOf = [ "netns-enthalpy.service" ];
+      wantedBy = [
+        "multi-user.target"
+        "netns-enthalpy.service"
+      ];
     };
-
-    services.enthalpy.services.enthalpy-exit = mkIf (staticRoutes != [ ]) { };
   };
 }

@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 with lib;
@@ -40,14 +41,6 @@ in
       );
       description = ''
         List of endpoints available on this node.
-      '';
-    };
-    port = mkOption {
-      type = types.port;
-      default = config.networking.ports.enthalpy-ipsec;
-      readOnly = true;
-      description = ''
-        UDP port used by IKEv2. NAT-T is enabled by default.
       '';
     };
     interfaces = mkOption {
@@ -99,30 +92,30 @@ in
       }
     ];
 
-    environment.systemPackages = with pkgs; [ strongswan ];
-
-    environment.etc."ranet/config.json".source = (pkgs.formats.json { }).generate "config.json" {
-      organization = cfg.ipsec.organization;
-      common_name = cfg.ipsec.commonName;
-      endpoints = builtins.map (ep: {
-        serial_number = ep.serialNumber;
-        address_family = ep.addressFamily;
-        address = ep.address;
-        port = cfg.ipsec.port;
-        updown = pkgs.writeShellScript "updown" ''
-          LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")
-          case "$PLUTO_VERB" in
-            up-client)
-              ip link add "$LINK" type xfrm if_id "$PLUTO_IF_ID_OUT"
-              ip link set "$LINK" netns ${cfg.netns} multicast on mtu 1400 up
-              ;;
-            down-client)
-              ip -n ${cfg.netns} link del "$LINK"
-              ;;
-          esac
-        '';
-      }) cfg.ipsec.endpoints;
-    };
+    environment.etc."enthalpy/ranet/config.json".source =
+      (pkgs.formats.json { }).generate "enthalpy-ranet-config-json"
+        {
+          organization = cfg.ipsec.organization;
+          common_name = cfg.ipsec.commonName;
+          endpoints = builtins.map (ep: {
+            serial_number = ep.serialNumber;
+            address_family = ep.addressFamily;
+            address = ep.address;
+            port = config.networking.ports.enthalpy-ipsec;
+            updown = pkgs.writeShellScript "updown" ''
+              LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")
+              case "$PLUTO_VERB" in
+                up-client)
+                  ip link add "$LINK" type xfrm if_id "$PLUTO_IF_ID_OUT"
+                  ip link set "$LINK" netns enthalpy multicast on mtu 1400 up
+                  ;;
+                down-client)
+                  ip -n enthalpy link del "$LINK"
+                  ;;
+              esac
+            '';
+          }) cfg.ipsec.endpoints;
+        };
 
     services.strongswan-swanctl = {
       enable = true;
@@ -130,7 +123,7 @@ in
         charon {
           interfaces_use = ${strings.concatStringsSep "," cfg.ipsec.interfaces}
           port = 0
-          port_nat_t = ${toString cfg.ipsec.port}
+          port_nat_t = ${toString config.networking.ports.enthalpy-ipsec}
           retransmit_base = 1
           plugins {
             socket-default {
@@ -168,7 +161,7 @@ in
             ''
           else
             cfg.ipsec.registry;
-        command = "ranet -c /etc/ranet/config.json -r ${registry} -k ${cfg.ipsec.privateKeyPath}";
+        command = "ranet -c /etc/enthalpy/ranet/config.json -r ${registry} -k ${cfg.ipsec.privateKeyPath}";
       in
       {
         path = with pkgs; [
@@ -178,7 +171,7 @@ in
         script = "${command} up";
         reload = "${command} up";
         preStop = "${command} down";
-        serviceConfig = {
+        serviceConfig = mylib.misc.serviceHardened // {
           Type = "oneshot";
           RemainAfterExit = true;
         };
@@ -189,16 +182,17 @@ in
           "network-online.target"
           "strongswan-swanctl.service"
         ];
-        requires = [
-          "netns-enthalpy.service"
-        ];
         after = [
           "network-online.target"
+          "netns-enthalpy.service"
           "strongswan-swanctl.service"
+        ];
+        partOf = [ "netns-enthalpy.service" ];
+        wantedBy = [
+          "multi-user.target"
           "netns-enthalpy.service"
         ];
-        wantedBy = [ "multi-user.target" ];
-        reloadTriggers = [ config.environment.etc."ranet/config.json".source ];
+        reloadTriggers = [ config.environment.etc."enthalpy/ranet/config.json".source ];
       };
   };
 }

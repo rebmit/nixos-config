@@ -16,7 +16,7 @@ in
     enable = mkEnableOption "bird for site-scope connectivity";
     socket = mkOption {
       type = types.str;
-      default = "/run/netns-${cfg.netns}/bird/bird.ctl";
+      default = "/run/enthalpy/bird/bird.ctl";
       description = ''
         Path to the bird control socket.
       '';
@@ -43,7 +43,7 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
-    environment.etc."netns/${cfg.netns}/bird.conf".source = pkgs.writeTextFile {
+    environment.etc."enthalpy/bird/bird.conf".source = pkgs.writeTextFile {
       name = "bird";
       text = cfg.bird.config;
       checkPhase = optionalString cfg.bird.checkConfig ''
@@ -55,14 +55,14 @@ in
     systemd.services.enthalpy-bird = {
       serviceConfig =
         mylib.misc.serviceHardened
-        // config.networking.netns.${cfg.netns}.serviceConfig
+        // config.networking.netns.enthalpy.serviceConfig
         // {
           Type = "forking";
           Restart = "on-failure";
           RestartSec = 5;
           DynamicUser = true;
-          RuntimeDirectory = "netns-${cfg.netns}/bird";
-          ExecStart = "${pkgs.bird}/bin/bird -s ${cfg.bird.socket} -c /etc/netns/${cfg.netns}/bird.conf";
+          RuntimeDirectory = "enthalpy/bird";
+          ExecStart = "${pkgs.bird}/bin/bird -s ${cfg.bird.socket} -c /etc/enthalpy/bird/bird.conf";
           ExecReload = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} configure";
           ExecStop = "${pkgs.bird}/bin/birdc -s ${cfg.bird.socket} down";
           CapabilityBoundingSet = [
@@ -82,13 +82,13 @@ in
             "AF_NETLINK"
           ];
         };
-      after = [ "netns-${cfg.netns}.service" ];
-      partOf = [ "netns-${cfg.netns}.service" ];
+      after = [ "netns-enthalpy.service" ];
+      partOf = [ "netns-enthalpy.service" ];
       wantedBy = [
         "multi-user.target"
-        "netns-${cfg.netns}.service"
+        "netns-enthalpy.service"
       ];
-      reloadTriggers = [ config.environment.etc."netns/${cfg.netns}/bird.conf".source ];
+      reloadTriggers = [ config.environment.etc."enthalpy/bird/bird.conf".source ];
     };
 
     services.enthalpy.bird.config = mkBefore ''

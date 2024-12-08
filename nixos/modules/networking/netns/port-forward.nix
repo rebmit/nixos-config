@@ -84,7 +84,7 @@ in
                 ]
               );
             in
-            nameValuePair "netns-${name}-port-forward-${toString index}" {
+            nameValuePair "netns-${name}-port-forward-${toString index}-${netns}-${protocol}" {
               serviceConfig =
                 mylib.misc.serviceHardened
                 // cfg.serviceConfig

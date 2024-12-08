@@ -26,7 +26,7 @@ in
             };
             mntnsPath = mkOption {
               type = types.str;
-              default = if name == "default" then "/proc/1/ns/mnt" else "/run/netns-${name}/mntns/${name}";
+              default = if name == "default" then "/proc/1/ns/mnt" else "/run/${name}/mntns/${name}";
               readOnly = true;
               description = ''
                 Path to the auxiliary mount namespace.
@@ -71,7 +71,7 @@ in
                     BindReadOnlyPaths = optionals config.enableDNSIsolation [
                       "/etc/netns/${name}/resolv.conf:/etc/resolv.conf:norbind"
                       "/etc/netns/${name}/nsswitch.conf:/etc/nsswitch.conf:norbind"
-                      "/run/netns-${name}/nscd:/run/nscd:norbind"
+                      "/run/${name}/nscd:/run/nscd:norbind"
                     ];
                   };
               readOnly = true;
@@ -143,13 +143,13 @@ in
             ${optionalString enableDNSIsolation ''
               nsenter --mount=${mntnsPath} mount --bind --read-only /etc/netns/${name}/resolv.conf /etc/resolv.conf
               nsenter --mount=${mntnsPath} mount --bind --read-only /etc/netns/${name}/nsswitch.conf /etc/nsswitch.conf
-              nsenter --mount=${mntnsPath} mount --bind --read-only /run/netns-${name}/nscd /run/nscd
+              nsenter --mount=${mntnsPath} mount --bind --read-only /run/${name}/nscd /run/nscd
             ''}
           '';
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
-            RuntimeDirectory = "netns-${name}/mntns";
+            RuntimeDirectory = "${name}/mntns";
           };
           after =
             [

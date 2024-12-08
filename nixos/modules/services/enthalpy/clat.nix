@@ -11,7 +11,7 @@ with lib;
 let
   inherit (mylib.network) cidr;
   cfg = config.services.enthalpy;
-  interface = config.networking.netns.${cfg.netns}.interface;
+  interface = config.networking.netns.enthalpy.interface;
 in
 {
   options.services.enthalpy.clat = {
@@ -61,7 +61,7 @@ in
       '';
       serviceConfig =
         mylib.misc.serviceHardened
-        // config.networking.netns.${cfg.netns}.serviceConfig
+        // config.networking.netns.enthalpy.serviceConfig
         // {
           Type = "forking";
           Restart = "on-failure";
@@ -77,11 +77,11 @@ in
           ];
           PrivateDevices = false;
         };
-      after = [ "netns-${cfg.netns}.service" ];
-      partOf = [ "netns-${cfg.netns}.service" ];
+      after = [ "netns-enthalpy.service" ];
+      partOf = [ "netns-enthalpy.service" ];
       wantedBy = [
         "multi-user.target"
-        "netns-${cfg.netns}.service"
+        "netns-enthalpy.service"
       ];
     };
   };

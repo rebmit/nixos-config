@@ -27,13 +27,6 @@ in
         Address to be added into the enthalpy network as source address.
       '';
     };
-    netns = mkOption {
-      type = types.str;
-      default = "enthalpy";
-      description = ''
-        Name of the network namespace for enthalpy interfaces.
-      '';
-    };
     network = mkOption {
       type = types.str;
       description = ''
@@ -43,8 +36,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.netns."${cfg.netns}" = {
-      interface = cfg.netns;
+    networking.netns.enthalpy = {
+      interface = "enthalpy";
       address = singleton "${cfg.address}/128";
       enableIPv4Forwarding = false;
       enableIPv6Forwarding = true;

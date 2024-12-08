@@ -43,12 +43,12 @@ in
             "/etc/netns/${name}/resolv.conf:/etc/resolv.conf:norbind"
             "/etc/netns/${name}/nsswitch.conf:/etc/nsswitch.conf:norbind"
           ];
-          BindPaths = [ "/run/netns-${name}/nscd:/run/nscd:norbind" ];
+          BindPaths = [ "/run/${name}/nscd:/run/nscd:norbind" ];
           Type = "notify";
           Restart = "on-failure";
           RestartSec = 5;
           User = "${name}-nscd";
-          RuntimeDirectory = "netns-${name}/nscd";
+          RuntimeDirectory = "${name}/nscd";
           RuntimeDirectoryPreserve = true;
           ExecStart = "${pkgs.nsncd}/bin/nsncd";
         };
