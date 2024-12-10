@@ -46,6 +46,7 @@ let
           kitty
           qt
           theme.catppuccin
+          valent
           xdg-user-dirs
           # keep-sorted end
         ]);
