@@ -13,6 +13,12 @@ creation_rules:
       - age:
           - *marisa
           - *flandre
+  - path_regex: secrets/common.*
+    key_groups:
+      - age:
+          - *marisa
+          - *flandre
+          - *reisen
   - path_regex: secrets/hosts/(opentofu/)?marisa-.*
     key_groups:
       - age:
