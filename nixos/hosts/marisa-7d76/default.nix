@@ -8,6 +8,7 @@
   imports =
     suites.workstation
     ++ [
+      profiles.programs.adb
       profiles.system.boot.binfmt
       profiles.system.boot.secure-boot
       profiles.users.rebmit
