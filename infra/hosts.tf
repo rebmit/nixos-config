@@ -36,6 +36,12 @@ locals {
       enthalpy_node_id           = parseint("f87", 16)
       enthalpy_node_organization = "core"
     }
+    "suwako-vie0" = {
+      endpoints_v4               = ["110.172.148.83"]
+      endpoints_v6               = ["2a0d:f302:136:7d2a::1"]
+      enthalpy_node_id           = parseint("763", 16)
+      enthalpy_node_organization = "core"
+    }
   }
 }
 

@@ -77,6 +77,17 @@
       "enthalpy_node_prefix": "fde3:3be3:a244:2670::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4sFno9JeH0787wN/gKJx1RgnTARnR8XEq7xogQt108",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYudfdvzw7yEA3onZf4+PJbOecxzinYnThKGI+K7uoOUw/RDwWNWxgh+o9j+/crGGazytg8yNe/fmIGovZ9nl2IYCH6rTBIe9bvM1p0TzcOXBrIZFOtXUGj4fHT+56MzdLHzlaMUGBLCV1NXXm4HFztN/iQKIwS4B2lvv8EtHsFybzUwWvw9d3nfQItDoBKzKhwFPg33bmAyF6JVLncZiMY1q78XZXAYfWGO3ba61f2ScsgsAxHSELkIWKXpjnxXGuHZGUNk4j5LSctVsM5RIkl37th4CWjKsTp1Iw5vwHXLou+xDrvtjdU3UxGWTYtx2KhIwzNR+WdLHCQ6RaPLvsRemuHhfhkcHfVBpYwL/LeQEHdfNX/Ulb9B8GzAfgGRzKzSyrkR8WhtCtOYQ0Zr/TpbGgzkS8cY4RLIEqZ4R8hFCEJw28za3kMKov4P2t2gI0RL5yVN0TzyMi1i46eMRN2DgPkzDG+kMqXBXzWDbeiX86/z5N5l7KCLNLQ4R2R46g8FqigRPhXEmhxkUjsnsYwOlGjwqEIRvzUpQ6SGF5LPv0E8KncEZUPDhXufBe70pySJi2dZQJu4CJpgi88rKRelJAX2eS9Ba49gXxmQjXWXDvk/9HBqoE3QAw/iXQlwi0G9gRja68FSKKq8K2maGj6KFdUw4Zz8zFuHn2HkSbaQ=="
+    },
+    "suwako-vie0": {
+      "endpoints": ["110.172.148.83", "2a0d:f302:136:7d2a::1"],
+      "endpoints_v4": ["110.172.148.83"],
+      "endpoints_v6": ["2a0d:f302:136:7d2a::1"],
+      "enthalpy_node_address": "fde3:3be3:a244:7630::1",
+      "enthalpy_node_id": 1891,
+      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "fde3:3be3:a244:7630::/60",
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDMJ1nNhJTdBjPZKTcxZv9uqdNXjysc/v+MuSobZtTX",
+      "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSqFe0/y6UpJwlOF4RIIml9aKO0KSSNUB+qb+KGShRRlK5T1vSVdOteaVOPBEqk8keJcZcYfmAuzg0BMtuuSvqPXPVvxCw/QFt8EjfTGh5t0Dzkhfx1xO07PGgF2yHu/s7xUUPwnRcXsmPK6zyJWKvmK/V+Zo+8ALv9ECrD4iJwI5vpSDKdIpxUHu9QwvDDftTFFWEb+M/T/fO4weqQBU57RWaB7K5/5yOTOJ0vqd3SpxJZ7KKGB8QZC3LLjJqyV1UywVbWvkXEQ5Kn35G1JwPtJcgo/DjSZW/zqvRfVyVdP29i1S3RXcOARiVpT1Mq3pU/tBlbXqf/jnD7hZBFRJzFpfSADp9qFxhv7G3jgRyXjYedU2Iq+pgwbgjsiMRruhl3T3R+nT0Z2u9cChOvkvtO4I2jWgqvwixpFrBrX64mQ1xsNgplsvMVb+lkj9JP8OicbbY+NwVMC5KNZR8FrmLN/0bVqZq3rknICoSd6lYw0dO9PsYpqWgZmPai7wQLCspg2EOgYZFw3Vqtl+FXvUA97pKGbTPkuKSsNgBZ2YJmv2ApFYQTXl13Kq+iFJ8fJNY73ZaNvADeM66RKOJphMPgG6OI4FmKfkRADSrWb2SL9/UlBDYo0ZbME/z4Gi84dTftFb6aQPl6d0nhnajBAfGfh8geTi46TCIBlk/ZVznZw=="
     }
   }
 }
