@@ -17,6 +17,7 @@ let
         # keep-sorted start
         programs.tools.common
         security.polkit
+        security.sudo
         services.dbus
         services.journald
         services.openssh

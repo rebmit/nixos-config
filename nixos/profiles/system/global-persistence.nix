@@ -2,7 +2,7 @@
 {
   environment.globalPersistence = {
     directories = [
-      "/var/db"
+      "/var/cache"
       "/var/lib"
       "/var/log"
       "/var/tmp"
