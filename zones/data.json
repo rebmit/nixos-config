@@ -10,6 +10,7 @@
   },
   "hosts": {
     "flandre-m5p": {
+      "b2_backup_bucket_name": "rebmit-backup-flandre-m5p",
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
@@ -21,6 +22,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3HwcBWColirOvlDd9oqP5BOuCxA85rfKEQ+d6Ey12s53qcykIfojg4EisFw+tQmLTijj9FfzTZFkcvd/caBOelUFbKavjS0jZ/r/zn2ThLu/kXVWrKmDlme8H/JircTBwUCkDYWnpMghPq7DEm3OCBU/lsVUJK0akKhZvvx4vlj/CD3uLXDuDDXVJCfxbRcw9NH+l57OhVDR4DD5P5zU/cP0ttBk84MqxygHeAtiK6gtwdSNl3V3fYiBO+nBlap0fU3rZh+yzzLYJU831FRAS85E2DnEK698hVmjInNKIxWzOv8O+EiriHfHvU4A3XQN31s0Mi+exPJHWp7UMN8oTgSg01kq2MCD9Lg5yAZ0t509g89u8uJ90LRQky8KOn1JNwng45+21GnLtH5Q65inlAFi1kXbl9Lr85Uy/9LpTZJDJGgGtlC4YWO21hMMqyCjgiVctKoT+wkf2S0ePUazWBq4/bWTwh5mTva+FbougcMaC+eqOJDzQIfwqIxRsR4n5txCRLM5J5hfASnJmoHqj7ipYXb3pWcPsxc3k/iE9aZOTlv66RaJ5d9V4GxyWzxM08dGIEw58sjQiFpqmlDEPmzPLfu3nzMPmIsh834OUWrUMtIr1Gae11QAudAd2oKFhWnIdEUkl2+P0OVqUqrFoVZZokaK7uPrNJFy5iKxaNQ=="
     },
     "kanako-hkg0": {
+      "b2_backup_bucket_name": "rebmit-backup-kanako-hkg0",
       "endpoints": ["103.214.22.143", "2406:ef80:1:3c5e::1"],
       "endpoints_v4": ["103.214.22.143"],
       "endpoints_v6": ["2406:ef80:1:3c5e::1"],
@@ -32,6 +34,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7ZgK7ONXQNzu6Vwod1IBDpO9c6kzcshPzpk5+9+lqnQljDOImpCCf7PT+3kgRGP/M8pLLYKfXp48H6Ray3F0+KJFP8O8Xv6zG1vZbp3Tb4SxXy9h/2fIhvbrgFe5EsaucT5nVT8MA5UB2t+YaZLdBF5ST/1SF08SWY7gYM+x2OWdpDYkwnYLjFe9UP5nuwbLp3zQxcjh9mR4jwsV0xfi3SiMHreMhfearyB3Q6QAKILtEIzsR7FsHatzqQDAD4dqgAkMUaAtNEK1w7xZXA0g2IHZOEkavp80KIDG4zDErBE/e/8E6VtYnsDkqku6TEqBVRxj7IRBf2TOD6eX/YzwHTOZ+c7FYlut7kzn0uh3NftRi+93oSfYS0CHteGZIGnvBVWCGLD4P3ibxJ3uq0xqqcauPyq+vTxdh7kEYtOw9LYobvyd0vUHKnf2kbU8Qrrsj/hKhoY75yTrrz/LaiPR575WDTrsP8vVQHwhfn0RQ1KCOJhuQ3DJKDXHJClB1PhMrB45t66JuzE++B5LCV41dHKguxFASeKYhUXqWhsU78wyR0Dpy0IGF7H3K289UjNjljhxbb6FnW1SaW+itfJ4FhHN34qc4qmGUmTBJglsy4bMgscIP4N+Bb5/+8ZdcLGRG+LDrA57HdbaaNCurO8zVY7gicRteVTNMTe4maiXwqQ=="
     },
     "marisa-7d76": {
+      "b2_backup_bucket_name": "rebmit-backup-marisa-7d76",
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
@@ -43,6 +46,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoGltlUb0Uptzulodhko/lP2Obux/w9A92zxf5yQAqrEXhyth4eHPWV305PRXYDjrCC3zqQqzNjxQ5eiJmIhFwh4iVV36AQhDGgPfHrW41Oaw1owPOYNu42KEfjti6NbyLOIoaXL8jaA4nrjMqppHi4j4ll49KUmcWi4u1uE13tY0W8ua+0N2BIe94jBfuPUjp4/0jgXGwPPNlUaTCnoU16XKIr4EFs/XPZcMfNxekdxXGS8QRjMWd4jjCm6htoX/7cYj/xndGzEdHb8f/9Z1VzS0wXOrKNrH3ewxYgkNjLUx3OlhbKO/WzOHaFyGDcbBnelMi56YqDDnAur6+F7dXjQ2Lu6Zw1XdqzEugFkpz6xPnDquTRVSrB9tljr0SP0Z1Y58QHP1Q/ahliK2ou915XnqYNM3M/fOWzsqlY89390sJxgPFyaOGeeDz+YGQ9uVqXJzupDagy/XU8GmQHHWvFuN6Hr1tT2S9QjsosHhDotqVSxm8KgiEmeLnQnVjTnL/cHI1HiOQH1ZLds/iHQJZzholn5GRk+HaOeIpIJLyAstL48QheUTbBR//LLVTVLpN4iKiLfVYbWeNhn5S8msCLXVZa317ns2k1614j0nrZnAXpymL091DO/y8QfYacG+w2tmpiAtGEADRagXQ5mC5oMqstUyM22G2SzH9GAFSFw=="
     },
     "marisa-a7s": {
+      "b2_backup_bucket_name": "rebmit-backup-marisa-a7s",
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
@@ -54,6 +58,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/IIzE70sM77KfOHas/WXa5D6vCBMP6cQVforOxpmoYyTmIB5we0n0YuZlp8giimN8E4yRfq/9Kc7hdpog9UR2sTb19YqpiCUsTEWJSP5NXWY0KALwE6Na6rijCprsuf6rv/ndT3MbCcDdi0myZGZV8Qe6g/+JfWlfWtsjvHkph+/U9QqZSmNnU1WlDHS1SlCkchjpJlPN2jx7dgJ61vqO0+0yTu76pl1kl8lFoMlsI8jIGAAluJMp2ktxs+sE34qpWCmCiWtU2CzgS+XVG53sZdjIXQhb3hBKCyjdBr36bNWfMNNB2FXgSqQOzQJxR3SRn+3PKQSuP+uQCrAX68hzQZg7x7gsA3tM8W+XtkDjaejUJ3USnouh5D8tYLMroeAbBwulS+4mQaCvC5CWE8MdqMwAwGC6unjbfq3tC3QkrWohOFZyXJ862TTOywJiVk1qP/kz63yeXD5pbFx/WyfpQW12TKlzIClHnbfTCTY7AuxoXnhJTKIXN28QIB6ZNwba3nOg34HhAXXgJF+l+UENN1MZ/mg0jOJ0IlVmGjEulZdI+G/eCfvfYv8pU7ItZvrge98vX0aWqAE54RQGO+dpkFz651LEBeCe+UB2xzjxnm0dMmhdUKsV/KEKRhSiKPNk3iBy52DVXCoBGPG/3b6Hc6c7ARiv0EGYm81xxrktkw=="
     },
     "reisen-lax0": {
+      "b2_backup_bucket_name": "rebmit-backup-reisen-lax0",
       "endpoints": ["38.175.109.149", "2a0e:6901:110:276:5054:ff:fe81:ec3b"],
       "endpoints_v4": ["38.175.109.149"],
       "endpoints_v6": ["2a0e:6901:110:276:5054:ff:fe81:ec3b"],
@@ -65,6 +70,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDURKDaakQjKr7dYDr0a9UZZsO/Rz2lqqiP5bCo5q22UvYa0hdvHSt+2OHL6FTTxfs1VAW36ygA7/UcHgfAhs1eilPhvfeLQjgQa+IcUvNty2PILL/1XrOm3Uqi63nGVenLm0Lib2hPKYg4Veuo8DrKEkScMTi+FXKn3erDeJT/dVwG9v0xfyRN/tx9kvu4I2zeXkqR84X56sQsLOhYWntNYLYeXue76XtIlNTDrfCtmQmUbt+Cxqypcvu+1xep1TuiEubpaAcqjofXnSBu+eq8+Oy7BuEud9kprniF3uX3fqzzgQCB2w3IHK9PE3mQFBkXMZ1kHTLD/UEuB2quTqFdrHpAAIPJrHRghqmuD/+KassG3+KQAj3D4ZNMv+A+vmNRWJ7p/d6lGQrhLR3FMhZBUEG4S7t+G7/00hI1EM7nBw1uDEuzv9SN+eZd3dZ6mP8zEK42+wsUXE0HWeDylkcUDDrrSv1boSIVkMKfeTEn739Jki2pV1LVrrJnYPv7kBfWw6TZUqEvQmeTkmw2x2NT2eVELI+gBUfGXsPACG60dbHwwcnit3qf2Qeg+mWdGTnqA532cUEl4CTrT04FKAHus01DgYpW8VOE6+7Jb3bpT6fUILmTHihOnqRXLzlNYfpnOgRSk/0DwFnIIMhKmRX6wWoIuuWksu5na4ajf/5/eQ=="
     },
     "reisen-sin0": {
+      "b2_backup_bucket_name": "rebmit-backup-reisen-sin0",
       "endpoints": [
         "194.156.163.233",
         "2407:b9c0:e002:20b:26a3:f0ff:fe46:a4d0"
@@ -79,6 +85,7 @@
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYudfdvzw7yEA3onZf4+PJbOecxzinYnThKGI+K7uoOUw/RDwWNWxgh+o9j+/crGGazytg8yNe/fmIGovZ9nl2IYCH6rTBIe9bvM1p0TzcOXBrIZFOtXUGj4fHT+56MzdLHzlaMUGBLCV1NXXm4HFztN/iQKIwS4B2lvv8EtHsFybzUwWvw9d3nfQItDoBKzKhwFPg33bmAyF6JVLncZiMY1q78XZXAYfWGO3ba61f2ScsgsAxHSELkIWKXpjnxXGuHZGUNk4j5LSctVsM5RIkl37th4CWjKsTp1Iw5vwHXLou+xDrvtjdU3UxGWTYtx2KhIwzNR+WdLHCQ6RaPLvsRemuHhfhkcHfVBpYwL/LeQEHdfNX/Ulb9B8GzAfgGRzKzSyrkR8WhtCtOYQ0Zr/TpbGgzkS8cY4RLIEqZ4R8hFCEJw28za3kMKov4P2t2gI0RL5yVN0TzyMi1i46eMRN2DgPkzDG+kMqXBXzWDbeiX86/z5N5l7KCLNLQ4R2R46g8FqigRPhXEmhxkUjsnsYwOlGjwqEIRvzUpQ6SGF5LPv0E8KncEZUPDhXufBe70pySJi2dZQJu4CJpgi88rKRelJAX2eS9Ba49gXxmQjXWXDvk/9HBqoE3QAw/iXQlwi0G9gRja68FSKKq8K2maGj6KFdUw4Zz8zFuHn2HkSbaQ=="
     },
     "suwako-vie0": {
+      "b2_backup_bucket_name": "rebmit-backup-suwako-vie0",
       "endpoints": ["110.172.148.83", "2a0d:f302:136:7d2a::1"],
       "endpoints_v4": ["110.172.148.83"],
       "endpoints_v6": ["2a0d:f302:136:7d2a::1"],

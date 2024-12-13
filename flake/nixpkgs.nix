@@ -5,6 +5,7 @@
 let
   overlays = [
     inputs.rebmit.overlays.default
+    inputs.nixpkgs-terraform-providers-bin.overlay
 
     (final: prev: {
       libadwaita = prev.libadwaita.overrideAttrs (old: {

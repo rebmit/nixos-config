@@ -16,7 +16,9 @@
             ps: with ps; [
               sops
               tls
+              random
               cloudflare
+              terraform-providers-bin.providers.Backblaze.b2
             ]
           ))
         ];

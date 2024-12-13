@@ -54,9 +54,13 @@ let
         # keep-sorted end
       ];
 
-      workstation = suites.baseline ++ suites.network ++ suites.desktop;
+      backup = with profiles; [
+        services.restic
+      ];
 
-      server = suites.baseline ++ suites.network;
+      workstation = suites.baseline ++ suites.network ++ suites.desktop ++ suites.backup;
+
+      server = suites.baseline ++ suites.network ++ suites.backup;
     }
   );
 in
