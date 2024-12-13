@@ -19,6 +19,7 @@ in
 
       # public ports
       enthalpy-ipsec = 13000;
+      enthalpy-wireguard-reimu-aston = 13101;
     };
     readOnly = true;
     description = ''
