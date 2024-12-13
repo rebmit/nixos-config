@@ -6,10 +6,13 @@
 }:
 {
   imports = with profiles; [
-    services.enthalpy.customer
+    services.enthalpy.customer-dualstack
   ];
 
-  services.enthalpy.ipsec.interfaces = [ "enp2s0" ];
+  services.enthalpy = {
+    ipsec.interfaces = [ "enp2s0" ];
+    clat.segment = lib.singleton "fde3:3be3:a244:f876::2";
+  };
 
   systemd.network = {
     enable = true;
