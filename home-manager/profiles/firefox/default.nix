@@ -1,6 +1,7 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/home.nix
 # https://github.com/llakala/nixos/blob/b3c5fbde5a5f78c91ee658250f9b42418b73a7b7/apps/gui/firefox.nix
+# https://gist.github.com/swwind/fe691c06ea53f89e02eb194df6144afa
 {
   lib,
   pkgs,
@@ -68,6 +69,7 @@
     "browser.urlbar.autoFill.adaptiveHistory.enabled" = true;
     "browser.tabs.closeWindowWithLastTab" = false;
     "browser.tabs.inTitlebar" = 0;
+    "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   };
 
   programs.firefox.policies.Preferences."browser.uiCustomization.state" = builtins.toJSON {
@@ -110,6 +112,30 @@
       "sidebar.revamp" = true;
       "sidebar.verticalTabs" = true;
     };
+    userChrome = ''
+      #tabbrowser-tabbox {
+        padding-right: var(--space-small);
+        padding-bottom: var(--space-small);
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: var(--toolbar-bgcolor);
+      }
+
+      #tabbrowser-tabpanels {
+        border-radius: var(--border-radius-medium);
+        box-shadow: var(--content-area-shadow);
+        overflow: hidden;
+      }
+
+      :root[inDOMFullscreen] #tabbrowser-tabbox {
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      :root[inDOMFullscreen] #tabbrowser-tabpanels {
+        border-radius: 0;
+      }
+    '';
   };
 
   programs.firefox.profiles.default.search.engines = {
