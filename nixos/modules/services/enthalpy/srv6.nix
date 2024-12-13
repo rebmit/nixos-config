@@ -79,7 +79,10 @@ in
         Type = "oneshot";
         RemainAfterExit = true;
       };
-      after = [ "netns-enthalpy.service" ];
+      after = [
+        "netns-enthalpy.service"
+        "enthalpy-exit.service"
+      ];
       partOf = [
         "netns-enthalpy.service"
         "enthalpy-exit.service"
