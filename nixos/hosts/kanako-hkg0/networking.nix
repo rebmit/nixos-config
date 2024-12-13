@@ -6,14 +6,30 @@
 }:
 {
   imports = with profiles; [
-    services.enthalpy.customer
+    services.enthalpy.transit-dualstack
   ];
 
   services.enthalpy.ipsec.interfaces = [ "enp1s0" ];
 
+  networking.nftables.tables.nat = {
+    family = "inet";
+    content = ''
+      chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        oifname enp1s0 counter masquerade
+      }
+    '';
+  };
+
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;
+    config = {
+      networkConfig = {
+        IPv4Forwarding = true;
+        IPv6Forwarding = true;
+      };
+    };
     networks = {
       "30-enp1s0" = {
         matchConfig.Name = "enp1s0";
