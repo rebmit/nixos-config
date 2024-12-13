@@ -14,4 +14,8 @@
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
+
+  home.globalPersistence.directories = [
+    ".config/valent"
+  ];
 }

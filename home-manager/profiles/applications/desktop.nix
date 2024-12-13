@@ -21,6 +21,7 @@
     ".thunderbird"
     ".zotero"
 
+    ".config/dconf"
     ".config/nheko"
 
     ".local/share/nheko"
