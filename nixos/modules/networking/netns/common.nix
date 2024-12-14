@@ -86,6 +86,7 @@ in
           ip netns exec ${name} sysctl -w net.ipv4.conf.all.forwarding=${enableIPv4Forwarding}
           ip netns exec ${name} sysctl -w net.ipv6.conf.default.forwarding=${enableIPv6Forwarding}
           ip netns exec ${name} sysctl -w net.ipv6.conf.all.forwarding=${enableIPv6Forwarding}
+          ip netns exec ${name} sysctl -w net.ipv4.ping_group_range="0 2147483647"
           ${concatMapStringsSep "\n" (addr: "ip -n ${name} addr add ${addr} dev ${interface}") address}
         '';
         preStop = ''
