@@ -9,6 +9,7 @@
     suites.server
     ++ (with profiles; [
       services.caddy
+      services.ntfy
       services.postgresql
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
