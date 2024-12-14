@@ -9,6 +9,7 @@
     suites.server
     ++ (with profiles; [
       services.caddy
+      services.keycloak
       services.ntfy
       services.postgresql
     ])

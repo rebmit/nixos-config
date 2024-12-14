@@ -46,6 +46,7 @@ in
               "cargo-bootstrap"
               "dotnet-sdk"
               "go"
+              "keycloak"
               "libreoffice"
               "rustc-bootstrap"
               "rustc-bootstrap-wrapper"

@@ -17,6 +17,7 @@ in
       # local ports
       enthalpy-gost = 3000;
       ntfy = 4000;
+      keycloak = 4010;
 
       # public ports
       enthalpy-ipsec = 13000;

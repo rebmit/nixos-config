@@ -9,7 +9,7 @@
     enable = true;
     settings = {
       base-url = "https://ntfy.rebmit.moe";
-      listen-http = "[::1]:${toString config.networking.ports.ntfy}";
+      listen-http = "127.0.0.1:${toString config.networking.ports.ntfy}";
       auth-default-access = "deny-all";
       behind-proxy = true;
     };
