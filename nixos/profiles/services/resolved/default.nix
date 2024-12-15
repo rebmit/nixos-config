@@ -5,6 +5,7 @@
     llmnr = "false";
     extraConfig = ''
       MulticastDNS=off
+      DNSStubListener=no
     '';
   };
 }
