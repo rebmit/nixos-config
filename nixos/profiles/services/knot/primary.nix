@@ -59,6 +59,26 @@ in
           remote = builtins.attrNames secondary;
         }
       ];
+      policy = [
+        {
+          algorithm = "ed25519";
+          id = "default";
+          ksk-lifetime = "365d";
+          ksk-shared = true;
+          ksk-submission = "default";
+          nsec3 = true;
+          nsec3-iterations = "0";
+          nsec3-salt-length = "0";
+          signing-threads = "4";
+        }
+      ];
+      submission = [
+        {
+          check-interval = "10m";
+          id = "default";
+          parent = "cloudflare";
+        }
+      ];
       template = [
         {
           id = "default";
@@ -66,6 +86,8 @@ in
           global-module = "mod-rrl/default";
           catalog-role = "member";
           catalog-zone = "catalog";
+          dnssec-policy = "default";
+          dnssec-signing = true;
           serial-policy = "unixtime";
           semantic-checks = true;
           zonefile-load = "difference-no-serial";
@@ -116,4 +138,6 @@ in
       ];
     };
   };
+
+  services.restic.backups.b2.paths = [ "/var/lib/knot" ];
 }
