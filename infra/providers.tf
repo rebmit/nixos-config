@@ -15,5 +15,8 @@ terraform {
     b2 = {
       source = "registry.terraform.io/backblaze/b2"
     }
+    vultr = {
+      source = "registry.terraform.io/vultr/vultr"
+    }
   }
 }

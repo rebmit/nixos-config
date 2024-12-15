@@ -18,6 +18,7 @@
               tls
               random
               cloudflare
+              vultr
               terraform-providers-bin.providers.Backblaze.b2
             ]
           ))
