@@ -63,6 +63,29 @@
         "type": "github"
       }
     },
+    "dns": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716554081,
+        "narHash": "sha256-N70c7NLGdp4zmKTEJa0zViJ8SRIN2OFi22cxN7NR1bk=",
+        "owner": "NickCao",
+        "repo": "dns.nix",
+        "rev": "cd98f05212793e9e8102fcb101748aa135a719b3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NickCao",
+        "repo": "dns.nix",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -395,6 +418,7 @@
           "devshell"
         ],
         "disko": "disko",
+        "dns": "dns",
         "flake-compat": [
           "rebmit",
           "flake-compat"

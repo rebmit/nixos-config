@@ -69,6 +69,11 @@
 
     rebmit.url = "github:rebmit/nix-exprs";
     flake-utils.url = "github:numtide/flake-utils";
+    dns = {
+      url = "github:NickCao/dns.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
     # misc
 
