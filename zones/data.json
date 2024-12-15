@@ -105,21 +105,6 @@
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjEgqwwhXxVAGXzz0sNuUs5TmLct+qNR/Xe/bcpmn4t",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1hMLO6484fCGhU5V6mp2fNJQxD71nZi2IriCQCYbVwi/7MCTSKKvJ4L076CATdVknrts8QymVP5vpfKRz9oFB0i3Z7qjdYJXMhY3Dgyib5zX4C/uIqEggwW9t7bjXiuAbLWqKjF4coD3R9ihaIq9MggMA/afAIh9trOtnUCTI84e4dc2lqFXdTUFZ9IdGXU6xYp7c9fJFM426BFvWFD0cxAiako/13ba0eB37WyaP0BK4nS0EnR1rqYf1AGVTQZyFQP0bca+OOmrR7p0487R9ikqWMk0ERpyZqFYclYljdfWn6xvpoPwz0PiH0TWoNBgqxud6Y6+DfNk0X9nGWOtOprGOrDSreJP3zkmgqvhS+AQ9KA1laRPuOdhU2ZkWtoqlu/E0XHUBWjyakTXqx+7fnQG3tAUaHDayk3zazBeXyitMX5uD0FOQ32hZLwBNRHwhSntL/dEOFom5R+K8rscb7XLVhSt+gUiIWxghflya6MjqRLjz/3+BNWxGmgXPOtHZuDIIti7CmRdGuEHx2/ZX8XkeEvtoxgZNNCT171YNMOtWc0FANQA+5/5B5gcYLUAcYC9lJLUo1rJypdsceuJdtV+xyEC1alSAGXPk82FU3E2j4iIXhygX6akncfevisY/iz6sbjNx4ZWFFIo6D2YnDeKgTUz4VZSO+ApoHh5xAQ=="
     },
-    "reisen-sin0": {
-      "b2_backup_bucket_name": "rebmit-backup-reisen-sin0",
-      "endpoints": [
-        "194.156.163.233",
-        "2407:b9c0:e002:20b:26a3:f0ff:fe46:a4d0"
-      ],
-      "endpoints_v4": ["194.156.163.233"],
-      "endpoints_v6": ["2407:b9c0:e002:20b:26a3:f0ff:fe46:a4d0"],
-      "enthalpy_node_address": "fde3:3be3:a244:2670::1",
-      "enthalpy_node_id": 615,
-      "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "fde3:3be3:a244:2670::/60",
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4sFno9JeH0787wN/gKJx1RgnTARnR8XEq7xogQt108",
-      "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYudfdvzw7yEA3onZf4+PJbOecxzinYnThKGI+K7uoOUw/RDwWNWxgh+o9j+/crGGazytg8yNe/fmIGovZ9nl2IYCH6rTBIe9bvM1p0TzcOXBrIZFOtXUGj4fHT+56MzdLHzlaMUGBLCV1NXXm4HFztN/iQKIwS4B2lvv8EtHsFybzUwWvw9d3nfQItDoBKzKhwFPg33bmAyF6JVLncZiMY1q78XZXAYfWGO3ba61f2ScsgsAxHSELkIWKXpjnxXGuHZGUNk4j5LSctVsM5RIkl37th4CWjKsTp1Iw5vwHXLou+xDrvtjdU3UxGWTYtx2KhIwzNR+WdLHCQ6RaPLvsRemuHhfhkcHfVBpYwL/LeQEHdfNX/Ulb9B8GzAfgGRzKzSyrkR8WhtCtOYQ0Zr/TpbGgzkS8cY4RLIEqZ4R8hFCEJw28za3kMKov4P2t2gI0RL5yVN0TzyMi1i46eMRN2DgPkzDG+kMqXBXzWDbeiX86/z5N5l7KCLNLQ4R2R46g8FqigRPhXEmhxkUjsnsYwOlGjwqEIRvzUpQ6SGF5LPv0E8KncEZUPDhXufBe70pySJi2dZQJu4CJpgi88rKRelJAX2eS9Ba49gXxmQjXWXDvk/9HBqoE3QAw/iXQlwi0G9gRja68FSKKq8K2maGj6KFdUw4Zz8zFuHn2HkSbaQ=="
-    },
     "suwako-vie0": {
       "b2_backup_bucket_name": "rebmit-backup-suwako-vie0",
       "endpoints": ["110.172.148.83", "2a0d:f302:136:7d2a::1"],
