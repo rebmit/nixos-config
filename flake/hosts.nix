@@ -150,6 +150,21 @@ in
     })
 
     (mkHost {
+      name = "reisen-sea0";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
+      name = "reisen-fra0";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
+      name = "reisen-nrt0";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
       name = "reisen-sin0";
       system = "x86_64-linux";
     })
