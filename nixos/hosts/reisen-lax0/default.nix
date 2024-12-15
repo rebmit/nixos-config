@@ -7,7 +7,7 @@
   imports = suites.server ++ (mylib.path.scanPaths ./. "default.nix");
 
   services.caddy = {
-    enable = true;
+    enable = false;
     virtualHosts."rebmit.moe".extraConfig = ''
       header /.well-known/matrix/* Content-Type application/json
       header /.well-known/matrix/* Access-Control-Allow-Origin *

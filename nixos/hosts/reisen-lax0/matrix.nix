@@ -31,7 +31,6 @@ in
 
   sops.secrets."synapse/signing-key" = {
     sopsFile = config.sops.secretFiles.get "hosts/reisen-lax0.yaml";
-    owner = config.systemd.services.matrix-synapse.serviceConfig.User;
   };
 
   sops.secrets."synapse/mautrix-telegram" = {
@@ -44,7 +43,7 @@ in
   ];
 
   services.matrix-synapse = {
-    enable = true;
+    enable = false;
     withJemalloc = true;
     settings = {
       server_name = "rebmit.moe";
@@ -100,7 +99,7 @@ in
   systemd.services.mautrix-telegram.serviceConfig.RuntimeMaxSec = 86400;
 
   services.mautrix-telegram = {
-    enable = true;
+    enable = false;
     environmentFile = config.sops.secrets."synapse/mautrix-telegram".path;
     serviceDependencies = [ "matrix-synapse.service" ];
     settings = {
@@ -159,7 +158,7 @@ in
   };
 
   services.heisenbridge = {
-    enable = true;
+    enable = false;
     homeserver = "http://127.0.0.1:8196";
     address = "127.0.0.1";
     port = 9898;
