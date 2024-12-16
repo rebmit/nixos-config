@@ -100,13 +100,13 @@
           {
             "serial_number": "0",
             "address_family": "ip4",
-            "address": "flandre-m5p.rebmit.link",
+            "address": "flandre-m5p.dyn.rebmit.link",
             "port": 13000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
-            "address": "flandre-m5p.rebmit.link",
+            "address": "flandre-m5p.dyn.rebmit.link",
             "port": 13000
           }
         ]
@@ -117,13 +117,13 @@
           {
             "serial_number": "0",
             "address_family": "ip4",
-            "address": "marisa-7d76.rebmit.link",
+            "address": "marisa-7d76.dyn.rebmit.link",
             "port": 13000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
-            "address": "marisa-7d76.rebmit.link",
+            "address": "marisa-7d76.dyn.rebmit.link",
             "port": 13000
           }
         ]
@@ -134,13 +134,13 @@
           {
             "serial_number": "0",
             "address_family": "ip4",
-            "address": "marisa-a7s.rebmit.link",
+            "address": "marisa-a7s.dyn.rebmit.link",
             "port": 13000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
-            "address": "marisa-a7s.rebmit.link",
+            "address": "marisa-a7s.dyn.rebmit.link",
             "port": 13000
           }
         ]

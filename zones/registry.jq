@@ -7,13 +7,13 @@
       {
         "serial_number": "0",
         "address_family": "ip4",
-        "address": "\(.key).rebmit.link",
+        "address": "\(.key)\(if .value.endpoints_v4 == [] then ".dyn" else "" end).rebmit.link",
         "port": 13000
       },
       {
         "serial_number": "1",
         "address_family": "ip6",
-        "address": "\(.key).rebmit.link",
+        "address": "\(.key)\(if .value.endpoints_v6 == [] then ".dyn" else "" end).rebmit.link",
         "port": 13000
       }
     ],
