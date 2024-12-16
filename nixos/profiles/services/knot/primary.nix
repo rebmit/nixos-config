@@ -1,6 +1,7 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/hcloud/iad0/knot.nix
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -24,6 +25,7 @@ in
 {
   services.knot = {
     enable = true;
+    keyFiles = [ "/run/credentials/knot.service/tsig_ddns_conf" ];
     settings = {
       server = {
         async-start = true;
@@ -57,6 +59,16 @@ in
         {
           id = "secondary";
           remote = builtins.attrNames secondary;
+        }
+      ];
+      acl = [
+        {
+          id = "ddns";
+          key = "ddns";
+          action = "update";
+          update-owner = "name";
+          update-owner-match = "sub";
+          update-owner-name = "dyn";
         }
       ];
       policy = [
@@ -119,6 +131,7 @@ in
         }
         {
           domain = "rebmit.link";
+          acl = "ddns";
           file = pkgs.writeText "db.link.rebmit" (
             import ../../../../zones/rebmit.link.nix {
               inherit (inputs) dns;
@@ -137,6 +150,24 @@ in
         }
       ];
     };
+  };
+
+  sops.secrets."knot_tsig_ddns" = {
+    opentofu = {
+      enable = true;
+    };
+    restartUnits = [ "knot.service" ];
+  };
+
+  sops.templates."knot_tsig_ddns_conf".content = ''
+    key:
+    - id: ddns
+      algorithm: hmac-sha256
+      secret: ${config.sops.placeholder."knot_tsig_ddns"}
+  '';
+
+  systemd.services.knot.serviceConfig = {
+    LoadCredential = [ "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}" ];
   };
 
   services.restic.backups.b2.paths = [ "/var/lib/knot" ];

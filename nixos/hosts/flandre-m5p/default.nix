@@ -7,9 +7,10 @@
 {
   imports =
     suites.server
-    ++ [
-      profiles.virtualization.libvirtd
-    ]
+    ++ (with profiles; [
+      services.knot.ddns
+      virtualization.libvirtd
+    ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
   system.stateVersion = "24.05";
