@@ -15,8 +15,5 @@
     CapabilityBoundingSet = [ "CAP_NET_BIND_SERVICE" ];
   };
 
-  services.restic.backups.b2.paths = [
-    config.services.caddy.logDir
-    config.services.caddy.dataDir
-  ];
+  services.restic.backups.b2.paths = [ config.services.caddy.dataDir ];
 }

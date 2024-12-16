@@ -55,5 +55,11 @@
     };
   };
 
+  services.restic.backups.b2.paths = [
+    "/etc/machine-id"
+    config.sops.age.keyFile
+    "/var/lib/nixos"
+  ];
+
   systemd.services.restic-backups-b2.serviceConfig.Environment = [ "GOGC=20" ];
 }
