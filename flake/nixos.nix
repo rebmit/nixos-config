@@ -40,6 +40,7 @@ let
         services.firewall
         services.networkd
         services.resolved
+        services.vnstat
         system.boot.sysctl.tcp-bbr
         # keep-sorted end
       ];
