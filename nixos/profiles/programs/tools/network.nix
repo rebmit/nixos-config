@@ -12,6 +12,7 @@
     ethtool
     ipcalc
     iperf3
+    knot-dns
     nmap
     rsync
     socat

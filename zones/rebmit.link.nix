@@ -2,7 +2,9 @@
 with dns.lib.combinators;
 let
   common = import ./common.nix;
-  hosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) common.hosts;
+  inherit (common) hosts;
+  publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) hosts;
+  enthalpyHosts = lib.filterAttrs (_name: value: value.enthalpy_node_address != null) hosts;
 in
 dns.lib.toString "rebmit.link" {
   inherit (common)
@@ -10,16 +12,27 @@ dns.lib.toString "rebmit.link" {
     SOA
     NS
     ;
-  subdomains = builtins.mapAttrs (_name: value: {
-    A = value.endpoints_v4;
-    AAAA = value.endpoints_v6;
-    HTTPS = [
-      {
-        alpn = [
-          "h3"
-          "h2"
+  subdomains = lib.listToAttrs (
+    lib.mapAttrsToList (
+      name: value:
+      lib.nameValuePair name {
+        A = value.endpoints_v4;
+        AAAA = value.endpoints_v6;
+        HTTPS = [
+          {
+            alpn = [
+              "h3"
+              "h2"
+            ];
+          }
         ];
       }
-    ];
-  }) hosts;
+    ) publicHosts
+    ++ lib.mapAttrsToList (
+      name: value:
+      lib.nameValuePair "${name}.enta" {
+        AAAA = [ value.enthalpy_node_address ];
+      }
+    ) enthalpyHosts
+  );
 }
