@@ -8,7 +8,7 @@
   imports =
     suites.server
     ++ (with profiles; [
-      services.knot.primary
+      services.knot.secondary
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 

@@ -14,11 +14,11 @@ rec {
   };
   NS = map (name: "${name}.rebmit.link.") nameservers;
 
-  primary = "reisen-fra0";
+  primary = "reisen-sea0";
   secondary = [
-    "reisen-sea0"
     "reisen-nrt0"
     "reisen-sin0"
+    "reisen-fra0"
   ];
   nameservers = [ primary ] ++ secondary;
   hosts = data.hosts;
