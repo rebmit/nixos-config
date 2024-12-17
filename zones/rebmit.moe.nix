@@ -23,6 +23,7 @@ dns.lib.toString "rebmit.moe" {
   subdomains = {
     keycloak.CNAME = [ "suwako-vie0.rebmit.link." ];
     matrix.CNAME = [ "suwako-vie0.rebmit.link." ];
+    miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
     ntfy.CNAME = [ "suwako-vie0.rebmit.link." ];
   };
 }

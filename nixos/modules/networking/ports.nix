@@ -18,6 +18,7 @@ in
       enthalpy-gost = 3000;
       ntfy = 4000;
       keycloak = 4010;
+      miniflux = 4020;
 
       # public ports
       enthalpy-ipsec = 13000;
