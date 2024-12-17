@@ -16,6 +16,10 @@ locals {
       region = "nrt"
       plan   = "vhp-1c-1gb-amd"
     }
+    "reisen-sin0" = {
+      region = "sgp"
+      plan   = "vhp-1c-1gb-amd"
+    }
   }
 }
 
