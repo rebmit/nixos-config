@@ -31,7 +31,6 @@ in
 
   sops.secrets."synapse/signing-key" = {
     sopsFile = config.sops.secretFiles.get "hosts/reisen-lax0.yaml";
-    owner = config.systemd.services.matrix-synapse.serviceConfig.User;
   };
 
   sops.secrets."synapse/mautrix-telegram" = {
@@ -44,7 +43,7 @@ in
   ];
 
   services.matrix-synapse = {
-    enable = true;
+    enable = false;
     withJemalloc = true;
     settings = {
       server_name = "rebmit.moe";
@@ -97,79 +96,10 @@ in
     };
   };
 
-  systemd.services.mautrix-telegram.serviceConfig.RuntimeMaxSec = 86400;
-
-  services.mautrix-telegram = {
-    enable = true;
-    environmentFile = config.sops.secrets."synapse/mautrix-telegram".path;
-    serviceDependencies = [ "matrix-synapse.service" ];
-    settings = {
-      homeserver = {
-        address = "http://127.0.0.1:8196";
-        domain = config.services.matrix-synapse.settings.server_name;
-      };
-      appservice = {
-        address = "http://127.0.0.1:29317";
-        database = "postgres:///mautrix-telegram?host=/run/postgresql";
-        hostname = "127.0.0.1";
-        port = 29317;
-        provisioning.enabled = false;
-      };
-      bridge = {
-        displayname_template = "{displayname}";
-        public_portals = true;
-        delivery_error_reports = true;
-        incoming_bridge_error_reports = true;
-        bridge_matrix_leave = false;
-        relay_user_distinguishers = [ ];
-        create_group_on_invite = false;
-        encryption = {
-          allow = true;
-          default = true;
-        };
-        animated_sticker = {
-          target = "webp";
-          convert_from_webm = true;
-        };
-        state_event_formats = {
-          join = "";
-          leave = "";
-          name_change = "";
-        };
-        permissions = {
-          "*" = "relaybot";
-          "@i:rebmit.moe" = "admin";
-        };
-        relaybot = {
-          authless_portals = false;
-        };
-      };
-      telegram = {
-        device_info = {
-          app_version = "3.5.2";
-        };
-      };
-      logging = {
-        loggers = {
-          mau.level = "INFO";
-          telethon.level = "INFO";
-        };
-      };
-    };
-  };
-
-  services.heisenbridge = {
-    enable = true;
-    homeserver = "http://127.0.0.1:8196";
-    address = "127.0.0.1";
-    port = 9898;
-    owner = "@i:rebmit.moe";
-  };
-
   services.caddy = {
     virtualHosts."matrix.rebmit.moe".extraConfig = ''
       reverse_proxy /_matrix/* 127.0.0.1:8196
-      reverse_proxy /_synapse/client/* 127.0.0.1:8196
+      reverse_proxy /_synapse/* 127.0.0.1:8196
 
       header {
         X-Frame-Options SAMEORIGIN
