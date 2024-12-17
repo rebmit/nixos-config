@@ -14,6 +14,7 @@
       services.miniflux
       services.ntfy
       services.postgresql
+      services.well-known
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
