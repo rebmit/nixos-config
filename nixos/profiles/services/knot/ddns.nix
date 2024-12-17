@@ -41,7 +41,7 @@ in
     wantedBy = [ "timers.target" ];
   };
 
-  sops.secrets."knot_tsig_ddns" = {
+  sops.secrets."knot_ddns_tsig_secret" = {
     opentofu = {
       enable = true;
     };
@@ -49,6 +49,6 @@ in
   };
 
   sops.templates."knot_tsig_ddns_key".content = "hmac-sha256:ddns:${
-    config.sops.placeholder."knot_tsig_ddns"
+    config.sops.placeholder."knot_ddns_tsig_secret"
   }";
 }

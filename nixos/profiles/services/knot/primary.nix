@@ -152,7 +152,7 @@ in
     };
   };
 
-  sops.secrets."knot_tsig_ddns" = {
+  sops.secrets."knot_ddns_tsig_secret" = {
     opentofu = {
       enable = true;
     };
@@ -163,7 +163,7 @@ in
     key:
     - id: ddns
       algorithm: hmac-sha256
-      secret: ${config.sops.placeholder."knot_tsig_ddns"}
+      secret: ${config.sops.placeholder."knot_ddns_tsig_secret"}
   '';
 
   systemd.services.knot.serviceConfig = {
