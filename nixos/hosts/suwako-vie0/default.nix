@@ -10,6 +10,7 @@
     ++ (with profiles; [
       services.caddy
       services.keycloak
+      services.knot.secondary
       services.miniflux
       services.ntfy
       services.postgresql
