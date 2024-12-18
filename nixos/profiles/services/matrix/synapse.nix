@@ -76,28 +76,6 @@
     extraConfig = ''
       reverse_proxy /_matrix/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}
       reverse_proxy /_synapse/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}
-
-      header {
-        X-Frame-Options SAMEORIGIN
-        X-Content-Type-Options nosniff
-        X-XSS-Protection "1; mode=block"
-        Content-Security-Policy "frame-ancestors 'self'"
-      }
-
-      file_server
-      root * "${
-        pkgs.element-web.override {
-          conf = {
-            default_server_config = {
-              "m.homeserver" = {
-                base_url = config.services.matrix-synapse.settings.public_baseurl;
-                server_name = config.services.matrix-synapse.settings.server_name;
-              };
-            };
-            show_labs_settings = true;
-          };
-        }
-      }"
     '';
   };
 }
