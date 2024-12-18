@@ -20,6 +20,7 @@ in
       keycloak = 4010;
       miniflux = 4020;
       matrix-synapse = 4030;
+      heisenbridge = 4031;
 
       # public ports
       enthalpy-ipsec = 13000;
