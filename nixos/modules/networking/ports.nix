@@ -19,6 +19,7 @@ in
       ntfy = 4000;
       keycloak = 4010;
       miniflux = 4020;
+      matrix-synapse = 4030;
 
       # public ports
       enthalpy-ipsec = 13000;
