@@ -30,11 +30,11 @@ in
   };
 
   sops.secrets."synapse/signing-key" = {
-    sopsFile = config.sops.secretFiles.get "hosts/reisen-lax0.yaml";
+    sopsFile = config.sops.secretFiles.host;
   };
 
   sops.secrets."synapse/mautrix-telegram" = {
-    sopsFile = config.sops.secretFiles.get "hosts/reisen-lax0.yaml";
+    sopsFile = config.sops.secretFiles.host;
   };
 
   systemd.services.matrix-synapse.serviceConfig.LoadCredential = [

@@ -25,6 +25,5 @@ dns.lib.toString "rebmit.moe" {
     matrix.CNAME = [ "suwako-vie0.rebmit.link." ];
     miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
     ntfy.CNAME = [ "suwako-vie0.rebmit.link." ];
-    synapse-admin.CNAME = [ "suwako-vie0.rebmit.link." ];
   };
 }

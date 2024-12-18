@@ -77,11 +77,11 @@
   };
 
   sops.secrets."wireguard/reimu-aston/private-key" = {
-    sopsFile = config.sops.secretFiles.get "hosts/flandre-m5p.yaml";
+    sopsFile = config.sops.secretFiles.host;
   };
 
   sops.secrets."wireguard/reimu-aston/preshared-key" = {
-    sopsFile = config.sops.secretFiles.get "hosts/flandre-m5p.yaml";
+    sopsFile = config.sops.secretFiles.host;
   };
 
   networking.wireguard = {

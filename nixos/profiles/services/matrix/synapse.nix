@@ -4,12 +4,12 @@
 { config, pkgs, ... }:
 {
   sops.secrets."synapse/signing-key" = {
-    sopsFile = config.sops.secretFiles.get "hosts/suwako-vie0.yaml";
+    sopsFile = config.sops.secretFiles.host;
     owner = config.systemd.services.matrix-synapse.serviceConfig.User;
   };
 
   sops.secrets."synapse/oidc-client-secret" = {
-    sopsFile = config.sops.secretFiles.get "hosts/suwako-vie0.yaml";
+    sopsFile = config.sops.secretFiles.host;
     owner = config.systemd.services.matrix-synapse.serviceConfig.User;
   };
 
@@ -98,13 +98,6 @@
           };
         }
       }"
-    '';
-  };
-
-  services.caddy.virtualHosts."synapse-admin.rebmit.moe" = {
-    extraConfig = ''
-      file_server
-      root * "${pkgs.synapse-admin}"
     '';
   };
 }
