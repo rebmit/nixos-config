@@ -18,12 +18,6 @@ locals {
       enthalpy_node_id           = parseint("572", 16)
       enthalpy_node_organization = "edge"
     }
-    "reisen-lax0" = {
-      endpoints_v4               = ["38.175.109.149"]
-      endpoints_v6               = ["2a0e:6901:110:276:5054:ff:fe81:ec3b"]
-      enthalpy_node_id           = null
-      enthalpy_node_organization = null
-    }
     "kanako-hkg0" = {
       endpoints_v4               = ["103.214.22.143"]
       endpoints_v6               = ["2406:ef80:1:3c5e::1"]
