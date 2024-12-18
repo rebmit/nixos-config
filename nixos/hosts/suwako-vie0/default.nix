@@ -11,8 +11,9 @@
       services.caddy
       services.keycloak
       services.knot.secondary
-      services.matrix.synapse
       services.matrix.heisenbridge
+      services.matrix.mautrix-telegram
+      services.matrix.synapse
       services.miniflux
       services.ntfy
       services.postgresql

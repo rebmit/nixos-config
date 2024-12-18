@@ -21,6 +21,7 @@ in
       miniflux = 4020;
       matrix-synapse = 4030;
       heisenbridge = 4031;
+      mautrix-telegram = 4032;
 
       # public ports
       enthalpy-ipsec = 13000;
