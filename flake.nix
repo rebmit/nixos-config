@@ -64,6 +64,7 @@
       url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    caddy-nix.url = "github:vincentbernat/caddy-nix";
 
     # libraries
 

@@ -7,6 +7,9 @@ let
     inputs.rebmit.overlays.default
     inputs.nixpkgs-terraform-providers-bin.overlay
 
+    # TODO: wait for https://nixpkgs-tracker.ocfox.me/?pr=358586
+    inputs.caddy-nix.overlays.default
+
     (final: prev: {
       libadwaita = prev.libadwaita.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
