@@ -11,28 +11,47 @@ dns.lib.toString "rebmit.link" {
     TTL
     SOA
     NS
+    DKIM
+    DMARC
     ;
-  subdomains = lib.listToAttrs (
-    lib.mapAttrsToList (
-      name: value:
-      lib.nameValuePair name {
-        A = value.endpoints_v4;
-        AAAA = value.endpoints_v6;
-        HTTPS = [
-          {
-            alpn = [
-              "h3"
-              "h2"
+  MX = with mx; [ (mx 10 "suwako-vie0.rebmit.link.") ];
+  TXT = [ (with spf; soft [ "mx" ]) ];
+  subdomains =
+    lib.recursiveUpdate
+      (lib.listToAttrs (
+        lib.mapAttrsToList (
+          name: value:
+          lib.nameValuePair name {
+            A = value.endpoints_v4;
+            AAAA = value.endpoints_v6;
+            HTTPS = [
+              {
+                alpn = [
+                  "h3"
+                  "h2"
+                ];
+              }
             ];
           }
+        ) publicHosts
+        ++ lib.mapAttrsToList (
+          name: value:
+          lib.nameValuePair "${name}.enta" {
+            AAAA = [ value.enthalpy_node_address ];
+          }
+        ) enthalpyHosts
+      ))
+      {
+        "suwako-vie0".DMARC = [
+          {
+            p = "reject";
+            sp = "reject";
+            pct = 100;
+            adkim = "relaxed";
+            aspf = "strict";
+            fo = [ "1" ];
+            ri = 604800;
+          }
         ];
-      }
-    ) publicHosts
-    ++ lib.mapAttrsToList (
-      name: value:
-      lib.nameValuePair "${name}.enta" {
-        AAAA = [ value.enthalpy_node_address ];
-      }
-    ) enthalpyHosts
-  );
+      };
 }

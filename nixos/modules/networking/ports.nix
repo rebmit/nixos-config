@@ -9,8 +9,12 @@ in
     type = with types; attrsOf port;
     default = {
       # standard ports
+      smtp = 25;
       http = 80;
       https = 443;
+      smtp-tls = 465;
+      smtp-starttls = 587;
+      imap-tls = 993;
       socks = 1080;
       ssh = 2222;
 
@@ -22,6 +26,8 @@ in
       matrix-synapse = 4030;
       heisenbridge = 4031;
       mautrix-telegram = 4032;
+      rspamd-controller = 4040;
+      rspamd-redis = 4041;
 
       # public ports
       enthalpy-ipsec = 13000;

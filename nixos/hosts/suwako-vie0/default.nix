@@ -11,6 +11,9 @@
       services.caddy
       services.keycloak
       services.knot.secondary
+      services.mail.dovecot
+      services.mail.postfix
+      services.mail.rspamd
       services.matrix.heisenbridge
       services.matrix.mautrix-telegram
       services.matrix.synapse
