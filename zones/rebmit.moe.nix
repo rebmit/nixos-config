@@ -1,4 +1,9 @@
-{ dns, lib, ... }:
+{
+  dns,
+  lib,
+  config,
+  ...
+}:
 with dns.lib.combinators;
 let
   common = import ./common.nix;
@@ -20,6 +25,20 @@ dns.lib.toString "rebmit.moe" {
         "h3"
         "h2"
       ];
+    }
+  ];
+  SRV = [
+    {
+      service = "imaps";
+      proto = "tcp";
+      port = config.networking.ports.imap-tls;
+      target = "suwako-vie0.rebmit.link.";
+    }
+    {
+      service = "submissions";
+      proto = "tcp";
+      port = config.networking.ports.smtp-tls;
+      target = "suwako-vie0.rebmit.link.";
     }
   ];
   MX = with mx; [ (mx 10 "suwako-vie0.rebmit.link.") ];

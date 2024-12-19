@@ -135,7 +135,7 @@ in
           file = pkgs.writeText "db.link.rebmit" (
             import ../../../../zones/rebmit.link.nix {
               inherit (inputs) dns;
-              inherit lib;
+              inherit lib config;
             }
           );
         }
@@ -144,7 +144,7 @@ in
           file = pkgs.writeText "db.moe.rebmit" (
             import ../../../../zones/rebmit.moe.nix {
               inherit (inputs) dns;
-              inherit lib;
+              inherit lib config;
             }
           );
         }
