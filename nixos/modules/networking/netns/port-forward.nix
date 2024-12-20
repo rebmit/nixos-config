@@ -105,6 +105,7 @@ in
                     "CAP_SYS_ADMIN"
                     "CAP_SYS_PTRACE"
                   ];
+                  SystemCallFilter = [ "@system-service" ];
                 };
               after = [
                 "network.target"

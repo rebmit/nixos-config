@@ -4,14 +4,33 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 {
-  systemd.services.postfix.serviceConfig = {
+  systemd.services.postfix.serviceConfig = mylib.misc.serviceHardened // {
+    StateDirectory = "postfix";
     PrivateTmp = true;
     ExecStartPre = ''
       ${pkgs.openssl}/bin/openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout /tmp/selfsigned.key -out /tmp/selfsigned.crt -batch
     '';
+    ProtectSystem = lib.mkForce "strict";
+    RestrictAddressFamilies = lib.mkForce [
+      "AF_INET"
+      "AF_INET6"
+      "AF_NETLINK"
+      "AF_UNIX"
+    ];
+    CapabilityBoundingSet = lib.mkForce [
+      ""
+      "CAP_DAC_READ_SEARCH"
+      "CAP_DAC_OVERRIDE"
+      "CAP_KILL"
+      "CAP_SETUID"
+      "CAP_SETGID"
+      "CAP_NET_BIND_SERVICE"
+    ];
+    SystemCallFilter = lib.mkForce [ "@system-service" ];
   };
 
   services.postfix = {

@@ -16,6 +16,8 @@
   };
 
   systemd.services.ntfy-sh.serviceConfig = mylib.misc.serviceHardened // {
+    AmbientCapabilities = lib.mkForce [ "" ];
+    CapabilityBoundingSet = lib.mkForce [ "" ];
     DynamicUser = lib.mkForce false;
   };
 

@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  mylib,
   ...
 }:
 let
@@ -95,9 +96,6 @@ in
       listen = 127.0.0.1
       haproxy_trusted_networks = 127.0.0.1/8
 
-      default_internal_user  = ${cfg.user}
-      default_internal_group = ${cfg.group}
-
       auth_username_format   = %Ln
       mail_home = ${maildir}/%u
 
@@ -169,6 +167,24 @@ in
       }
     }
   '';
+
+  systemd.services.dovecot2.serviceConfig = mylib.misc.serviceHardened // {
+    StateDirectory = "dovecot";
+    ReadWritePaths = [ maildir ];
+    CapabilityBoundingSet = [
+      "CAP_CHOWN"
+      "CAP_KILL"
+      "CAP_SYS_CHROOT"
+      "CAP_SETUID"
+      "CAP_SETGID"
+      "CAP_NET_BIND_SERVICE"
+      "CAP_DAC_OVERRIDE"
+    ];
+    SystemCallFilter = [
+      "@system-service"
+      "chroot"
+    ];
+  };
 
   services.restic.backups.b2.paths = [ maildir ];
 }
