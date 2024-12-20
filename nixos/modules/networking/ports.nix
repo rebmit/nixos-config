@@ -10,10 +10,11 @@ in
     default = {
       # standard ports
       smtp = 25;
+      dns = 53;
       http = 80;
       https = 443;
       smtp-tls = 465;
-      smtp-starttls = 587;
+      smtp-submission = 587;
       imap-tls = 993;
       socks = 1080;
       ssh = 2222;
@@ -28,6 +29,7 @@ in
       mautrix-telegram = 4032;
       rspamd-controller = 4040;
       rspamd-redis = 4041;
+      caddy-admin = 4050;
 
       # public ports
       enthalpy-ipsec = 13000;

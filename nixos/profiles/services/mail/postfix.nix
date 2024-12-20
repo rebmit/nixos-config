@@ -66,7 +66,7 @@
         lmtp = {
           args = [ "flags=O" ];
         };
-        "127.0.0.1:${toString config.networking.ports.smtp-starttls}" = {
+        "127.0.0.1:${toString config.networking.ports.smtp-submission}" = {
           type = "inet";
           private = false;
           command = "smtpd";

@@ -25,4 +25,8 @@
   };
 
   services.restic.backups.b2.paths = [ config.services.caddy.dataDir ];
+
+  services.caddy.globalConfig = ''
+    admin 127.0.0.1:${toString config.networking.ports.caddy-admin}
+  '';
 }

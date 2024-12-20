@@ -42,6 +42,7 @@ let
         services.resolved
         services.vnstat
         system.boot.sysctl.tcp-bbr
+        system.boot.sysctl.udp-buffer-size
         # keep-sorted end
       ];
 

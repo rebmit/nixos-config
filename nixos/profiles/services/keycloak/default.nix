@@ -17,6 +17,7 @@
       http-port = config.networking.ports.keycloak;
       proxy-headers = "xforwarded";
       hostname = "keycloak.rebmit.moe";
+      cache = "local";
     };
   };
 
