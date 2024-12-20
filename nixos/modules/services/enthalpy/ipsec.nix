@@ -124,6 +124,7 @@ in
           interfaces_use = ${strings.concatStringsSep "," cfg.ipsec.interfaces}
           port = 0
           port_nat_t = ${toString config.networking.ports.enthalpy-ipsec}
+          retransmit_timeout = 30
           retransmit_base = 1
           plugins {
             socket-default {
