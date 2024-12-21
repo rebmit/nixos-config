@@ -10,6 +10,7 @@
     ++ (with profiles; [
       services.caddy
       services.knot.secondary
+      services.ntfy
       services.prometheus.node-exporter
       services.prometheus.server
     ])
