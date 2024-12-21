@@ -10,13 +10,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "kanako-hkg0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "kanako-hkg0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -27,13 +27,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "reisen-fra0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "reisen-fra0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -44,13 +44,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "reisen-nrt0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "reisen-nrt0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -61,13 +61,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "reisen-sea0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "reisen-sea0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -78,13 +78,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "reisen-sin0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "reisen-sin0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -95,13 +95,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "suwako-vie0.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "suwako-vie0.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       }
@@ -118,13 +118,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "flandre-m5p.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "flandre-m5p.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -135,13 +135,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "marisa-7d76.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "marisa-7d76.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       },
@@ -152,13 +152,13 @@
             "serial_number": "0",
             "address_family": "ip4",
             "address": "marisa-a7s.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           },
           {
             "serial_number": "1",
             "address_family": "ip6",
             "address": "marisa-a7s.dyn.rebmit.link",
-            "port": 13000
+            "port": 14000
           }
         ]
       }

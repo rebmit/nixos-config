@@ -32,8 +32,8 @@ in
       caddy-admin = 4050;
 
       # public ports
-      enthalpy-ipsec = 13000;
       enthalpy-wireguard-reimu-aston = 13101;
+      enthalpy-ipsec = 14000;
     };
     readOnly = true;
     description = ''
