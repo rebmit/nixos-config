@@ -35,6 +35,34 @@ in
         static_configs = [ { inherit targets; } ];
       }
     ];
+    rules = lib.singleton (
+      builtins.toJSON {
+        groups = [
+          {
+            name = "metrics";
+            rules = [
+              {
+                alert = "NodeDown";
+                expr = ''up == 0'';
+                for = "5m";
+              }
+              {
+                alert = "OOM";
+                expr = ''node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.1'';
+              }
+              {
+                alert = "DiskFull";
+                expr = ''node_filesystem_avail_bytes{mountpoint=~"/persist"} / node_filesystem_size_bytes < 0.1'';
+              }
+              {
+                alert = "UnitFailed";
+                expr = ''node_systemd_unit_state{state="failed"} == 1'';
+              }
+            ];
+          }
+        ];
+      }
+    );
   };
 
   services.caddy.virtualHosts."prometheus.rebmit.moe" = {
