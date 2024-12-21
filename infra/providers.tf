@@ -1,22 +1,22 @@
 terraform {
   required_providers {
     sops = {
-      source = "registry.terraform.io/carlpett/sops"
+      source = "carlpett/sops"
     }
     tls = {
-      source = "registry.terraform.io/hashicorp/tls"
+      source = "hashicorp/tls"
     }
     random = {
-      source = "registry.terraform.io/hashicorp/random"
+      source = "hashicorp/random"
     }
     cloudflare = {
-      source = "registry.terraform.io/cloudflare/cloudflare"
+      source = "cloudflare/cloudflare"
     }
     b2 = {
       source = "registry.terraform.io/backblaze/b2"
     }
     vultr = {
-      source = "registry.terraform.io/vultr/vultr"
+      source = "vultr/vultr"
     }
   }
 }

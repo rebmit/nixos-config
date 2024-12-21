@@ -17,7 +17,7 @@ variable "zone_id" {
 terraform {
   required_providers {
     cloudflare = {
-      source = "registry.terraform.io/cloudflare/cloudflare"
+      source = "cloudflare/cloudflare"
     }
   }
 }
