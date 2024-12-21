@@ -20,6 +20,7 @@
       services.miniflux
       services.ntfy
       services.postgresql
+      services.prometheus.node-exporter
       services.well-known
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
