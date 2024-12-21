@@ -48,5 +48,6 @@ dns.lib.toString "rebmit.moe" {
     matrix.CNAME = [ "suwako-vie0.rebmit.link." ];
     miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
     ntfy.CNAME = [ "suwako-vie0.rebmit.link." ];
+    prometheus.CNAME = [ "reisen-nrt0.rebmit.link." ];
   };
 }
