@@ -18,7 +18,6 @@
       services.matrix.mautrix-telegram
       services.matrix.synapse
       services.miniflux
-      services.ntfy
       services.postgresql
       services.prometheus.node-exporter
       services.well-known
