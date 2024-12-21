@@ -82,11 +82,9 @@ in
       gnupg.sshKeyPaths = [ ];
       opentofuTemplate = ''
         {
-          ${
-            lib.concatMapStringsSep "\n, " (cfg: ''"${cfg.name}": ${cfg.opentofu.jqPath}'') (
-              lib.attrValues secretsFromOutputs
-            )
-          }
+          ${lib.concatMapStringsSep "\n, " (cfg: ''"${cfg.name}": ${cfg.opentofu.jqPath}'') (
+            lib.attrValues secretsFromOutputs
+          )}
         }
       '';
       secretFiles = {

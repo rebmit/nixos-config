@@ -6,7 +6,7 @@
     noto-fonts-cjk-serif
     noto-fonts-emoji
     roboto-mono
-    (nerdfonts.override { fonts = [ "RobotoMono" ]; })
+    nerd-fonts.roboto-mono
   ];
 
   fonts.fontconfig.enable = true;

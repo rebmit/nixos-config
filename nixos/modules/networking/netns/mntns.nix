@@ -102,11 +102,9 @@ in
           unshare --mount=${mntnsPath} --propagation slave true
           nsenter --mount=${mntnsPath} bash ${pkgs.writeShellScript "netns-${name}-mntns-bind-mount" ''
             declare -A bind_mounts=(
-              ${
-                concatMapStringsSep "\n" (d: ''
-                  ["${d.mountPoint}"]="${d.hostPath}:${if d.isReadOnly then "ro" else "rw"}"
-                '') (attrValues bindMounts)
-              }
+              ${concatMapStringsSep "\n" (d: ''
+                ["${d.mountPoint}"]="${d.hostPath}:${if d.isReadOnly then "ro" else "rw"}"
+              '') (attrValues bindMounts)}
             )
 
             for mount_point in "''${!bind_mounts[@]}"; do

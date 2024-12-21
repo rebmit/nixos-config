@@ -54,11 +54,9 @@ in
     services.enthalpy.bird.config = ''
       protocol static {
         ipv6 sadr;
-        ${
-          concatMapStringsSep "\n" (p: ''
-            route ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev "host";
-          '') birdPrefix
-        }
+        ${concatMapStringsSep "\n" (p: ''
+          route ${p.destination} from ${p.source} via fe80::ff:fe00:1 dev "host";
+        '') birdPrefix}
       }
     '';
 
