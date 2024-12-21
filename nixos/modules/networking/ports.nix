@@ -30,6 +30,8 @@ in
       rspamd-controller = 4040;
       rspamd-redis = 4041;
       caddy-admin = 4050;
+      prometheus = 4060;
+      prometheus-node-exporter = 4070;
 
       # public ports
       enthalpy-wireguard-reimu-aston = 13101;
