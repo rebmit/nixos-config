@@ -11,6 +11,7 @@
       services.caddy
       services.knot.secondary
       services.prometheus.node-exporter
+      services.prometheus.ping-exporter
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 

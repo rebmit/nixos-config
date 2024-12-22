@@ -75,6 +75,16 @@ in
         static_configs = [ { inherit targets; } ];
       }
       {
+        job_name = "ping";
+        scheme = "https";
+        metrics_path = "/ping";
+        basic_auth = {
+          username = "prometheus";
+          password_file = config.sops.secrets."prometheus/password".path;
+        };
+        static_configs = [ { inherit targets; } ];
+      }
+      {
         job_name = "dns";
         scheme = "http";
         metrics_path = "/probe";
