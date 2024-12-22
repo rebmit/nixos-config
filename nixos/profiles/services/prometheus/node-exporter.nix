@@ -27,6 +27,13 @@
         }
         reverse_proxy ${listenAddress}:${toString port}
       }
+
+      route /caddy {
+        basic_auth {
+          prometheus {$PROM_PASSWD}
+        }
+        metrics
+      }
     '';
   };
 }
