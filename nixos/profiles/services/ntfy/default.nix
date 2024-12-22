@@ -31,7 +31,7 @@
 
   systemd.services.caddy.serviceConfig = {
     LoadCredential = [
-      "cloudflare_aop_cert:${builtins.toFile "cloudflare_aop_certificate" data.cloudflare_aop_certificate}"
+      "cloudflare_aop_ntfy_ca_cert:${builtins.toFile "cloudflare_aop_ca_certificate" data.cloudflare_aop_ca_certificate}"
       "cloudflare_origin_ntfy_cert:${builtins.toFile "cloudflare_origin_ntfy_certificate" data.cloudflare_origin_ntfy_certificate}"
       "cloudflare_origin_ntfy_key:${config.sops.secrets."cloudflare_origin_ntfy_private_key".path}"
     ];
@@ -46,7 +46,7 @@
         tls ${credentialPath}/cloudflare_origin_ntfy_cert ${credentialPath}/cloudflare_origin_ntfy_key {
           client_auth {
             mode require_and_verify
-            trust_pool file ${credentialPath}/cloudflare_aop_cert
+            trust_pool file ${credentialPath}/cloudflare_aop_ntfy_ca_cert
           }
         }
         reverse_proxy ${config.services.ntfy-sh.settings.listen-http}

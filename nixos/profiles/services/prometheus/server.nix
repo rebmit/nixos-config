@@ -1,6 +1,11 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/hcloud/iad1/prometheus.nix
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  data,
+  ...
+}:
 let
   common = import ../../../../zones/common.nix;
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) common.hosts;
@@ -15,7 +20,7 @@ in
 
   services.prometheus = {
     enable = true;
-    webExternalUrl = "https://prometheus.rebmit.moe";
+    webExternalUrl = "https://prometheus.rebmit.workers.moe";
     listenAddress = "127.0.0.1";
     port = config.networking.ports.prometheus;
     retentionTime = "7d";
@@ -65,9 +70,36 @@ in
     );
   };
 
-  services.caddy.virtualHosts."prometheus.rebmit.moe" = {
-    extraConfig = with config.services.prometheus; ''
-      reverse_proxy ${listenAddress}:${toString port}
-    '';
+  sops.secrets."cloudflare_origin_prometheus_private_key" = {
+    opentofu = {
+      enable = true;
+    };
+    restartUnits = [ "caddy.service" ];
   };
+
+  systemd.services.caddy.serviceConfig = {
+    LoadCredential = [
+      "cloudflare_aop_prometheus_ca_cert:${builtins.toFile "cloudflare_aop_ca_certificate" data.cloudflare_aop_ca_certificate}"
+      "cloudflare_origin_prometheus_cert:${builtins.toFile "cloudflare_origin_prometheus_certificate" data.cloudflare_origin_prometheus_certificate}"
+      "cloudflare_origin_prometheus_key:${
+        config.sops.secrets."cloudflare_origin_prometheus_private_key".path
+      }"
+    ];
+  };
+
+  services.caddy.virtualHosts."prometheus.rebmit.workers.moe" =
+    let
+      credentialPath = "/run/credentials/caddy.service";
+    in
+    {
+      extraConfig = with config.services.prometheus; ''
+        tls ${credentialPath}/cloudflare_origin_prometheus_cert ${credentialPath}/cloudflare_origin_prometheus_key {
+          client_auth {
+            mode require_and_verify
+            trust_pool file ${credentialPath}/cloudflare_aop_prometheus_ca_cert
+          }
+        }
+        reverse_proxy ${listenAddress}:${toString port}
+      '';
+    };
 }

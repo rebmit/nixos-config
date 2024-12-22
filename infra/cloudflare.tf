@@ -33,6 +33,42 @@ resource "cloudflare_custom_hostname_fallback_origin" "fallback" {
 }
 
 # ------------------------------------
+# cloudflare zero trust - common
+
+resource "cloudflare_zero_trust_access_policy" "default" {
+  account_id = local.cloudflare_main_account_id
+  name       = "Default Policy"
+  decision   = "allow"
+
+  include {
+    email = [
+      "rebmit@rebmit.moe",
+      "rebmit233@outlook.com",
+    ]
+  }
+}
+
+resource "cloudflare_zero_trust_access_identity_provider" "pin_login" {
+  account_id = local.cloudflare_main_account_id
+  name       = "PIN login"
+  type       = "onetimepin"
+}
+
+resource "cloudflare_zero_trust_access_identity_provider" "oidc_keycloak" {
+  account_id = local.cloudflare_main_account_id
+  name       = "Keycloak"
+  type       = "oidc"
+  config {
+    client_id     = "cloudflare"
+    client_secret = local.secrets.cloudflare.keycloak_oidc_secret
+    auth_url      = "https://keycloak.rebmit.moe/realms/rebmit/protocol/openid-connect/auth"
+    token_url     = "https://keycloak.rebmit.moe/realms/rebmit/protocol/openid-connect/token"
+    certs_url     = "https://keycloak.rebmit.moe/realms/rebmit/protocol/openid-connect/certs"
+    scopes        = ["openid", "email", "profile"]
+  }
+}
+
+# ------------------------------------
 # cloudflare workers - mirror
 
 module "cloudflare_workers_mirror" {
@@ -66,7 +102,7 @@ resource "tls_self_signed_cert" "cloudflare_aop_ca" {
   ]
 }
 
-output "cloudflare_aop_certificate" {
+output "cloudflare_aop_ca_certificate" {
   value     = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
   sensitive = false
 }
@@ -92,4 +128,39 @@ output "cloudflare_origin_ntfy_certificate" {
 output "cloudflare_origin_ntfy_private_key" {
   value     = module.cloudflare_reverse_proxy_ntfy.origin_private_key
   sensitive = true
+}
+
+# ------------------------------------
+# cloudflare reverse proxy - prometheus
+
+module "cloudflare_reverse_proxy_prometheus" {
+  source             = "./modules/cloudflare-reverse-proxy"
+  name               = "prometheus"
+  ca_private_key_pem = tls_private_key.cloudflare_aop_ca.private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
+  ipv4               = [module.vultr_instances["reisen-nrt0"].ipv4]
+  ipv6               = [module.vultr_instances["reisen-nrt0"].ipv6]
+  zone_id            = local.cloudflare_workers_zone_id
+}
+
+output "cloudflare_origin_prometheus_certificate" {
+  value     = module.cloudflare_reverse_proxy_prometheus.origin_certificate
+  sensitive = false
+}
+
+output "cloudflare_origin_prometheus_private_key" {
+  value     = module.cloudflare_reverse_proxy_prometheus.origin_private_key
+  sensitive = true
+}
+
+resource "cloudflare_zero_trust_access_application" "prometheus" {
+  zone_id                   = local.cloudflare_workers_zone_id
+  name                      = "Prometheus"
+  domain                    = "prometheus.rebmit.workers.moe"
+  type                      = "self_hosted"
+  session_duration          = "24h"
+  auto_redirect_to_identity = false
+  policies = [
+    cloudflare_zero_trust_access_policy.default.id
+  ]
 }
