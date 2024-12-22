@@ -31,6 +31,7 @@ in
       rspamd-redis = 4041;
       caddy-admin = 4050;
       prometheus = 4060;
+      prometheus-alertmanager = 4061;
       prometheus-node-exporter = 4070;
       prometheus-blackbox-exporter = 4071;
 

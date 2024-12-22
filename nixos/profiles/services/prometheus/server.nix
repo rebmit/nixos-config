@@ -8,6 +8,7 @@
   ...
 }:
 let
+  cfg = config.services.prometheus;
   common = import ../../../../zones/common.nix;
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) common.hosts;
   targets = lib.mapAttrsToList (name: _value: "${name}.rebmit.link") publicHosts;
@@ -35,6 +36,11 @@ in
     sopsFile = config.sops.secretFiles.host;
     owner = config.systemd.services.prometheus.serviceConfig.User;
     restartUnits = [ "prometheus.service" ];
+  };
+
+  sops.secrets."prometheus/alertmanager-ntfy" = {
+    sopsFile = config.sops.secretFiles.host;
+    restartUnits = [ "alertmanager.service" ];
   };
 
   services.prometheus = {
@@ -121,6 +127,55 @@ in
         ];
       }
     );
+    alertmanagers = [
+      {
+        path_prefix = "/alert";
+        static_configs = [
+          {
+            targets = [ "${cfg.alertmanager.listenAddress}:${builtins.toString cfg.alertmanager.port}" ];
+          }
+        ];
+      }
+    ];
+    alertmanager = {
+      enable = true;
+      webExternalUrl = "https://${config.networking.fqdn}/alert";
+      listenAddress = "127.0.0.1";
+      port = config.networking.ports.prometheus-alertmanager;
+      extraFlags = [ ''--cluster.listen-address=""'' ];
+      configuration = {
+        receivers = [
+          {
+            name = "ntfy";
+            webhook_configs = [
+              {
+                url = "https://ntfy.rebmit.workers.moe/alert?tpl=yes&m=${lib.escapeURL ''
+                  Alert {{.status}}
+                  {{range .alerts}}-----{{range $k,$v := .labels}}
+                  {{$k}}={{$v}}{{end}}
+                  {{end}}
+                ''}";
+                http_config = {
+                  basic_auth = {
+                    username = "alertmanager";
+                    password_file = "/run/credentials/alertmanager.service/alertmanager-ntfy";
+                  };
+                };
+              }
+            ];
+          }
+        ];
+        route = {
+          receiver = "ntfy";
+        };
+      };
+    };
+  };
+
+  systemd.services.alertmanager.serviceConfig = {
+    LoadCredential = [
+      "alertmanager-ntfy:${config.sops.secrets."prometheus/alertmanager-ntfy".path}"
+    ];
   };
 
   services.prometheus.exporters.blackbox = {
