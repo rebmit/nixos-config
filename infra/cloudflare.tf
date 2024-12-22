@@ -164,3 +164,64 @@ resource "cloudflare_zero_trust_access_application" "prometheus" {
     cloudflare_zero_trust_access_policy.default.id
   ]
 }
+
+# ------------------------------------
+# cloudflare rulesets - redirects
+
+resource "cloudflare_custom_hostname" "ntfy" {
+  zone_id  = local.cloudflare_workers_zone_id
+  hostname = "ntfy.rebmit.moe"
+  ssl {
+    method = "http"
+  }
+}
+
+resource "cloudflare_custom_hostname" "prometheus" {
+  zone_id  = local.cloudflare_workers_zone_id
+  hostname = "prometheus.rebmit.moe"
+  ssl {
+    method = "http"
+  }
+}
+
+resource "cloudflare_ruleset" "bulk_redirects" {
+  account_id = local.cloudflare_main_account_id
+  name       = "bulk_redirects"
+  kind       = "root"
+  phase      = "http_request_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_list {
+        name = cloudflare_list.bulk_redirects.name
+        key  = "http.request.full_uri"
+      }
+    }
+    expression = "http.request.full_uri in $bulk_redirects"
+    enabled    = true
+  }
+}
+
+resource "cloudflare_list" "bulk_redirects" {
+  account_id = local.cloudflare_main_account_id
+  name       = "bulk_redirects"
+  kind       = "redirect"
+
+  dynamic "item" {
+    for_each = toset(["ntfy", "prometheus"])
+    content {
+      value {
+        redirect {
+          source_url            = "${item.key}.rebmit.moe"
+          target_url            = "https://${item.key}.rebmit.workers.moe"
+          status_code           = 301
+          include_subdomains    = "disabled"
+          subpath_matching      = "enabled"
+          preserve_query_string = "enabled"
+          preserve_path_suffix  = "enabled"
+        }
+      }
+    }
+  }
+}

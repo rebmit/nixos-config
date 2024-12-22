@@ -47,5 +47,7 @@ dns.lib.toString "rebmit.moe" {
     keycloak.CNAME = [ "suwako-vie0.rebmit.link." ];
     matrix.CNAME = [ "suwako-vie0.rebmit.link." ];
     miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
+    ntfy.CNAME = [ "fallback.workers.moe." ];
+    prometheus.CNAME = [ "fallback.workers.moe." ];
   };
 }
