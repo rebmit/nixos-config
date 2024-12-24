@@ -26,5 +26,5 @@
 
   services.power-profiles-daemon.enable = true;
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }
