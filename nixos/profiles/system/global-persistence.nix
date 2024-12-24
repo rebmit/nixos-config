@@ -1,6 +1,17 @@
-{ ... }:
+{ config, ... }:
 {
+  assertions = [
+    {
+      assertion = config.fileSystems ? "/persist";
+      message = ''
+        `config.fileSystems."/persist"` must be set.
+      '';
+    }
+  ];
+
   environment.globalPersistence = {
+    enable = true;
+    root = "/persist";
     directories = [
       "/var/cache"
       "/var/lib"
