@@ -18,6 +18,7 @@ let
         programs.tools.common
         security.polkit
         security.sudo
+        services.btrfs-auto-scrub
         services.dbus
         services.journald
         services.openssh
