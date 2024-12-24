@@ -1,8 +1,14 @@
-{ modulesPath, ... }:
+{ modulesPath, profiles, ... }:
 {
-  imports = [
+  imports = with profiles; [
     (modulesPath + "/profiles/qemu-guest.nix")
+    system.disko.btrfs-common
   ];
+
+  disko.devices = {
+    nodev."/".mountOptions = [ "size=1G" ];
+    disk.main.device = "/dev/vda";
+  };
 
   boot = {
     loader = {

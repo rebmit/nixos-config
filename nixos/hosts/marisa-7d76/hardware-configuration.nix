@@ -1,5 +1,14 @@
-{ lib, ... }:
+{ profiles, lib, ... }:
 {
+  imports = with profiles; [
+    system.disko.luks-btrfs-common
+  ];
+
+  disko.devices = {
+    nodev."/".mountOptions = [ "size=8G" ];
+    disk.main.device = "/dev/disk/by-path/pci-0000:04:00.0-nvme-1";
+  };
+
   boot = {
     initrd.availableKernelModules = [
       "nvme"
