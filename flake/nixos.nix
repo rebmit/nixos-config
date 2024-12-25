@@ -21,6 +21,7 @@ let
         services.btrfs-auto-scrub
         services.dbus
         services.journald
+        services.nscd
         services.openssh
         services.zram-generator
         system.boot.kernel.latest
