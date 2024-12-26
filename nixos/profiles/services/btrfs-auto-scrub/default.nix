@@ -11,4 +11,11 @@ in
     enable = btrfsDevices != [ ];
     fileSystems = btrfsDevices;
   };
+
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/btrfs";
+      mode = "0700";
+    }
+  ];
 }

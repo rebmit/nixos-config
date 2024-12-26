@@ -55,10 +55,12 @@
     };
   };
 
+  preservation.preserveAt."/persist".directories = [ "/var/cache/restic-backups-b2" ];
+
   services.restic.backups.b2.paths = [
-    "/etc/machine-id"
-    config.sops.age.keyFile
-    "/var/lib/nixos"
+    "/persist/etc/machine-id"
+    "/persist${config.sops.age.keyFile}"
+    "/persist/var/lib/nixos"
   ];
 
   systemd.services.restic-backups-b2.serviceConfig.Environment = [ "GOGC=20" ];

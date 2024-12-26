@@ -25,23 +25,29 @@
         "/persist" = {
           directories = [
             {
-              directory = "/var/cache";
+              directory = "/var/lib/machines";
+              mode = "0700";
+            }
+            {
+              directory = "/var/lib/nixos";
               inInitrd = true;
             }
             {
-              directory = "/var/lib";
-              inInitrd = true;
+              directory = "/var/lib/portables";
+              mode = "0700";
             }
-            {
-              directory = "/var/log";
-              inInitrd = true;
-            }
+            "/var/lib/systemd"
             {
               directory = "/var/tmp";
-              inInitrd = true;
+              mode = "1777";
             }
           ];
           files = [
+            {
+              file = config.sops.age.keyFile;
+              inInitrd = true;
+              mode = "0600";
+            }
             {
               file = "/etc/machine-id";
               inInitrd = true;
@@ -69,6 +75,11 @@
   # https://willibutz.github.io/preservation/examples.html
   systemd.tmpfiles.settings.preservation = lib.mkMerge (
     lib.mapAttrsToList (name: hmCfg: {
+      "${hmCfg.home.homeDirectory}/.cache".d = {
+        user = name;
+        group = config.users.users.${name}.group;
+        mode = "0755";
+      };
       "${hmCfg.home.homeDirectory}/.config".d = {
         user = name;
         group = config.users.users.${name}.group;

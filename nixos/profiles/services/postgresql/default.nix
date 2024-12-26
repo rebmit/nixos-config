@@ -49,7 +49,17 @@ in
     backupAll = true;
   };
 
-  services.restic.backups.b2.paths = [ config.services.postgresqlBackup.location ];
+  preservation.preserveAt."/persist".directories = [
+    "/var/lib/postgresql"
+    {
+      directory = config.services.postgresqlBackup.location;
+      mode = "0700";
+    }
+  ];
+
+  services.restic.backups.b2.paths = [
+    "/persist${config.services.postgresqlBackup.location}"
+  ];
 
   systemd.services."restic-backups-b2" = {
     requires = [ "postgresqlBackup.service" ];

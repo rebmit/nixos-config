@@ -57,4 +57,15 @@
     bind = "127.0.0.1";
     port = config.networking.ports.rspamd-redis;
   };
+
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/rspamd";
+      mode = "0700";
+    }
+    {
+      directory = "/var/lib/redis-rspamd";
+      mode = "0700";
+    }
+  ];
 }

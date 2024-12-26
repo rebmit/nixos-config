@@ -79,5 +79,14 @@
     '';
   };
 
-  services.restic.backups.b2.paths = [ "/var/lib/matrix-synapse" ];
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/matrix-synapse";
+      mode = "0700";
+      user = config.systemd.services.matrix-synapse.serviceConfig.User;
+      group = config.systemd.services.matrix-synapse.serviceConfig.Group;
+    }
+  ];
+
+  services.restic.backups.b2.paths = [ "/persist/var/lib/matrix-synapse" ];
 }

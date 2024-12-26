@@ -170,5 +170,12 @@ in
     LoadCredential = [ "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}" ];
   };
 
-  services.restic.backups.b2.paths = [ "/var/lib/knot" ];
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/knot";
+      mode = "0700";
+    }
+  ];
+
+  services.restic.backups.b2.paths = [ "/persist/var/lib/knot" ];
 }

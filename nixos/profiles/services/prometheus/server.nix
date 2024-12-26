@@ -250,4 +250,9 @@ in
         reverse_proxy ${listenAddress}:${toString port}
       '';
     };
+
+  preservation.preserveAt."/persist".directories = [
+    "/var/lib/prometheus2"
+    "/var/lib/private/alertmanager"
+  ];
 }

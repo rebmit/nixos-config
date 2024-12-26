@@ -53,5 +53,7 @@
       '';
     };
 
-  services.restic.backups.b2.paths = [ "/var/lib/ntfy-sh" ];
+  preservation.preserveAt."/persist".directories = [ "/var/lib/ntfy-sh" ];
+
+  services.restic.backups.b2.paths = [ "/persist/var/lib/ntfy-sh" ];
 }

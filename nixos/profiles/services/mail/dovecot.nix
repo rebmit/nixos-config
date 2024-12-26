@@ -186,5 +186,15 @@ in
     ];
   };
 
-  services.restic.backups.b2.paths = [ maildir ];
+  preservation.preserveAt."/persist".directories = [
+    "/var/lib/dovecot"
+    {
+      directory = maildir;
+      mode = "0700";
+    }
+  ];
+
+  services.restic.backups.b2.paths = [
+    "/persist${maildir}"
+  ];
 }

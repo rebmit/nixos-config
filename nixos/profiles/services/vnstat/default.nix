@@ -9,4 +9,6 @@
   systemd.services.vnstat.restartTriggers = [ config.environment.etc."vnstat.conf".text ];
 
   systemd.services.vnstat.serviceConfig = mylib.misc.serviceHardened;
+
+  preservation.preserveAt."/persist".directories = [ "/var/lib/vnstat" ];
 }
