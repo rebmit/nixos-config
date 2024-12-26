@@ -10,7 +10,7 @@ in
 {
   services.darkman.enable = true;
 
-  home.globalPersistence.directories = [ ".cache/darkman" ];
+  preservation.preserveAt."/persist".directories = [ ".cache/darkman" ];
 
   systemd.user.tmpfiles.rules = [
     "C %h/.cache/darkman/mode.txt - - - - ${defaultMode}"

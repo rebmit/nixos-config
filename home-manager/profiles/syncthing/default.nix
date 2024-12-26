@@ -2,5 +2,5 @@
 {
   services.syncthing.enable = true;
 
-  home.globalPersistence.directories = [ ".local/state/syncthing" ];
+  preservation.preserveAt."/persist".directories = [ ".local/state/syncthing" ];
 }

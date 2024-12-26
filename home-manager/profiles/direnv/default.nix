@@ -5,5 +5,5 @@
     nix-direnv.enable = true;
   };
 
-  home.globalPersistence.directories = [ ".local/share/direnv" ];
+  preservation.preserveAt."/persist".directories = [ ".local/share/direnv" ];
 }

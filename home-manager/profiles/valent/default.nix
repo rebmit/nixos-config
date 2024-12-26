@@ -15,7 +15,5 @@
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  home.globalPersistence.directories = [
-    ".config/valent"
-  ];
+  preservation.preserveAt."/persist".directories = [ ".config/valent" ];
 }

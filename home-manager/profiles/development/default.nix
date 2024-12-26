@@ -1,6 +1,4 @@
 { ... }:
 {
-  home.globalPersistence.directories = [
-    "Projects"
-  ];
+  preservation.preserveAt."/persist".directories = [ "Projects" ];
 }

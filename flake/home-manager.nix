@@ -18,6 +18,7 @@ let
         applications.base
         fish
         helix
+        preservation
         tmux
         yazi
         # keep-sorted end

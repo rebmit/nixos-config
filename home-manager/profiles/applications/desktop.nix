@@ -17,7 +17,7 @@
     # keep-sorted end
   ];
 
-  home.globalPersistence.directories = [
+  preservation.preserveAt."/persist".directories = [
     ".thunderbird"
     ".zotero"
 

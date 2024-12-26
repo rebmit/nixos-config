@@ -7,6 +7,4 @@
       swtpm.enable = true;
     };
   };
-
-  environment.globalPersistence.user.directories = [ ".config/libvirt" ];
 }

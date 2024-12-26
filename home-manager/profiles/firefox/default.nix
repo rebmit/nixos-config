@@ -178,7 +178,7 @@
     };
   };
 
-  home.globalPersistence.directories = [ ".mozilla" ];
+  preservation.preserveAt."/persist".directories = [ ".mozilla" ];
 
   programs.niri.browser = lib.mkDefault [ "firefox" ];
 }

@@ -31,7 +31,7 @@
 
     # nixos modules
 
-    impermanence.url = "github:nix-community/impermanence";
+    preservation.url = "github:WilliButz/preservation";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

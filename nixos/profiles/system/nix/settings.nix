@@ -20,9 +20,4 @@
       builders-use-substitutes = true;
     };
   };
-
-  environment.globalPersistence.user.directories = [
-    ".cache/nix"
-    ".local/share/nix"
-  ];
 }

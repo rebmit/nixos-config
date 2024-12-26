@@ -39,5 +39,5 @@
     '';
   };
 
-  home.globalPersistence.directories = [ ".local/share/fish" ];
+  preservation.preserveAt."/persist".directories = [ ".local/share/fish" ];
 }

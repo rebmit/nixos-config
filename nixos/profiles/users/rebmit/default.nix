@@ -34,16 +34,9 @@ in
     sopsFile = config.sops.secretFiles.get "local.yaml";
   };
 
-  environment.globalPersistence.user.users = [ "rebmit" ];
-
   home-manager.users.rebmit =
     { ... }:
     {
-      home.globalPersistence = {
-        enable = true;
-        home = homeDirectory;
-      };
-
       programs.git = {
         userName = "Lu Wang";
         userEmail = "rebmit@rebmit.moe";

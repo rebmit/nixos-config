@@ -13,7 +13,7 @@
     videos = "$HOME/Videos";
   };
 
-  home.globalPersistence.directories = [
+  preservation.preserveAt."/persist".directories = [
     "Documents"
     "Downloads"
     "Music"

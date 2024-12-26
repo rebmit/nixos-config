@@ -9,5 +9,5 @@
     pkiBundle = "/etc/secureboot";
   };
 
-  environment.globalPersistence.directories = [ "/etc/secureboot" ];
+  preservation.preserveAt."/persist".directories = [ "/etc/secureboot" ];
 }

@@ -90,6 +90,4 @@ in
     };
     restartUnits = [ "sshd.service" ];
   };
-
-  environment.globalPersistence.user.directories = [ ".ssh" ];
 }

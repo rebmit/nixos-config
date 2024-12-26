@@ -28,11 +28,11 @@ let
         system.boot.kernel.latest
         system.boot.systemd-initrd
         system.common
-        system.global-persistence
         system.nix.gc
         system.nix.registry
         system.nix.settings
         system.nix.version
+        system.preservation
         users.root
         # keep-sorted end
       ];
