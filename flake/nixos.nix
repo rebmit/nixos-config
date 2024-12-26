@@ -21,6 +21,7 @@ let
         services.btrfs-auto-scrub
         services.dbus
         services.journald
+        services.logrotate
         services.nscd
         services.openssh
         services.zram-generator
