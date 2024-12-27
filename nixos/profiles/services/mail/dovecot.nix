@@ -38,10 +38,6 @@ in
       };
   };
 
-  systemd.tmpfiles.rules = [
-    "d ${maildir} 0700 ${cfg.mailUser} ${cfg.mailGroup} -"
-  ];
-
   services.dovecot2 = {
     enable = true;
     modules = [ pkgs.dovecot_pigeonhole ];
@@ -187,10 +183,17 @@ in
   };
 
   preservation.preserveAt."/persist".directories = [
-    "/var/lib/dovecot"
+    {
+      directory = "/var/lib/dovecot";
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
     {
       directory = maildir;
       mode = "0700";
+      user = config.services.dovecot2.mailUser;
+      group = config.services.dovecot2.mailGroup;
     }
   ];
 

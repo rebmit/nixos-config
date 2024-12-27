@@ -34,8 +34,18 @@
   '';
 
   preservation.preserveAt."/persist".directories = [
-    config.services.caddy.dataDir
-    config.services.caddy.logDir
+    {
+      directory = config.services.caddy.dataDir;
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
+    {
+      directory = config.services.caddy.logDir;
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
   ];
 
   services.restic.backups.b2.paths = [

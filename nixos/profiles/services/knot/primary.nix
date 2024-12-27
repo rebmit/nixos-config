@@ -173,7 +173,9 @@ in
   preservation.preserveAt."/persist".directories = [
     {
       directory = "/var/lib/knot";
-      mode = "0700";
+      mode = "-";
+      user = "-";
+      group = "-";
     }
   ];
 

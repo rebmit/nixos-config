@@ -252,7 +252,17 @@ in
     };
 
   preservation.preserveAt."/persist".directories = [
-    "/var/lib/prometheus2"
-    "/var/lib/private/alertmanager"
+    {
+      directory = "/var/lib/prometheus2";
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
+    {
+      directory = "/var/lib/private/alertmanager";
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
   ];
 }

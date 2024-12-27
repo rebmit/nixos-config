@@ -101,5 +101,12 @@
       };
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/postfix" ];
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/postfix";
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
+  ];
 }

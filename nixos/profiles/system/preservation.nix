@@ -26,20 +26,34 @@
           directories = [
             {
               directory = "/var/lib/machines";
-              mode = "0700";
+              mode = "0755";
+              user = "root";
+              group = "root";
             }
             {
               directory = "/var/lib/nixos";
               inInitrd = true;
+              mode = "0755";
+              user = "root";
+              group = "root";
             }
             {
               directory = "/var/lib/portables";
-              mode = "0700";
+              mode = "0755";
+              user = "root";
+              group = "root";
             }
-            "/var/lib/systemd"
+            {
+              directory = "/var/lib/systemd";
+              mode = "0755";
+              user = "root";
+              group = "root";
+            }
             {
               directory = "/var/tmp";
               mode = "1777";
+              user = "root";
+              group = "root";
             }
           ];
           files = [
@@ -47,11 +61,16 @@
               file = config.sops.age.keyFile;
               inInitrd = true;
               mode = "0600";
+              user = "root";
+              group = "root";
             }
             {
               file = "/etc/machine-id";
               inInitrd = true;
               how = "symlink";
+              mode = "-";
+              user = "root";
+              group = "root";
               configureParent = true;
             }
           ];

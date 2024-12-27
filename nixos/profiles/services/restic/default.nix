@@ -55,7 +55,14 @@
     };
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/cache/restic-backups-b2" ];
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/cache/restic-backups-b2";
+      mode = "0755";
+      user = "root";
+      group = "root";
+    }
+  ];
 
   services.restic.backups.b2.paths = [
     "/persist/etc/machine-id"

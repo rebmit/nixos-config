@@ -61,11 +61,15 @@
   preservation.preserveAt."/persist".directories = [
     {
       directory = "/var/lib/rspamd";
-      mode = "0700";
+      mode = "-";
+      user = "-";
+      group = "-";
     }
     {
       directory = "/var/lib/redis-rspamd";
-      mode = "0700";
+      mode = "-";
+      user = "-";
+      group = "-";
     }
   ];
 }

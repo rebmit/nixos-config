@@ -16,6 +16,8 @@ in
     {
       directory = "/var/lib/btrfs";
       mode = "0700";
+      user = "root";
+      group = "root";
     }
   ];
 }

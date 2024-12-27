@@ -10,5 +10,12 @@
 
   systemd.services.vnstat.serviceConfig = mylib.misc.serviceHardened;
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/vnstat" ];
+  preservation.preserveAt."/persist".directories = [
+    {
+      directory = "/var/lib/vnstat";
+      mode = "-";
+      user = "-";
+      group = "-";
+    }
+  ];
 }

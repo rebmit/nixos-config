@@ -13,7 +13,9 @@
   preservation.preserveAt."/persist".directories = [
     {
       directory = "/var/lib/pipewire";
-      mode = "0700";
+      mode = "-";
+      user = "-";
+      group = "-";
     }
   ];
 }
