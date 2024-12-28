@@ -42,7 +42,7 @@
   networking.netns.enthalpy.forwardPorts = lib.optionals config.services.openssh.enable [
     {
       protocol = "tcp";
-      netns = "default";
+      netns = "init";
       source = "[::]:${toString config.networking.ports.ssh}";
       target = "[::]:${toString config.networking.ports.ssh}";
     }

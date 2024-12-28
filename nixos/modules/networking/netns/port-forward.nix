@@ -31,7 +31,7 @@ in
                   };
                   netns = mkOption {
                     type = types.str;
-                    default = "default";
+                    default = "init";
                     description = ''
                       The network namespace to forward ports from.
                     '';
@@ -78,7 +78,7 @@ in
                 ;
               netnsPath = config.networking.netns.${netns}.netnsPath;
               serviceDeps = map (ns: "netns-${ns}.service") (
-                filter (ns: ns != "default") [
+                filter (ns: ns != "init") [
                   name
                   netns
                 ]

@@ -7,7 +7,7 @@
 with lib;
 let
   allNetns = config.networking.netns;
-  nonDefaultNetns = filterAttrs (name: _cfg: name != "default") allNetns;
+  nonDefaultNetns = filterAttrs (name: _cfg: name != "init") allNetns;
 in
 {
   options.networking.netns = mkOption {
@@ -18,7 +18,7 @@ in
           options = {
             netnsPath = mkOption {
               type = types.str;
-              default = if name == "default" then "/proc/1/ns/net" else "/run/netns/${name}";
+              default = if name == "init" then "/proc/1/ns/net" else "/run/netns/${name}";
               readOnly = true;
               description = ''
                 Path to the network namespace.
@@ -62,7 +62,7 @@ in
   };
 
   config = {
-    networking.netns.default = { };
+    networking.netns.init = { };
 
     systemd.services = mapAttrs' (
       name: cfg:

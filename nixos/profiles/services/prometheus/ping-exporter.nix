@@ -26,7 +26,7 @@ in
     wantedBy = [ "netns-enthalpy.service" ];
   };
 
-  networking.netns.default.forwardPorts = lib.singleton {
+  networking.netns.init.forwardPorts = lib.singleton {
     protocol = "tcp";
     netns = "enthalpy";
     source = "127.0.0.1:${toString config.networking.ports.prometheus-ping-exporter}";

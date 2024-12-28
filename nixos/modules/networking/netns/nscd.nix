@@ -8,7 +8,7 @@
 with lib;
 let
   allNetns = config.networking.netns;
-  dnsIsolatedNetns = filterAttrs (name: cfg: name != "default" && cfg.enableDNSIsolation) allNetns;
+  dnsIsolatedNetns = filterAttrs (name: cfg: name != "init" && cfg.enableDNSIsolation) allNetns;
 in
 {
   options.networking.netns = mkOption {

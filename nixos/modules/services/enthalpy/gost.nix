@@ -35,7 +35,7 @@ in
 
     networking.netns.enthalpy.forwardPorts = singleton {
       protocol = "tcp";
-      netns = "default";
+      netns = "init";
       source = "[::1]:${toString config.networking.ports.enthalpy-gost}";
       target = "[::1]:${toString config.networking.ports.socks}";
     };

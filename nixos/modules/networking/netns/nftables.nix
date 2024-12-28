@@ -7,7 +7,7 @@
 with lib;
 let
   allNetns = config.networking.netns;
-  nftablesEnabledNetns = filterAttrs (name: cfg: name != "default" && cfg.nftables.enable) allNetns;
+  nftablesEnabledNetns = filterAttrs (name: cfg: name != "init" && cfg.nftables.enable) allNetns;
 in
 {
   options.networking.netns = mkOption {

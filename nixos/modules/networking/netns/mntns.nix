@@ -7,7 +7,7 @@
 with lib;
 let
   allNetns = config.networking.netns;
-  nonDefaultNetns = filterAttrs (name: _cfg: name != "default") allNetns;
+  nonDefaultNetns = filterAttrs (name: _cfg: name != "init") allNetns;
 in
 {
   options.networking.netns = mkOption {
@@ -18,7 +18,7 @@ in
           options = {
             mntnsPath = mkOption {
               type = types.str;
-              default = if name == "default" then "/proc/1/ns/mnt" else "/run/${name}/mntns/${name}";
+              default = if name == "init" then "/proc/1/ns/mnt" else "/run/${name}/mntns/${name}";
               readOnly = true;
               description = ''
                 Path to the auxiliary mount namespace.
@@ -40,7 +40,7 @@ in
                       hostPath = mkOption {
                         type = types.str;
                         description = ''
-                          Location of the path to be mounted in the default mount namespace.
+                          Location of the path to be mounted in the init mount namespace.
                         '';
                       };
                       isReadOnly = mkOption {
@@ -62,7 +62,7 @@ in
             serviceConfig = mkOption {
               type = types.attrs;
               default =
-                if name == "default" then
+                if name == "init" then
                   { }
                 else
                   let
