@@ -53,7 +53,6 @@ in
             "/etc/netns/${name}/nsswitch.conf:/etc/nsswitch.conf:norbind"
             "/etc/netns/${name}/gai.conf:/etc/gai.conf:norbind"
           ];
-          BindPaths = [ "/run/${name}/nscd:/run/nscd:norbind" ];
           Type = "notify";
           Restart = "on-failure";
           RestartSec = 5;
@@ -62,7 +61,10 @@ in
           RuntimeDirectoryPreserve = true;
           ExecStart = "${pkgs.nsncd}/bin/nsncd";
         };
-        environment.LD_LIBRARY_PATH = config.system.nssModules.path;
+        environment = {
+          LD_LIBRARY_PATH = config.system.nssModules.path;
+          NSNCD_SOCKET_PATH = "/run/${name}/nscd/socket";
+        };
         before = [ "netns-${name}-mntns.service" ];
         after = [
           "netns-${name}.service"
