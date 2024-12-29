@@ -26,9 +26,9 @@
           directories = [
             {
               directory = "/var/lib/machines";
-              mode = "0755";
-              user = "root";
-              group = "root";
+              mode = "-";
+              user = "-";
+              group = "-";
             }
             {
               directory = "/var/lib/nixos";
@@ -39,21 +39,21 @@
             }
             {
               directory = "/var/lib/portables";
-              mode = "0755";
-              user = "root";
-              group = "root";
+              mode = "-";
+              user = "-";
+              group = "-";
             }
             {
               directory = "/var/lib/systemd";
-              mode = "0755";
-              user = "root";
-              group = "root";
+              mode = "-";
+              user = "-";
+              group = "-";
             }
             {
               directory = "/var/tmp";
-              mode = "1777";
-              user = "root";
-              group = "root";
+              mode = "-";
+              user = "-";
+              group = "-";
             }
           ];
           files = [
