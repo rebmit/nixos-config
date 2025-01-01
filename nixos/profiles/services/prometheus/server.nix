@@ -105,9 +105,9 @@ in
           {
             targets = [
               "https://rebmit.moe"
-              "https://keycloak.rebmit.moe"
-              "https://matrix.rebmit.moe"
-              "https://miniflux.rebmit.moe"
+              "https://chat.rebmit.moe"
+              "https://id.rebmit.moe"
+              "https://rss.rebmit.moe"
             ];
           }
         ];

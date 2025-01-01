@@ -44,11 +44,11 @@ dns.lib.toString "rebmit.moe" {
   MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains = {
-    keycloak.CNAME = [ "suwako-vie0.rebmit.link." ];
-    matrix.CNAME = [ "suwako-vie0.rebmit.link." ];
-    miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
+    chat.CNAME = [ "suwako-vie0.rebmit.link." ];
+    id.CNAME = [ "suwako-vie0.rebmit.link." ];
     ntfy.CNAME = [ "fallback.workers.moe." ];
     prometheus.CNAME = [ "fallback.workers.moe." ];
+    rss.CNAME = [ "suwako-vie0.rebmit.link." ];
     vault.CNAME = [ "suwako-vie1.rebmit.link." ];
   };
 }

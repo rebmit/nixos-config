@@ -18,7 +18,7 @@
     withJemalloc = true;
     settings = {
       server_name = "rebmit.moe";
-      public_baseurl = "https://matrix.rebmit.moe";
+      public_baseurl = "https://chat.rebmit.moe";
 
       dynamic_thumbnails = true;
       enable_registration = true;
@@ -48,8 +48,8 @@
       oidc_providers = [
         {
           idp_id = "keycloak";
-          idp_name = "keycloak.rebmit.moe";
-          issuer = "https://keycloak.rebmit.moe/realms/rebmit";
+          idp_name = "id.rebmit.moe";
+          issuer = "https://id.rebmit.moe/realms/rebmit";
           client_id = "synapse";
           client_secret_path = config.sops.secrets."synapse/oidc-client-secret".path;
           scopes = [
@@ -72,7 +72,7 @@
     };
   };
 
-  services.caddy.virtualHosts."matrix.rebmit.moe" = {
+  services.caddy.virtualHosts."chat.rebmit.moe" = {
     extraConfig = ''
       reverse_proxy /_matrix/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}
       reverse_proxy /_synapse/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}

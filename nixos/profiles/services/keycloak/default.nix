@@ -16,7 +16,7 @@
       http-host = "127.0.0.1";
       http-port = config.networking.ports.keycloak;
       proxy-headers = "xforwarded";
-      hostname = "keycloak.rebmit.moe";
+      hostname = "id.rebmit.moe";
       cache = "local";
     };
   };
@@ -25,7 +25,7 @@
     MemoryDenyWriteExecute = false;
   };
 
-  services.caddy.virtualHosts."keycloak.rebmit.moe" = {
+  services.caddy.virtualHosts."id.rebmit.moe" = {
     extraConfig = ''
       reverse_proxy ${config.services.keycloak.settings.http-host}:${toString config.services.keycloak.settings.http-port}
     '';
