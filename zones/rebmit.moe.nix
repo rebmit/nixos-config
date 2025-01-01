@@ -32,16 +32,16 @@ dns.lib.toString "rebmit.moe" {
       service = "imaps";
       proto = "tcp";
       port = config.networking.ports.imap-tls;
-      target = "suwako-vie0.rebmit.link.";
+      target = "suwako-vie1.rebmit.link.";
     }
     {
       service = "submissions";
       proto = "tcp";
       port = config.networking.ports.smtp-tls;
-      target = "suwako-vie0.rebmit.link.";
+      target = "suwako-vie1.rebmit.link.";
     }
   ];
-  MX = with mx; [ (mx 10 "suwako-vie0.rebmit.link.") ];
+  MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains = {
     keycloak.CNAME = [ "suwako-vie0.rebmit.link." ];

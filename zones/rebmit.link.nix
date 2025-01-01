@@ -14,7 +14,7 @@ dns.lib.toString "rebmit.link" {
     DKIM
     DMARC
     ;
-  MX = with mx; [ (mx 10 "suwako-vie0.rebmit.link.") ];
+  MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains =
     lib.recursiveUpdate
@@ -42,7 +42,7 @@ dns.lib.toString "rebmit.link" {
         ) enthalpyHosts
       ))
       {
-        "suwako-vie0".DMARC = [
+        "suwako-vie1".DMARC = [
           {
             p = "reject";
             sp = "reject";

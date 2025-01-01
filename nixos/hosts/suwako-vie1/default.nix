@@ -10,6 +10,9 @@
     ++ (with profiles; [
       services.caddy
       services.knot.secondary
+      services.mail.dovecot
+      services.mail.postfix
+      services.mail.rspamd
       services.prometheus.node-exporter
       services.prometheus.ping-exporter
       services.well-known
