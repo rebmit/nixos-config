@@ -13,7 +13,6 @@
       services.mail.dovecot
       services.mail.postfix
       services.mail.rspamd
-      services.well-known
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 

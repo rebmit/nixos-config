@@ -15,6 +15,7 @@
       services.matrix.synapse
       services.miniflux
       services.postgresql
+      services.well-known
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
