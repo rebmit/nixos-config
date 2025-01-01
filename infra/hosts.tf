@@ -30,6 +30,12 @@ locals {
       enthalpy_node_id           = parseint("763", 16)
       enthalpy_node_organization = "core"
     }
+    "suwako-vie1" = {
+      endpoints_v4               = ["46.102.157.144"]
+      endpoints_v6               = ["2a0d:f302:102:8e05::1"]
+      enthalpy_node_id           = parseint("f24", 16)
+      enthalpy_node_organization = "core"
+    }
     "reisen-sea0" = {
       endpoints_v4               = [module.vultr_instances["reisen-sea0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-sea0"].ipv6]

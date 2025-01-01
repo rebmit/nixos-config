@@ -107,6 +107,18 @@
       "enthalpy_node_prefix": "fde3:3be3:a244:7630::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDMJ1nNhJTdBjPZKTcxZv9uqdNXjysc/v+MuSobZtTX",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSqFe0/y6UpJwlOF4RIIml9aKO0KSSNUB+qb+KGShRRlK5T1vSVdOteaVOPBEqk8keJcZcYfmAuzg0BMtuuSvqPXPVvxCw/QFt8EjfTGh5t0Dzkhfx1xO07PGgF2yHu/s7xUUPwnRcXsmPK6zyJWKvmK/V+Zo+8ALv9ECrD4iJwI5vpSDKdIpxUHu9QwvDDftTFFWEb+M/T/fO4weqQBU57RWaB7K5/5yOTOJ0vqd3SpxJZ7KKGB8QZC3LLjJqyV1UywVbWvkXEQ5Kn35G1JwPtJcgo/DjSZW/zqvRfVyVdP29i1S3RXcOARiVpT1Mq3pU/tBlbXqf/jnD7hZBFRJzFpfSADp9qFxhv7G3jgRyXjYedU2Iq+pgwbgjsiMRruhl3T3R+nT0Z2u9cChOvkvtO4I2jWgqvwixpFrBrX64mQ1xsNgplsvMVb+lkj9JP8OicbbY+NwVMC5KNZR8FrmLN/0bVqZq3rknICoSd6lYw0dO9PsYpqWgZmPai7wQLCspg2EOgYZFw3Vqtl+FXvUA97pKGbTPkuKSsNgBZ2YJmv2ApFYQTXl13Kq+iFJ8fJNY73ZaNvADeM66RKOJphMPgG6OI4FmKfkRADSrWb2SL9/UlBDYo0ZbME/z4Gi84dTftFb6aQPl6d0nhnajBAfGfh8geTi46TCIBlk/ZVznZw=="
+    },
+    "suwako-vie1": {
+      "b2_backup_bucket_name": "rebmit-backup-suwako-vie1",
+      "endpoints": ["46.102.157.144", "2a0d:f302:102:8e05::1"],
+      "endpoints_v4": ["46.102.157.144"],
+      "endpoints_v6": ["2a0d:f302:102:8e05::1"],
+      "enthalpy_node_address": "fde3:3be3:a244:f240::1",
+      "enthalpy_node_id": 3876,
+      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "fde3:3be3:a244:f240::/60",
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFI0Y8Hwaoz9fx1MAn+BLWpTxWeoIzwXPLUp3xCcWXN",
+      "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpW5WjanSmPXY7GDOjV3a8lFDw3Y7mE+GWNE4p8y9xGfD63/SkctHMkvDeOEGGmAaqJEniCvcq1XktJunGbinsjOvgTDeDWuHrFvIMAUntCMgLHeN8l4VcK4dSO1tTCzVo7kMLhrSMpgndFl33uUDSj7Z9BekshT5HzvQ2NjaRFcygioJzTpihka+nV/jSR9a08ewMaJzyamV8wo7AOF8PfGTYUxj+q6R9nbWO8dKFYyCwqo5aUaC8VtI0blgalHjEYgn5MKJxocdxrGWOCdaYYH6UqMMgZ7f1icXfAbvKYD+0dC15IVur8yKAr2PUmqWsXAuTDl4uS/450i2sptnsaNF5IHbAa1trq1nUPZ45uv0HbUU7Ri6f3vsvEJfKHyIKsGmOMVync5sJuqVUhbUQH/lnjGqGUV1T9yQK+dIi4sjBu/ETsWMbtPyiCzAochgsVN5K9iStBgUARilZkroPwEVK3HbMUUOv3SA9Wszog5E3s2Rx8FGsAEQyQ/C5dg4KpQgDE4kO8qqukaLyEgHcNJ238UrBwu23aNJGcRUAysIvJKhepdJRV4We+nF7bQ1r3bQDR2xhyWtuy26CD+5rAp7yrC15GAYzVzDsp79Z+nhIBBpV97N1B0xLb1U6PjwdeHyylAKvTaGMVzkzgYoH97xhFwBCHoxnMNKmgaw8TQ=="
     }
   }
 }

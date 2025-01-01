@@ -150,6 +150,11 @@ in
     })
 
     (mkHost {
+      name = "suwako-vie1";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
       name = "reisen-sea0";
       system = "x86_64-linux";
     })
