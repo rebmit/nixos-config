@@ -35,6 +35,7 @@ in
       prometheus-node-exporter = 4070;
       prometheus-blackbox-exporter = 4071;
       prometheus-ping-exporter = 4072;
+      vaultwarden = 4080;
 
       # public ports
       enthalpy-wireguard-reimu-aston = 13101;

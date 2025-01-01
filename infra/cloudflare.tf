@@ -213,7 +213,7 @@ resource "cloudflare_list" "bulk_redirects" {
     content {
       value {
         redirect {
-          source_url            = "${item.key}.rebmit.moe"
+          source_url            = "${item.key}.rebmit.moe/"
           target_url            = "https://${item.key}.rebmit.workers.moe"
           status_code           = 301
           include_subdomains    = "disabled"

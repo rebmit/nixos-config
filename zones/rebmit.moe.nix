@@ -49,5 +49,6 @@ dns.lib.toString "rebmit.moe" {
     miniflux.CNAME = [ "suwako-vie0.rebmit.link." ];
     ntfy.CNAME = [ "fallback.workers.moe." ];
     prometheus.CNAME = [ "fallback.workers.moe." ];
+    vault.CNAME = [ "suwako-vie1.rebmit.link." ];
   };
 }
