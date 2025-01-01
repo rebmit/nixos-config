@@ -10,7 +10,6 @@
     ++ (with profiles; [
       services.caddy
       services.keycloak
-      services.knot.secondary
       services.mail.dovecot
       services.mail.postfix
       services.mail.rspamd

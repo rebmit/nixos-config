@@ -37,7 +37,7 @@ rec {
   secondary = [
     "reisen-nrt0"
     "reisen-sin0"
-    "suwako-vie0"
+    "suwako-vie1"
   ];
   nameservers = [ primary ] ++ secondary;
   hosts = data.hosts;

@@ -9,6 +9,7 @@
     suites.server
     ++ (with profiles; [
       services.caddy
+      services.knot.secondary
       services.prometheus.node-exporter
       services.prometheus.ping-exporter
     ])
