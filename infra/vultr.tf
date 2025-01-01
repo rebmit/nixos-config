@@ -8,10 +8,6 @@ locals {
       region = "sea"
       plan   = "vhp-1c-1gb-amd"
     }
-    "reisen-fra0" = {
-      region = "fra"
-      plan   = "vhp-1c-1gb-amd"
-    }
     "reisen-nrt0" = {
       region = "nrt"
       plan   = "vhp-1c-1gb-amd"

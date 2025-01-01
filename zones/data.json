@@ -60,18 +60,6 @@
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9fXHmGnidVo2MoV4ayYBbFmQebM7ldDT/o+fCP4mMU",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/IIzE70sM77KfOHas/WXa5D6vCBMP6cQVforOxpmoYyTmIB5we0n0YuZlp8giimN8E4yRfq/9Kc7hdpog9UR2sTb19YqpiCUsTEWJSP5NXWY0KALwE6Na6rijCprsuf6rv/ndT3MbCcDdi0myZGZV8Qe6g/+JfWlfWtsjvHkph+/U9QqZSmNnU1WlDHS1SlCkchjpJlPN2jx7dgJ61vqO0+0yTu76pl1kl8lFoMlsI8jIGAAluJMp2ktxs+sE34qpWCmCiWtU2CzgS+XVG53sZdjIXQhb3hBKCyjdBr36bNWfMNNB2FXgSqQOzQJxR3SRn+3PKQSuP+uQCrAX68hzQZg7x7gsA3tM8W+XtkDjaejUJ3USnouh5D8tYLMroeAbBwulS+4mQaCvC5CWE8MdqMwAwGC6unjbfq3tC3QkrWohOFZyXJ862TTOywJiVk1qP/kz63yeXD5pbFx/WyfpQW12TKlzIClHnbfTCTY7AuxoXnhJTKIXN28QIB6ZNwba3nOg34HhAXXgJF+l+UENN1MZ/mg0jOJ0IlVmGjEulZdI+G/eCfvfYv8pU7ItZvrge98vX0aWqAE54RQGO+dpkFz651LEBeCe+UB2xzjxnm0dMmhdUKsV/KEKRhSiKPNk3iBy52DVXCoBGPG/3b6Hc6c7ARiv0EGYm81xxrktkw=="
     },
-    "reisen-fra0": {
-      "b2_backup_bucket_name": "rebmit-backup-reisen-fra0",
-      "endpoints": ["45.76.85.223", "2001:19f0:6c00:17df:5400:05ff:fe35:27db"],
-      "endpoints_v4": ["45.76.85.223"],
-      "endpoints_v6": ["2001:19f0:6c00:17df:5400:05ff:fe35:27db"],
-      "enthalpy_node_address": "fde3:3be3:a244:f2d0::1",
-      "enthalpy_node_id": 3885,
-      "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "fde3:3be3:a244:f2d0::/60",
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8fcTLxR7Ka/Rkmww+3cN+itkBhZjxL6xhBjNYm3E4R",
-      "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDexqlexFdKKpE/ibr94fIkFm+ThDZZoBHauvLFqWqhGUJgvOsRXt8TalgcRtdKQi5zbXhhi0KMEtoozvjhLT+ZJA3SSU/cC/7Etnx/ewoMWoGaS01IEPc73HR1HNhIjYffhECEXNNjoK4v/iJjPiizuhjrWO74VWobyYcrFyITqk0ETmTggTX2gRG0AvUEFYZ8BOHlGUgfU2vGdpui0pRc4zPsu8/ICsK4Pk6DPASeuOZiT78wBNZBN5k7irVAuNZdIk4tvPywGlC9fxQPjXJ9yy/nZ00rOUk7RGhCbV+jC08rnIM3JUQLzo4n7nHMYCieKbRTbleaYJgzqeUtyllwTY7lvPo3eOL4bSyFC1Nv5j363kLA8/LhfHYTKWEd68hmr0/ApIqZXkblWgwPjfBHIGNDxP/Zv6QsHQ6rx/kP+Nxu8KJ1QkZikNezt41fwpdk/k5jSVeEaYyFeh4qim7KynNkS1g29Yf1XlT/neVk1i824kB2Sy7J8sl1fKaxT9gIbL9vzusOa7dm2tBy2vMhN1iP15h8BL5XCnsoxQng2VaeAicq2wNrgeAqupBpgCY4Zalrd0ep3VxVD/P3YIQD1BRKKKU6Zsj567Ws9JEffOUYGqWNer6/boWuVR1fGWJdEs2qD6g/WLOxAJyWs9+citoN2ZorcxW7IpAaKW3T+w=="
-    },
     "reisen-nrt0": {
       "b2_backup_bucket_name": "rebmit-backup-reisen-nrt0",
       "endpoints": ["45.77.183.85", "2001:19f0:7002:0f85:5400:05ff:fe35:27dc"],
