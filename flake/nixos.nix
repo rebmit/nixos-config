@@ -64,9 +64,14 @@ let
         services.restic
       ];
 
+      monitoring = with profiles; [
+        services.prometheus.node-exporter
+        services.prometheus.ping-exporter
+      ];
+
       workstation = suites.baseline ++ suites.network ++ suites.desktop ++ suites.backup;
 
-      server = suites.baseline ++ suites.network ++ suites.backup;
+      server = suites.baseline ++ suites.network ++ suites.backup ++ suites.monitoring;
     }
   );
 in

@@ -15,8 +15,6 @@
       services.matrix.synapse
       services.miniflux
       services.postgresql
-      services.prometheus.node-exporter
-      services.prometheus.ping-exporter
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
