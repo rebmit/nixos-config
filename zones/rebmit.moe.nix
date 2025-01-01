@@ -7,7 +7,7 @@
 with dns.lib.combinators;
 let
   common = import ./common.nix;
-  inherit (common.hosts) suwako-vie0;
+  inherit (common.hosts) suwako-vie1;
 in
 dns.lib.toString "rebmit.moe" {
   inherit (common)
@@ -17,8 +17,8 @@ dns.lib.toString "rebmit.moe" {
     DKIM
     DMARC
     ;
-  A = suwako-vie0.endpoints_v4;
-  AAAA = suwako-vie0.endpoints_v6;
+  A = suwako-vie1.endpoints_v4;
+  AAAA = suwako-vie1.endpoints_v6;
   HTTPS = [
     {
       alpn = [
