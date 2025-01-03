@@ -68,7 +68,7 @@
 
     # libraries
 
-    rebmit.url = "github:rebmit/nix-exprs";
+    rebmit.url = "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz";
     flake-utils.url = "github:numtide/flake-utils";
     dns = {
       url = "github:NickCao/dns.nix";
