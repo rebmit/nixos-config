@@ -9,6 +9,7 @@
     suites.server
     ++ (with profiles; [
       services.caddy
+      services.forgejo
       services.keycloak
       services.matrix.heisenbridge
       services.matrix.mautrix-telegram
