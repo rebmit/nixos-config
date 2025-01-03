@@ -10,21 +10,96 @@ locals {
 # ------------------------------------
 # authenticated origin pulls - common
 
+resource "tls_private_key" "cloudflare_aop_ca" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
+
+resource "tls_self_signed_cert" "cloudflare_aop_ca" {
+  is_ca_certificate = true
+  private_key_pem   = tls_private_key.cloudflare_aop_ca.private_key_pem
+  subject {
+    common_name  = "workers.moe"
+    organization = "rebmit"
+  }
+  validity_period_hours = 8760 # 1 year
+  early_renewal_hours   = 4320 # 6 months
+  allowed_uses = [
+    "cert_signing",
+    "crl_signing"
+  ]
+}
+
+output "cloudflare_aop_ca_certificate" {
+  value     = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
+  sensitive = false
+}
+
+resource "tls_private_key" "cloudflare_aop_leaf" {
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
+
+resource "tls_cert_request" "cloudflare_aop_leaf" {
+  private_key_pem = tls_private_key.cloudflare_aop_leaf.private_key_pem
+  dns_names       = ["*.rebmit.workers.moe", "*.rebmit.moe"]
+  subject {
+    common_name  = "workers.moe"
+    organization = "rebmit"
+  }
+}
+
+resource "tls_locally_signed_cert" "cloudflare_aop_leaf" {
+  cert_request_pem   = tls_cert_request.cloudflare_aop_leaf.cert_request_pem
+  ca_private_key_pem = tls_private_key.cloudflare_aop_ca.private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
+
+  validity_period_hours = 4320 # 6 months
+  early_renewal_hours   = 2160 # 3 months
+  allowed_uses = [
+    "client_auth"
+  ]
+}
+
 resource "cloudflare_authenticated_origin_pulls" "default" {
   zone_id = local.cloudflare_workers_zone_id
   enabled = true
 }
 
+resource "cloudflare_authenticated_origin_pulls_certificate" "zone" {
+  zone_id     = local.cloudflare_workers_zone_id
+  certificate = tls_locally_signed_cert.cloudflare_aop_leaf.cert_pem
+  private_key = tls_private_key.cloudflare_aop_leaf.private_key_pem
+  type        = "per-zone"
+}
+
+resource "cloudflare_authenticated_origin_pulls" "zone" {
+  zone_id                                = local.cloudflare_workers_zone_id
+  authenticated_origin_pulls_certificate = cloudflare_authenticated_origin_pulls_certificate.zone.id
+  enabled                                = true
+}
+
 # ------------------------------------
 # custom hostname ssl - common
 
-resource "cloudflare_record" "fallback" {
-  name    = "fallback"
-  proxied = true
-  ttl     = 1
-  type    = "AAAA"
-  content = "100::"
-  zone_id = local.cloudflare_workers_zone_id
+resource "cloudflare_record" "fallback_a" {
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v4)
+  name     = "fallback"
+  proxied  = true
+  ttl      = 1
+  type     = "A"
+  content  = each.value
+  zone_id  = local.cloudflare_workers_zone_id
+}
+
+resource "cloudflare_record" "fallback_aaaa" {
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v6)
+  name     = "fallback"
+  proxied  = true
+  ttl      = 1
+  type     = "AAAA"
+  content  = each.value
+  zone_id  = local.cloudflare_workers_zone_id
 }
 
 resource "cloudflare_custom_hostname_fallback_origin" "fallback" {
@@ -33,7 +108,7 @@ resource "cloudflare_custom_hostname_fallback_origin" "fallback" {
 }
 
 # ------------------------------------
-# cloudflare zero trust - common
+# zero trust - common
 
 resource "cloudflare_zero_trust_access_policy" "default" {
   account_id = local.cloudflare_main_account_id
@@ -69,159 +144,90 @@ resource "cloudflare_zero_trust_access_identity_provider" "oidc_keycloak" {
 }
 
 # ------------------------------------
-# cloudflare workers - mirror
+# workers - mirror
+
+resource "cloudflare_record" "mirror_cname" {
+  name    = "mirror.rebmit"
+  proxied = true
+  ttl     = 1
+  type    = "CNAME"
+  content = "fallback.workers.moe"
+  zone_id = local.cloudflare_workers_zone_id
+}
 
 module "cloudflare_workers_mirror" {
   source     = "./modules/cloudflare-workers"
   name       = "mirror"
+  hostname   = ["mirror.rebmit.workers.moe"]
   script     = file("${path.module}/resources/cloudflare-workers/mirror.js")
   account_id = local.cloudflare_main_account_id
   zone_id    = local.cloudflare_workers_zone_id
 }
 
 # ------------------------------------
-# cloudflare reverse proxy - common
+# zero trust - prom
 
-resource "tls_private_key" "cloudflare_aop_ca" {
-  algorithm   = "ECDSA"
-  ecdsa_curve = "P384"
-}
-
-resource "tls_self_signed_cert" "cloudflare_aop_ca" {
-  is_ca_certificate = true
-  private_key_pem   = tls_private_key.cloudflare_aop_ca.private_key_pem
-  subject {
-    common_name  = "workers.moe"
-    organization = "rebmit"
-  }
-  validity_period_hours = 8760 # 1 year
-  early_renewal_hours   = 4320 # 6 months
-  allowed_uses = [
-    "cert_signing",
-    "crl_signing"
-  ]
-}
-
-output "cloudflare_aop_ca_certificate" {
-  value     = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
-  sensitive = false
-}
-
-# ------------------------------------
-# cloudflare reverse proxy - ntfy
-
-module "cloudflare_reverse_proxy_ntfy" {
-  source             = "./modules/cloudflare-reverse-proxy"
-  name               = "ntfy"
-  ca_private_key_pem = tls_private_key.cloudflare_aop_ca.private_key_pem
-  ca_cert_pem        = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
-  ipv4               = [module.vultr_instances["reisen-nrt0"].ipv4]
-  ipv6               = [module.vultr_instances["reisen-nrt0"].ipv6]
-  zone_id            = local.cloudflare_workers_zone_id
-}
-
-output "cloudflare_origin_ntfy_certificate" {
-  value     = module.cloudflare_reverse_proxy_ntfy.origin_certificate
-  sensitive = false
-}
-
-output "cloudflare_origin_ntfy_private_key" {
-  value     = module.cloudflare_reverse_proxy_ntfy.origin_private_key
-  sensitive = true
-}
-
-# ------------------------------------
-# cloudflare reverse proxy - prometheus
-
-module "cloudflare_reverse_proxy_prometheus" {
-  source             = "./modules/cloudflare-reverse-proxy"
-  name               = "prometheus"
-  ca_private_key_pem = tls_private_key.cloudflare_aop_ca.private_key_pem
-  ca_cert_pem        = tls_self_signed_cert.cloudflare_aop_ca.cert_pem
-  ipv4               = [module.vultr_instances["reisen-nrt0"].ipv4]
-  ipv6               = [module.vultr_instances["reisen-nrt0"].ipv6]
-  zone_id            = local.cloudflare_workers_zone_id
-}
-
-output "cloudflare_origin_prometheus_certificate" {
-  value     = module.cloudflare_reverse_proxy_prometheus.origin_certificate
-  sensitive = false
-}
-
-output "cloudflare_origin_prometheus_private_key" {
-  value     = module.cloudflare_reverse_proxy_prometheus.origin_private_key
-  sensitive = true
-}
-
-resource "cloudflare_zero_trust_access_application" "prometheus" {
-  zone_id                   = local.cloudflare_workers_zone_id
-  name                      = "Prometheus"
-  domain                    = "prometheus.rebmit.workers.moe"
-  type                      = "self_hosted"
-  session_duration          = "24h"
-  auto_redirect_to_identity = false
-  policies = [
-    cloudflare_zero_trust_access_policy.default.id
-  ]
-}
-
-# ------------------------------------
-# cloudflare rulesets - redirects
-
-resource "cloudflare_custom_hostname" "ntfy" {
+resource "cloudflare_record" "prom_a" {
+  name     = "prom.rebmit"
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v4)
+  proxied  = true
+  ttl      = 1
+  type     = "A"
+  content  = each.value
   zone_id  = local.cloudflare_workers_zone_id
-  hostname = "ntfy.rebmit.moe"
-  ssl {
-    method = "http"
-  }
 }
 
-resource "cloudflare_custom_hostname" "prometheus" {
+resource "cloudflare_record" "prom_aaaa" {
+  name     = "prom.rebmit"
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v6)
+  proxied  = true
+  ttl      = 1
+  type     = "AAAA"
+  content  = each.value
   zone_id  = local.cloudflare_workers_zone_id
-  hostname = "prometheus.rebmit.moe"
-  ssl {
-    method = "http"
-  }
 }
 
-resource "cloudflare_ruleset" "bulk_redirects" {
-  account_id = local.cloudflare_main_account_id
-  name       = "bulk_redirects"
-  kind       = "root"
-  phase      = "http_request_redirect"
-
-  rules {
-    action = "redirect"
-    action_parameters {
-      from_list {
-        name = cloudflare_list.bulk_redirects.name
-        key  = "http.request.full_uri"
-      }
-    }
-    expression = "http.request.full_uri in $bulk_redirects"
-    enabled    = true
-  }
+module "cloudflare_zero_trust_prom" {
+  source   = "./modules/cloudflare-zero-trust"
+  name     = "prom"
+  hostname = ["prom.rebmit.workers.moe", "prom.rebmit.moe"]
+  policies = [cloudflare_zero_trust_access_policy.default.id]
+  zone_id  = local.cloudflare_workers_zone_id
 }
 
-resource "cloudflare_list" "bulk_redirects" {
-  account_id = local.cloudflare_main_account_id
-  name       = "bulk_redirects"
-  kind       = "redirect"
+# ------------------------------------
+# dns only - push
 
-  dynamic "item" {
-    for_each = toset(["ntfy", "prometheus"])
-    content {
-      value {
-        redirect {
-          source_url            = "${item.key}.rebmit.moe/"
-          target_url            = "https://${item.key}.rebmit.workers.moe"
-          status_code           = 301
-          include_subdomains    = "disabled"
-          subpath_matching      = "enabled"
-          preserve_query_string = "enabled"
-          preserve_path_suffix  = "enabled"
-        }
-      }
-    }
+resource "cloudflare_record" "push_a" {
+  name     = "push.rebmit"
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v4)
+  proxied  = false
+  ttl      = 1
+  type     = "A"
+  content  = each.value
+  zone_id  = local.cloudflare_workers_zone_id
+}
+
+resource "cloudflare_record" "push_aaaa" {
+  name     = "push.rebmit"
+  for_each = toset(module.hosts["suwako-vie1"].endpoints_v6)
+  proxied  = false
+  ttl      = 1
+  type     = "AAAA"
+  content  = each.value
+  zone_id  = local.cloudflare_workers_zone_id
+}
+
+resource "cloudflare_record" "push_https" {
+  name    = "push.rebmit"
+  proxied = false
+  ttl     = 1
+  type    = "HTTPS"
+  zone_id = local.cloudflare_workers_zone_id
+
+  data {
+    priority = 1
+    target   = "."
+    value    = "alpn=\"h3,h2\""
   }
 }

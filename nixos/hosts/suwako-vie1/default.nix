@@ -13,6 +13,8 @@
       services.mail.dovecot
       services.mail.postfix
       services.mail.rspamd
+      services.ntfy
+      services.prometheus.server
       services.vaultwarden
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");

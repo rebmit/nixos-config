@@ -2,6 +2,10 @@ variable "name" {
   type = string
 }
 
+variable "hostname" {
+  type = list(string)
+}
+
 variable "script" {
   type = string
 }
@@ -22,18 +26,10 @@ terraform {
   }
 }
 
-resource "cloudflare_record" "dns" {
-  name    = "${var.name}.rebmit"
-  proxied = true
-  ttl     = 1
-  type    = "CNAME"
-  content = "fallback.workers.moe"
-  zone_id = var.zone_id
-}
-
 resource "cloudflare_workers_route" "workers" {
+  for_each    = toset(var.hostname)
   script_name = cloudflare_workers_script.workers.name
-  pattern     = "${cloudflare_record.dns.hostname}/*"
+  pattern     = "${each.value}/*"
   zone_id     = var.zone_id
 }
 
@@ -45,8 +41,9 @@ resource "cloudflare_workers_script" "workers" {
 }
 
 resource "cloudflare_custom_hostname" "workers" {
+  for_each = toset(var.hostname)
   zone_id  = var.zone_id
-  hostname = "${var.name}.rebmit.workers.moe"
+  hostname = each.value
   ssl {
     method = "http"
   }

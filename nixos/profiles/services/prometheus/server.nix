@@ -32,20 +32,20 @@ let
   ];
 in
 {
-  sops.secrets."prometheus/password" = {
+  sops.secrets."prom/password" = {
     sopsFile = config.sops.secretFiles.host;
     owner = config.systemd.services.prometheus.serviceConfig.User;
     restartUnits = [ "prometheus.service" ];
   };
 
-  sops.secrets."prometheus/alertmanager-ntfy" = {
+  sops.secrets."prom/alertmanager-ntfy" = {
     sopsFile = config.sops.secretFiles.host;
     restartUnits = [ "alertmanager.service" ];
   };
 
   services.prometheus = {
     enable = true;
-    webExternalUrl = "https://prometheus.rebmit.workers.moe";
+    webExternalUrl = "https://prom.rebmit.moe";
     listenAddress = "127.0.0.1";
     port = config.networking.ports.prometheus;
     retentionTime = "7d";
@@ -60,7 +60,7 @@ in
         metrics_path = "/metrics";
         basic_auth = {
           username = "prometheus";
-          password_file = config.sops.secrets."prometheus/password".path;
+          password_file = config.sops.secrets."prom/password".path;
         };
         static_configs = [ { inherit targets; } ];
       }
@@ -70,7 +70,7 @@ in
         metrics_path = "/caddy";
         basic_auth = {
           username = "prometheus";
-          password_file = config.sops.secrets."prometheus/password".path;
+          password_file = config.sops.secrets."prom/password".path;
         };
         static_configs = [ { inherit targets; } ];
       }
@@ -80,7 +80,7 @@ in
         metrics_path = "/ping";
         basic_auth = {
           username = "prometheus";
-          password_file = config.sops.secrets."prometheus/password".path;
+          password_file = config.sops.secrets."prom/password".path;
         };
         static_configs = [ { inherit targets; } ];
       }
@@ -169,7 +169,7 @@ in
             name = "ntfy";
             webhook_configs = [
               {
-                url = "https://ntfy.rebmit.workers.moe/alert?tpl=yes&m=${lib.escapeURL ''
+                url = "https://push.rebmit.workers.moe/alert?tpl=yes&m=${lib.escapeURL ''
                   Alert {{.status}}
                   {{range .alerts}}-----{{range $k,$v := .labels}}
                   {{$k}}={{$v}}{{end}}
@@ -194,7 +194,7 @@ in
 
   systemd.services.alertmanager.serviceConfig = {
     LoadCredential = [
-      "alertmanager-ntfy:${config.sops.secrets."prometheus/alertmanager-ntfy".path}"
+      "alertmanager-ntfy:${config.sops.secrets."prom/alertmanager-ntfy".path}"
     ];
   };
 
@@ -218,38 +218,18 @@ in
     };
   };
 
-  sops.secrets."cloudflare_origin_prometheus_private_key" = {
-    opentofu = {
-      enable = true;
-    };
-    restartUnits = [ "caddy.service" ];
-  };
-
-  systemd.services.caddy.serviceConfig = {
-    LoadCredential = [
-      "cloudflare_aop_prometheus_ca_cert:${builtins.toFile "cloudflare_aop_ca_certificate" data.cloudflare_aop_ca_certificate}"
-      "cloudflare_origin_prometheus_cert:${builtins.toFile "cloudflare_origin_prometheus_certificate" data.cloudflare_origin_prometheus_certificate}"
-      "cloudflare_origin_prometheus_key:${
-        config.sops.secrets."cloudflare_origin_prometheus_private_key".path
-      }"
-    ];
-  };
-
-  services.caddy.virtualHosts."prometheus.rebmit.workers.moe" =
-    let
-      credentialPath = "/run/credentials/caddy.service";
-    in
-    {
-      extraConfig = with config.services.prometheus; ''
-        tls ${credentialPath}/cloudflare_origin_prometheus_cert ${credentialPath}/cloudflare_origin_prometheus_key {
-          client_auth {
-            mode require_and_verify
-            trust_pool file ${credentialPath}/cloudflare_aop_prometheus_ca_cert
-          }
+  services.caddy.virtualHosts."prom.rebmit.moe" = {
+    serverAliases = [ "prom.rebmit.workers.moe" ];
+    extraConfig = with config.services.prometheus; ''
+      tls internal {
+        client_auth {
+          mode require_and_verify
+          trust_pool file ${builtins.toFile "cloudflare_aop_ca_certificate" data.cloudflare_aop_ca_certificate}
         }
-        reverse_proxy ${listenAddress}:${toString port}
-      '';
-    };
+      }
+      reverse_proxy ${listenAddress}:${toString port}
+    '';
+  };
 
   preservation.preserveAt."/persist".directories = [
     {

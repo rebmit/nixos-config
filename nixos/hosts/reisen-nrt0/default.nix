@@ -10,8 +10,6 @@
     ++ (with profiles; [
       services.caddy
       services.knot.secondary
-      services.ntfy
-      services.prometheus.server
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
