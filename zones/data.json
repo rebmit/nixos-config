@@ -96,9 +96,9 @@
     },
     "suwako-vie0": {
       "b2_backup_bucket_name": "rebmit-backup-suwako-vie0",
-      "endpoints": ["110.172.148.83", "2a0d:f302:136:7d2a::1"],
-      "endpoints_v4": ["110.172.148.83"],
-      "endpoints_v6": ["2a0d:f302:136:7d2a::1"],
+      "endpoints": ["203.34.137.22", "2a0d:f302:137:fd9c::1"],
+      "endpoints_v4": ["203.34.137.22"],
+      "endpoints_v6": ["2a0d:f302:137:fd9c::1"],
       "enthalpy_node_address": "fde3:3be3:a244:7630::1",
       "enthalpy_node_id": 1891,
       "enthalpy_node_organization": "rebmit's core network",

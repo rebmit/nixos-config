@@ -18,10 +18,10 @@
           IPv6AcceptRA = false;
         };
         routes = [
-          { Destination = "110.172.148.65"; }
-          { Destination = "2a0d:f302:136::1"; }
-          { Gateway = "110.172.148.65"; }
-          { Gateway = "2a0d:f302:136::1"; }
+          { Destination = "203.34.137.1"; }
+          { Destination = "2a0d:f302:137::1"; }
+          { Gateway = "203.34.137.1"; }
+          { Gateway = "2a0d:f302:137::1"; }
         ];
         dhcpV4Config.RouteMetric = 1024;
         dhcpV6Config.RouteMetric = 1024;
