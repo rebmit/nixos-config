@@ -7,21 +7,12 @@ let
     inputs.rebmit.overlays.default
     inputs.nixpkgs-terraform-providers-bin.overlay
 
-    # TODO: wait for https://nixpkgs-tracker.ocfox.me/?pr=358586
-    inputs.caddy-nix.overlays.default
-
-    (final: prev: {
+    (_final: prev: {
       libadwaita = prev.libadwaita.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ../patches/libadwaita-without-adwaita-theme.patch
         ];
         doCheck = false;
-      });
-      # TODO: wait for https://nixpkgs-tracker.ocfox.me/?pr=360101
-      xdg-desktop-portal-gnome = prev.xdg-desktop-portal-gnome.overrideAttrs (_old: {
-        propagatedUserEnvPkgs = [
-          final.nautilus
-        ];
       });
     })
   ];

@@ -6,6 +6,7 @@
     foliate
     libreoffice-fresh
     loupe
+    nautilus
     nheko
     papers
     seahorse

@@ -9,8 +9,8 @@
     enable = true;
     enableReload = true;
     package = pkgs.caddy.withPlugins {
-      plugins = [ "github.com/mholt/caddy-l4@3c6cc2c0ee0875899fde271fbdef95be3fef7a92" ];
-      hash = "sha256-s5LzVOAvVsZxbhdgIdpe1OBSHIAc/tCi+1pEofeQx6k=";
+      plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250102174933-6e5f5e311ead" ];
+      hash = "sha256-F7SZRTkJ2f/khJb1OCdbGNjxp95sN4Pl+Scir3PSKec=";
     };
   };
 
