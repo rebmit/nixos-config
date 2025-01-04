@@ -20,7 +20,6 @@ in
 
   systemd.user.services.waybar = {
     Unit = {
-      ConditionEnvironment = lib.singleton "WAYLAND_DISPLAY";
       Requisite = lib.singleton "graphical-session.target";
       After = lib.singleton "graphical-session.target";
     };
