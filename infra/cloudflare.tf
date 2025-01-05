@@ -129,20 +129,6 @@ resource "cloudflare_zero_trust_access_identity_provider" "pin_login" {
   type       = "onetimepin"
 }
 
-resource "cloudflare_zero_trust_access_identity_provider" "oidc_keycloak" {
-  account_id = local.cloudflare_main_account_id
-  name       = "Keycloak"
-  type       = "oidc"
-  config {
-    client_id     = "cloudflare"
-    client_secret = local.secrets.cloudflare.keycloak_oidc_secret
-    auth_url      = "https://id.rebmit.moe/realms/rebmit/protocol/openid-connect/auth"
-    token_url     = "https://id.rebmit.moe/realms/rebmit/protocol/openid-connect/token"
-    certs_url     = "https://id.rebmit.moe/realms/rebmit/protocol/openid-connect/certs"
-    scopes        = ["openid", "email", "profile"]
-  }
-}
-
 # ------------------------------------
 # workers - mirror
 
