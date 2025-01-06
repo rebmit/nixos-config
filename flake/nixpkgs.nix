@@ -8,6 +8,11 @@ let
     inputs.nixpkgs-terraform-providers-bin.overlay
 
     (_final: prev: {
+      mautrix-telegram = prev.mautrix-telegram.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          ../patches/mautrix-telegram-sticker.patch
+        ];
+      });
       libadwaita = prev.libadwaita.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ../patches/libadwaita-without-adwaita-theme.patch

@@ -1,0 +1,24 @@
+diff --git a/mautrix_telegram/util/webm_converter.py b/mautrix_telegram/util/webm_converter.py
+index 6ba4eed0..33d04514 100644
+--- a/mautrix_telegram/util/webm_converter.py
++++ b/mautrix_telegram/util/webm_converter.py
+@@ -26,13 +26,17 @@
+
+ converter_args = {
+     "gif": {
++        "input_args": ("-c:v", "libvpx-vp9"),
+         "output_args": ("-vf", "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse"),
+     },
+     "png": {
+-        "input_args": ("-ss", "0"),
++        "input_args": ("-c:v", "libvpx-vp9", "-ss", "0"),
+         "output_args": ("-frames:v", "1"),
+     },
+-    "webp": {},
++    "webp": {
++        "input_args": ("-c:v", "libvpx-vp9"),
++        "output_args": ("-loop", "0"),
++    },
+ }
+
+
