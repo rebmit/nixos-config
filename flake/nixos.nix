@@ -32,6 +32,7 @@ let
         system.nix.registry
         system.nix.settings
         system.nix.version
+        system.perlless
         system.preservation
         users.root
         # keep-sorted end
