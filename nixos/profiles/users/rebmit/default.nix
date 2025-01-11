@@ -5,7 +5,6 @@
   ...
 }:
 let
-  uid = config.ids.uids.rebmit;
   homeDirectory = "/home/rebmit";
   groupNameIfPresent =
     name: lib.optional (config.users.groups ? ${name}) config.users.groups.${name}.name;
@@ -13,8 +12,10 @@ in
 {
   programs.fish.enable = true;
 
+  ids.uids.rebmit = 1000;
+
   users.users.rebmit = {
-    inherit uid;
+    uid = config.ids.uids.rebmit;
     hashedPasswordFile = config.sops.secrets."user-password/rebmit".path;
     isNormalUser = true;
     shell = pkgs.fish;
