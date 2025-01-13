@@ -1,5 +1,5 @@
 {
   systemd.user.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "gtk3";
+    QT_QPA_PLATFORMTHEME = "xdgdesktopportal";
   };
 }
