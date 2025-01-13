@@ -106,7 +106,7 @@ in
             targets = [
               "https://rebmit.moe"
               "https://chat.rebmit.moe"
-              "https://id.rebmit.moe"
+              "https://idp.rebmit.moe"
               "https://rss.rebmit.moe"
             ];
           }

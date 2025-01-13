@@ -20,8 +20,8 @@
       OAUTH2_CLIENT_ID = "miniflux";
       OAUTH2_CLIENT_SECRET_FILE = "/run/credentials/miniflux.service/oidc-client-secret";
       OAUTH2_REDIRECT_URL = "${BASE_URL}/oauth2/oidc/callback";
-      OAUTH2_OIDC_PROVIDER_NAME = "id.rebmit.moe";
-      OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://id.rebmit.moe/realms/rebmit";
+      OAUTH2_OIDC_PROVIDER_NAME = "idp.rebmit.moe";
+      OAUTH2_OIDC_DISCOVERY_ENDPOINT = "https://idp.rebmit.moe/realms/rebmit";
       OAUTH2_USER_CREATION = 1;
     };
   };

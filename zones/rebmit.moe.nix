@@ -46,7 +46,7 @@ dns.lib.toString "rebmit.moe" {
   subdomains = {
     chat.CNAME = [ "suwako-vie0.rebmit.link." ];
     git.CNAME = [ "suwako-vie0.rebmit.link." ];
-    id.CNAME = [ "suwako-vie0.rebmit.link." ];
+    idp.CNAME = [ "suwako-vie0.rebmit.link." ];
     prom.CNAME = [ "fallback.workers.moe." ];
     push.CNAME = [ "suwako-vie1.rebmit.link." ];
     rss.CNAME = [ "suwako-vie0.rebmit.link." ];

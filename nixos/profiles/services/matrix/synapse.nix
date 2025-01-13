@@ -48,8 +48,8 @@
       oidc_providers = [
         {
           idp_id = "keycloak";
-          idp_name = "id.rebmit.moe";
-          issuer = "https://id.rebmit.moe/realms/rebmit";
+          idp_name = "idp.rebmit.moe";
+          issuer = "https://idp.rebmit.moe/realms/rebmit";
           client_id = "synapse";
           client_secret_path = config.sops.secrets."synapse/oidc-client-secret".path;
           scopes = [
