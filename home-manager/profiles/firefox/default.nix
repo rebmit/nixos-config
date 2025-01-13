@@ -119,21 +119,23 @@
         outline: none !important;
         box-shadow: none !important;
         background-color: var(--toolbar-bgcolor);
+        :root[inDOMFullscreen] & {    
+          padding-right: 0;
+          padding-bottom: 0;
+        }
       }
 
       #tabbrowser-tabpanels {
         border-radius: var(--border-radius-medium);
         box-shadow: var(--content-area-shadow);
         overflow: hidden;
+        :root[inDOMFullscreen] & {
+          border-radius: 0;
+        }
       }
 
-      :root[inDOMFullscreen] #tabbrowser-tabbox {
-        padding-right: 0;
-        padding-bottom: 0;
-      }
-
-      :root[inDOMFullscreen] #tabbrowser-tabpanels {
-        border-radius: 0;
+      .browser-toolbox-background {
+        background-color: var(--toolbar-bgcolor) !important;
       }
     '';
   };

@@ -31,7 +31,7 @@
 
     # nixos modules
 
-    preservation.url = "github:WilliButz/preservation";
+    preservation.url = "github:nix-community/preservation";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +61,7 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nixpkgs-terraform-providers-bin = {
-      url = "github:nix-community/nixpkgs-terraform-providers-bin";
+      url = "github:rebmit/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
