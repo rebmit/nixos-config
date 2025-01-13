@@ -64,19 +64,15 @@
               user = "root";
               group = "root";
             }
-            {
-              file = "/etc/machine-id";
-              inInitrd = true;
-              how = "symlink";
-              mode = "-";
-              user = "root";
-              group = "root";
-              configureParent = true;
-            }
           ];
         };
       }
     );
+  };
+
+  environment.etc."machine-id" = {
+    source = "/persist/etc/machine-id";
+    mode = "direct-symlink";
   };
 
   # https://github.com/NixOS/nixpkgs/pull/351151#issuecomment-2549025171

@@ -9,5 +9,8 @@
     pkiBundle = "/etc/secureboot";
   };
 
-  preservation.preserveAt."/persist".directories = [ "/etc/secureboot" ];
+  environment.etc."secureboot" = {
+    source = "/persist/etc/secureboot";
+    mode = "direct-symlink";
+  };
 }
