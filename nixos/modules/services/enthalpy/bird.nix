@@ -117,6 +117,7 @@ in
         randomize router id;
         interface "enta*" {
           type tunnel;
+          link quality etx;
           rxcost 32;
           rtt cost 1024;
           rtt max 1024 ms;
