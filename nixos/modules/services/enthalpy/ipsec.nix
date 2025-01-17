@@ -57,41 +57,14 @@ in
       '';
     };
     registry = mkOption {
-      type = types.path;
+      type = types.str;
       description = ''
-        Path to the registry.
-      '';
-    };
-    blacklist = mkOption {
-      type = types.nullOr (types.listOf types.str);
-      default = null;
-      description = ''
-        A list of organizations that are blacklisted.
-      '';
-    };
-    whitelist = mkOption {
-      type = types.nullOr (types.listOf types.str);
-      default = null;
-      description = ''
-        A list of organizations that are whitelisted.
+        Url to the registry.
       '';
     };
   };
 
   config = mkIf (cfg.enable && cfg.ipsec.enable) {
-    assertions = [
-      {
-        assertion = builtins.all id [
-          (cfg.ipsec.blacklist != null -> cfg.ipsec.whitelist == null)
-          (cfg.ipsec.whitelist != null -> cfg.ipsec.blacklist == null)
-        ];
-        message = ''
-          Only one of `config.services.enthalpy.ipsec.blacklist` or
-          `config.services.enthalpy.ipsec.whitelist` can be defined at a time.
-        '';
-      }
-    ];
-
     environment.etc."enthalpy/ranet/config.json".source =
       (pkgs.formats.json { }).generate "enthalpy-ranet-config-json"
         {
@@ -147,22 +120,7 @@ in
 
     systemd.services.enthalpy-ipsec =
       let
-        registry =
-          if cfg.ipsec.whitelist != null then
-            pkgs.runCommand "filtered-registry" { } ''
-              ${pkgs.jq}/bin/jq "[.[] | select(.organization | IN(${
-                concatMapStringsSep "," (org: "\\\"${org}\\\"") cfg.ipsec.whitelist
-              }))]" ${cfg.ipsec.registry} > $out
-            ''
-          else if cfg.ipsec.blacklist != null then
-            pkgs.runCommand "filtered-registry" { } ''
-              ${pkgs.jq}/bin/jq "[.[] | select(.organization | IN(${
-                concatMapStringsSep "," (org: "\\\"${org}\\\"") cfg.ipsec.blacklist
-              }) | not)]" ${cfg.ipsec.registry} > $out
-            ''
-          else
-            cfg.ipsec.registry;
-        command = "ranet -c /etc/enthalpy/ranet/config.json -r ${registry} -k ${cfg.ipsec.privateKeyPath}";
+        command = "ranet -c /etc/enthalpy/ranet/config.json -r /var/lib/enthalpy/registry.json -k ${cfg.ipsec.privateKeyPath}";
       in
       {
         path = with pkgs; [
@@ -175,6 +133,9 @@ in
         serviceConfig = mylib.misc.serviceHardened // {
           Type = "oneshot";
           RemainAfterExit = true;
+        };
+        unitConfig = {
+          AssertFileNotEmpty = "/var/lib/enthalpy/registry.json";
         };
         bindsTo = [
           "strongswan-swanctl.service"
@@ -195,5 +156,29 @@ in
         ];
         reloadTriggers = [ config.environment.etc."enthalpy/ranet/config.json".source ];
       };
+
+    systemd.tmpfiles.rules = [ "d /var/lib/enthalpy 0755 root root - -" ];
+
+    systemd.services.enthalpy-registry = {
+      path = with pkgs; [
+        curl
+        jq
+        coreutils
+      ];
+      script = ''
+        set -euo pipefail
+        curl --fail --retry 3 --retry-connrefused "${cfg.ipsec.registry}" --output /var/lib/enthalpy/registry.json.new
+        mv /var/lib/enthalpy/registry.json.new /var/lib/enthalpy/registry.json
+        /run/current-system/systemd/bin/systemctl reload-or-restart --no-block enthalpy-ipsec || true
+      '';
+      serviceConfig.Type = "oneshot";
+    };
+
+    systemd.timers.enthalpy-registry = {
+      timerConfig = {
+        OnCalendar = "*:0/15";
+      };
+      wantedBy = [ "timers.target" ];
+    };
   };
 }

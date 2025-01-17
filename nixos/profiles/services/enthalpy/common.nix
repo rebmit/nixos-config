@@ -2,7 +2,6 @@
   config,
   data,
   hostData,
-  self,
   lib,
   ...
 }:
@@ -31,7 +30,7 @@
         }
       ];
       privateKeyPath = config.sops.secrets."enthalpy_node_private_key_pem".path;
-      registry = "${self}/zones/registry.json";
+      registry = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
     };
     bird = {
       enable = true;
