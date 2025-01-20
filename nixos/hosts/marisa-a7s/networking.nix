@@ -10,10 +10,10 @@
   ];
 
   services.enthalpy = {
-    ipsec = {
-      interfaces = [ "wlan0" ];
-      whitelist = [ "rebmit's edge network" ];
-    };
+    ipsec.interfaces = [
+      "eno1"
+      "wlan0"
+    ];
     clat.segment = lib.singleton "fde3:3be3:a244:f876::2";
   };
 
