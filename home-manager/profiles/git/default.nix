@@ -5,7 +5,7 @@
     lfs.enable = true;
     extraConfig = {
       commit.gpgSign = true;
-      gpg.format = "ssh";
+      signing.format = "ssh";
       pull.rebase = true;
       init.defaultBranch = "master";
       fetch.prune = true;
