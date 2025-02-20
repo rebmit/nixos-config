@@ -1,16 +1,17 @@
-{ lib, ... }:
+{ ... }:
 {
   programs.git = {
     enable = true;
     lfs.enable = true;
+    signing = {
+      format = "ssh";
+      key = "~/.ssh/id_ed25519";
+    };
     extraConfig = {
       commit.gpgSign = true;
-      signing.format = "ssh";
       pull.rebase = true;
       init.defaultBranch = "master";
       fetch.prune = true;
     };
   };
-
-  programs.git.signing.key = lib.mkDefault "~/.ssh/id_ed25519";
 }
