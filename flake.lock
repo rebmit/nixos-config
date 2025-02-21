@@ -32,6 +32,7 @@
       },
       "original": {
         "owner": "numtide",
+        "ref": "main",
         "repo": "devshell",
         "type": "github"
       }
@@ -104,11 +105,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736143030,
-        "narHash": "sha256-+hu54pAoLDEZT9pjHlqL9DNzWz0NbUn8NEAHP7PQPzU=",
+        "lastModified": 1738453229,
+        "narHash": "sha256-7H9XgNiGLKN1G1CgRh0vUL4AheZSYzPm+zmZ7vxbJdo=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "b905f6fc23a9051a6e1b741e1438dbfc0634c6de",
+        "rev": "32ea77a06711b758da0ad9bd6a844c5740a87abd",
         "type": "github"
       },
       "original": {
@@ -151,11 +152,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735882644,
-        "narHash": "sha256-3FZAG+pGt3OElQjesCAWeMkQ7C/nB1oTHLRQ8ceP110=",
+        "lastModified": 1737465171,
+        "narHash": "sha256-R10v2hoJRLq8jcL4syVFag7nIGE7m13qO48wRIukWNg=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "a5a961387e75ae44cc20f0a57ae463da5e959656",
+        "rev": "9364dc02281ce2d37a1f55b6e51f7c0f65a75f17",
         "type": "github"
       },
       "original": {
@@ -344,11 +345,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1736767083,
-        "narHash": "sha256-OZHDb8i/n8CSLpakfODz0t46heIcGq6C367Yggg2lwc=",
+        "lastModified": 1740120235,
+        "narHash": "sha256-+x/stAkrpf7yG0cYZuWVGErucQc+GS1gYKaJYI705WY=",
         "owner": "rebmit",
         "repo": "nixpkgs",
-        "rev": "5a8b017272b9ca8f7df4fcb9a024dfa644d2b395",
+        "rev": "2b7cb897a753f10b76022d8db814290f11addf23",
         "type": "github"
       },
       "original": {
@@ -389,11 +390,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1736767410,
-        "narHash": "sha256-LvS9MeJVTuTM8EFth2z343BxZACv+MQdRoY9dwqpH2k=",
-        "rev": "ebc39f5c2d9548262ebcd964c5aab4ec24bf3574",
+        "lastModified": 1740120305,
+        "narHash": "sha256-Jv/eucJoOD4V4kZrCjE5d/XDf3AZwwU+Yhi/X/J62Dc=",
+        "rev": "d9e0103deba21a7be9c512503ee8ccb33c7fa694",
         "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/ebc39f5c2d9548262ebcd964c5aab4ec24bf3574.tar.gz"
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/d9e0103deba21a7be9c512503ee8ccb33c7fa694.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -507,11 +508,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1736154270,
-        "narHash": "sha256-p2r8xhQZ3TYIEKBoiEhllKWQqWNJNoT9v64Vmg4q8Zw=",
+        "lastModified": 1739829690,
+        "narHash": "sha256-mL1szCeIsjh6Khn3nH2cYtwO5YXG6gBiTw1A30iGeDU=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "13c913f5deb3a5c08bb810efd89dc8cb24dd968b",
+        "rev": "3d0579f5cc93436052d94b73925b48973a104204",
         "type": "github"
       },
       "original": {
