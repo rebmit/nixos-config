@@ -8,6 +8,7 @@
   imports =
     suites.server
     ++ (with profiles; [
+      services.bgp
       services.caddy
       services.knot.secondary
     ])

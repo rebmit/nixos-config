@@ -92,6 +92,7 @@ in
         inherit (cfg) mntnsPath bindMounts;
       in
       nameValuePair "netns-${name}-mntns" {
+        enable = false;
         path = with pkgs; [
           coreutils
           util-linux
