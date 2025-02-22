@@ -54,6 +54,12 @@ locals {
       enthalpy_node_id           = parseint("254", 16)
       enthalpy_node_organization = "core"
     }
+    "reisen-ams0" = {
+      endpoints_v4               = [module.vultr_instances["reisen-ams0"].ipv4]
+      endpoints_v6               = [module.vultr_instances["reisen-ams0"].ipv6]
+      enthalpy_node_id           = parseint("38c", 16)
+      enthalpy_node_organization = "core"
+    }
   }
 }
 
