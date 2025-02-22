@@ -70,7 +70,14 @@ let
         services.prometheus.ping-exporter
       ];
 
-      workstation = suites.baseline ++ suites.network ++ suites.desktop ++ suites.backup;
+      workstation =
+        suites.baseline
+        ++ suites.network
+        ++ suites.desktop
+        ++ suites.backup
+        ++ (with profiles; [
+          security.hardware-keys
+        ]);
 
       server = suites.baseline ++ suites.network ++ suites.backup ++ suites.monitoring;
     }
