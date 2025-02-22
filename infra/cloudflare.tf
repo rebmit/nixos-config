@@ -130,27 +130,6 @@ resource "cloudflare_zero_trust_access_identity_provider" "pin_login" {
 }
 
 # ------------------------------------
-# workers - mirror
-
-resource "cloudflare_record" "mirror_cname" {
-  name    = "mirror.rebmit"
-  proxied = true
-  ttl     = 1
-  type    = "CNAME"
-  content = "fallback.workers.moe"
-  zone_id = local.cloudflare_workers_zone_id
-}
-
-module "cloudflare_workers_mirror" {
-  source     = "./modules/cloudflare-workers"
-  name       = "mirror"
-  hostname   = ["mirror.rebmit.workers.moe"]
-  script     = file("${path.module}/resources/cloudflare-workers/mirror.js")
-  account_id = local.cloudflare_main_account_id
-  zone_id    = local.cloudflare_workers_zone_id
-}
-
-# ------------------------------------
 # zero trust - prom
 
 resource "cloudflare_record" "prom_a" {
