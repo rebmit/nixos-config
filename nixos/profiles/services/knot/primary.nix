@@ -148,6 +148,15 @@ in
             }
           );
         }
+        {
+          domain = "1.2.e.7.0.a.a.e.0.a.2.ip6.arpa";
+          file = pkgs.writeText "db.arpa.ip6.2.a.0.e.a.a.0.7.e.2.1" (
+            import ../../../../zones/1.2.e.7.0.a.a.e.0.a.2.ip6.arpa.nix {
+              inherit (inputs) dns;
+              inherit lib config;
+            }
+          );
+        }
       ];
     };
   };

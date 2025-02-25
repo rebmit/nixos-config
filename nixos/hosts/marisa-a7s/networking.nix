@@ -1,5 +1,6 @@
 {
   profiles,
+  config,
   lib,
   ...
 }:
@@ -15,6 +16,16 @@
       "wlan0"
     ];
     clat.segment = lib.singleton "2a0e:aa07:e21c:2546::2";
+  };
+
+  systemd.tmpfiles.settings = {
+    "10-iwd" = {
+      "/var/lib/iwd/ZJUWLAN-Secure.8021x".C.argument = config.sops.secrets."wireless/edu".path;
+    };
+  };
+
+  sops.secrets."wireless/edu" = {
+    sopsFile = config.sops.secretFiles.get "local.yaml";
   };
 
   systemd.network = {
