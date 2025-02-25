@@ -14,7 +14,7 @@
       "eno1"
       "wlan0"
     ];
-    clat.segment = lib.singleton "fde3:3be3:a244:f876::2";
+    clat.segment = lib.singleton "fde3:3be3:a244:2546::2";
   };
 
   systemd.network = {

@@ -18,23 +18,17 @@ locals {
       enthalpy_node_id           = parseint("572", 16)
       enthalpy_node_organization = "edge"
     }
-    "kanako-hkg0" = {
-      endpoints_v4               = ["103.214.22.143"]
-      endpoints_v6               = ["2406:ef80:1:3c5e::1"]
-      enthalpy_node_id           = parseint("f87", 16)
-      enthalpy_node_organization = "core"
-    }
     "suwako-vie0" = {
       endpoints_v4               = ["203.34.137.22"]
       endpoints_v6               = ["2a0d:f302:137:fd9c::1"]
-      enthalpy_node_id           = parseint("763", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_id           = null
+      enthalpy_node_organization = null
     }
     "suwako-vie1" = {
       endpoints_v4               = ["46.102.157.144"]
       endpoints_v6               = ["2a0d:f302:102:8e05::1"]
-      enthalpy_node_id           = parseint("f24", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_id           = null
+      enthalpy_node_organization = null
     }
     "reisen-sea0" = {
       endpoints_v4               = [module.vultr_instances["reisen-sea0"].ipv4]
