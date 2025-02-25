@@ -1,5 +1,5 @@
 locals {
-  enthalpy_network_prefix = "fde3:3be3:a244::/48"
+  enthalpy_network_prefix = "2a0e:aa07:e21c::/48"
   enthalpy_organizations = {
     core = "rebmit's core network"
     edge = "rebmit's edge network"

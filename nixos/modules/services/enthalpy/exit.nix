@@ -42,15 +42,6 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.exit.enable) {
-    systemd.network.networks."50-enthalpy" = {
-      matchConfig.Name = "enthalpy";
-      routes = singleton {
-        Destination = cfg.network;
-        Gateway = "fe80::ff:fe00:2";
-      };
-      linkConfig.RequiredForOnline = false;
-    };
-
     services.enthalpy.bird.config = ''
       protocol static {
         ipv6 sadr;

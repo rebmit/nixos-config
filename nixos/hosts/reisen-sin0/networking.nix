@@ -7,7 +7,7 @@
   services.enthalpy.ipsec.interfaces = [ "enp1s0" ];
 
   networking.nftables.tables.nat = {
-    family = "inet";
+    family = "ip";
     content = ''
       chain postrouting {
         type nat hook postrouting priority srcnat; policy accept;

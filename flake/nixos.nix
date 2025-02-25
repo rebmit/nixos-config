@@ -67,7 +67,6 @@ let
 
       monitoring = with profiles; [
         services.prometheus.node-exporter
-        services.prometheus.ping-exporter
       ];
 
       workstation =

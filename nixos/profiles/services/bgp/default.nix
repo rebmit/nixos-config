@@ -16,7 +16,7 @@
       protocol static announce6 {
         ipv6;
         route 2a0e:aa07:e210::/44 unreachable;
-        route 2a0e:aa07:e21c::/48 unreachable;
+        route 2a0e:aa07:e21c::/48 via fe80::ff:fe00:2 dev "enthalpy";
       }
       protocol kernel kernel6 {
         ipv6 {

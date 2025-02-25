@@ -11,7 +11,7 @@
 
   services.enthalpy = {
     ipsec.interfaces = [ "enp14s0" ];
-    clat.segment = lib.singleton "fde3:3be3:a244:2546::2";
+    clat.segment = lib.singleton "2a0e:aa07:e21c:2546::2";
   };
 
   systemd.network = {

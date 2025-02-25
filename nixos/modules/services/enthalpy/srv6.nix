@@ -46,6 +46,7 @@ in
     };
 
     systemd.network.networks."50-enthalpy" = {
+      matchConfig.Name = "enthalpy";
       routes = singleton {
         Destination = "::/0";
         Type = "blackhole";
@@ -58,6 +59,7 @@ in
         From = cfg.network;
         To = cfg.srv6.prefix;
       };
+      linkConfig.RequiredForOnline = false;
     };
 
     services.enthalpy.exit = {
