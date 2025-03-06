@@ -6,10 +6,13 @@
   ...
 }:
 let
-  inherit (lib) types;
+  inherit (lib) types isList isBool;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-  inherit (lib.attrsets) mapAttrs' nameValuePair;
+  inherit (lib.attrsets) mapAttrs' nameValuePair mapAttrsToList;
+  inherit (lib.strings) concatStringsSep;
+  inherit (lib.lists) concatLists;
+  inherit (lib.trivial) boolToString;
 in
 {
   options.networking.netns-ng = mkOption {
@@ -90,6 +93,43 @@ in
         wantedBy = [ "multi-user.target" ];
       }
     ) config.networking.netns-ng;
+
+    environment.systemPackages =
+      mapAttrsToList
+        (
+          name: cfg:
+          let
+            toOption = x: if isBool x then boolToString x else toString x;
+            attrsToProperties =
+              as:
+              concatStringsSep " " (
+                concatLists (
+                  mapAttrsToList (
+                    name: value:
+                    map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
+                  ) as
+                )
+              );
+          in
+          pkgs.writeShellApplication {
+            name = "netns-run-${name}";
+            text = ''
+              systemd-run --pipe --pty \
+                --property="User=$USER" \
+                ${attrsToProperties cfg.config.serviceConfig} \
+                --same-dir \
+                --wait "$@"
+            '';
+          }
+        )
+        (
+          config.networking.netns-ng
+          // {
+            init.config.serviceConfig = {
+              NetworkNamespacePath = "/proc/1/ns/net";
+            };
+          }
+        );
 
     # TODO: remove test netns
     networking.netns-ng.test = {

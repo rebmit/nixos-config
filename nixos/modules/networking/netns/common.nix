@@ -100,21 +100,5 @@ in
         wantedBy = [ "multi-user.target" ];
       }
     ) nonDefaultNetns;
-
-    environment.systemPackages = mkIf (nonDefaultNetns != { }) (
-      mapAttrsToList (
-        name: cfg:
-        let
-          inherit (cfg) netnsPath mntnsPath;
-        in
-        pkgs.writeShellApplication {
-          name = "netns-run-${name}";
-          runtimeInputs = with pkgs; [ util-linux ];
-          text = ''
-            pkexec nsenter -t $$ -e --mount=${mntnsPath} --net=${netnsPath} -S "$(id -u)" -G "$(id -g)" --wdns="$PWD" "$@"
-          '';
-        }
-      ) allNetns
-    );
   };
 }
