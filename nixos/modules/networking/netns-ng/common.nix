@@ -92,6 +92,16 @@ in
     ) config.networking.netns-ng;
 
     # TODO: remove test netns
-    networking.netns-ng.test = { };
+    networking.netns-ng.test = {
+      services.bird = {
+        enable = true;
+        config = ''
+          router id 1;
+          protocol device {
+            scan time 5;
+          }
+        '';
+      };
+    };
   };
 }
