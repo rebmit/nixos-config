@@ -18,7 +18,12 @@ let
     mapAttrs'
     nameValuePair
     ;
-  inherit (lib.strings) concatStringsSep concatMapStringsSep escapeShellArgs;
+  inherit (lib.strings)
+    concatStringsSep
+    concatMapStringsSep
+    escapeShellArgs
+    optionalString
+    ;
   inherit (lib.lists) remove filter;
   inherit (lib.meta) getExe;
 
@@ -148,66 +153,70 @@ in
   config = {
     system.extraSystemBuilderCmds = ''
       ${concatStringsSep "\n" (
-        mapAttrsToList (name: cfg: ''
-          mkdir -p $out/netns/${name}
-          ln -s ${cfg.build.etcMetadataImage} $out/netns/${name}/etc-metadata-image
-          ln -s ${cfg.build.etcBasedir}       $out/netns/${name}/etc-basedir
-        '') config.networking.netns-ng
+        mapAttrsToList (
+          name: cfg:
+          optionalString cfg.enable ''
+            mkdir -p $out/netns/${name}
+            ln -s ${cfg.build.etcMetadataImage} $out/netns/${name}/etc-metadata-image
+            ln -s ${cfg.build.etcBasedir}       $out/netns/${name}/etc-basedir
+          ''
+        ) config.networking.netns-ng
       )}
     '';
 
     systemd.services = mapAttrs' (
       name: cfg:
-      nameValuePair "netns-${name}-confext" {
-        inherit (cfg) enable;
-        path = with pkgs; [
-          coreutils
-          util-linux
-          move-mount-beneath
-        ];
-        script = ''
-          etcMetadataImage=$(readlink -f /run/current-system/netns/${name}/etc-metadata-image)
-          etcBasedir=$(readlink -f /run/current-system/netns/${name}/etc-basedir)
+      nameValuePair "netns-${name}-confext" (
+        mkIf cfg.enable {
+          path = with pkgs; [
+            coreutils
+            util-linux
+            move-mount-beneath
+          ];
+          script = ''
+            etcMetadataImage=$(readlink -f /run/current-system/netns/${name}/etc-metadata-image)
+            etcBasedir=$(readlink -f /run/current-system/netns/${name}/etc-basedir)
 
-          mkdir -p /run/netns-${name}/confext/etc
-          tmpMetadataMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc-metadata.XXXXXXXXXX)
-          mount --type erofs -o ro "$etcMetadataImage" "$tmpMetadataMount"
+            mkdir -p /run/netns-${name}/confext/etc
+            tmpMetadataMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc-metadata.XXXXXXXXXX)
+            mount --type erofs -o ro "$etcMetadataImage" "$tmpMetadataMount"
 
-          if ! mountpoint -q /run/netns-${name}/confext/etc; then
-            mount --type overlay overlay \
-              --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
-              /run/netns-${name}/confext/etc
-          else
-            tmpEtcMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc.XXXXXXXXXX)
-            mount --bind --make-private "$tmpEtcMount" "$tmpEtcMount"
-            mount --type overlay overlay \
-              --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
-              "$tmpEtcMount"
-            move-mount --move --beneath "$tmpEtcMount" /run/netns-${name}/confext/etc
-            umount --lazy --recursive /run/netns-${name}/confext/etc
-            umount --lazy "$tmpEtcMount"
-            rmdir "$tmpEtcMount"
-          fi
-
-          findmnt --type erofs --list --kernel --output TARGET | while read -r mountPoint; do
-            if [[ "$mountPoint" =~ ^/run/netns-${name}/confext/nixos-etc-metadata\..{10}$ && "$mountPoint" != "$tmpMetadataMount" ]]; then
-              umount --lazy "$mountPoint"
-              rmdir "$mountPoint"
+            if ! mountpoint -q /run/netns-${name}/confext/etc; then
+              mount --type overlay overlay \
+                --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
+                /run/netns-${name}/confext/etc
+            else
+              tmpEtcMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc.XXXXXXXXXX)
+              mount --bind --make-private "$tmpEtcMount" "$tmpEtcMount"
+              mount --type overlay overlay \
+                --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
+                "$tmpEtcMount"
+              move-mount --move --beneath "$tmpEtcMount" /run/netns-${name}/confext/etc
+              umount --lazy --recursive /run/netns-${name}/confext/etc
+              umount --lazy "$tmpEtcMount"
+              rmdir "$tmpEtcMount"
             fi
-          done
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        after = [ "netns-${name}.service" ];
-        partOf = [ "netns-${name}.service" ];
-        wantedBy = [
-          "netns-${name}.service"
-          "multi-user.target"
-        ];
-        restartTriggers = [ "${self}" ]; # hack
-      }
+
+            findmnt --type erofs --list --kernel --output TARGET | while read -r mountPoint; do
+              if [[ "$mountPoint" =~ ^/run/netns-${name}/confext/nixos-etc-metadata\..{10}$ && "$mountPoint" != "$tmpMetadataMount" ]]; then
+                umount --lazy "$mountPoint"
+                rmdir "$mountPoint"
+              fi
+            done
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+          };
+          after = [ "netns-${name}.service" ];
+          partOf = [ "netns-${name}.service" ];
+          wantedBy = [
+            "netns-${name}.service"
+            "multi-user.target"
+          ];
+          restartTriggers = [ "${self}" ]; # hack
+        }
+      )
     ) config.networking.netns-ng;
   };
 }

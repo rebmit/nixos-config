@@ -75,24 +75,25 @@ in
   config = {
     systemd.services = mapAttrs' (
       name: cfg:
-      nameValuePair "netns-${name}" {
-        inherit (cfg) enable;
-        path = with pkgs; [ iproute2 ];
-        script = ''
-          ip netns add ${name}
-          ip -n ${name} link set lo up
-        '';
-        preStop = ''
-          ip netns del ${name}
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        restartIfChanged = false;
-        after = [ "network-pre.target" ];
-        wantedBy = [ "multi-user.target" ];
-      }
+      nameValuePair "netns-${name}" (
+        mkIf cfg.enable {
+          path = with pkgs; [ iproute2 ];
+          script = ''
+            ip netns add ${name}
+            ip -n ${name} link set lo up
+          '';
+          preStop = ''
+            ip netns del ${name}
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+          };
+          restartIfChanged = false;
+          after = [ "network-pre.target" ];
+          wantedBy = [ "multi-user.target" ];
+        }
+      )
     ) config.networking.netns-ng;
 
     environment.systemPackages =

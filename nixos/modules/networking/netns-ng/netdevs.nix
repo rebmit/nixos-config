@@ -7,6 +7,7 @@
 let
   inherit (lib) types isAttrs;
   inherit (lib.options) mkOption;
+  inherit (lib.modules) mkIf;
   inherit (lib.attrsets)
     listToAttrs
     nameValuePair
@@ -90,32 +91,33 @@ in
           name: cfg:
           mapAttrsToList (
             n: v:
-            nameValuePair "netns-${name}-netdev-${n}" {
-              inherit (cfg) enable;
-              path = with pkgs; [ iproute2 ];
-              script = ''
-                ip link show dev "${n}" >/dev/null 2>&1 && ip link delete dev "${n}"
-                ip link add name "${n}" \
-                  ${optionalString (v.address != null) "address ${v.address}"} \
-                  ${optionalString (v.mtu != null) "mtu ${toString v.mtu}"} \
-                  type "${v.kind}" ${attrsToString v.extraArgs}
-                ip link set dev "${n}" up
-              '';
-              postStop = ''
-                ip link delete dev "${n}" || true
-              '';
-              serviceConfig = {
-                Type = "oneshot";
-                RemainAfterExit = true;
-                NetworkNamespacePath = cfg.netnsPath;
-              };
-              after = [ "netns-${name}.service" ];
-              partOf = [ "netns-${name}.service" ];
-              wantedBy = [
-                "netns-${name}.service"
-                "multi-user.target"
-              ];
-            }
+            nameValuePair "netns-${name}-netdev-${n}" (
+              mkIf cfg.enable {
+                path = with pkgs; [ iproute2 ];
+                script = ''
+                  ip link show dev "${n}" >/dev/null 2>&1 && ip link delete dev "${n}"
+                  ip link add name "${n}" \
+                    ${optionalString (v.address != null) "address ${v.address}"} \
+                    ${optionalString (v.mtu != null) "mtu ${toString v.mtu}"} \
+                    type "${v.kind}" ${attrsToString v.extraArgs}
+                  ip link set dev "${n}" up
+                '';
+                postStop = ''
+                  ip link delete dev "${n}" || true
+                '';
+                serviceConfig = {
+                  Type = "oneshot";
+                  RemainAfterExit = true;
+                  NetworkNamespacePath = cfg.netnsPath;
+                };
+                after = [ "netns-${name}.service" ];
+                partOf = [ "netns-${name}.service" ];
+                wantedBy = [
+                  "netns-${name}.service"
+                  "multi-user.target"
+                ];
+              }
+            )
           ) cfg.netdevs
         ) config.networking.netns-ng
       )

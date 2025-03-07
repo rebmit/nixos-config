@@ -65,26 +65,27 @@ in
   config = {
     systemd.services = mapAttrs' (
       name: cfg:
-      nameValuePair "netns-${name}-sysctl" {
-        inherit (cfg) enable;
-        path = with pkgs; [ procps ];
-        script = concatStrings (
-          mapAttrsToList (
-            n: v: optionalString (v != null) "sysctl -w \"${n}=${if v == false then "0" else toString v}\"\n"
-          ) cfg.sysctl
-        );
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          NetworkNamespacePath = cfg.netnsPath;
-        };
-        after = [ "netns-${name}.service" ];
-        partOf = [ "netns-${name}.service" ];
-        wantedBy = [
-          "netns-${name}.service"
-          "multi-user.target"
-        ];
-      }
+      nameValuePair "netns-${name}-sysctl" (
+        mkIf cfg.enable {
+          path = with pkgs; [ procps ];
+          script = concatStrings (
+            mapAttrsToList (
+              n: v: optionalString (v != null) "sysctl -w \"${n}=${if v == false then "0" else toString v}\"\n"
+            ) cfg.sysctl
+          );
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            NetworkNamespacePath = cfg.netnsPath;
+          };
+          after = [ "netns-${name}.service" ];
+          partOf = [ "netns-${name}.service" ];
+          wantedBy = [
+            "netns-${name}.service"
+            "multi-user.target"
+          ];
+        }
+      )
     ) config.networking.netns-ng;
   };
 }

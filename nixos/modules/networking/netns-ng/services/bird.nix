@@ -73,39 +73,40 @@ in
       let
         birdCfg = cfg.services.bird;
       in
-      nameValuePair "netns-${name}-bird" (mkMerge [
-        cfg.config
-        {
-          enable = cfg.enable && birdCfg.enable;
-          serviceConfig = mylib.misc.serviceHardened // {
-            Type = "forking";
-            Restart = "on-failure";
-            RestartSec = 5;
-            DynamicUser = true;
-            RuntimeDirectory = "netns-${name}/bird";
-            ExecStart = "${getExe' birdCfg.package "bird"} -s ${birdCfg.socket} -c /etc/bird/bird.conf";
-            ExecReload = "${getExe' birdCfg.package "birdc"} -s ${birdCfg.socket} configure";
-            ExecStop = "${getExe' birdCfg.package "birdc"} -s ${birdCfg.socket} down";
-            CapabilityBoundingSet = [
-              "CAP_NET_ADMIN"
-              "CAP_NET_BIND_SERVICE"
-              "CAP_NET_RAW"
-            ];
-            AmbientCapabilities = [
-              "CAP_NET_ADMIN"
-              "CAP_NET_BIND_SERVICE"
-              "CAP_NET_RAW"
-            ];
-            RestrictAddressFamilies = [
-              "AF_UNIX"
-              "AF_INET"
-              "AF_INET6"
-              "AF_NETLINK"
-            ];
-          };
-          reloadTriggers = optional birdCfg.autoReload cfg.confext."bird/bird.conf".source;
-        }
-      ])
+      nameValuePair "netns-${name}-bird" (
+        mkIf (cfg.enable && birdCfg.enable) (mkMerge [
+          cfg.config
+          {
+            serviceConfig = mylib.misc.serviceHardened // {
+              Type = "forking";
+              Restart = "on-failure";
+              RestartSec = 5;
+              DynamicUser = true;
+              RuntimeDirectory = "netns-${name}/bird";
+              ExecStart = "${getExe' birdCfg.package "bird"} -s ${birdCfg.socket} -c /etc/bird/bird.conf";
+              ExecReload = "${getExe' birdCfg.package "birdc"} -s ${birdCfg.socket} configure";
+              ExecStop = "${getExe' birdCfg.package "birdc"} -s ${birdCfg.socket} down";
+              CapabilityBoundingSet = [
+                "CAP_NET_ADMIN"
+                "CAP_NET_BIND_SERVICE"
+                "CAP_NET_RAW"
+              ];
+              AmbientCapabilities = [
+                "CAP_NET_ADMIN"
+                "CAP_NET_BIND_SERVICE"
+                "CAP_NET_RAW"
+              ];
+              RestrictAddressFamilies = [
+                "AF_UNIX"
+                "AF_INET"
+                "AF_INET6"
+                "AF_NETLINK"
+              ];
+            };
+            reloadTriggers = optional birdCfg.autoReload cfg.confext."bird/bird.conf".source;
+          }
+        ])
+      )
     ) config.networking.netns-ng;
   };
 }

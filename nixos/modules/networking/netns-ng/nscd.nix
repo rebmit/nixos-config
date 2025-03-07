@@ -56,34 +56,35 @@ in
     {
       systemd.services = mapAttrs' (
         name: cfg:
-        nameValuePair "netns-${name}-nscd" {
-          enable = cfg.enable && cfg.nscd.enable;
-          serviceConfig = mylib.misc.serviceHardened // {
-            NetworkNamespacePath = cfg.netnsPath;
-            BindReadOnlyPaths = [ "/run/netns-${name}/confext/etc:/etc:norbind" ];
-            Type = "notify";
-            Restart = "on-failure";
-            RestartSec = 5;
-            DynamicUser = true;
-            RuntimeDirectory = "netns-${name}/nscd";
-            RuntimeDirectoryPreserve = true;
-            ExecStart = "${pkgs.nsncd}/bin/nsncd";
-          };
-          environment = {
-            LD_LIBRARY_PATH = config.system.nssModules.path;
-            NSNCD_SOCKET_PATH = "/run/netns-${name}/nscd/socket";
-          };
-          after = [
-            "netns-${name}.service"
-            "netns-${name}-confext.service"
-          ];
-          requires = [ "netns-${name}-confext.service" ];
-          partOf = [ "netns-${name}.service" ];
-          wantedBy = [
-            "netns-${name}.service"
-            "multi-user.target"
-          ];
-        }
+        nameValuePair "netns-${name}-nscd" (
+          mkIf (cfg.enable && cfg.nscd.enable) {
+            serviceConfig = mylib.misc.serviceHardened // {
+              NetworkNamespacePath = cfg.netnsPath;
+              BindReadOnlyPaths = [ "/run/netns-${name}/confext/etc:/etc:norbind" ];
+              Type = "notify";
+              Restart = "on-failure";
+              RestartSec = 5;
+              DynamicUser = true;
+              RuntimeDirectory = "netns-${name}/nscd";
+              RuntimeDirectoryPreserve = true;
+              ExecStart = "${pkgs.nsncd}/bin/nsncd";
+            };
+            environment = {
+              LD_LIBRARY_PATH = config.system.nssModules.path;
+              NSNCD_SOCKET_PATH = "/run/netns-${name}/nscd/socket";
+            };
+            after = [
+              "netns-${name}.service"
+              "netns-${name}-confext.service"
+            ];
+            requires = [ "netns-${name}-confext.service" ];
+            partOf = [ "netns-${name}.service" ];
+            wantedBy = [
+              "netns-${name}.service"
+              "multi-user.target"
+            ];
+          }
+        )
       ) config.networking.netns-ng;
     }
   ];
