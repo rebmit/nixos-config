@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -9,7 +8,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
-  inherit (lib.modules) mkMerge;
+  inherit (lib.modules) mkMerge mkIf;
   inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.strings) optionalString;
   inherit (lib.lists) optional;
@@ -53,21 +52,16 @@ in
             };
           };
 
-          config =
-            let
-              cfg = config.services.bird;
-            in
-            {
-              confext."bird/bird.conf".source = pkgs.writeTextFile {
-                name = "bird";
-                text = cfg.config;
-                derivationArgs.nativeBuildInputs = optional cfg.checkConfig cfg.package;
-                checkPhase = optionalString cfg.checkConfig ''
-                  ln -s $out bird.conf
-                  bird -d -p -c bird.conf
-                '';
-              };
+          config = mkIf (config.enable && config.services.bird.enable) {
+            confext."bird/bird.conf".source = pkgs.writeTextFile {
+              name = "bird";
+              text = config.services.bird.config;
+              checkPhase = optionalString config.services.bird.checkConfig ''
+                ln -s $out bird.conf
+                ${getExe' config.services.bird.package "bird"} -d -p -c bird.conf
+              '';
             };
+          };
         }
       )
     );

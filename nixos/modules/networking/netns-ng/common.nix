@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -43,7 +42,9 @@ in
               '';
             };
             build = mkOption {
-              inherit (options.system.build) type;
+              type = types.submodule {
+                freeformType = (pkgs.formats.json { }).type;
+              };
               default = { };
               description = ''
                 Attribute set of derivations used to set up the network namespace.
@@ -116,7 +117,7 @@ in
             text = ''
               systemd-run --pipe --pty \
                 --property="User=$USER" \
-                ${attrsToProperties cfg.config.serviceConfig} \
+                ${attrsToProperties (cfg.config.serviceConfig or { })} \
                 --same-dir \
                 --wait "$@"
             '';
@@ -133,8 +134,18 @@ in
 
     # TODO: remove test netns
     networking.netns-ng.test = {
+      enable = true;
+      netdevs.test = {
+        kind = "veth";
+        extraArgs = {
+          peer = {
+            name = "test";
+            netns = "/proc/1/ns/net";
+          };
+        };
+      };
       services.bird = {
-        enable = true;
+        enable = false;
         config = ''
           router id 1;
           protocol device {

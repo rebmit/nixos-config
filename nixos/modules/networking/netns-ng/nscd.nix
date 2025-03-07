@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -19,7 +18,7 @@ in
         { name, config, ... }:
         {
           options = {
-            nscd.enable = mkEnableOption "nsncd in the network namespace for isolated name lookup" // {
+            nscd.enable = mkEnableOption "nscd in the network namespace" // {
               default = true;
             };
           };
