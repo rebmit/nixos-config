@@ -25,7 +25,7 @@ in
             package = mkPackageOption pkgs "bird3" { };
             socket = mkOption {
               type = types.str;
-              default = "/run/netns-${name}/bird/bird.ctl";
+              default = "${config.runtimeDirectory}/bird/bird.ctl";
               description = ''
                 Path to the bird control socket.
               '';

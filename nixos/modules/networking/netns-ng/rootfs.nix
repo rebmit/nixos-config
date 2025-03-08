@@ -9,7 +9,7 @@
 }:
 let
   inherit (lib) types;
-  inherit (lib.options) mkOption;
+  inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.attrsets)
     attrValues
@@ -29,6 +29,40 @@ let
 
   inherit (config.system) nssDatabases;
   etc = config.environment.etc;
+
+  bindMountOptions =
+    { name, ... }:
+    {
+      options = {
+        enable = mkEnableOption "the bind mount" // {
+          default = true;
+        };
+        mountPoint = mkOption {
+          type = types.str;
+          description = ''
+            The mount point in the auxiliary mount namespace.
+          '';
+        };
+        sourcePath = mkOption {
+          type = types.str;
+          description = ''
+            The source path in the default mount namespace.
+          '';
+        };
+        isReadOnly = mkOption {
+          type = types.bool;
+          default = false;
+          description = ''
+            Whether the mounted path should be accessed in read-only mode.
+          '';
+        };
+      };
+
+      config = {
+        mountPoint = mkDefault name;
+        sourcePath = mkDefault name;
+      };
+    };
 in
 {
   options.networking.netns-ng = mkOption {
@@ -37,12 +71,38 @@ in
         { name, config, ... }:
         {
           options = {
+            runtimeDirectory = mkOption {
+              type = types.str;
+              default = "/run/netns-${name}";
+              readOnly = true;
+              description = ''
+                Path to the runtime directory for services within the
+                network namespace, relative to the host's root directory.
+              '';
+            };
+            rootDirectory = mkOption {
+              type = types.str;
+              default = "${config.runtimeDirectory}/rootfs";
+              readOnly = true;
+              description = ''
+                Root directory in the auxiliary mount namespace for the
+                network namespace, relative to the host's root directory.
+              '';
+            };
+            bindMounts = mkOption {
+              type = types.attrsOf (types.submodule bindMountOptions);
+              default = { };
+              description = ''
+                Per-network namespace bind mounts into the new root of the
+                auxiliary mount namespace.
+              '';
+            };
             confext = mkOption {
               inherit (options.environment.etc) type;
               default = { };
               description = ''
                 Per-network namespace configuration extensions that will be
-                merged on {file}`/etc`.
+                merged on {file}`/etc` in the auxiliary mount namespace.
               '';
             };
           };
@@ -136,13 +196,37 @@ in
                 };
               };
 
-              config = {
-                serviceConfig = {
-                  BindReadOnlyPaths = [ "/run/netns-${name}/confext/etc:/etc:norbind" ];
-                };
-                after = [ "netns-${name}-confext.service" ];
-                requires = [ "netns-${name}-confext.service" ];
+              bindMounts = mkDefault {
+                "/bin" = { };
+                "/boot" = { };
+                "/home" = { };
+                "/nix" = { };
+                "/persist" = { };
+                "/root" = { };
+                "/run" = { };
+                "/srv" = { };
+                "/tmp" = { };
+                "/usr" = { };
+                "/var" = { };
               };
+
+              config =
+                let
+                  enabledBindMounts = filter (d: d.enable) (attrValues config.bindMounts);
+                  rwBinds = filter (d: d.isReadOnly == false) enabledBindMounts;
+                  roBinds = filter (d: d.isReadOnly == true) enabledBindMounts;
+                in
+                {
+                  serviceConfig = {
+                    RootDirectory = config.rootDirectory;
+                    MountAPIVFS = "yes";
+                    TemporaryFileSystem = [ config.runtimeDirectory ];
+                    BindPaths = map (d: "${d.sourcePath}:${d.mountPoint}:rbind") rwBinds;
+                    BindReadOnlyPaths = map (d: "${d.sourcePath}:${d.mountPoint}:rbind") roBinds;
+                  };
+                  after = [ "netns-${name}-confext.service" ];
+                  requires = [ "netns-${name}-confext.service" ];
+                };
             }
           );
         }
@@ -166,6 +250,10 @@ in
 
     systemd.services = mapAttrs' (
       name: cfg:
+      let
+        confextPath = "${cfg.runtimeDirectory}/confext";
+        etcPath = "${cfg.rootDirectory}/etc";
+      in
       nameValuePair "netns-${name}-confext" (
         mkIf cfg.enable {
           path = with pkgs; [
@@ -177,28 +265,29 @@ in
             etcMetadataImage=$(readlink -f /run/current-system/netns/${name}/etc-metadata-image)
             etcBasedir=$(readlink -f /run/current-system/netns/${name}/etc-basedir)
 
-            mkdir -p /run/netns-${name}/confext/etc
-            tmpMetadataMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc-metadata.XXXXXXXXXX)
+            mkdir -p ${etcPath}
+            mkdir -p ${confextPath}
+            tmpMetadataMount=$(TMPDIR="${confextPath}" mktemp --directory -t nixos-etc-metadata.XXXXXXXXXX)
             mount --type erofs -o ro "$etcMetadataImage" "$tmpMetadataMount"
 
-            if ! mountpoint -q /run/netns-${name}/confext/etc; then
+            if ! mountpoint -q ${etcPath}; then
               mount --type overlay overlay \
                 --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
-                /run/netns-${name}/confext/etc
+                ${etcPath}
             else
-              tmpEtcMount=$(TMPDIR="/run/netns-${name}/confext" mktemp --directory -t nixos-etc.XXXXXXXXXX)
+              tmpEtcMount=$(TMPDIR="${confextPath}" mktemp --directory -t nixos-etc.XXXXXXXXXX)
               mount --bind --make-private "$tmpEtcMount" "$tmpEtcMount"
               mount --type overlay overlay \
                 --options "lowerdir=$tmpMetadataMount::$etcBasedir,relatime,redirect_dir=on,metacopy=on" \
                 "$tmpEtcMount"
-              move-mount --move --beneath "$tmpEtcMount" /run/netns-${name}/confext/etc
-              umount --lazy --recursive /run/netns-${name}/confext/etc
+              move-mount --move --beneath "$tmpEtcMount" ${etcPath}
+              umount --lazy --recursive ${etcPath}
               umount --lazy "$tmpEtcMount"
               rmdir "$tmpEtcMount"
             fi
 
             findmnt --type erofs --list --kernel --output TARGET | while read -r mountPoint; do
-              if [[ "$mountPoint" =~ ^/run/netns-${name}/confext/nixos-etc-metadata\..{10}$ && "$mountPoint" != "$tmpMetadataMount" ]]; then
+              if [[ "$mountPoint" =~ ^${confextPath}/nixos-etc-metadata\..{10}$ && "$mountPoint" != "$tmpMetadataMount" ]]; then
                 umount --lazy "$mountPoint"
                 rmdir "$mountPoint"
               fi

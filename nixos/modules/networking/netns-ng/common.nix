@@ -54,7 +54,9 @@ in
 
           config = mkIf config.enable {
             config = {
-              serviceConfig.NetworkNamespacePath = config.netnsPath;
+              serviceConfig = {
+                NetworkNamespacePath = config.netnsPath;
+              };
               after = [ "netns-${name}.service" ];
               partOf = [ "netns-${name}.service" ];
               wantedBy = [
@@ -129,6 +131,7 @@ in
           // {
             init.config.serviceConfig = {
               NetworkNamespacePath = "/proc/1/ns/net";
+              PrivateMounts = false;
             };
           }
         );
@@ -146,7 +149,7 @@ in
         };
       };
       services.bird = {
-        enable = false;
+        enable = true;
         config = ''
           router id 1;
           protocol device {
