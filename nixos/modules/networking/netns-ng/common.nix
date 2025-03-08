@@ -135,28 +135,5 @@ in
             };
           }
         );
-
-    # TODO: remove test netns
-    networking.netns-ng.test = {
-      enable = true;
-      netdevs.test = {
-        kind = "veth";
-        extraArgs = {
-          peer = {
-            name = "test";
-            netns = "/proc/1/ns/net";
-          };
-        };
-      };
-      services.bird = {
-        enable = true;
-        config = ''
-          router id 1;
-          protocol device {
-            scan time 5;
-          }
-        '';
-      };
-    };
   };
 }
