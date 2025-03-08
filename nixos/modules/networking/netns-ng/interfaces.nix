@@ -9,7 +9,6 @@ let
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
   inherit (lib.attrsets)
-    mapAttrs
     listToAttrs
     nameValuePair
     mapAttrsToList
@@ -82,6 +81,14 @@ let
             the interface.
           '';
         };
+        netdevDependencies = mkOption {
+          type = types.listOf types.str;
+          default = [ ];
+          description = ''
+            A list of additional systemd services that must be active
+            before the network interface configuration takes place.
+          '';
+        };
       };
     };
 
@@ -98,18 +105,12 @@ in
   options.networking.netns-ng = mkOption {
     type = types.attrsOf (
       types.submodule (
-        { config, ... }:
+        { ... }:
         {
           options = {
             interfaces = mkOption {
               type = types.attrsOf (types.submodule interfaceOptions);
               default = { };
-              apply =
-                ifs:
-                mapAttrs (
-                  name: value:
-                  if config.netdevs ? "${name}" then value else throw "Netdev config for '${name}' is not defined"
-                ) ifs;
               description = ''
                 Per-network namespace network interfaces configuration.
               '';
@@ -133,6 +134,8 @@ in
                 script = ''
                   state="${cfg.runtimeDirectory}/network/addresses/${n}"
                   mkdir -p "$(dirname "$state")"
+
+                  ip link set dev "${n}" up
 
                   ${concatMapStrings (addr: ''
                     echo "${addr}" >> $state
@@ -194,17 +197,14 @@ in
                 };
                 after = [
                   "netns-${name}.service"
-                  "netns-${name}-netdev-${n}.service"
-                ];
+                ] ++ v.netdevDependencies;
                 partOf = [
                   "netns-${name}.service"
-                  "netns-${name}-netdev-${n}.service"
-                ];
+                ] ++ v.netdevDependencies;
                 wantedBy = [
                   "netns-${name}.service"
-                  "netns-${name}-netdev-${n}.service"
                   "multi-user.target"
-                ];
+                ] ++ v.netdevDependencies;
               }
             )
           ) cfg.interfaces

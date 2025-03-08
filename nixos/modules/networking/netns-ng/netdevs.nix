@@ -100,7 +100,6 @@ in
                     ${optionalString (v.address != null) "address ${v.address}"} \
                     ${optionalString (v.mtu != null) "mtu ${toString v.mtu}"} \
                     type "${v.kind}" ${attrsToString v.extraArgs}
-                  ip link set dev "${n}" up
                 '';
                 postStop = ''
                   ip link delete dev "${n}" || true
