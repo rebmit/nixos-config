@@ -13,6 +13,11 @@ let
           ../patches/bird-babel-link-quality-estimation.patch
         ];
       });
+      bird3 = prev.bird3.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [
+          ../patches/bird-babel-link-quality-estimation.patch
+        ];
+      });
       mautrix-telegram = prev.mautrix-telegram.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ../patches/mautrix-telegram-sticker.patch

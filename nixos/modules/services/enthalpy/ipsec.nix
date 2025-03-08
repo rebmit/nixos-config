@@ -90,34 +90,6 @@ in
           }) cfg.ipsec.endpoints;
         };
 
-    services.strongswan-swanctl = {
-      enable = true;
-      strongswan.extraConfig = ''
-        charon {
-          interfaces_use = ${strings.concatStringsSep "," cfg.ipsec.interfaces}
-          port = 0
-          port_nat_t = ${toString config.networking.ports.enthalpy-ipsec}
-          retransmit_timeout = 30
-          retransmit_base = 1
-          plugins {
-            socket-default {
-              set_source = yes
-              set_sourceif = yes
-            }
-            dhcp {
-              load = no
-            }
-          }
-        }
-        charon-systemd {
-          journal {
-            default = -1
-            ike = 0
-          }
-        }
-      '';
-    };
-
     systemd.services.enthalpy-ipsec =
       let
         command = "ranet -c /etc/enthalpy/ranet/config.json -r /var/lib/enthalpy/registry.json -k ${cfg.ipsec.privateKeyPath}";
