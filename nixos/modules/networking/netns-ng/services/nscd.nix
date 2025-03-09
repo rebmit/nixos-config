@@ -17,8 +17,8 @@ in
       types.submodule (
         { config, ... }:
         {
-          options = {
-            services.nscd.enable = mkEnableOption "nscd" // {
+          options.services.nscd = {
+            enable = mkEnableOption "nscd" // {
               default = true;
             };
           };
@@ -26,7 +26,7 @@ in
           config = mkIf config.enable {
             config = {
               serviceConfig = {
-                BindReadOnlyPaths = mkIf config.services.nscd.enable [
+                BindPaths = mkIf config.services.nscd.enable [
                   "${config.runtimeDirectory}/nscd:/run/nscd:rbind"
                 ];
                 InaccessiblePaths = mkIf (!config.services.nscd.enable) [ "/run/nscd" ];

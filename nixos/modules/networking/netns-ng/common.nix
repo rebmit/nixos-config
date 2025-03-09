@@ -35,7 +35,6 @@ in
               type = types.submodule {
                 freeformType = (pkgs.formats.json { }).type;
               };
-              internal = true;
               default = { };
               description = ''
                 Systemd service configuration for entering the network namespace.
@@ -98,42 +97,32 @@ in
       )
     ) config.networking.netns-ng;
 
-    environment.systemPackages =
-      mapAttrsToList
-        (
-          name: cfg:
-          let
-            toOption = x: if isBool x then boolToString x else toString x;
-            attrsToProperties =
-              as:
-              concatStringsSep " " (
-                concatLists (
-                  mapAttrsToList (
-                    name: value:
-                    map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
-                  ) as
-                )
-              );
-          in
-          pkgs.writeShellApplication {
-            name = "netns-run-${name}";
-            text = ''
-              systemd-run --pipe --pty \
-                --property="User=$USER" \
-                ${attrsToProperties (cfg.config.serviceConfig or { })} \
-                --same-dir \
-                --wait "$@"
-            '';
-          }
-        )
-        (
-          config.networking.netns-ng
-          // {
-            init.config.serviceConfig = {
-              NetworkNamespacePath = "/proc/1/ns/net";
-              PrivateMounts = false;
-            };
-          }
-        );
+    environment.systemPackages = mapAttrsToList (
+      name: cfg:
+      let
+        toOption = x: if isBool x then boolToString x else toString x;
+        attrsToProperties =
+          as:
+          concatStringsSep " " (
+            concatLists (
+              mapAttrsToList (
+                name: value:
+                map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
+              ) as
+            )
+          );
+      in
+      pkgs.writeShellApplication {
+        name = "netns-run-${name}";
+        text = ''
+          systemd-run --pipe --pty \
+            --setenv=PATH \
+            --property="User=$USER" \
+            ${attrsToProperties (cfg.config.serviceConfig or { })} \
+            --same-dir \
+            --wait "$@"
+        '';
+      }
+    ) (config.networking.netns-ng // { init.config = { }; });
   };
 }
