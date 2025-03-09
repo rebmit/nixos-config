@@ -19,42 +19,44 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
-    networking.netns-ng.enthalpy-ng.services.bird = {
-      enable = true;
-      config = ''
-        router id ${toString cfg.identifier};
-        ipv6 sadr table sadr6;
-        protocol device {
-          scan time 5;
-        }
-        protocol kernel {
-          ipv6 sadr {
-            export all;
-            import none;
+    networking.netns-ng.enthalpy-ng = {
+      services.bird = {
+        enable = true;
+        config = ''
+          router id ${toString cfg.identifier};
+          ipv6 sadr table sadr6;
+          protocol device {
+            scan time 5;
+          }
+          protocol kernel {
+            ipv6 sadr {
+              export all;
+              import none;
+            };
+            metric 512;
+          }
+          protocol static {
+            ipv6 sadr;
+            route ${cfg.prefix} from ::/0 unreachable;
+            route ${cfg.network} from ::/0 unreachable;
           };
-          metric 512;
-        }
-        protocol static {
-          ipv6 sadr;
-          route ${cfg.prefix} from ::/0 unreachable;
-          route ${cfg.network} from ::/0 unreachable;
-        };
-        protocol babel {
-          ipv6 sadr {
-            export all;
-            import all;
-          };
-          randomize router id;
-          interface "enta*" {
-            type tunnel;
-            link quality etx;
-            rxcost 32;
-            rtt cost 1024;
-            rtt max 1024 ms;
-            rx buffer 2000;
-          };
-        }
-      '';
+          protocol babel {
+            ipv6 sadr {
+              export all;
+              import all;
+            };
+            randomize router id;
+            interface "enta*" {
+              type tunnel;
+              link quality etx;
+              rxcost 32;
+              rtt cost 1024;
+              rtt max 1024 ms;
+              rx buffer 2000;
+            };
+          }
+        '';
+      };
     };
   };
 }
