@@ -20,6 +20,13 @@ in
 {
   options.services.enthalpy-ng.clat = {
     enable = mkEnableOption "464XLAT for IPv4 connectivity";
+    prefix = mkOption {
+      type = types.str;
+      default = "64:ff9b::/96";
+      description = ''
+        IPv6 prefix used for NAT64 translation.
+      '';
+    };
     address = mkOption {
       type = types.str;
       default = cidr.host 2 cfg.prefix;
@@ -39,7 +46,7 @@ in
     networking.netns-ng.enthalpy-ng = {
       services.tayga.clat = {
         ipv4Address = "192.0.0.1";
-        prefix = "64:ff9b::/96";
+        prefix = cfg.clat.prefix;
         mapping = singleton {
           ipv4Address = "192.0.0.2";
           ipv6Address = cfg.clat.address;
@@ -61,7 +68,7 @@ in
       interfaces.enthalpy = {
         routes = [
           {
-            cidr = "64:ff9b::/96";
+            cidr = cfg.clat.prefix;
             extraOptions = {
               from = "${cfg.clat.address}/128";
               mtu = 1280;
