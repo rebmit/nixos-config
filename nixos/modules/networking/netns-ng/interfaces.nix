@@ -50,6 +50,13 @@ let
             The next hop of this route.
           '';
         };
+        table = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          description = ''
+            The routing table of this route.
+          '';
+        };
         extraOptions = mkOption {
           type = types.submodule {
             freeformType = (pkgs.formats.json { }).type;
@@ -159,15 +166,16 @@ in
                       inherit (route) cidr;
                       type = toString route.type;
                       via = optionalString (route.via != null) "via \"${route.via}\"";
+                      table = optionalString (route.table != null) "table \"${route.table}\"";
                       options = attrsToString route.extraOptions;
                     in
                     ''
                       echo "${cidr}" >> $state
                       echo -n "adding route ${cidr}... "
-                       if out=$(ip route replace ${type} "${cidr}" ${options} ${via} dev "${n}" proto static 2>&1); then
+                       if out=$(ip route replace ${type} "${cidr}" ${options} ${via} dev "${n}" ${table} proto static 2>&1); then
                          echo "done"
                        else
-                         echo "'ip route replace ${type} \"${cidr}\" ${options} ${via} dev \"${n}\"' failed: $out"
+                         echo "'ip route replace ${type} \"${cidr}\" ${options} ${via} dev \"${n}\" ${table}' failed: $out"
                          exit 1
                        fi
                     ''

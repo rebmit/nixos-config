@@ -104,5 +104,20 @@ in
         '';
       };
     };
+
+    services.enthalpy-ng.bird.exit.enable = true;
+
+    networking.netns-ng.enthalpy-ng = {
+      interfaces.host.routes = [
+        {
+          cidr = cfg.plat.prefix;
+          via = "fe80::ff:fe00:2";
+          table = "plat";
+          extraOptions = {
+            from = cfg.network;
+          };
+        }
+      ];
+    };
   };
 }
