@@ -11,6 +11,7 @@ let
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
   inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.lists) singleton;
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy-ng;
@@ -40,9 +41,15 @@ in
       "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.main}";
     };
 
-    # TODO: blackhole in localsid
-
     networking.netns-ng.enthalpy-ng = {
+      interfaces.lo = {
+        routes = singleton {
+          cidr = "::/0";
+          type = "blackhole";
+          table = netnsCfg.misc.routingTables.localsid;
+        };
+      };
+
       interfaces.enthalpy = {
         routes = mapAttrsToList (name: value: {
           cidr = name;
