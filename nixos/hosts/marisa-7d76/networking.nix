@@ -37,6 +37,7 @@
       registry = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
     };
     plat.enable = true;
+    srv6.enable = true;
   };
 
   systemd.network = {

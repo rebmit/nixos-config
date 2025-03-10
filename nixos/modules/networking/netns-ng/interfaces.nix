@@ -51,7 +51,12 @@ let
           '';
         };
         table = mkOption {
-          type = types.nullOr types.str;
+          type =
+            with types;
+            nullOr (oneOf [
+              str
+              int
+            ]);
           default = null;
           description = ''
             The routing table of this route.
@@ -65,6 +70,51 @@ let
           description = ''
             Extra route options. See the symbol `OPTIONS` in the
             {manpage}`ip-route(8)` manual page for the details.
+          '';
+        };
+      };
+    };
+
+  routingPolicyRuleOptions =
+    { ... }:
+    {
+      options = {
+        priority = mkOption {
+          type = types.int;
+          description = ''
+            Priority of the routing rule in the RPDB.
+          '';
+        };
+        family = mkOption {
+          type = types.listOf (
+            types.enum [
+              "ipv4"
+              "ipv6"
+            ]
+          );
+          default = [ "ipv6" ];
+          description = ''
+            IP family of the routing policy rule.
+          '';
+        };
+        selector = mkOption {
+          type = types.submodule {
+            freeformType = (pkgs.formats.json { }).type;
+          };
+          default = { };
+          description = ''
+            Selector options. See the symbol `SELECTOR` in the
+            {manpage}`ip-rule(8)` manual page for the details.
+          '';
+        };
+        action = mkOption {
+          type = types.submodule {
+            freeformType = (pkgs.formats.json { }).type;
+          };
+          default = { };
+          description = ''
+            Action options. See the symbol `ACTION` in the
+            {manpage}`ip-rule(8)` manual page for the details.
           '';
         };
       };
@@ -87,6 +137,14 @@ let
           default = [ ];
           description = ''
             List of extra static routes that will be assigned to
+            the interface.
+          '';
+        };
+        routingPolicyRules = mkOption {
+          type = types.listOf (types.submodule routingPolicyRuleOptions);
+          default = [ ];
+          description = ''
+            List of extra routing policy rules that will be assigned to
             the interface.
           '';
         };
@@ -166,11 +224,11 @@ in
                       inherit (route) cidr;
                       type = toString route.type;
                       via = optionalString (route.via != null) "via \"${route.via}\"";
-                      table = optionalString (route.table != null) "table \"${route.table}\"";
+                      table = optionalString (route.table != null) "table \"${toString route.table}\"";
                       options = attrsToString route.extraOptions;
                     in
                     ''
-                      echo "${cidr}" >> $state
+                      echo "${cidr} ${table}" >> $state
                       echo -n "adding route ${cidr}... "
                        if out=$(ip route replace ${type} "${cidr}" ${options} ${via} dev "${n}" ${table} proto static 2>&1); then
                          echo "done"
@@ -180,13 +238,56 @@ in
                        fi
                     ''
                   ) v.routes}
+
+                  state="${cfg.runtimeDirectory}/network/routes-policy-rules/${n}"
+                  mkdir -p "$(dirname "$state")"
+
+                  ${concatMapStrings (
+                    rule:
+                    let
+                      priority = "pref ${toString rule.priority}";
+                      selector = attrsToString rule.selector;
+                      action = attrsToString rule.action;
+                    in
+                    ''
+                      ${optionalString (builtins.elem "ipv4" rule.family) ''
+                        echo "-4 rule del ${priority}" >> $state
+                        echo -n "adding ipv4 route policy rule ${priority}... "
+                        if out=$(ip -4 rule add ${priority} ${selector} ${action} proto static 2>&1); then
+                          echo "done"
+                        else
+                          echo "'ip -4 rule add ${priority} ${selector} ${action}' failed: $out"
+                          exit 1
+                        fi
+                      ''}
+                      ${optionalString (builtins.elem "ipv6" rule.family) ''
+                        echo "-6 rule del ${priority}" >> $state
+                        echo -n "adding ipv6 route policy rule ${priority}... "
+                        if out=$(ip -6 rule add ${priority} ${selector} ${action} proto static 2>&1); then
+                          echo "done"
+                        else
+                          echo "'ip -6 rule add ${priority} ${selector} ${action}' failed: $out"
+                          exit 1
+                        fi
+                      ''}
+                    ''
+                  ) v.routingPolicyRules}
                 '';
                 preStop = ''
+                  state="${cfg.runtimeDirectory}/network/routes-policy-rules/${n}"
+                  if [ -e "$state" ]; then
+                    while read -r cmd; do
+                      echo -n "deleting rule $cmd ... "
+                      ip $cmd >/dev/null 2>&1 && echo "done" || echo "failed"
+                    done < "$state"
+                    rm -f "$state"
+                  fi
+
                   state="${cfg.runtimeDirectory}/network/routes/${n}"
                   if [ -e "$state" ]; then
-                    while read -r cidr; do
-                      echo -n "deleting route $cidr... "
-                      ip route del "$cidr" dev "${n}" >/dev/null 2>&1 && echo "done" || echo "failed"
+                    while read -r route; do
+                      echo -n "deleting route $route... "
+                      ip route del $route dev "${n}" >/dev/null 2>&1 && echo "done" || echo "failed"
                     done < "$state"
                     rm -f "$state"
                   fi

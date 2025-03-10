@@ -17,6 +17,7 @@ let
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy-ng;
+  netnsCfg = config.networking.netns-ng.enthalpy-ng;
 in
 {
   options.services.enthalpy-ng.plat = {
@@ -112,12 +113,19 @@ in
         {
           cidr = cfg.plat.prefix;
           via = "fe80::ff:fe00:2";
-          table = "plat";
+          table = netnsCfg.misc.routingTables.plat;
           extraOptions = {
             from = cfg.network;
           };
         }
       ];
+    };
+
+    services.enthalpy-ng.srv6 = {
+      enable = true;
+      actions = {
+        "${cidr.host 2 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.plat}";
+      };
     };
   };
 }
