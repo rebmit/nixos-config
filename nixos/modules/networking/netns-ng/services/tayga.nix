@@ -14,7 +14,7 @@ let
     nameValuePair
     mapAttrsToList
     ;
-  inherit (lib.strings) optionalString concatMapStringsSep;
+  inherit (lib.strings) optionalString concatStringsSep;
   inherit (lib.lists) flatten;
   inherit (lib.meta) getExe;
 
@@ -61,16 +61,9 @@ let
             setting is optional.
           '';
         };
-        mapping = mkOption {
-          type = types.listOf (
-            types.submodule {
-              options = {
-                ipv4Address = mkOption { type = types.str; };
-                ipv6Address = mkOption { type = types.str; };
-              };
-            }
-          );
-          default = [ ];
+        mappings = mkOption {
+          type = types.attrsOf types.str;
+          default = { };
           description = ''
             Single-host mapping between IPv4 and IPv6 address. This setting
             is optional.
@@ -136,7 +129,7 @@ in
                       ${optionalString (v.ipv6Address != null) "ipv6-addr ${v.ipv6Address}"}
                       ${optionalString (v.prefix != null) "prefix ${v.prefix}"}
                       ${optionalString (v.dynamicPool != null) "dynamic-pool ${v.dynamicPool}"}
-                      ${concatMapStringsSep "\n" (mp: "map ${mp.ipv4Address} ${mp.ipv6Address}") v.mapping}
+                      ${concatStringsSep "\n" (mapAttrsToList (name: value: "map ${name} ${value}") v.mappings)}
                     ''}";
                   };
                 }

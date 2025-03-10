@@ -1,6 +1,5 @@
 {
   hostData,
-  data,
   profiles,
   config,
   lib,
@@ -21,7 +20,6 @@
   services.enthalpy-ng = {
     enable = true;
     identifier = 3448;
-    network = data.enthalpy_network_prefix;
     ipsec = {
       organization = hostData.enthalpy_node_organization;
       commonName = config.networking.hostName;
@@ -38,14 +36,8 @@
       privateKeyPath = config.sops.secrets."enthalpy_node_private_key_pem".path;
       registry = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
     };
-    clat = {
-      enable = true;
-      segment = lib.singleton "2a0e:aa07:e21c:2546::2";
-    };
+    plat.enable = true;
   };
-
-  # TODO: remove test config
-  services.nat64.enable = true;
 
   systemd.network = {
     enable = true;

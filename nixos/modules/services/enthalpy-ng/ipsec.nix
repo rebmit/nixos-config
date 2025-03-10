@@ -17,7 +17,7 @@ let
 in
 {
   options.services.enthalpy-ng.ipsec = {
-    enable = mkEnableOption "IPSec/IKEv2 for link-scope connectivity" // {
+    enable = mkEnableOption "IPSec/IKEv2 integration" // {
       default = true;
     };
     organization = mkOption {

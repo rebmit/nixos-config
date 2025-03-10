@@ -19,25 +19,26 @@ let
 in
 {
   options.services.enthalpy-ng.clat = {
-    enable = mkEnableOption "464XLAT for IPv4 connectivity";
-    prefix = mkOption {
-      type = types.str;
-      default = "64:ff9b::/96";
-      description = ''
-        IPv6 prefix used for NAT64 translation.
-      '';
-    };
+    enable = mkEnableOption "the CLAT component of 464XLAT";
     address = mkOption {
       type = types.str;
       default = cidr.host 2 cfg.prefix;
       description = ''
-        IPv6 address used for 464XLAT as the mapped source address.
+        IPv6 address used for CLAT as the mapped source address
+        for outgoing packets from this node.
+      '';
+    };
+    prefix = mkOption {
+      type = types.str;
+      default = "64:ff9b::/96";
+      description = ''
+        IPv6 prefix used for the PLAT component of 464XLAT.
       '';
     };
     segment = mkOption {
       type = types.listOf types.str;
       description = ''
-        SRv6 segments used for NAT64.
+        SRv6 segments to reach the PLAT gateway.
       '';
     };
   };
@@ -47,10 +48,7 @@ in
       services.tayga.clat = {
         ipv4Address = "192.0.0.1";
         prefix = cfg.clat.prefix;
-        mapping = singleton {
-          ipv4Address = "192.0.0.2";
-          ipv6Address = cfg.clat.address;
-        };
+        mappings."192.0.0.2" = cfg.clat.address;
       };
 
       interfaces.clat = {
@@ -66,16 +64,14 @@ in
       };
 
       interfaces.enthalpy = {
-        routes = [
-          {
-            cidr = cfg.clat.prefix;
-            extraOptions = {
-              from = "${cfg.clat.address}/128";
-              mtu = 1280;
-              encap = "seg6 mode encap segs ${concatStringsSep "," cfg.clat.segment}";
-            };
-          }
-        ];
+        routes = singleton {
+          cidr = cfg.clat.prefix;
+          extraOptions = {
+            from = "${cfg.clat.address}/128";
+            mtu = 1280;
+            encap = "seg6 mode encap segs ${concatStringsSep "," cfg.clat.segment}";
+          };
+        };
       };
     };
   };
