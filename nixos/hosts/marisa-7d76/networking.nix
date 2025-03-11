@@ -1,43 +1,37 @@
 {
-  hostData,
   profiles,
   config,
   lib,
   ...
 }:
+let
+  inherit (lib.lists) singleton;
+in
 {
-  imports = with profiles; [
-    services.enthalpy.customer-dualstack
-    services.enthalpy.fw-proxy
-  ];
+  imports = with profiles; [ services.enthalpy ];
 
-  services.enthalpy = {
+  services.enthalpy-ng = {
     ipsec.interfaces = [ "enp14s0" ];
-    clat.segment = lib.singleton "2a0e:aa07:e21c:2546::2";
+    clat = {
+      enable = true;
+      segment = singleton "2a0e:aa07:e21c:2546::2";
+    };
   };
 
-  # TODO: remove test config
-  services.enthalpy-ng = {
-    enable = true;
-    identifier = 3448;
-    ipsec = {
-      organization = hostData.enthalpy_node_organization;
-      commonName = config.networking.hostName;
-      endpoints = [
-        {
-          serialNumber = "0";
-          addressFamily = "ip4";
-        }
-        {
-          serialNumber = "1";
-          addressFamily = "ip6";
-        }
-      ];
-      privateKeyPath = config.sops.secrets."enthalpy_node_private_key_pem".path;
-      registry = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
+  systemd.services.nix-daemon = config.networking.netns-ng.enthalpy-ng.config;
+  systemd.services."user@${toString config.users.users.rebmit.uid}" =
+    config.networking.netns-ng.enthalpy-ng.config
+    // {
+      overrideStrategy = "asDropin";
+      restartIfChanged = false;
     };
-    plat.enable = true;
-    srv6.enable = true;
+
+  services.proxy = {
+    enable = true;
+    inbounds = singleton {
+      netnsPath = config.networking.netns-ng.enthalpy-ng.netnsPath;
+      listenPort = config.networking.netns-ng.enthalpy-ng.misc.ports.proxy-init-netns;
+    };
   };
 
   systemd.network = {

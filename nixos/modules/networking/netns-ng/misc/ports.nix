@@ -40,5 +40,14 @@ in
         }
       ]) config.networking.netns-ng
     );
+
+    networking.netns-ng = {
+      enthalpy-ng = {
+        misc.ports = {
+          # local ports
+          proxy-init-netns = 3000;
+        };
+      };
+    };
   };
 }

@@ -28,6 +28,7 @@ in
     };
     commonName = mkOption {
       type = types.str;
+      default = config.networking.hostName;
       description = ''
         Name of this node, should be unique within an organization.
       '';
@@ -64,6 +65,7 @@ in
     };
     registry = mkOption {
       type = types.str;
+      default = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
       description = ''
         URL of the registry to be used.
       '';
