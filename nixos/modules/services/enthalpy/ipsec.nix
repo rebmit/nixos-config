@@ -178,6 +178,8 @@ in
         /run/current-system/systemd/bin/systemctl reload-or-restart --no-block ranet || true
       '';
       serviceConfig.Type = "oneshot";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
     };
 
     systemd.timers.ranet-registry = {

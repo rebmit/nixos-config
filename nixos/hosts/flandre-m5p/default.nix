@@ -9,7 +9,6 @@
     suites.server
     ++ (with profiles; [
       services.knot.ddns
-      virtualization.libvirtd
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 

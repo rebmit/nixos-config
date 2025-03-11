@@ -4,21 +4,21 @@
   config,
   ...
 }:
+let
+  inherit (lib.lists) singleton;
+in
 {
-  imports = with profiles; [
-    services.enthalpy.customer-dualstack
-  ];
-
-  systemd.services.nix-daemon = {
-    inherit (config.networking.netns.enthalpy) serviceConfig;
-    after = [ "netns-enthalpy.service" ];
-    requires = [ "netns-enthalpy.service" ];
-  };
+  imports = with profiles; [ services.enthalpy ];
 
   services.enthalpy = {
     ipsec.interfaces = [ "enp2s0" ];
-    clat.segment = lib.singleton "2a0e:aa07:e21c:2546::2";
+    clat = {
+      enable = true;
+      segment = singleton "2a0e:aa07:e21c:2546::2";
+    };
   };
+
+  systemd.services.nix-daemon = config.networking.netns-ng.enthalpy.config;
 
   systemd.network = {
     enable = true;
