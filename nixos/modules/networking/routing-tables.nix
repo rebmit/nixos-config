@@ -26,10 +26,8 @@ in
         local = 255;
 
         # enthalpy
-        localsid = 300;
-        nat64 = 301;
-
         plat = 400;
+        enthalpy = 410;
       };
       readOnly = true;
       description = ''
@@ -53,9 +51,7 @@ in
         default = 32767;
 
         plat = 400;
-
-        # enthalpy
-        localsid = 500;
+        enthalpy = 1000;
       };
       readOnly = true;
       description = ''

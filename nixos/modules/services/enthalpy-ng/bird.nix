@@ -8,7 +8,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkAfter;
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.lists) singleton;
 
@@ -161,7 +161,37 @@ in
         Gateway = "fe80::ff:fe00:1";
         GatewayOnLink = true;
       });
+      routingPolicyRules = mkIf config.services.bird.enable (singleton {
+        Priority = config.networking.routingPolicyPriorities.enthalpy;
+        Family = "ipv6";
+        Table = config.networking.routingTables.enthalpy;
+      });
       linkConfig.RequiredForOnline = false;
     };
+
+    services.bird.config = mkAfter ''
+      ipv6 sadr table sadr6;
+
+      protocol kernel {
+        kernel table ${toString config.networking.routingTables.enthalpy};
+        ipv6 sadr {
+          export all;
+          import none;
+        };
+        metric 512;
+      }
+
+      protocol babel {
+        ipv6 sadr {
+          export all;
+          import all;
+        };
+        randomize router id;
+        interface "enthalpy" {
+          type wired;
+          rx buffer 2000;
+        };
+      }
+    '';
   };
 }
