@@ -10,6 +10,7 @@ let
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatMapStringsSep optionalString;
+  inherit (lib.lists) singleton;
 
   cfg = config.services.enthalpy-ng;
   netnsCfg = config.networking.netns-ng.enthalpy-ng;
@@ -155,6 +156,11 @@ in
 
     systemd.network.networks."50-enthalpy" = mkIf cfg.bird.exit.enable {
       matchConfig.Name = "enthalpy";
+      routes = mkIf (!config.services.bird.enable) (singleton {
+        Destination = cfg.network;
+        Gateway = "fe80::ff:fe00:1";
+        GatewayOnLink = true;
+      });
       linkConfig.RequiredForOnline = false;
     };
   };

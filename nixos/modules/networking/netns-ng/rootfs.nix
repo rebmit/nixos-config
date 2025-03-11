@@ -227,7 +227,7 @@ in
                     BindReadOnlyPaths = map (d: "${d.sourcePath}:${d.mountPoint}:rbind") roBinds;
                   };
                   after = [ "netns-${name}-confext.service" ];
-                  requires = [ "netns-${name}-confext.service" ];
+                  wants = [ "netns-${name}-confext.service" ];
                 };
             }
           );
