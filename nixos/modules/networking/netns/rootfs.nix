@@ -67,7 +67,7 @@ let
     };
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { name, config, ... }:
@@ -246,7 +246,7 @@ in
             ln -s ${cfg.build.etcMetadataImage} $out/netns/${name}/etc-metadata-image
             ln -s ${cfg.build.etcBasedir}       $out/netns/${name}/etc-basedir
           ''
-        ) config.networking.netns-ng
+        ) config.networking.netns
       )}
     '';
 
@@ -308,6 +308,6 @@ in
           restartTriggers = [ "${self}" ]; # hack
         }
       )
-    ) config.networking.netns-ng;
+    ) config.networking.netns;
   };
 }

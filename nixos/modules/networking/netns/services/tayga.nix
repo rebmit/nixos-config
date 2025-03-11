@@ -81,7 +81,7 @@ let
     };
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { name, ... }:
@@ -136,7 +136,7 @@ in
               ])
             )
           ) cfg.services.tayga
-        ) config.networking.netns-ng
+        ) config.networking.netns
       )
     );
   };

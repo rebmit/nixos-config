@@ -13,7 +13,7 @@ let
   inherit (lib.lists) singleton;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns-ng.enthalpy;
+  netnsCfg = config.networking.netns.enthalpy;
 in
 {
   options.services.enthalpy.bird = {
@@ -44,7 +44,7 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
-    networking.netns-ng.enthalpy = {
+    networking.netns.enthalpy = {
       services.bird = {
         enable = true;
         config = ''

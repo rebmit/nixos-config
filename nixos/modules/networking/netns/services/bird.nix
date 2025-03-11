@@ -15,7 +15,7 @@ let
   inherit (lib.meta) getExe';
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { name, config, ... }:
@@ -107,6 +107,6 @@ in
           }
         ])
       )
-    ) config.networking.netns-ng;
+    ) config.networking.netns;
   };
 }

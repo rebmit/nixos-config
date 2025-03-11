@@ -17,7 +17,7 @@ let
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns-ng.enthalpy;
+  netnsCfg = config.networking.netns.enthalpy;
 in
 {
   options.services.enthalpy.plat = {
@@ -108,7 +108,7 @@ in
 
     services.enthalpy.bird.exit.enable = true;
 
-    networking.netns-ng.enthalpy = {
+    networking.netns.enthalpy = {
       interfaces.host.routes = [
         {
           cidr = cfg.plat.prefix;

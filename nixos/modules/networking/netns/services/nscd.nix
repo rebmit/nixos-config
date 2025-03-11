@@ -12,7 +12,7 @@ let
   inherit (lib.attrsets) mapAttrs' nameValuePair;
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { config, ... }:
@@ -59,7 +59,7 @@ in
         nameValuePair "${cfg.runtimeDirectory}/nscd" (
           mkIf (cfg.enable && cfg.services.nscd.enable) { d = { }; }
         )
-      ) config.networking.netns-ng;
+      ) config.networking.netns;
 
       systemd.services = mapAttrs' (
         name: cfg:
@@ -83,7 +83,7 @@ in
             }
           ])
         )
-      ) config.networking.netns-ng;
+      ) config.networking.netns;
     }
   ];
 }

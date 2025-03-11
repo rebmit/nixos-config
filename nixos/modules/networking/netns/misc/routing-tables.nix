@@ -19,7 +19,7 @@ let
   ];
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { config, ... }:
@@ -90,10 +90,10 @@ in
           assertion = noCollision (attrValues cfg.misc.routingPolicyPriorities);
           message = "routing policy priority collision in named netns ${name}";
         }
-      ]) config.networking.netns-ng
+      ]) config.networking.netns
     );
 
-    networking.netns-ng = {
+    networking.netns = {
       enthalpy = {
         misc.routingTables = {
           plat = 400;

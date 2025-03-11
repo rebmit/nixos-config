@@ -18,7 +18,7 @@ in
     };
   };
 
-  systemd.services.nix-daemon = config.networking.netns-ng.enthalpy.config;
+  systemd.services.nix-daemon = config.networking.netns.enthalpy.config;
 
   systemd.network = {
     enable = true;

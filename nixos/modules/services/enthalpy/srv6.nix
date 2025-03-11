@@ -15,7 +15,7 @@ let
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns-ng.enthalpy;
+  netnsCfg = config.networking.netns.enthalpy;
 in
 {
   options.services.enthalpy.srv6 = {
@@ -41,7 +41,7 @@ in
       "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.main}";
     };
 
-    networking.netns-ng.enthalpy = {
+    networking.netns.enthalpy = {
       interfaces.lo = {
         routes = singleton {
           cidr = "::/0";

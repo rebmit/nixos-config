@@ -45,7 +45,7 @@ in
       };
     };
 
-    networking.netns-ng = mkOption {
+    networking.netns = mkOption {
       type = types.attrsOf (
         types.submodule (
           { ... }:
@@ -93,7 +93,7 @@ in
           )
         )
         (
-          config.networking.netns-ng
+          config.networking.netns
           // {
             init = {
               enable = true;

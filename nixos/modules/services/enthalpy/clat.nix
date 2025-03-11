@@ -15,7 +15,7 @@ let
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns-ng.enthalpy;
+  netnsCfg = config.networking.netns.enthalpy;
 in
 {
   options.services.enthalpy.clat = {
@@ -44,7 +44,7 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.clat.enable) {
-    networking.netns-ng.enthalpy = {
+    networking.netns.enthalpy = {
       services.tayga.clat = {
         ipv4Address = "192.0.0.1";
         prefix = cfg.clat.prefix;

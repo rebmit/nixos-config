@@ -12,7 +12,7 @@ let
   noCollision = l: length (unique l) == length l;
 in
 {
-  options.networking.netns-ng = mkOption {
+  options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
         { ... }:
@@ -38,10 +38,10 @@ in
           assertion = noCollision (attrValues cfg.misc.ports);
           message = "port collision in named netns ${name}";
         }
-      ]) config.networking.netns-ng
+      ]) config.networking.netns
     );
 
-    networking.netns-ng = {
+    networking.netns = {
       enthalpy = {
         misc.ports = {
           # local ports

@@ -13,7 +13,7 @@ let
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns-ng.enthalpy;
+  netnsCfg = config.networking.netns.enthalpy;
 in
 {
   options.services.enthalpy = {
@@ -51,7 +51,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.netns-ng.enthalpy = {
+    networking.netns.enthalpy = {
       sysctl = {
         "net.ipv6.conf.all.forwarding" = 1;
         "net.ipv6.conf.default.forwarding" = 1;

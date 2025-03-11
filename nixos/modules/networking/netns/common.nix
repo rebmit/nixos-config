@@ -4,101 +4,125 @@
   pkgs,
   ...
 }:
-with lib;
 let
-  allNetns = config.networking.netns;
-  nonDefaultNetns = filterAttrs (name: _cfg: name != "init") allNetns;
+  inherit (lib) types isList isBool;
+  inherit (lib.options) mkOption mkEnableOption;
+  inherit (lib.modules) mkIf;
+  inherit (lib.attrsets) mapAttrs' nameValuePair mapAttrsToList;
+  inherit (lib.strings) concatStringsSep;
+  inherit (lib.lists) concatLists;
+  inherit (lib.trivial) boolToString;
 in
 {
   options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
-        { name, ... }:
+        { name, config, ... }:
         {
           options = {
+            enable = mkEnableOption "the network namespace" // {
+              default = true;
+            };
             netnsPath = mkOption {
               type = types.str;
-              default = if name == "init" then "/proc/1/ns/net" else "/run/netns/${name}";
+              default = "/run/netns/${name}";
               readOnly = true;
               description = ''
-                Path to the network namespace.
+                Path to the network namespace, see {manpage}`ip-netns(8)`.
               '';
             };
-            interface = mkOption {
-              type = types.str;
-              default = name;
+            config = mkOption {
+              type = types.submodule {
+                freeformType = (pkgs.formats.json { }).type;
+              };
+              default = { };
               description = ''
-                Name of the dummy interface to add the address.
+                Systemd service configuration for entering the network namespace.
               '';
             };
-            address = mkOption {
-              type = types.listOf types.str;
-              default = [ ];
+            build = mkOption {
+              type = types.submodule {
+                freeformType = (pkgs.formats.json { }).type;
+              };
+              default = { };
               description = ''
-                Address to be added into the network namespace as source address.
+                Attribute set of derivations used to set up the network namespace.
               '';
             };
-            enableIPv4Forwarding = mkOption {
-              type = types.bool;
-              default = false;
-              description = ''
-                Whether to enable IPv4 packet forwarding in the network namespace.
-              '';
-            };
-            enableIPv6Forwarding = mkOption {
-              type = types.bool;
-              default = false;
-              description = ''
-                Whether to enable IPv6 packet forwarding in the network namespace.
-              '';
+          };
+
+          config = mkIf config.enable {
+            config = {
+              serviceConfig = {
+                NetworkNamespacePath = config.netnsPath;
+              };
+              after = [ "netns-${name}.service" ];
+              partOf = [ "netns-${name}.service" ];
+              wantedBy = [
+                "netns-${name}.service"
+                "multi-user.target"
+              ];
             };
           };
         }
       )
     );
+    default = { };
     description = ''
-      Network namespace configuration.
+      Named network namespace configuration.
     '';
   };
 
   config = {
-    networking.netns.init = { };
-
     systemd.services = mapAttrs' (
       name: cfg:
+      nameValuePair "netns-${name}" (
+        mkIf cfg.enable {
+          path = with pkgs; [ iproute2 ];
+          script = ''
+            ip netns add ${name}
+            ip -n ${name} link set lo up
+          '';
+          preStop = ''
+            ip netns del ${name}
+          '';
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+          };
+          restartIfChanged = false;
+          after = [ "network-pre.target" ];
+          wantedBy = [ "multi-user.target" ];
+        }
+      )
+    ) config.networking.netns;
+
+    environment.systemPackages = mapAttrsToList (
+      name: cfg:
       let
-        inherit (cfg) interface address;
-        enableIPv4Forwarding = if cfg.enableIPv4Forwarding then "1" else "0";
-        enableIPv6Forwarding = if cfg.enableIPv6Forwarding then "1" else "0";
+        toOption = x: if isBool x then boolToString x else toString x;
+        attrsToProperties =
+          as:
+          concatStringsSep " " (
+            concatLists (
+              mapAttrsToList (
+                name: value:
+                map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
+              ) as
+            )
+          );
       in
-      nameValuePair "netns-${name}" {
-        path = with pkgs; [
-          coreutils
-          iproute2
-          procps
-        ];
-        script = ''
-          ip netns add ${name}
-          ip -n ${name} link add ${interface} type dummy
-          ip -n ${name} link set lo up
-          ip -n ${name} link set ${interface} up
-          ip netns exec ${name} sysctl -w net.ipv4.conf.default.forwarding=${enableIPv4Forwarding}
-          ip netns exec ${name} sysctl -w net.ipv4.conf.all.forwarding=${enableIPv4Forwarding}
-          ip netns exec ${name} sysctl -w net.ipv6.conf.default.forwarding=${enableIPv6Forwarding}
-          ip netns exec ${name} sysctl -w net.ipv6.conf.all.forwarding=${enableIPv6Forwarding}
-          ip netns exec ${name} sysctl -w net.ipv4.ping_group_range="0 2147483647"
-          ${concatMapStringsSep "\n" (addr: "ip -n ${name} addr add ${addr} dev ${interface}") address}
+      pkgs.writeShellApplication {
+        name = "netns-run-${name}";
+        text = ''
+          systemd-run --pipe --pty \
+            --setenv=PATH \
+            --property="User=$USER" \
+            ${attrsToProperties (cfg.config.serviceConfig or { })} \
+            --same-dir \
+            --wait "$@"
         '';
-        preStop = ''
-          ip netns del ${name}
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-        };
-        after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
       }
-    ) nonDefaultNetns;
+    ) (config.networking.netns // { init.config = { }; });
   };
 }
