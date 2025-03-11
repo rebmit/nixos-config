@@ -12,11 +12,11 @@ let
   inherit (lib.modules) mkIf;
   inherit (mylib.network) cidr;
 
-  cfg = config.services.enthalpy-ng;
-  netnsCfg = config.networking.netns-ng.enthalpy-ng;
+  cfg = config.services.enthalpy;
+  netnsCfg = config.networking.netns-ng.enthalpy;
 in
 {
-  options.services.enthalpy-ng = {
+  options.services.enthalpy = {
     enable = mkEnableOption "enthalpy overlay network, next generation";
     identifier = mkOption {
       type = types.int;
@@ -51,7 +51,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.netns-ng.enthalpy-ng = {
+    networking.netns-ng.enthalpy = {
       sysctl = {
         "net.ipv6.conf.all.forwarding" = 1;
         "net.ipv6.conf.default.forwarding" = 1;

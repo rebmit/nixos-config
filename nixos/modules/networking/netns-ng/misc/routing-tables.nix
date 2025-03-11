@@ -94,7 +94,7 @@ in
     );
 
     networking.netns-ng = {
-      enthalpy-ng = {
+      enthalpy = {
         misc.routingTables = {
           plat = 400;
           localsid = 500;

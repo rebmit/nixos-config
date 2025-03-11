@@ -42,7 +42,7 @@ in
     );
 
     networking.netns-ng = {
-      enthalpy-ng = {
+      enthalpy = {
         misc.ports = {
           # local ports
           proxy-init-netns = 3000;

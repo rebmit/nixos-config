@@ -12,11 +12,11 @@ let
   inherit (lib.strings) concatMapStringsSep optionalString;
   inherit (lib.lists) singleton;
 
-  cfg = config.services.enthalpy-ng;
-  netnsCfg = config.networking.netns-ng.enthalpy-ng;
+  cfg = config.services.enthalpy;
+  netnsCfg = config.networking.netns-ng.enthalpy;
 in
 {
-  options.services.enthalpy-ng.bird = {
+  options.services.enthalpy.bird = {
     enable = mkEnableOption "bird integration" // {
       default = true;
     };
@@ -44,7 +44,7 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
-    networking.netns-ng.enthalpy-ng = {
+    networking.netns-ng.enthalpy = {
       services.bird = {
         enable = true;
         config = ''

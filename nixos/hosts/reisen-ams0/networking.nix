@@ -2,7 +2,7 @@
 {
   imports = with profiles; [ services.enthalpy ];
 
-  services.enthalpy-ng = {
+  services.enthalpy = {
     ipsec.interfaces = [ "enp1s0" ];
     bird.exit = {
       enable = true;

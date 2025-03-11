@@ -14,11 +14,11 @@ let
   inherit (lib.lists) singleton;
   inherit (mylib.network) cidr;
 
-  cfg = config.services.enthalpy-ng;
-  netnsCfg = config.networking.netns-ng.enthalpy-ng;
+  cfg = config.services.enthalpy;
+  netnsCfg = config.networking.netns-ng.enthalpy;
 in
 {
-  options.services.enthalpy-ng.srv6 = {
+  options.services.enthalpy.srv6 = {
     enable = mkEnableOption "segment routing over IPv6";
     prefix = mkOption {
       type = types.str;
@@ -37,11 +37,11 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.srv6.enable) {
-    services.enthalpy-ng.srv6.actions = {
+    services.enthalpy.srv6.actions = {
       "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.main}";
     };
 
-    networking.netns-ng.enthalpy-ng = {
+    networking.netns-ng.enthalpy = {
       interfaces.lo = {
         routes = singleton {
           cidr = "::/0";

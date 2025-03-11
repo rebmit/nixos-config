@@ -5,7 +5,7 @@
     useHostOutput = true;
   };
 
-  services.enthalpy-ng = {
+  services.enthalpy = {
     enable = true;
     identifier = hostData.enthalpy_node_id;
 

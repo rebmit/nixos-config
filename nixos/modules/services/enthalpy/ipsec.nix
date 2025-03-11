@@ -13,10 +13,10 @@ let
   inherit (lib.modules) mkIf;
   inherit (lib.strings) concatStringsSep;
 
-  cfg = config.services.enthalpy-ng;
+  cfg = config.services.enthalpy;
 in
 {
-  options.services.enthalpy-ng.ipsec = {
+  options.services.enthalpy.ipsec = {
     enable = mkEnableOption "IPSec/IKEv2 integration" // {
       default = true;
     };
@@ -114,10 +114,10 @@ in
           case "$PLUTO_VERB" in
             up-client)
               ip link add "$LINK" type xfrm if_id "$PLUTO_IF_ID_OUT"
-              ip link set "$LINK" netns enthalpy-ng multicast on mtu 1400 up
+              ip link set "$LINK" netns enthalpy multicast on mtu 1400 up
               ;;
             down-client)
-              ip -n enthalpy-ng link del "$LINK"
+              ip -n enthalpy link del "$LINK"
               ;;
           esac
         '';
@@ -154,13 +154,13 @@ in
         ];
         after = [
           "network-online.target"
-          "netns-enthalpy-ng.service"
+          "netns-enthalpy.service"
           "strongswan-swanctl.service"
         ];
-        partOf = [ "netns-enthalpy-ng.service" ];
+        partOf = [ "netns-enthalpy.service" ];
         wantedBy = [
           "multi-user.target"
-          "netns-enthalpy-ng.service"
+          "netns-enthalpy.service"
         ];
         reloadTriggers = [ config.environment.etc."ranet/config.json".source ];
       };

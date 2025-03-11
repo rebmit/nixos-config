@@ -16,11 +16,11 @@ let
   inherit (lib.meta) getExe;
   inherit (mylib.network) cidr;
 
-  cfg = config.services.enthalpy-ng;
-  netnsCfg = config.networking.netns-ng.enthalpy-ng;
+  cfg = config.services.enthalpy;
+  netnsCfg = config.networking.netns-ng.enthalpy;
 in
 {
-  options.services.enthalpy-ng.plat = {
+  options.services.enthalpy.plat = {
     enable = mkEnableOption "the PLAT component of 464XLAT, NAT64 / SIIT-DC implementation";
     prefix = mkOption {
       type = types.str;
@@ -106,9 +106,9 @@ in
       };
     };
 
-    services.enthalpy-ng.bird.exit.enable = true;
+    services.enthalpy.bird.exit.enable = true;
 
-    networking.netns-ng.enthalpy-ng = {
+    networking.netns-ng.enthalpy = {
       interfaces.host.routes = [
         {
           cidr = cfg.plat.prefix;
@@ -121,7 +121,7 @@ in
       ];
     };
 
-    services.enthalpy-ng.srv6 = {
+    services.enthalpy.srv6 = {
       enable = true;
       actions = {
         "${cidr.host 2 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.plat}";

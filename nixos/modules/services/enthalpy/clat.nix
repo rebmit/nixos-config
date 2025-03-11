@@ -14,11 +14,11 @@ let
   inherit (lib.lists) singleton;
   inherit (mylib.network) cidr;
 
-  cfg = config.services.enthalpy-ng;
-  netnsCfg = config.networking.netns-ng.enthalpy-ng;
+  cfg = config.services.enthalpy;
+  netnsCfg = config.networking.netns-ng.enthalpy;
 in
 {
-  options.services.enthalpy-ng.clat = {
+  options.services.enthalpy.clat = {
     enable = mkEnableOption "the CLAT component of 464XLAT";
     address = mkOption {
       type = types.str;
@@ -44,7 +44,7 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.clat.enable) {
-    networking.netns-ng.enthalpy-ng = {
+    networking.netns-ng.enthalpy = {
       services.tayga.clat = {
         ipv4Address = "192.0.0.1";
         prefix = cfg.clat.prefix;

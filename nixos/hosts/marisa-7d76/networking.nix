@@ -10,7 +10,7 @@ in
 {
   imports = with profiles; [ services.enthalpy ];
 
-  services.enthalpy-ng = {
+  services.enthalpy = {
     ipsec.interfaces = [ "enp14s0" ];
     clat = {
       enable = true;
@@ -18,9 +18,9 @@ in
     };
   };
 
-  systemd.services.nix-daemon = config.networking.netns-ng.enthalpy-ng.config;
+  systemd.services.nix-daemon = config.networking.netns-ng.enthalpy.config;
   systemd.services."user@${toString config.users.users.rebmit.uid}" =
-    config.networking.netns-ng.enthalpy-ng.config
+    config.networking.netns-ng.enthalpy.config
     // {
       overrideStrategy = "asDropin";
       restartIfChanged = false;
@@ -29,8 +29,8 @@ in
   services.proxy = {
     enable = true;
     inbounds = singleton {
-      netnsPath = config.networking.netns-ng.enthalpy-ng.netnsPath;
-      listenPort = config.networking.netns-ng.enthalpy-ng.misc.ports.proxy-init-netns;
+      netnsPath = config.networking.netns-ng.enthalpy.netnsPath;
+      listenPort = config.networking.netns-ng.enthalpy.misc.ports.proxy-init-netns;
     };
   };
 
