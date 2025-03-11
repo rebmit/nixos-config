@@ -1,5 +1,4 @@
 locals {
-  enthalpy_network_prefix = "2a0e:aa07:e21c::/48"
   enthalpy_organizations = {
     core = "rebmit's core network"
     edge = "rebmit's edge network"
@@ -9,11 +8,6 @@ locals {
 resource "tls_private_key" "enthalpy" {
   for_each  = local.enthalpy_organizations
   algorithm = "ED25519"
-}
-
-output "enthalpy_network_prefix" {
-  value     = local.enthalpy_network_prefix
-  sensitive = false
 }
 
 output "enthalpy_organizations" {

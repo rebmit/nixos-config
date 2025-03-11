@@ -79,7 +79,7 @@ in
         charon {
           interfaces_use = ${concatStringsSep "," cfg.ipsec.interfaces}
           port = 0
-          port_nat_t = ${toString config.networking.ports.enthalpy-ipsec}
+          port_nat_t = ${toString config.networking.ports.ipsec-nat-traversal}
           retransmit_timeout = 30
           retransmit_base = 1
           plugins {
@@ -108,7 +108,7 @@ in
         serial_number = ep.serialNumber;
         address_family = ep.addressFamily;
         address = ep.address;
-        port = config.networking.ports.enthalpy-ipsec;
+        port = config.networking.ports.ipsec-nat-traversal;
         updown = pkgs.writeShellScript "updown" ''
           LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")
           case "$PLUTO_VERB" in

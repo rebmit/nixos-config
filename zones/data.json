@@ -1,6 +1,5 @@
 {
   "cloudflare_aop_ca_certificate": "-----BEGIN CERTIFICATE-----\nMIIBzDCCAVKgAwIBAgIRAJCGHkUUj6Dihk9xz84mW7wwCgYIKoZIzj0EAwMwJzEP\nMA0GA1UEChMGcmVibWl0MRQwEgYDVQQDEwt3b3JrZXJzLm1vZTAeFw0yNTAxMDMx\nMjUzMTRaFw0yNjAxMDMxMjUzMTRaMCcxDzANBgNVBAoTBnJlYm1pdDEUMBIGA1UE\nAxMLd29ya2Vycy5tb2UwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAATtv7AP+CNni3kM\nrV6wO8zolfrOM5jBRTRSEfRcyzgsC8lSt/CXUF5bdFkFkgqb1XqXVJA1qhRaEEKj\naaHZiWRZsl4YNfXYIoMEhr0cUyBXXZo+eL/DaYtR1JlcOJ9gIyGjQjBAMA4GA1Ud\nDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTkDXkFx7XVqGA+\nb0t4gc7pI6NhXjAKBggqhkjOPQQDAwNoADBlAjABJIne3vOoNn8Om/Vs8XTLR0tM\nxxBzO6CRFm5Mp9cnzMYD60mFox6gEDRyb4Au6tYCMQDIVZUsDEFukk+NV91+97Yz\nB3tOVSMdICqkC8VTaoBqSxrkBzb2+T4lzZUyYC+Bknk=\n-----END CERTIFICATE-----\n",
-  "enthalpy_network_prefix": "2a0e:aa07:e21c::/48",
   "enthalpy_organizations": {
     "core": "rebmit's core network",
     "edge": "rebmit's edge network"
@@ -15,10 +14,8 @@
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
-      "enthalpy_node_address": "2a0e:aa07:e21c:a230::1",
       "enthalpy_node_id": 2595,
       "enthalpy_node_organization": "rebmit's edge network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:a230::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDVLnLJQLiSquUSKC1aH9+mZuCHJex5B73BGY4TNDlxv",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD3HwcBWColirOvlDd9oqP5BOuCxA85rfKEQ+d6Ey12s53qcykIfojg4EisFw+tQmLTijj9FfzTZFkcvd/caBOelUFbKavjS0jZ/r/zn2ThLu/kXVWrKmDlme8H/JircTBwUCkDYWnpMghPq7DEm3OCBU/lsVUJK0akKhZvvx4vlj/CD3uLXDuDDXVJCfxbRcw9NH+l57OhVDR4DD5P5zU/cP0ttBk84MqxygHeAtiK6gtwdSNl3V3fYiBO+nBlap0fU3rZh+yzzLYJU831FRAS85E2DnEK698hVmjInNKIxWzOv8O+EiriHfHvU4A3XQN31s0Mi+exPJHWp7UMN8oTgSg01kq2MCD9Lg5yAZ0t509g89u8uJ90LRQky8KOn1JNwng45+21GnLtH5Q65inlAFi1kXbl9Lr85Uy/9LpTZJDJGgGtlC4YWO21hMMqyCjgiVctKoT+wkf2S0ePUazWBq4/bWTwh5mTva+FbougcMaC+eqOJDzQIfwqIxRsR4n5txCRLM5J5hfASnJmoHqj7ipYXb3pWcPsxc3k/iE9aZOTlv66RaJ5d9V4GxyWzxM08dGIEw58sjQiFpqmlDEPmzPLfu3nzMPmIsh834OUWrUMtIr1Gae11QAudAd2oKFhWnIdEUkl2+P0OVqUqrFoVZZokaK7uPrNJFy5iKxaNQ=="
     },
@@ -27,10 +24,8 @@
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
-      "enthalpy_node_address": "2a0e:aa07:e21c:d790::1",
       "enthalpy_node_id": 3449,
       "enthalpy_node_organization": "rebmit's edge network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:d790::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBdcVQak4mnur3LpBd9TMWeOdh8LBeWkNQKQtNmK03x",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCoGltlUb0Uptzulodhko/lP2Obux/w9A92zxf5yQAqrEXhyth4eHPWV305PRXYDjrCC3zqQqzNjxQ5eiJmIhFwh4iVV36AQhDGgPfHrW41Oaw1owPOYNu42KEfjti6NbyLOIoaXL8jaA4nrjMqppHi4j4ll49KUmcWi4u1uE13tY0W8ua+0N2BIe94jBfuPUjp4/0jgXGwPPNlUaTCnoU16XKIr4EFs/XPZcMfNxekdxXGS8QRjMWd4jjCm6htoX/7cYj/xndGzEdHb8f/9Z1VzS0wXOrKNrH3ewxYgkNjLUx3OlhbKO/WzOHaFyGDcbBnelMi56YqDDnAur6+F7dXjQ2Lu6Zw1XdqzEugFkpz6xPnDquTRVSrB9tljr0SP0Z1Y58QHP1Q/ahliK2ou915XnqYNM3M/fOWzsqlY89390sJxgPFyaOGeeDz+YGQ9uVqXJzupDagy/XU8GmQHHWvFuN6Hr1tT2S9QjsosHhDotqVSxm8KgiEmeLnQnVjTnL/cHI1HiOQH1ZLds/iHQJZzholn5GRk+HaOeIpIJLyAstL48QheUTbBR//LLVTVLpN4iKiLfVYbWeNhn5S8msCLXVZa317ns2k1614j0nrZnAXpymL091DO/y8QfYacG+w2tmpiAtGEADRagXQ5mC5oMqstUyM22G2SzH9GAFSFw=="
     },
@@ -39,10 +34,8 @@
       "endpoints": [],
       "endpoints_v4": [],
       "endpoints_v6": [],
-      "enthalpy_node_address": "2a0e:aa07:e21c:5720::1",
       "enthalpy_node_id": 1394,
       "enthalpy_node_organization": "rebmit's edge network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:5720::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN9fXHmGnidVo2MoV4ayYBbFmQebM7ldDT/o+fCP4mMU",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/IIzE70sM77KfOHas/WXa5D6vCBMP6cQVforOxpmoYyTmIB5we0n0YuZlp8giimN8E4yRfq/9Kc7hdpog9UR2sTb19YqpiCUsTEWJSP5NXWY0KALwE6Na6rijCprsuf6rv/ndT3MbCcDdi0myZGZV8Qe6g/+JfWlfWtsjvHkph+/U9QqZSmNnU1WlDHS1SlCkchjpJlPN2jx7dgJ61vqO0+0yTu76pl1kl8lFoMlsI8jIGAAluJMp2ktxs+sE34qpWCmCiWtU2CzgS+XVG53sZdjIXQhb3hBKCyjdBr36bNWfMNNB2FXgSqQOzQJxR3SRn+3PKQSuP+uQCrAX68hzQZg7x7gsA3tM8W+XtkDjaejUJ3USnouh5D8tYLMroeAbBwulS+4mQaCvC5CWE8MdqMwAwGC6unjbfq3tC3QkrWohOFZyXJ862TTOywJiVk1qP/kz63yeXD5pbFx/WyfpQW12TKlzIClHnbfTCTY7AuxoXnhJTKIXN28QIB6ZNwba3nOg34HhAXXgJF+l+UENN1MZ/mg0jOJ0IlVmGjEulZdI+G/eCfvfYv8pU7ItZvrge98vX0aWqAE54RQGO+dpkFz651LEBeCe+UB2xzjxnm0dMmhdUKsV/KEKRhSiKPNk3iBy52DVXCoBGPG/3b6Hc6c7ARiv0EGYm81xxrktkw=="
     },
@@ -51,10 +44,8 @@
       "endpoints": ["45.76.35.203", "2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
       "endpoints_v4": ["45.76.35.203"],
       "endpoints_v6": ["2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
-      "enthalpy_node_address": "2a0e:aa07:e21c:38c0::1",
       "enthalpy_node_id": 908,
       "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:38c0::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQrE6Kza1z2rJWtRuHqUNv58b6wPSwqQz4hAke/z+9F",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxKhxxqFhH1y6wSMDPgMEfoCoN8LhCbDi31QbRwDxZaejer2dFtgIB1TU0yGPpvJszsG+dl8kVZJTbY3x4JHTmT8wQCkBlckqqtW4BcSB6ANv7WOlWT1IslP0xfoxQwcSzsqy2jAnrs7B8qspTE7pm91B5VqR7stIs3cj0lsXRpSiH7eX4QEPGRN5CawZd6xEvFwb7X3D3BuLw7a9sJdCCslAurVOYn3Rcef9EUX0e00AxnBg+7gjechmdtUxPlsAisvO0saMHuP1c3L5p05RidUYa9fYHD2gb8GIMEhCjw962m0maF6PevYzAHWowIPxDF30x1AD+ky+HTe/iYr2Y+5qXGsTNr+kWC9rgX2py25B6FzHwNwr8JhVit3XZ7dVlZwQOio48ttrk56WBV3Z7hb0T+PjTC8T/bnv5e8yq5AXhHm0DchyvtlZLqr22rrw3GPiki+HZ0Sf2FYQbix9bVFNp5jh49ug3aFstFwSd8LP7BgmYKW0fJ9PQuYo/aFy+Y+PueOfwKA871aOsjgvvVnXhuH1D4TDLIL/8j3H7fwbr29wINlS+ZqpsDPtBw4x9qaMYc5LdtIb+ikN9mlEtVC53uV9SAklOhNFHnBp4Gk20QeV2xhO5aUgbqasAXvTjJmmiuIuNufsSiAcIreaAEAegeQl8ZpSKuDdMbu5cGQ=="
     },
@@ -63,10 +54,8 @@
       "endpoints": ["45.77.183.85", "2001:19f0:7002:0f85:5400:05ff:fe35:27dc"],
       "endpoints_v4": ["45.77.183.85"],
       "endpoints_v6": ["2001:19f0:7002:0f85:5400:05ff:fe35:27dc"],
-      "enthalpy_node_address": "2a0e:aa07:e21c:5860::1",
       "enthalpy_node_id": 1414,
       "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:5860::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkqmL+uYIEuN4rNClXuZN7xEnZ8CsZyiNpoVHRprB1i",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC/wh+0jfJ6UyW1yxpZt3egzH+FWh+OfizNhTDcOtrgwYw8LIjNSJDzhPwSKU4W7PwL6podrD3K/uQpcJRwrx+92P0JkR/GgapI/gXpOWWkR+EJI7KBnk+1iIYKpfy4y77j+QEH/Vhf3vNU6/Moke2Bos4Ml+YKJoaZH1b1o3xaW0zN8yaPT9PhZjaB4IpNktGYDGMdYCl/NvN0t3//s5921MX6cLl6hj/i4Wx+hQzenHg/PiGsONCW6bIWXdKwo2BfS5d8xOA39LbvIpqt6bwTuNYs21+768soVkoqHhdJnU8+L5erF2jlG/cwmNEWCisQ3V8VDH1VTymm4fBgA5OPaiLvph/se4pBUqmHlc8W0BE43qRydNlTLKKf0FuWHi0ecumnlBL+wxijiukwaoQeqB67OF6r4XdWuzMXayU+OqFn5Ys2UJf2EUGfGTP88Z51KjYIBgb6GZM0aevD2P5I1iA4ipfSaWEUlt96ye0dMBgPcFaXX+dE9ZtLr0T/xL7iJVFphrO7VjZWsXHrJbbg1IuWcxRferZh7P/FOdpaUaHKtYH36pBwAe647qa2U4gCTNnhZ8myR9GaLkiMTbFZTmcVg0rDHJ2VIL/577IF86+i/WapJb3GhKOzdv46L8rybeUA0MCazZge7DQMcbWZfw4btpcQ4wp1cL+5pWmd/Q=="
     },
@@ -75,10 +64,8 @@
       "endpoints": ["149.28.8.87", "2001:19f0:8001:09c8:5400:05ff:fe35:27dd"],
       "endpoints_v4": ["149.28.8.87"],
       "endpoints_v6": ["2001:19f0:8001:09c8:5400:05ff:fe35:27dd"],
-      "enthalpy_node_address": "2a0e:aa07:e21c:6b80::1",
       "enthalpy_node_id": 1720,
       "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:6b80::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjEgqwwhXxVAGXzz0sNuUs5TmLct+qNR/Xe/bcpmn4t",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC1hMLO6484fCGhU5V6mp2fNJQxD71nZi2IriCQCYbVwi/7MCTSKKvJ4L076CATdVknrts8QymVP5vpfKRz9oFB0i3Z7qjdYJXMhY3Dgyib5zX4C/uIqEggwW9t7bjXiuAbLWqKjF4coD3R9ihaIq9MggMA/afAIh9trOtnUCTI84e4dc2lqFXdTUFZ9IdGXU6xYp7c9fJFM426BFvWFD0cxAiako/13ba0eB37WyaP0BK4nS0EnR1rqYf1AGVTQZyFQP0bca+OOmrR7p0487R9ikqWMk0ERpyZqFYclYljdfWn6xvpoPwz0PiH0TWoNBgqxud6Y6+DfNk0X9nGWOtOprGOrDSreJP3zkmgqvhS+AQ9KA1laRPuOdhU2ZkWtoqlu/E0XHUBWjyakTXqx+7fnQG3tAUaHDayk3zazBeXyitMX5uD0FOQ32hZLwBNRHwhSntL/dEOFom5R+K8rscb7XLVhSt+gUiIWxghflya6MjqRLjz/3+BNWxGmgXPOtHZuDIIti7CmRdGuEHx2/ZX8XkeEvtoxgZNNCT171YNMOtWc0FANQA+5/5B5gcYLUAcYC9lJLUo1rJypdsceuJdtV+xyEC1alSAGXPk82FU3E2j4iIXhygX6akncfevisY/iz6sbjNx4ZWFFIo6D2YnDeKgTUz4VZSO+ApoHh5xAQ=="
     },
@@ -87,10 +74,8 @@
       "endpoints": ["45.32.101.163", "2401:c080:1400:1674:5400:05ff:fe35:ea5e"],
       "endpoints_v4": ["45.32.101.163"],
       "endpoints_v6": ["2401:c080:1400:1674:5400:05ff:fe35:ea5e"],
-      "enthalpy_node_address": "2a0e:aa07:e21c:2540::1",
       "enthalpy_node_id": 596,
       "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:2540::/60",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1BhcBQvjVZH/ItFXLVuxUblvv/v7LU6qzu07BCWHfH",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCyo8uHilsp0vI68tXzDm7iErFPNbJoPzKLctBsXD/aizedp37KhiFZr7PcyXwZWPPzxZ/oOmP4m2K7olRNBTBrGZ5hY/e760KnMkyQ5Au7dhl77sScC2iCqa6EKMcK3K7gCnPnpuijszbsZzMY2NpKGUoo82Yr5SmcbIvPQjKwp8v6GliaVmjLY5IqSn1uUJoGD6SOsS4jUFotPL7KmIgZGwnjVZsJqoitTLfCzxJ0FSMSln/Lz0FDfPA1tm9tSfINOZBZSTBSrEQYcB6QH7mM6+YxSFn7kLqbud25v4Cy/VguJ87zND1zKvXXSdL7DsUs95DvNsW20c2FDB5wP3h4ot/GF3PRaIG3pPWWKmUNcntPxK6PC2SQ7DyIwW+LGsN2uUqNHnznE0fLZ5rW42ZUx8Xznb3YScXMblTXMqZI+EmMm9WU/BT1fQK7U23Ad3xwKPovrsa2hQZh7sst3UMUXZzkGmHv6WOjePm4tnhDfgIqKYB3L1DCMiYy5K85kz1toaYaWHg/JoZJZJpwIRdXzZvedvzAsgCYL1fJsGiwkFX3VTN8nW4N+0X+P8U0kdajS4f1VI90Htc1G53DUuBcMGjHDCUILmfQYY3tl/S7k0tXYRq+IFmFo2atU7ZpX4EuFDRGTXA99yYsnxFW2LfbfJ2YLFDN4I2nJ+Q8SlphYw=="
     },
@@ -99,10 +84,8 @@
       "endpoints": ["203.34.137.22", "2a0d:f302:137:fd9c::1"],
       "endpoints_v4": ["203.34.137.22"],
       "endpoints_v6": ["2a0d:f302:137:fd9c::1"],
-      "enthalpy_node_address": null,
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDMJ1nNhJTdBjPZKTcxZv9uqdNXjysc/v+MuSobZtTX",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSqFe0/y6UpJwlOF4RIIml9aKO0KSSNUB+qb+KGShRRlK5T1vSVdOteaVOPBEqk8keJcZcYfmAuzg0BMtuuSvqPXPVvxCw/QFt8EjfTGh5t0Dzkhfx1xO07PGgF2yHu/s7xUUPwnRcXsmPK6zyJWKvmK/V+Zo+8ALv9ECrD4iJwI5vpSDKdIpxUHu9QwvDDftTFFWEb+M/T/fO4weqQBU57RWaB7K5/5yOTOJ0vqd3SpxJZ7KKGB8QZC3LLjJqyV1UywVbWvkXEQ5Kn35G1JwPtJcgo/DjSZW/zqvRfVyVdP29i1S3RXcOARiVpT1Mq3pU/tBlbXqf/jnD7hZBFRJzFpfSADp9qFxhv7G3jgRyXjYedU2Iq+pgwbgjsiMRruhl3T3R+nT0Z2u9cChOvkvtO4I2jWgqvwixpFrBrX64mQ1xsNgplsvMVb+lkj9JP8OicbbY+NwVMC5KNZR8FrmLN/0bVqZq3rknICoSd6lYw0dO9PsYpqWgZmPai7wQLCspg2EOgYZFw3Vqtl+FXvUA97pKGbTPkuKSsNgBZ2YJmv2ApFYQTXl13Kq+iFJ8fJNY73ZaNvADeM66RKOJphMPgG6OI4FmKfkRADSrWb2SL9/UlBDYo0ZbME/z4Gi84dTftFb6aQPl6d0nhnajBAfGfh8geTi46TCIBlk/ZVznZw=="
     },
@@ -111,10 +94,8 @@
       "endpoints": ["46.102.157.144", "2a0d:f302:102:8e05::1"],
       "endpoints_v4": ["46.102.157.144"],
       "endpoints_v6": ["2a0d:f302:102:8e05::1"],
-      "enthalpy_node_address": null,
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFI0Y8Hwaoz9fx1MAn+BLWpTxWeoIzwXPLUp3xCcWXN",
       "ssh_host_rsa_key_pub": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpW5WjanSmPXY7GDOjV3a8lFDw3Y7mE+GWNE4p8y9xGfD63/SkctHMkvDeOEGGmAaqJEniCvcq1XktJunGbinsjOvgTDeDWuHrFvIMAUntCMgLHeN8l4VcK4dSO1tTCzVo7kMLhrSMpgndFl33uUDSj7Z9BekshT5HzvQ2NjaRFcygioJzTpihka+nV/jSR9a08ewMaJzyamV8wo7AOF8PfGTYUxj+q6R9nbWO8dKFYyCwqo5aUaC8VtI0blgalHjEYgn5MKJxocdxrGWOCdaYYH6UqMMgZ7f1icXfAbvKYD+0dC15IVur8yKAr2PUmqWsXAuTDl4uS/450i2sptnsaNF5IHbAa1trq1nUPZ45uv0HbUU7Ri6f3vsvEJfKHyIKsGmOMVync5sJuqVUhbUQH/lnjGqGUV1T9yQK+dIi4sjBu/ETsWMbtPyiCzAochgsVN5K9iStBgUARilZkroPwEVK3HbMUUOv3SA9Wszog5E3s2Rx8FGsAEQyQ/C5dg4KpQgDE4kO8qqukaLyEgHcNJ238UrBwu23aNJGcRUAysIvJKhepdJRV4We+nF7bQ1r3bQDR2xhyWtuy26CD+5rAp7yrC15GAYzVzDsp79Z+nhIBBpV97N1B0xLb1U6PjwdeHyylAKvTaGMVzkzgYoH97xhFwBCHoxnMNKmgaw8TQ=="
     }

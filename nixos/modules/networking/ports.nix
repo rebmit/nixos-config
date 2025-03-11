@@ -20,7 +20,6 @@ in
       ssh = 2222;
 
       # local ports
-      enthalpy-gost = 3000;
       ntfy = 4000;
       keycloak = 4010;
       miniflux = 4020;
@@ -34,13 +33,11 @@ in
       prometheus-alertmanager = 4061;
       prometheus-node-exporter = 4070;
       prometheus-blackbox-exporter = 4071;
-      prometheus-ping-exporter = 4072;
       vaultwarden = 4080;
       forgejo = 4090;
 
       # public ports
-      enthalpy-wireguard-reimu-aston = 13101;
-      enthalpy-ipsec = 14000;
+      ipsec-nat-traversal = 14000;
     };
     readOnly = true;
     description = ''

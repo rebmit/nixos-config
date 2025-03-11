@@ -63,7 +63,6 @@ module "hosts" {
   name                       = each.key
   endpoints_v4               = each.value.endpoints_v4
   endpoints_v6               = each.value.endpoints_v6
-  enthalpy_network_prefix    = local.enthalpy_network_prefix
   enthalpy_organizations     = local.enthalpy_organizations
   enthalpy_private_key       = tls_private_key.enthalpy
   enthalpy_node_id           = each.value.enthalpy_node_id

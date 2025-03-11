@@ -4,7 +4,6 @@ let
   common = import ./common.nix;
   inherit (common) hosts;
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) hosts;
-  enthalpyHosts = lib.filterAttrs (_name: value: value.enthalpy_node_address != null) hosts;
 in
 dns.lib.toString "rebmit.link" {
   inherit (common)
@@ -34,12 +33,6 @@ dns.lib.toString "rebmit.link" {
             ];
           }
         ) publicHosts
-        ++ lib.mapAttrsToList (
-          name: value:
-          lib.nameValuePair "${name}.enta" {
-            AAAA = [ value.enthalpy_node_address ];
-          }
-        ) enthalpyHosts
       ))
       {
         "suwako-vie1".DMARC = [
