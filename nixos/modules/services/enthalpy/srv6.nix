@@ -38,7 +38,7 @@ in
 
   config = mkIf (cfg.enable && cfg.srv6.enable) {
     services.enthalpy.srv6.actions = {
-      "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.main}";
+      "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.routingTables.main}";
     };
 
     networking.netns.enthalpy = {
@@ -46,28 +46,28 @@ in
         routes = singleton {
           cidr = "::/0";
           type = "blackhole";
-          table = netnsCfg.misc.routingTables.localsid;
+          table = netnsCfg.routingTables.localsid;
         };
       };
 
       interfaces.enthalpy = {
         routes = mapAttrsToList (name: value: {
           cidr = name;
-          table = netnsCfg.misc.routingTables.localsid;
+          table = netnsCfg.routingTables.localsid;
           extraOptions = {
             encap.seg6local.action = value;
           };
         }) cfg.srv6.actions;
         routingPolicyRules = [
           {
-            priority = netnsCfg.misc.routingPolicyPriorities.localsid;
+            priority = netnsCfg.routingPolicyPriorities.localsid;
             family = [ "ipv6" ];
             selector = {
               from = cfg.network;
               to = cfg.srv6.prefix;
             };
             action = {
-              table = netnsCfg.misc.routingTables.localsid;
+              table = netnsCfg.routingTables.localsid;
             };
           }
         ];

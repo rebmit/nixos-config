@@ -30,7 +30,7 @@ in
     enable = true;
     inbounds = singleton {
       netnsPath = config.networking.netns.enthalpy.netnsPath;
-      listenPort = config.networking.netns.enthalpy.misc.ports.proxy-init-netns;
+      listenPort = config.networking.netns.enthalpy.ports.proxy-init-netns;
     };
   };
 

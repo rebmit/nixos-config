@@ -17,7 +17,7 @@ in
       types.submodule (
         { ... }:
         {
-          options.misc = {
+          options = {
             ports = mkOption {
               type = with types; attrsOf port;
               default = { };
@@ -35,19 +35,10 @@ in
     assertions = flatten (
       mapAttrsToList (name: cfg: [
         {
-          assertion = noCollision (attrValues cfg.misc.ports);
+          assertion = noCollision (attrValues cfg.ports);
           message = "port collision in named netns ${name}";
         }
       ]) config.networking.netns
     );
-
-    networking.netns = {
-      enthalpy = {
-        misc.ports = {
-          # local ports
-          proxy-init-netns = 3000;
-        };
-      };
-    };
   };
 }

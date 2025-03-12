@@ -1,5 +1,5 @@
 # Portions of this file are sourced from
-# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/gravity.nix
+# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/gravity/default.nix
 {
   config,
   lib,
@@ -113,7 +113,7 @@ in
         {
           cidr = cfg.plat.prefix;
           via = "fe80::ff:fe00:2";
-          table = netnsCfg.misc.routingTables.plat;
+          table = netnsCfg.routingTables.plat;
           extraOptions = {
             from = cfg.network;
           };
@@ -124,7 +124,7 @@ in
     services.enthalpy.srv6 = {
       enable = true;
       actions = {
-        "${cidr.host 2 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.misc.routingTables.plat}";
+        "${cidr.host 2 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.routingTables.plat}";
       };
     };
   };

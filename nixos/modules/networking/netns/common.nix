@@ -97,32 +97,45 @@ in
       )
     ) config.networking.netns;
 
-    environment.systemPackages = mapAttrsToList (
-      name: cfg:
-      let
-        toOption = x: if isBool x then boolToString x else toString x;
-        attrsToProperties =
-          as:
-          concatStringsSep " " (
-            concatLists (
-              mapAttrsToList (
-                name: value:
-                map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
-              ) as
-            )
-          );
-      in
-      pkgs.writeShellApplication {
-        name = "netns-run-${name}";
-        text = ''
-          systemd-run --pipe --pty \
-            --setenv=PATH \
-            --property="User=$USER" \
-            ${attrsToProperties (cfg.config.serviceConfig or { })} \
-            --same-dir \
-            --wait "$@"
-        '';
-      }
-    ) (config.networking.netns // { init.config = { }; });
+    environment.systemPackages =
+      mapAttrsToList
+        (
+          name: cfg:
+          let
+            toOption = x: if isBool x then boolToString x else toString x;
+            attrsToProperties =
+              as:
+              concatStringsSep " " (
+                concatLists (
+                  mapAttrsToList (
+                    name: value:
+                    map (x: "--property=\"${name}=${toOption x}\"") (if isList value then value else [ value ])
+                  ) as
+                )
+              );
+          in
+          mkIf cfg.enable (
+            pkgs.writeShellApplication {
+              name = "netns-run-${name}";
+              text = ''
+                systemd-run --pipe --pty \
+                  --setenv=PATH \
+                  --property="User=$USER" \
+                  ${attrsToProperties (cfg.config.serviceConfig or { })} \
+                  --same-dir \
+                  --wait "$@"
+              '';
+            }
+          )
+        )
+        (
+          config.networking.netns
+          // {
+            init = {
+              enable = true;
+              config = { };
+            };
+          }
+        );
   };
 }

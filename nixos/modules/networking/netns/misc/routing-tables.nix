@@ -24,7 +24,7 @@ in
       types.submodule (
         { config, ... }:
         {
-          options.misc = {
+          options = {
             routingTables = mkOption {
               type = with types; attrsOf int;
               default = { };
@@ -49,14 +49,14 @@ in
           };
 
           config = {
-            misc.routingTables = {
+            routingTables = {
               unspec = 0;
               default = 253;
               main = 254;
               local = 255;
             };
 
-            misc.routingPolicyPriorities = {
+            routingPolicyPriorities = {
               local = 0;
               main = 32766;
               default = 32767;
@@ -65,7 +65,7 @@ in
             confext."iproute2/rt_tables.d/routing_tables.conf".text = ''
               ${concatStringsSep "\n" (
                 mapAttrsToList (name: table: "${toString table} ${name}") (
-                  filterAttrs (name: _table: !(builtins.elem name reservedTables)) config.misc.routingTables
+                  filterAttrs (name: _table: !(builtins.elem name reservedTables)) config.routingTables
                 )
               )}
             '';
@@ -79,30 +79,18 @@ in
     assertions = flatten (
       mapAttrsToList (name: cfg: [
         {
-          assertion = noCollision (attrValues cfg.misc.routingTables);
+          assertion = noCollision (attrValues cfg.routingTables);
           message = "routing table id collision in named netns ${name}";
         }
         {
-          assertion = noCollision (attrValues cfg.misc.routingMarks);
+          assertion = noCollision (attrValues cfg.routingMarks);
           message = "routing mark id collision in named netns ${name}";
         }
         {
-          assertion = noCollision (attrValues cfg.misc.routingPolicyPriorities);
+          assertion = noCollision (attrValues cfg.routingPolicyPriorities);
           message = "routing policy priority collision in named netns ${name}";
         }
       ]) config.networking.netns
     );
-
-    networking.netns = {
-      enthalpy = {
-        misc.routingTables = {
-          plat = 400;
-          localsid = 500;
-        };
-        misc.routingPolicyPriorities = {
-          localsid = 500;
-        };
-      };
-    };
   };
 }

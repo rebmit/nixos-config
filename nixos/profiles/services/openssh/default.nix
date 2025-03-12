@@ -20,13 +20,6 @@ let
           ];
           publicKey = hostData.ssh_host_ed25519_key_pub;
         })
-        (nameValuePair "${host}-rsa" {
-          hostNames = [
-            "${host}.rebmit.link"
-            "${host}.enta.rebmit.link"
-          ];
-          publicKey = hostData.ssh_host_rsa_key_pub;
-        })
       ]) data.hosts
     )
   );
@@ -45,11 +38,6 @@ in
       ClientAliveCountMax ${aliveCountMax}
     '';
     hostKeys = [
-      {
-        bits = 4096;
-        inherit (config.sops.secrets."ssh_host_rsa_key") path;
-        type = "rsa";
-      }
       {
         inherit (config.sops.secrets."ssh_host_ed25519_key") path;
         type = "ed25519";
@@ -73,14 +61,6 @@ in
           Hostname ${h}.enta.rebmit.link
           Port ${toString config.networking.ports.ssh}
       '') (attrNames data.hosts);
-  };
-
-  sops.secrets."ssh_host_rsa_key" = {
-    opentofu = {
-      enable = true;
-      useHostOutput = true;
-    };
-    restartUnits = [ "sshd.service" ];
   };
 
   sops.secrets."ssh_host_ed25519_key" = {
