@@ -14,7 +14,7 @@
   services.prometheus.exporters.node = {
     enable = true;
     listenAddress = "127.0.0.1";
-    port = config.networking.ports.prometheus-node-exporter;
+    port = config.ports.prometheus-node-exporter;
     enabledCollectors = [ "systemd" ];
     disabledCollectors = [ "arp" ];
   };

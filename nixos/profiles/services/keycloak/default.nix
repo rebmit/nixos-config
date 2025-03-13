@@ -14,7 +14,7 @@
     settings = {
       http-enabled = true;
       http-host = "127.0.0.1";
-      http-port = config.networking.ports.keycloak;
+      http-port = config.ports.keycloak;
       proxy-headers = "xforwarded";
       hostname = "idp.rebmit.moe";
       cache = "local";

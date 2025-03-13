@@ -31,13 +31,13 @@ dns.lib.toString "rebmit.moe" {
     {
       service = "imaps";
       proto = "tcp";
-      port = config.networking.ports.imap-tls;
+      port = config.ports.imap-tls;
       target = "suwako-vie1.rebmit.link.";
     }
     {
       service = "submissions";
       proto = "tcp";
-      port = config.networking.ports.smtp-tls;
+      port = config.ports.smtp-tls;
       target = "suwako-vie1.rebmit.link.";
     }
   ];

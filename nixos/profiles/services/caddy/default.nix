@@ -26,7 +26,7 @@
   };
 
   services.caddy.globalConfig = ''
-    admin 127.0.0.1:${toString config.networking.ports.caddy-admin}
+    admin 127.0.0.1:${toString config.ports.caddy-admin}
 
     servers {
       metrics

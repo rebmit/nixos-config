@@ -27,7 +27,7 @@ in
 {
   services.openssh = {
     enable = true;
-    ports = [ config.networking.ports.ssh ];
+    ports = [ config.ports.ssh ];
     openFirewall = true;
     settings = {
       PermitRootLogin = "prohibit-password";
@@ -56,10 +56,10 @@ in
       + concatMapStringsSep "\n" (h: ''
         Host ${h}
           Hostname ${h}.rebmit.link
-          Port ${toString config.networking.ports.ssh}
+          Port ${toString config.ports.ssh}
         Host ${h}.enta
           Hostname ${h}.enta.rebmit.link
-          Port ${toString config.networking.ports.ssh}
+          Port ${toString config.ports.ssh}
       '') (attrNames data.hosts);
   };
 

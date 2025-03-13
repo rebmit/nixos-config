@@ -30,7 +30,7 @@ in
         mkOpts = opts: lib.concatLists (lib.mapAttrsToList mkKeyVal opts);
       in
       {
-        "127.0.0.1:${toString config.networking.ports.smtp-submission}".args = mkOpts {
+        "127.0.0.1:${toString config.ports.smtp-submission}".args = mkOpts {
           smtpd_sasl_auth_enable = "yes";
           smtpd_sasl_type = "dovecot";
           smtpd_sasl_path = "/run/dovecot2/auth-postfix";
@@ -131,7 +131,7 @@ in
 
   services.caddy.globalConfig = ''
     layer4 {
-      :${toString config.networking.ports.imap-tls} {
+      :${toString config.ports.imap-tls} {
         route {
           tls {
             connection_policy {
@@ -146,7 +146,7 @@ in
           }
         }
       }
-      :${toString config.networking.ports.smtp-tls} {
+      :${toString config.ports.smtp-tls} {
         route {
           tls {
             connection_policy {
@@ -157,7 +157,7 @@ in
           }
           proxy {
             proxy_protocol v2
-            upstream 127.0.0.1:${toString config.networking.ports.smtp-submission}
+            upstream 127.0.0.1:${toString config.ports.smtp-submission}
           }
         }
       }

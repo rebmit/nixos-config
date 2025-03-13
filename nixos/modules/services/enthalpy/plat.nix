@@ -53,15 +53,15 @@ in
       routes = [
         {
           Destination = cfg.plat.prefix;
-          Table = config.networking.routingTables.plat;
+          Table = config.routingTables.plat;
         }
         { Destination = cfg.plat.dynamicPool; }
       ];
       routingPolicyRules = [
         {
-          Priority = config.networking.routingPolicyPriorities.plat;
+          Priority = config.routingPolicyPriorities.plat;
           Family = "ipv6";
-          Table = config.networking.routingTables.plat;
+          Table = config.routingTables.plat;
           From = cfg.network;
           To = cfg.plat.prefix;
         }

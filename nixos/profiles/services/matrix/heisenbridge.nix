@@ -39,7 +39,7 @@
       };
       rate_limited = false;
       sender_localpart = "heisenbridge";
-      url = "http://127.0.0.1:${toString config.networking.ports.heisenbridge}";
+      url = "http://127.0.0.1:${toString config.ports.heisenbridge}";
       as_token = config.sops.placeholder."heisenbridge_appservice_as_token";
       hs_token = config.sops.placeholder."heisenbridge_appservice_hs_token";
     };
@@ -51,9 +51,9 @@
 
   services.heisenbridge = {
     enable = true;
-    homeserver = "http://127.0.0.1:${toString config.networking.ports.matrix-synapse}";
+    homeserver = "http://127.0.0.1:${toString config.ports.matrix-synapse}";
     address = "127.0.0.1";
-    port = config.networking.ports.heisenbridge;
+    port = config.ports.heisenbridge;
     owner = "@rebmit:rebmit.moe";
   };
 }

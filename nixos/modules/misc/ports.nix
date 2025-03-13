@@ -1,11 +1,11 @@
 { config, lib, ... }:
 with lib;
 let
-  cfg = config.networking.ports;
+  cfg = config.ports;
   noCollision = l: length (unique l) == length l;
 in
 {
-  options.networking.ports = mkOption {
+  options.ports = mkOption {
     type = with types; attrsOf port;
     default = {
       # standard ports

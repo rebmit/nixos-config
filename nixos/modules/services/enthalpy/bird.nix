@@ -162,9 +162,9 @@ in
         GatewayOnLink = true;
       });
       routingPolicyRules = mkIf config.services.bird.enable (singleton {
-        Priority = config.networking.routingPolicyPriorities.enthalpy;
+        Priority = config.routingPolicyPriorities.enthalpy;
         Family = "ipv6";
-        Table = config.networking.routingTables.enthalpy;
+        Table = config.routingTables.enthalpy;
       });
       linkConfig.RequiredForOnline = false;
     };
@@ -173,7 +173,7 @@ in
       ipv6 sadr table sadr6;
 
       protocol kernel {
-        kernel table ${toString config.networking.routingTables.enthalpy};
+        kernel table ${toString config.routingTables.enthalpy};
         ipv6 sadr {
           export all;
           import none;

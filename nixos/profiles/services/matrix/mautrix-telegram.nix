@@ -58,7 +58,7 @@
       };
       rate_limited = false;
       sender_localpart = "mautrix-telegram";
-      url = "http://127.0.0.1:${toString config.networking.ports.mautrix-telegram}";
+      url = "http://127.0.0.1:${toString config.ports.mautrix-telegram}";
       as_token = config.sops.placeholder."mautrix_telegram_appservice_as_token";
       hs_token = config.sops.placeholder."mautrix_telegram_appservice_hs_token";
       de.sorunome.msc2409.push_ephemeral = true;
@@ -90,15 +90,15 @@
     serviceDependencies = [ config.systemd.services.matrix-synapse.name ];
     settings = {
       homeserver = {
-        address = "http://127.0.0.1:${toString config.networking.ports.matrix-synapse}";
+        address = "http://127.0.0.1:${toString config.ports.matrix-synapse}";
         domain = config.services.matrix-synapse.settings.server_name;
       };
       appservice = {
         id = "telegram";
-        address = "http://127.0.0.1:${toString config.networking.ports.mautrix-telegram}";
+        address = "http://127.0.0.1:${toString config.ports.mautrix-telegram}";
         database = "postgres:///mautrix-telegram?host=/run/postgresql";
         hostname = "127.0.0.1";
-        port = config.networking.ports.mautrix-telegram;
+        port = config.ports.mautrix-telegram;
         provisioning.enabled = false;
       };
       bridge = {

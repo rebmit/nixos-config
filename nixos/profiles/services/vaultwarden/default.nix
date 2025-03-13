@@ -11,7 +11,7 @@
       SENDS_ALLOWED = false;
       ORG_CREATION_USERS = "none";
       ROCKET_ADDRESS = "127.0.0.1";
-      ROCKET_PORT = config.networking.ports.vaultwarden;
+      ROCKET_PORT = config.ports.vaultwarden;
       IP_HEADER = "X-Forwarded-For";
       ENABLE_WEBSOCKET = false;
     };

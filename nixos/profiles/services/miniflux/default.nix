@@ -14,7 +14,7 @@
     enable = true;
     config = rec {
       BASE_URL = "https://rss.rebmit.moe";
-      LISTEN_ADDR = "127.0.0.1:${toString config.networking.ports.miniflux}";
+      LISTEN_ADDR = "127.0.0.1:${toString config.ports.miniflux}";
       CREATE_ADMIN = 0;
       OAUTH2_PROVIDER = "oidc";
       OAUTH2_CLIENT_ID = "miniflux";

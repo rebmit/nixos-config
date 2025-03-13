@@ -29,7 +29,7 @@
       listeners = [
         {
           bind_addresses = [ "127.0.0.1" ];
-          port = config.networking.ports.matrix-synapse;
+          port = config.ports.matrix-synapse;
           tls = false;
           type = "http";
           x_forwarded = true;
@@ -74,8 +74,8 @@
 
   services.caddy.virtualHosts."chat.rebmit.moe" = {
     extraConfig = ''
-      reverse_proxy /_matrix/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}
-      reverse_proxy /_synapse/* 127.0.0.1:${toString config.networking.ports.matrix-synapse}
+      reverse_proxy /_matrix/* 127.0.0.1:${toString config.ports.matrix-synapse}
+      reverse_proxy /_synapse/* 127.0.0.1:${toString config.ports.matrix-synapse}
     '';
   };
 

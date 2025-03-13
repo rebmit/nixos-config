@@ -47,7 +47,7 @@ in
     enable = true;
     webExternalUrl = "https://prom.rebmit.moe";
     listenAddress = "127.0.0.1";
-    port = config.networking.ports.prometheus;
+    port = config.ports.prometheus;
     retentionTime = "7d";
     globalConfig = {
       scrape_interval = "1m";
@@ -161,7 +161,7 @@ in
       enable = true;
       webExternalUrl = "https://${config.networking.fqdn}/alert";
       listenAddress = "127.0.0.1";
-      port = config.networking.ports.prometheus-alertmanager;
+      port = config.ports.prometheus-alertmanager;
       extraFlags = [ ''--cluster.listen-address=""'' ];
       configuration = {
         receivers = [
@@ -201,7 +201,7 @@ in
   services.prometheus.exporters.blackbox = {
     enable = true;
     listenAddress = "127.0.0.1";
-    port = config.networking.ports.prometheus-blackbox-exporter;
+    port = config.ports.prometheus-blackbox-exporter;
     configFile = (pkgs.formats.yaml { }).generate "config.yml" {
       modules = {
         http_2xx = {

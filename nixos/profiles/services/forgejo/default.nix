@@ -18,9 +18,9 @@
       server = {
         DOMAIN = "git.rebmit.moe";
         HTTP_ADDR = "127.0.0.1";
-        HTTP_PORT = config.networking.ports.forgejo;
+        HTTP_PORT = config.ports.forgejo;
         ROOT_URL = "https://git.rebmit.moe";
-        SSH_PORT = config.networking.ports.ssh;
+        SSH_PORT = config.ports.ssh;
       };
       service = {
         DISABLE_REGISTRATION = true;

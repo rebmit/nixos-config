@@ -17,7 +17,7 @@
     enable = true;
     workers = {
       controller = {
-        bindSockets = [ "localhost:${toString config.networking.ports.rspamd-controller}" ];
+        bindSockets = [ "localhost:${toString config.ports.rspamd-controller}" ];
       };
       rspamd_proxy = {
         bindSockets = [
@@ -38,7 +38,7 @@
         }
       '';
       "redis.conf".text = ''
-        servers = "127.0.0.1:${toString config.networking.ports.rspamd-redis}";
+        servers = "127.0.0.1:${toString config.ports.rspamd-redis}";
       '';
       "classifier-bayes.conf".text = ''
         autolearn = true;
@@ -55,7 +55,7 @@
   services.redis.servers.rspamd = {
     enable = true;
     bind = "127.0.0.1";
-    port = config.networking.ports.rspamd-redis;
+    port = config.ports.rspamd-redis;
   };
 
   preservation.preserveAt."/persist".directories = [

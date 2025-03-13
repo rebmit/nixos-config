@@ -5,7 +5,6 @@
 }:
 with lib;
 let
-  cfg = config.networking;
   noCollision = l: length (unique l) == length l;
   reservedTables = [
     "local"
@@ -15,7 +14,7 @@ let
   ];
 in
 {
-  options.networking = {
+  options = {
     routingTables = mkOption {
       type = with types; attrsOf int;
       default = {
@@ -63,15 +62,15 @@ in
   config = {
     assertions = [
       {
-        assertion = noCollision (attrValues cfg.routingTables);
+        assertion = noCollision (attrValues config.routingTables);
         message = "routing table id collision";
       }
       {
-        assertion = noCollision (attrValues cfg.routingMarks);
+        assertion = noCollision (attrValues config.routingMarks);
         message = "routing mark id collision";
       }
       {
-        assertion = noCollision (attrValues cfg.routingPolicyPriorities);
+        assertion = noCollision (attrValues config.routingPolicyPriorities);
         message = "routing policy priority collision";
       }
     ];
@@ -81,7 +80,7 @@ in
       text = ''
         ${concatStringsSep "\n" (
           mapAttrsToList (name: table: "${toString table} ${name}") (
-            filterAttrs (name: _table: !(lib.elem name reservedTables)) cfg.routingTables
+            filterAttrs (name: _table: !(lib.elem name reservedTables)) config.routingTables
           )
         )}
       '';
