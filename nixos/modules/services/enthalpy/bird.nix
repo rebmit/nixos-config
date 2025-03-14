@@ -64,15 +64,15 @@ in
             metric 512;
           }
 
-          function is_safe_prefix() {
+          function is_safe_prefix() -> bool {
             return net.dst.len <= 60;
           }
 
-          function is_enthalpy_prefix() {
+          function is_enthalpy_prefix() -> bool {
             return net.dst ~ [${cfg.network}+];
           }
 
-          function is_rebmit_prefix() {
+          function is_rebmit_prefix() -> bool {
             return net.dst ~ [${concatMapStringsSep ",\n" (p: "${p}+") cfg.bird.prefixes}];
           }
 
