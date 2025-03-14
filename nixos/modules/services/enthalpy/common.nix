@@ -42,7 +42,7 @@ in
     };
     network = mkOption {
       type = types.str;
-      default = "2a0e:aa07:e21c::/48";
+      default = "2a0e:aa07:e21c::/47";
       readOnly = true;
       description = ''
         Prefix of the enthalpy network.

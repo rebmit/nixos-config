@@ -78,7 +78,10 @@ in
             RemainAfterExit = true;
             NetworkNamespacePath = cfg.netnsPath;
           };
-          after = [ "netns-${name}.service" ];
+          after = [
+            "netns-${name}.service"
+            "systemd-modules-load.service"
+          ];
           partOf = [ "netns-${name}.service" ];
           wantedBy = [
             "netns-${name}.service"
