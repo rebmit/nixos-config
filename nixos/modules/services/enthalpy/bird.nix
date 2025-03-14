@@ -79,19 +79,16 @@ in
           protocol static {
             ipv6 sadr;
             route ${cfg.prefix} from ::/0 unreachable;
-          }
-
-          ${optionalString cfg.bird.exit.enable ''
-            protocol static {
-              ipv6 sadr;
+            ${optionalString cfg.bird.exit.enable ''
               route ${cfg.network} from ::/0 unreachable;
               ${optionalString (cfg.bird.exit.kind == "transit") ''
                 route ::/0 from ${cfg.network} via fe80::ff:fe00:2 dev "host";
               ''}
-            }
-          ''}
+            ''}
+          }
 
           protocol babel {
+            vrf default;
             ipv6 sadr {
               export filter {
                 if !is_safe_prefix() then reject;
@@ -115,6 +112,7 @@ in
 
           ${optionalString cfg.bird.exit.enable ''
             protocol babel {
+              vrf default;
               ipv6 sadr {
                 export filter {
                   if !is_safe_prefix() then reject;
@@ -129,7 +127,11 @@ in
               };
               randomize router id;
               interface "host" {
-                type wired;
+                type tunnel;
+                link quality etx;
+                rxcost 32;
+                rtt cost 1024;
+                rtt max 1024 ms;
                 rx buffer 2000;
               };
             }
@@ -169,12 +171,13 @@ in
       linkConfig.RequiredForOnline = false;
     };
 
-    services.bird.config = mkAfter ''
-      ipv6 sadr table sadr6;
+    services.bird.config = mkIf cfg.bird.exit.enable (mkAfter ''
+      ipv6 sadr table enthalpy6;
 
       protocol kernel {
         kernel table ${toString config.routingTables.enthalpy};
         ipv6 sadr {
+          table enthalpy6;
           export all;
           import none;
         };
@@ -183,15 +186,20 @@ in
 
       protocol babel {
         ipv6 sadr {
+          table enthalpy6;
           export all;
           import all;
         };
         randomize router id;
         interface "enthalpy" {
-          type wired;
+          type tunnel;
+          link quality etx;
+          rxcost 32;
+          rtt cost 1024;
+          rtt max 1024 ms;
           rx buffer 2000;
         };
       }
-    '';
+    '');
   };
 }
