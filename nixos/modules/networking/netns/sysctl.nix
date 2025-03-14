@@ -54,7 +54,7 @@ in
 
             config = {
               after = [ "netns-${name}-sysctl.service" ];
-              requires = [ "netns-${name}-sysctl.service" ];
+              wants = [ "netns-${name}-sysctl.service" ];
             };
           };
         }
