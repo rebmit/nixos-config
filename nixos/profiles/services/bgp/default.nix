@@ -17,6 +17,7 @@
         ipv6;
         route 2a0e:aa07:e210::/44 unreachable;
         route 2a0e:aa07:e21c::/48 unreachable;
+        route 2a0e:aa07:e21d::/48 unreachable;
       }
       protocol kernel kernel6 {
         ipv6 {
