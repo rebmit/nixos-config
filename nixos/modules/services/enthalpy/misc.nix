@@ -18,6 +18,8 @@ mkIf cfg.enable {
 
     routingPolicyPriorities = {
       localsid = 500;
+      l3mdev = 1000;
+      l3mdev-unreachable = 2000;
     };
   };
 }

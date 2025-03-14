@@ -10,6 +10,7 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
+  inherit (lib.lists) singleton;
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
@@ -71,6 +72,15 @@ in
 
       interfaces.enthalpy = {
         addresses = [ cfg.address ];
+        routingPolicyRules = singleton {
+          priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
+          family = [
+            "ipv4"
+            "ipv6"
+          ];
+          selector.l3mdev = { };
+          action.unreachable = { };
+        };
         netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
       };
     };
