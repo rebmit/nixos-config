@@ -9,11 +9,16 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf mkAfter;
-  inherit (lib.strings) concatMapStringsSep optionalString;
+  inherit (lib.strings) concatMapStringsSep optionalString splitString;
   inherit (lib.lists) singleton;
+  inherit (lib.trivial) fromHexString;
+  inherit (lib.network) ipv6;
 
   cfg = config.services.enthalpy;
   netnsCfg = config.networking.netns.enthalpy;
+
+  splitAddress = idx: builtins.elemAt (splitString ":" (ipv6.fromString cfg.prefix).address) idx;
+  routerId = (fromHexString (splitAddress 2)) * 65536 + (fromHexString (splitAddress 3));
 in
 {
   options.services.enthalpy.bird = {
@@ -48,7 +53,7 @@ in
       services.bird = {
         enable = true;
         config = ''
-          router id ${toString cfg.identifier};
+          router id ${toString routerId};
 
           protocol device {
             scan time 5;

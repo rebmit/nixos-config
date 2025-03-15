@@ -1,4 +1,14 @@
-{ hostData, config, ... }:
+{
+  hostData,
+  config,
+  mylib,
+  ...
+}:
+let
+  inherit (mylib.network) cidr;
+
+  cfg = config.services.enthalpy;
+in
 {
   sops.secrets."enthalpy_node_private_key_pem".opentofu = {
     enable = true;
@@ -7,7 +17,8 @@
 
   services.enthalpy = {
     enable = true;
-    identifier = hostData.enthalpy_node_id;
+    entity = "rebmit";
+    prefix = cidr.subnet (60 - cidr.length cfg.network) hostData.enthalpy_node_id cfg.network;
 
     ipsec = {
       organization = hostData.enthalpy_node_organization;

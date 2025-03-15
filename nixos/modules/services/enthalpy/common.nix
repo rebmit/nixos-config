@@ -1,8 +1,10 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/gravity/default.nix
 {
+  inputs,
   config,
   lib,
+  pkgs,
   mylib,
   ...
 }:
@@ -10,7 +12,9 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-  inherit (lib.lists) singleton;
+  inherit (lib.attrsets) mapAttrs' nameValuePair;
+  inherit (lib.lists) singleton any;
+  inherit (lib.network) ipv6;
   inherit (mylib.network) cidr;
 
   cfg = config.services.enthalpy;
@@ -19,26 +23,21 @@ in
 {
   options.services.enthalpy = {
     enable = mkEnableOption "enthalpy overlay network, next generation";
-    identifier = mkOption {
-      type = types.int;
+    entity = mkOption {
+      type = types.str;
       description = ''
-        Unique identifier of the node in the enthalpy network.
+        The name of the entity responsible for maintaining this node.
+        It should match the name registered in the metadata database.
       '';
     };
-    address = mkOption {
-      type = types.str;
-      default = "${cidr.host 1 cfg.prefix}/128";
+    metadata = mkOption {
+      type = types.submodule {
+        freeformType = (pkgs.formats.json { }).type;
+      };
+      default = builtins.fromJSON (builtins.readFile "${inputs.enthalpy}/zones/data.json");
       readOnly = true;
       description = ''
-        Address to be added into the enthalpy network as source address.
-      '';
-    };
-    prefix = mkOption {
-      type = types.str;
-      default = "${cidr.subnet (60 - cidr.length cfg.network) cfg.identifier cfg.network}";
-      readOnly = true;
-      description = ''
-        Prefix to be announced for the local node in the enthalpy network.
+        Metadata for the enthalpy network.
       '';
     };
     network = mkOption {
@@ -49,9 +48,45 @@ in
         Prefix of the enthalpy network.
       '';
     };
+    prefix = mkOption {
+      type = types.str;
+      description = ''
+        Prefix to be announced for this node in the enthalpy network.
+      '';
+    };
+    address = mkOption {
+      type = types.str;
+      default = "${cidr.host 1 cfg.prefix}/128";
+      readOnly = true;
+      description = ''
+        Address to be added as source address for this node.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = any (
+          p: (cidr.child cfg.prefix p) || (ipv6.fromString cfg.prefix == ipv6.fromString p)
+        ) cfg.metadata."${cfg.entity}".prefixes;
+        message = ''
+          The prefix for this node must fall within the range of any registered
+          prefix in the metadata database of this entity. You can forcibly ignore
+          this assertion, but any invalid route announced might be rejected by
+          other nodes in enthalpy network.
+        '';
+      }
+      {
+        assertion = cidr.length cfg.prefix <= 64;
+        message = ''
+          The prefix length for this node to be announced should not exceed 64.
+          You can forcibly ignore this assertion, but any invalid route announced
+          might be rejected by other nodes in enthalpy network.
+        '';
+      }
+    ];
+
     boot.kernelModules = [ "vrf" ];
 
     networking.netns.enthalpy = {
@@ -66,9 +101,19 @@ in
         "net.ipv4.raw_l3mdev_accept" = 0;
       };
 
-      netdevs.enthalpy = {
-        kind = "dummy";
-      };
+      netdevs =
+        (mapAttrs' (
+          name: _value:
+          nameValuePair "vrf-${name}" {
+            kind = "vrf";
+            extraArgs.table = netnsCfg.routingTables.main;
+          }
+        ) cfg.metadata)
+        // {
+          enthalpy = {
+            kind = "dummy";
+          };
+        };
 
       interfaces.enthalpy = {
         addresses = [ cfg.address ];
