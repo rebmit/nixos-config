@@ -60,7 +60,7 @@ in
         "net.ipv6.conf.default.forwarding" = 1;
 
         # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
-        "net.vrf.strict_mode" = 1;
+        "net.vrf.strict_mode" = 0;
         "net.ipv4.tcp_l3mdev_accept" = 0;
         "net.ipv4.udp_l3mdev_accept" = 0;
         "net.ipv4.raw_l3mdev_accept" = 0;
