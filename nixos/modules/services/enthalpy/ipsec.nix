@@ -11,9 +11,12 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-  inherit (lib.strings) concatStringsSep;
+  inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.strings) concatStringsSep concatMapStringsSep;
+  inherit (lib.lists) flatten singleton all;
 
   cfg = config.services.enthalpy;
+  allOrganizations = flatten (mapAttrsToList (_name: value: value.organizations) cfg.metadata);
 in
 {
   options.services.enthalpy.ipsec = {
@@ -70,9 +73,28 @@ in
         URL of the registry to be used.
       '';
     };
+    whitelist = mkOption {
+      type = types.listOf types.str;
+      default = allOrganizations;
+      description = ''
+        A list of organizations that are whitelisted.
+      '';
+    };
   };
 
   config = mkIf (cfg.enable && cfg.ipsec.enable) {
+    assertions = singleton {
+      assertion = all (org: builtins.elem org allOrganizations) cfg.ipsec.whitelist;
+      message = ''
+        All organizations listed in the whitelist must exist in
+        `config.services.enthalpy.metadata`.
+
+        We perform this assertion because newly joined organizations do not
+        have a corresponding VRF to set, as we currently do not support creating
+        VRFs and configuring routing daemon dynamically.
+      '';
+    };
+
     services.strongswan-swanctl = {
       enable = true;
       strongswan.extraConfig = ''
@@ -174,7 +196,10 @@ in
       script = ''
         set -euo pipefail
         curl --fail --retry 5 --retry-delay 30 --retry-connrefused "${cfg.ipsec.registry}" --output /var/lib/ranet/registry.json.new
-        mv /var/lib/ranet/registry.json.new /var/lib/ranet/registry.json
+        jq "[.[] | select(.organization | IN(${
+          concatMapStringsSep "," (org: ''\"${org}\"'') cfg.ipsec.whitelist
+        }))]" /var/lib/ranet/registry.json.new > /var/lib/ranet/registry.json.filtered
+        mv /var/lib/ranet/registry.json.filtered /var/lib/ranet/registry.json
         /run/current-system/systemd/bin/systemctl reload-or-restart --no-block ranet || true
       '';
       serviceConfig.Type = "oneshot";
