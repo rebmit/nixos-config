@@ -1,8 +1,9 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   services.forgejo = {
     enable = true;
     lfs.enable = true;
+    package = pkgs.forgejo;
     user = "git";
     group = "git";
     database = {
