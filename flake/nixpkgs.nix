@@ -5,19 +5,10 @@
 let
   overlays = [
     inputs.rebmit.overlays.default
+    inputs.enthalpy.overlays.default
     inputs.nixpkgs-terraform-providers-bin.overlay
 
     (_final: prev: {
-      bird = prev.bird.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          ../patches/bird-babel-link-quality-estimation.patch
-        ];
-      });
-      bird3 = prev.bird3.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
-          ../patches/bird-babel-link-quality-estimation.patch
-        ];
-      });
       mautrix-telegram = prev.mautrix-telegram.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ../patches/mautrix-telegram-sticker.patch

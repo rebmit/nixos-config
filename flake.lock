@@ -81,6 +81,49 @@
         "type": "github"
       }
     },
+    "enthalpy": {
+      "inputs": {
+        "devshell": [
+          "enthalpy",
+          "rebmit",
+          "devshell"
+        ],
+        "flake-parts": [
+          "enthalpy",
+          "rebmit",
+          "flake-parts"
+        ],
+        "git-hooks-nix": [
+          "enthalpy",
+          "rebmit",
+          "git-hooks-nix"
+        ],
+        "nixpkgs": [
+          "enthalpy",
+          "rebmit",
+          "nixpkgs"
+        ],
+        "rebmit": [
+          "rebmit"
+        ],
+        "treefmt-nix": [
+          "enthalpy",
+          "rebmit",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742032439,
+        "narHash": "sha256-rGzqxq2k7BlIVqSs61HmYlrO9w+GAv4Fqspnvxy+12o=",
+        "rev": "1642c0a64c17c66f94c911543aebe789bb5686be",
+        "type": "tarball",
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/enthalpy/archive/1642c0a64c17c66f94c911543aebe789bb5686be.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -390,11 +433,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1741460858,
-        "narHash": "sha256-/NdANAHBRqgDzfqXUbhO3r7AlC458ThKU47jJu67sUI=",
-        "rev": "8383bc341ce7e7981eb7cd96bcaf99b66cc866fb",
+        "lastModified": 1742033149,
+        "narHash": "sha256-tw+8LfuYePE6W7q2MX7Ej48UdOwn594rgvyh8Aio1Ho=",
+        "rev": "5488f654e0e1ba179b36b1d1fdab8fc9aec09789",
         "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/8383bc341ce7e7981eb7cd96bcaf99b66cc866fb.tar.gz"
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/5488f654e0e1ba179b36b1d1fdab8fc9aec09789.tar.gz"
       },
       "original": {
         "type": "tarball",
@@ -410,6 +453,7 @@
         ],
         "disko": "disko",
         "dns": "dns",
+        "enthalpy": "enthalpy",
         "flake-compat": [
           "rebmit",
           "flake-compat"

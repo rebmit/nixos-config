@@ -69,6 +69,10 @@
     # libraries
 
     rebmit.url = "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz";
+    enthalpy = {
+      url = "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz";
+      inputs.rebmit.follows = "rebmit";
+    };
     flake-utils.url = "github:numtide/flake-utils";
     dns = {
       url = "github:NickCao/dns.nix";
