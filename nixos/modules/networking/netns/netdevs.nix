@@ -51,7 +51,7 @@ let
           };
           default = { };
           description = ''
-            Additional arguments for the netdev type. See {manpage}`ip-route(8)`
+            Additional arguments for the netdev type. See {manpage}`ip-link(8)`
             manual page for the details.
           '';
         };
