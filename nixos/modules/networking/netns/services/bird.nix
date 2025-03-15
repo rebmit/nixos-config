@@ -22,7 +22,7 @@ in
         {
           options.services.bird = {
             enable = mkEnableOption "bird internet routing daemon";
-            package = mkPackageOption pkgs "bird3" { };
+            package = mkPackageOption pkgs "bird2" { };
             socket = mkOption {
               type = types.str;
               default = "${config.runtimeDirectory}/bird/bird.ctl";
