@@ -10,6 +10,7 @@
     ++ (with profiles; [
       services.caddy
       services.forgejo
+      services.forgejo-actions-runner
       services.geofeed
       services.keycloak
       services.matrix.heisenbridge
@@ -18,6 +19,7 @@
       services.miniflux
       services.postgresql
       services.well-known
+      virtualization.podman
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
