@@ -9,6 +9,7 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf mkAfter;
+  inherit (lib.attrsets) attrNames;
   inherit (lib.strings) concatMapStringsSep optionalString splitString;
   inherit (lib.lists) singleton;
   inherit (lib.trivial) fromHexString;
@@ -19,6 +20,7 @@ let
 
   splitAddress = idx: builtins.elemAt (splitString ":" (ipv6.fromString cfg.prefix).address) idx;
   routerId = (fromHexString (splitAddress 2)) * 65536 + (fromHexString (splitAddress 3));
+  netdevDependencies = map (name: netnsCfg.netdevs."vrf-${name}".service) (attrNames cfg.metadata);
 in
 {
   options.services.enthalpy.bird = {
@@ -31,6 +33,13 @@ in
       readOnly = true;
       description = ''
         List of prefixes that this autonomous system is allowed to announce.
+      '';
+    };
+    transit = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+      description = ''
+        List of transit network entities in the enthalpy network.
       '';
     };
     exit = {
@@ -49,6 +58,11 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
+    systemd.services.netns-enthalpy-bird = {
+      requires = netdevDependencies;
+      after = netdevDependencies;
+    };
+
     networking.netns.enthalpy = {
       services.bird = {
         enable = true;
@@ -92,31 +106,40 @@ in
             ''}
           }
 
-          protocol babel {
-            vrf default;
-            ipv6 sadr {
-              export filter {
-                if !is_safe_prefix() then reject;
-                accept;
+          ${concatMapStringsSep "\n" (name: ''
+            function is_entity_${name}_prefix() -> bool {
+              return net.dst ~ [${concatMapStringsSep ",\n" (p: "${p}+") cfg.metadata."${name}".prefixes}];
+            }
+
+            protocol babel entity_${name} {
+              vrf "vrf-${name}";
+              ipv6 sadr {
+                export filter {
+                  if !is_safe_prefix() then reject;
+                  accept;
+                };
+                import filter {
+                  if !is_safe_prefix() then reject;
+                  ${optionalString (name != cfg.entity && !builtins.elem name cfg.bird.transit) ''
+                    if !is_entity_${name}_prefix() then reject;
+                  ''}
+                  accept;
+                };
               };
-              import filter {
-                if !is_safe_prefix() then reject;
-                accept;
+              randomize router id;
+              interface "enta*" {
+                type tunnel;
+                link quality etx;
+                rxcost 32;
+                rtt cost 1024;
+                rtt max 1024 ms;
+                rx buffer 2000;
               };
-            };
-            randomize router id;
-            interface "enta*" {
-              type tunnel;
-              link quality etx;
-              rxcost 32;
-              rtt cost 1024;
-              rtt max 1024 ms;
-              rx buffer 2000;
-            };
-          }
+            }
+          '') (attrNames cfg.metadata)}
 
           ${optionalString cfg.bird.exit.enable ''
-            protocol babel {
+            protocol babel exit {
               vrf default;
               ipv6 sadr {
                 export filter {

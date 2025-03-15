@@ -96,9 +96,9 @@ in
 
         # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
         "net.vrf.strict_mode" = 0;
-        "net.ipv4.tcp_l3mdev_accept" = 0;
-        "net.ipv4.udp_l3mdev_accept" = 0;
-        "net.ipv4.raw_l3mdev_accept" = 0;
+        "net.ipv4.tcp_l3mdev_accept" = 1;
+        "net.ipv4.udp_l3mdev_accept" = 1;
+        "net.ipv4.raw_l3mdev_accept" = 1;
       };
 
       netdevs =
@@ -115,19 +115,29 @@ in
           };
         };
 
-      interfaces.enthalpy = {
-        addresses = [ cfg.address ];
-        routingPolicyRules = singleton {
-          priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
-          family = [
-            "ipv4"
-            "ipv6"
-          ];
-          selector.l3mdev = { };
-          action.unreachable = { };
+      interfaces =
+        (mapAttrs' (
+          name: _value:
+          nameValuePair "vrf-${name}" {
+            netdevDependencies = [ netnsCfg.netdevs."vrf-${name}".service ];
+          }
+        ) cfg.metadata)
+        // {
+          enthalpy = {
+            addresses = [ cfg.address ];
+            routingPolicyRules = singleton {
+              priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
+              family = [
+                "ipv4"
+                "ipv6"
+              ];
+              selector.l3mdev = { };
+              action.unreachable = { };
+            };
+            netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
+          };
         };
-        netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
-      };
+
     };
   };
 }
