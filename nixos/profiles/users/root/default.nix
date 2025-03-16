@@ -5,6 +5,7 @@
     openssh.authorizedKeys.keyFiles = [
       ./_ssh/marisa-7d76
       ./_ssh/marisa-a7s
+      ./_ssh/canokey-canary
     ];
   };
 
