@@ -45,6 +45,16 @@ let
     hostData = data.hosts."${name}";
   };
 
+  darwinSpecialArgs = name: {
+    inherit
+      inputs
+      self
+      data
+      mylib
+      ;
+    hostData = data.hosts."${name}";
+  };
+
   commonNixosModules =
     name:
     nixosModules
@@ -121,6 +131,35 @@ let
           ];
       };
     };
+
+  mkDarwinHost =
+    {
+      name,
+      configurationName ? name,
+      nixpkgs ? inputs.nixpkgs,
+      nix-darwin ? inputs.nix-darwin,
+      system,
+    }:
+    {
+      ${name} = nix-darwin.lib.darwinSystem {
+        specialArgs = darwinSpecialArgs name;
+        modules = lib.optional (configurationName != null) ../darwin/hosts/${configurationName} ++ [
+          (
+            { lib, ... }:
+            {
+              networking.hostName = lib.mkDefault name;
+              networking.computerName = lib.mkDefault name;
+            }
+          )
+          {
+            nixpkgs = {
+              inherit ((getSystem system).nixpkgs) config overlays;
+              hostPlatform = system;
+            };
+          }
+        ];
+      };
+    };
 in
 {
   flake.nixosConfigurations = lib.mkMerge [
@@ -167,6 +206,13 @@ in
     (mkHost {
       name = "reisen-ams0";
       system = "x86_64-linux";
+    })
+  ];
+
+  flake.darwinConfigurations = lib.mkMerge [
+    (mkDarwinHost {
+      name = "marisa-j715";
+      system = "aarch64-darwin";
     })
   ];
 }

@@ -366,6 +366,26 @@
         "type": "github"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742013980,
+        "narHash": "sha256-34YbfwABU5nb0F5eaaJE3ujldaNDhmyxw7CWqhXJV08=",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "9175b4bb5f127fb7b5784b14f7e01abff24c378f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nixpkgs-terraform-providers-bin": {
       "inputs": {
         "nixpkgs": [
@@ -470,6 +490,7 @@
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "niri-flake": "niri-flake",
+        "nix-darwin": "nix-darwin",
         "nixpkgs": [
           "rebmit",
           "nixpkgs"

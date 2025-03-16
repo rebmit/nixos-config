@@ -53,6 +53,10 @@
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.pre-commit-hooks-nix.follows = "git-hooks-nix";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # programs
 
