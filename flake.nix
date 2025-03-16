@@ -53,6 +53,9 @@
       inputs.rust-overlay.follows = "rust-overlay";
       inputs.pre-commit-hooks-nix.follows = "git-hooks-nix";
     };
+
+    # darwin modules
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,6 +70,10 @@
     };
     nixpkgs-terraform-providers-bin = {
       url = "github:rebmit/nixpkgs-terraform-providers-bin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs-firefox-darwin = {
+      url = "github:bandithedoge/nixpkgs-firefox-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   pkgs,
   self,
@@ -12,13 +13,14 @@
     openssh
   ];
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+  nixpkgs.overlays = [ inputs.nixpkgs-firefox-darwin.overlay ];
 
   home-manager.users.rebmit =
-    { suites, profiles, ... }:
+    {
+      suites,
+      profiles,
+      ...
+    }:
     {
       imports =
         suites.workstation
@@ -44,6 +46,8 @@
       disabledModules = [ profiles.preservation ];
 
       systemd.user.tmpfiles.rules = lib.mkForce [ ];
+
+      home.packages = with pkgs; [ librewolf ];
     };
 
   users.users.rebmit.home = "/Users/rebmit";
