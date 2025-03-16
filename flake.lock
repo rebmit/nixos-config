@@ -433,11 +433,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1742033149,
-        "narHash": "sha256-tw+8LfuYePE6W7q2MX7Ej48UdOwn594rgvyh8Aio1Ho=",
-        "rev": "5488f654e0e1ba179b36b1d1fdab8fc9aec09789",
+        "lastModified": 1742115255,
+        "narHash": "sha256-ipTV//avbZGHVZxTa+E+M7LkIUnYajbw3WGDu1nUYT8=",
+        "rev": "cc87e208730a2d18e15945842eda675e499f615a",
         "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/5488f654e0e1ba179b36b1d1fdab8fc9aec09789.tar.gz"
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/cc87e208730a2d18e15945842eda675e499f615a.tar.gz"
       },
       "original": {
         "type": "tarball",
