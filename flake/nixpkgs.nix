@@ -53,6 +53,7 @@ in
               "sof-firmware"
               "temurin-bin"
               "zotero"
+              "zulu-ca-jdk"
               # keep-sorted end
             ];
 

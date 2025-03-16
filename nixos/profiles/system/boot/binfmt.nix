@@ -1,9 +1,11 @@
 {
   lib,
   pkgs,
-  mylib,
   ...
 }:
 {
-  boot.binfmt.emulatedSystems = lib.remove pkgs.stdenv.hostPlatform.system mylib.systems;
+  boot.binfmt.emulatedSystems = lib.remove pkgs.stdenv.hostPlatform.system [
+    "aarch64-linux"
+    "x86_64-linux"
+  ];
 }
