@@ -19,6 +19,7 @@ let
         fish
         helix
         preservation
+        theme.catppuccin
         tmux
         yazi
         # keep-sorted end
@@ -46,7 +47,6 @@ let
           gtk
           kitty
           qt
-          theme.catppuccin
           valent
           xdg-user-dirs
           # keep-sorted end

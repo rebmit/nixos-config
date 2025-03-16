@@ -92,6 +92,32 @@ let
       )
     ];
 
+  commonDarwinModules = name: [
+    inputs.home-manager.darwinModules.home-manager
+    (
+      { ... }:
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          sharedModules = commonDarwinHomeModules name;
+          extraSpecialArgs = homeSpecialArgs name;
+        };
+      }
+    )
+  ];
+
+  commonDarwinHomeModules =
+    _name:
+    homeModules
+    ++ [
+      inputs.niri-flake.homeModules.niri
+
+      {
+        home.stateVersion = lib.mkDefault "24.11";
+      }
+    ];
+
   mkHost =
     {
       name,
@@ -143,21 +169,24 @@ let
     {
       ${name} = nix-darwin.lib.darwinSystem {
         specialArgs = darwinSpecialArgs name;
-        modules = lib.optional (configurationName != null) ../darwin/hosts/${configurationName} ++ [
-          (
-            { lib, ... }:
+        modules =
+          (commonDarwinModules name)
+          ++ lib.optional (configurationName != null) ../darwin/hosts/${configurationName}
+          ++ [
+            (
+              { lib, ... }:
+              {
+                networking.hostName = lib.mkDefault name;
+                networking.computerName = lib.mkDefault name;
+              }
+            )
             {
-              networking.hostName = lib.mkDefault name;
-              networking.computerName = lib.mkDefault name;
+              nixpkgs = {
+                inherit ((getSystem system).nixpkgs) config overlays;
+                hostPlatform = system;
+              };
             }
-          )
-          {
-            nixpkgs = {
-              inherit ((getSystem system).nixpkgs) config overlays;
-              hostPlatform = system;
-            };
-          }
-        ];
+          ];
       };
     };
 in

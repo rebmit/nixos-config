@@ -1,12 +1,14 @@
-{ pkgs, self, ... }:
+{
+  lib,
+  pkgs,
+  self,
+  ...
+}:
 {
   environment.systemPackages = with pkgs; [
-    helix
     git
-    kitty
     coreutils
     htop
-    yazi
     openssh
   ];
 
@@ -14,6 +16,37 @@
     enable = true;
     nix-direnv.enable = true;
   };
+
+  home-manager.users.rebmit =
+    { suites, profiles, ... }:
+    {
+      imports =
+        suites.workstation
+        ++ (with profiles; [
+          kitty
+        ]);
+
+      programs.git = {
+        userName = "git";
+        userEmail = "rebmit@rebmit.moe";
+        signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
+      };
+
+      programs.tmux.shell = "${pkgs.fish}/bin/fish";
+
+      programs.kitty.font.size = lib.mkForce 16.0;
+
+      programs.helix.settings.theme = lib.mkForce "catppuccin_mocha";
+
+      xdg.configFile."kitty/theme.conf".source =
+        lib.mkForce "${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf";
+
+      disabledModules = [ profiles.preservation ];
+
+      systemd.user.tmpfiles.rules = lib.mkForce [ ];
+    };
+
+  users.users.rebmit.home = "/Users/rebmit";
 
   nix.settings.experimental-features = "nix-command flakes";
 

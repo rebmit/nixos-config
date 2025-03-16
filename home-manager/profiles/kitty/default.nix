@@ -13,7 +13,7 @@
     };
     settings = {
       background_opacity = "0.95";
-      hide_window_decorations = "yes";
+      hide_window_decorations = lib.mkIf pkgs.stdenv.hostPlatform.isLinux "yes";
       confirm_os_window_close = "0";
       enable_audio_bell = "no";
       map = "kitty_mod+t no_op";
@@ -24,8 +24,6 @@
   };
 
   programs.fuzzel.settings.main.terminal = lib.mkDefault "kitty";
-
-  programs.niri.terminal = lib.mkDefault [ "kitty" ];
 
   systemd.user.tmpfiles.rules = [
     "L %h/.config/kitty/theme.conf - - - - ${config.theme.light.kittyTheme}"

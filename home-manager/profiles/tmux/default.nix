@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   programs.tmux = {
     enable = true;
@@ -69,5 +74,5 @@
     '';
   };
 
-  programs.kitty.settings.shell = lib.mkDefault "tmux";
+  programs.kitty.settings.shell = lib.mkDefault "${config.programs.tmux.package}/bin/tmux";
 }

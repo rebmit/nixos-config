@@ -10,6 +10,11 @@ remote name:
 local name:
   nixos-rebuild switch --use-remote-sudo --flake .#{{name}} --verbose --show-trace
 
+[macos]
+[group('nix')]
+local name:
+  darwin-rebuild switch --flake .#{{name}} --verbose --show-trace
+
 [group('nix')]
 up:
   nix flake update

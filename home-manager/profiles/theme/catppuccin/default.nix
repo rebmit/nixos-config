@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 let
   importBase24Theme =
     file:
@@ -31,18 +31,21 @@ in
     };
   };
 
-  home.packages = with pkgs; [
-    papirus-icon-theme
-    capitaine-cursors
-    (catppuccin-gtk.override {
-      accents = [ "blue" ];
-      size = "compact";
-      variant = "latte";
-    })
-    (catppuccin-gtk.override {
-      accents = [ "blue" ];
-      size = "compact";
-      variant = "frappe";
-    })
-  ];
+  home.packages = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
+    with pkgs;
+    [
+      papirus-icon-theme
+      capitaine-cursors
+      (catppuccin-gtk.override {
+        accents = [ "blue" ];
+        size = "compact";
+        variant = "latte";
+      })
+      (catppuccin-gtk.override {
+        accents = [ "blue" ];
+        size = "compact";
+        variant = "frappe";
+      })
+    ]
+  );
 }
