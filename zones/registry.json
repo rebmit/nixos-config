@@ -110,23 +110,6 @@
             "port": 14000
           }
         ]
-      },
-      {
-        "common_name": "marisa-a7s",
-        "endpoints": [
-          {
-            "serial_number": "0",
-            "address_family": "ip4",
-            "address": "marisa-a7s.dyn.rebmit.link",
-            "port": 14000
-          },
-          {
-            "serial_number": "1",
-            "address_family": "ip6",
-            "address": "marisa-a7s.dyn.rebmit.link",
-            "port": 14000
-          }
-        ]
       }
     ]
   }

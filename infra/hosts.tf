@@ -12,12 +12,6 @@ locals {
       enthalpy_node_id           = parseint("d79", 16)
       enthalpy_node_organization = "edge"
     }
-    "marisa-a7s" = {
-      endpoints_v4               = []
-      endpoints_v6               = []
-      enthalpy_node_id           = parseint("572", 16)
-      enthalpy_node_organization = "edge"
-    }
     "suwako-vie0" = {
       endpoints_v4               = ["203.34.137.22"]
       endpoints_v6               = ["2a0d:f302:137:fd9c::1"]
