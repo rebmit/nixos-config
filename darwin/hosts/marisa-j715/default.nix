@@ -34,8 +34,6 @@
         signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
       };
 
-      programs.tmux.shell = "${pkgs.fish}/bin/fish";
-
       programs.kitty.font.size = lib.mkForce 16.0;
 
       programs.helix.settings.theme = lib.mkForce "catppuccin_mocha";
@@ -50,7 +48,13 @@
       home.packages = with pkgs; [ librewolf ];
     };
 
-  users.users.rebmit.home = "/Users/rebmit";
+  users.users.rebmit = {
+    uid = 501;
+    home = "/Users/rebmit";
+    shell = pkgs.fish;
+  };
+
+  users.knownUsers = [ "rebmit" ];
 
   nix.settings.experimental-features = "nix-command flakes";
 
