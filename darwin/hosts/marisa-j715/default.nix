@@ -40,7 +40,7 @@
         ]);
 
       programs.git = {
-        userName = "git";
+        userName = "Lu Wang";
         userEmail = "rebmit@rebmit.moe";
         signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
       };
