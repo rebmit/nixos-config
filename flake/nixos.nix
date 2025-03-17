@@ -29,7 +29,6 @@ let
         system.nix.settings
         system.nix.version
         system.perlless
-        system.preservation
         users.root
         # keep-sorted end
       ];
@@ -42,6 +41,7 @@ let
           services.zram-generator
           system.boot.kernel.latest
           system.boot.systemd-initrd
+          system.preservation
           # keep-sorted end
         ]);
 

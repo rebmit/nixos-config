@@ -7,6 +7,12 @@
 {
   imports = [ "${modulesPath}/virtualisation/lxc-container.nix" ];
 
+  networking = {
+    dhcpcd.enable = false;
+    useDHCP = false;
+    useHostResolvConf = false;
+  };
+
   environment.shellInit = ''
     . /opt/orbstack-guest/etc/profile-early
     . /opt/orbstack-guest/etc/profile-late

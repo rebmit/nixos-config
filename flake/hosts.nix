@@ -198,6 +198,11 @@ in
     })
 
     (mkHost {
+      name = "marisa-j715";
+      system = "aarch64-linux";
+    })
+
+    (mkHost {
       name = "flandre-m5p";
       system = "x86_64-linux";
     })

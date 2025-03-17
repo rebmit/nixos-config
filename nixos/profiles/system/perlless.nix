@@ -1,9 +1,9 @@
-{ lib, ... }:
+{ config, lib, ... }:
 {
-  system.etc.overlay.enable = lib.mkDefault true;
+  system.etc.overlay.enable = lib.mkIf (!config.boot.isContainer) true;
 
   services.userborn = {
-    enable = lib.mkDefault true;
-    passwordFilesLocation = lib.mkDefault "/var/lib/nixos";
+    enable = true;
+    passwordFilesLocation = "/var/lib/nixos";
   };
 }
