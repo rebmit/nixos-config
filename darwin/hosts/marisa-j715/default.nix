@@ -11,7 +11,18 @@
     coreutils
     htop
     openssh
+    utm
   ];
+
+  launchd.user.agents.ssh-agent = {
+    command = "${pkgs.openssh}/bin/ssh-agent -D -a $HOME/.run/ssh-agent";
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+    };
+  };
+
+  environment.variables.SSH_AUTH_SOCK = "$HOME/.run/ssh-agent";
 
   nixpkgs.overlays = [ inputs.nixpkgs-firefox-darwin.overlay ];
 

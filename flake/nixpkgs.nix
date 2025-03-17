@@ -52,6 +52,7 @@ in
               "rustc-bootstrap-wrapper"
               "sof-firmware"
               "temurin-bin"
+              "utm"
               "zotero"
               "zulu-ca-jdk"
               # keep-sorted end
