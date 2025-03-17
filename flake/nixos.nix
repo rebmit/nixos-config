@@ -13,20 +13,16 @@ let
   nixosProfiles = rakeLeaves ../nixos/profiles;
   nixosSuites = buildSuites nixosProfiles (
     profiles: suites: {
-      baseline = with profiles; [
+      minimal = with profiles; [
         # keep-sorted start
         programs.tools.common
         security.polkit
         security.sudo
-        services.btrfs-auto-scrub
         services.dbus
         services.journald
         services.logrotate
         services.nscd
         services.openssh
-        services.zram-generator
-        system.boot.kernel.latest
-        system.boot.systemd-initrd
         system.common
         system.nix.gc
         system.nix.registry
@@ -37,6 +33,17 @@ let
         users.root
         # keep-sorted end
       ];
+
+      baseline =
+        suites.minimal
+        ++ (with profiles; [
+          # keep-sorted start
+          services.btrfs-auto-scrub
+          services.zram-generator
+          system.boot.kernel.latest
+          system.boot.systemd-initrd
+          # keep-sorted end
+        ]);
 
       network = with profiles; [
         # keep-sorted start
