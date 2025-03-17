@@ -27,6 +27,15 @@
       "enthalpy_node_organization": "rebmit's edge network",
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBdcVQak4mnur3LpBd9TMWeOdh8LBeWkNQKQtNmK03x"
     },
+    "marisa-j715": {
+      "b2_backup_bucket_name": "rebmit-backup-marisa-j715",
+      "endpoints": [],
+      "endpoints_v4": [],
+      "endpoints_v6": [],
+      "enthalpy_node_id": 1394,
+      "enthalpy_node_organization": "rebmit's edge network",
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6aUERU0Suxg3ycqs1dCfcnvLkOipQN0NBeUKmqProl"
+    },
     "reisen-ams0": {
       "b2_backup_bucket_name": "rebmit-backup-reisen-ams0",
       "endpoints": ["45.76.35.203", "2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
