@@ -56,7 +56,10 @@
 
       systemd.user.tmpfiles.rules = lib.mkForce [ ];
 
-      home.packages = with pkgs; [ librewolf ];
+      home.packages = with pkgs; [
+        cinny-desktop
+        librewolf
+      ];
     };
 
   users.users.rebmit = {
