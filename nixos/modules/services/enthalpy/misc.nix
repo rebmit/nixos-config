@@ -14,6 +14,8 @@ mkIf cfg.enable {
     routingTables = {
       plat = 400;
       localsid = 500;
+      vrf-local = 600;
+      vrf-other = 601;
     };
 
     routingPolicyPriorities = {

@@ -11,7 +11,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.lists) singleton any;
   inherit (lib.network) ipv6;
@@ -54,14 +54,6 @@ in
         Prefix to be announced for this node in the enthalpy network.
       '';
     };
-    address = mkOption {
-      type = types.str;
-      default = "${cidr.host 1 cfg.prefix}/128";
-      readOnly = true;
-      description = ''
-        Address to be added as source address for this node.
-      '';
-    };
   };
 
   config = mkIf cfg.enable {
@@ -89,55 +81,69 @@ in
 
     boot.kernelModules = [ "vrf" ];
 
-    networking.netns.enthalpy = {
-      sysctl = {
-        "net.ipv6.conf.all.forwarding" = 1;
-        "net.ipv6.conf.default.forwarding" = 1;
+    networking.netns.enthalpy = mkMerge [
+      {
+        sysctl = {
+          "net.ipv6.conf.all.forwarding" = 1;
+          "net.ipv6.conf.default.forwarding" = 1;
 
-        # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
-        "net.vrf.strict_mode" = 0;
-        "net.ipv4.tcp_l3mdev_accept" = 1;
-        "net.ipv4.udp_l3mdev_accept" = 1;
-        "net.ipv4.raw_l3mdev_accept" = 1;
-      };
+          # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
+          "net.vrf.strict_mode" = 0;
+          "net.ipv4.tcp_l3mdev_accept" = 1;
+          "net.ipv4.udp_l3mdev_accept" = 1;
+          "net.ipv4.raw_l3mdev_accept" = 1;
+        };
 
-      netdevs =
-        (mapAttrs' (
+        netdevs.enthalpy = {
+          kind = "dummy";
+        };
+
+        interfaces.enthalpy = {
+          addresses = [ "${cidr.host 1 cfg.prefix}/128" ];
+          routingPolicyRules = singleton {
+            priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
+            family = [
+              "ipv4"
+              "ipv6"
+            ];
+            selector.l3mdev = { };
+            action.unreachable = { };
+          };
+          netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
+        };
+
+        interfaces."vrf-${cfg.entity}" = {
+          addresses = [ "${cidr.host 0 cfg.prefix}/128" ];
+          routes = [
+            {
+              cidr = "::/0";
+              table = netnsCfg.routingTables.vrf-other;
+            }
+            {
+              cidr = "::/0";
+              table = netnsCfg.routingTables.main;
+              extraOptions.from = cfg.network;
+            }
+          ];
+        };
+      }
+      {
+        netdevs = mapAttrs' (
           name: _value:
           nameValuePair "vrf-${name}" {
             kind = "vrf";
-            extraArgs.table = netnsCfg.routingTables.main;
+            extraArgs.table =
+              if name == cfg.entity then netnsCfg.routingTables.vrf-local else netnsCfg.routingTables.vrf-other;
           }
-        ) cfg.metadata)
-        // {
-          enthalpy = {
-            kind = "dummy";
-          };
-        };
+        ) cfg.metadata;
 
-      interfaces =
-        (mapAttrs' (
+        interfaces = mapAttrs' (
           name: _value:
           nameValuePair "vrf-${name}" {
             netdevDependencies = [ netnsCfg.netdevs."vrf-${name}".service ];
           }
-        ) cfg.metadata)
-        // {
-          enthalpy = {
-            addresses = [ cfg.address ];
-            routingPolicyRules = singleton {
-              priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
-              family = [
-                "ipv4"
-                "ipv6"
-              ];
-              selector.l3mdev = { };
-              action.unreachable = { };
-            };
-            netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
-          };
-        };
-
-    };
+        ) cfg.metadata;
+      }
+    ];
   };
 }

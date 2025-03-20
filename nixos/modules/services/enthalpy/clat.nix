@@ -54,7 +54,10 @@ in
       interfaces.clat = {
         addresses = [ "192.0.0.2/32" ];
         routes = [
-          { cidr = "${cfg.clat.address}/128"; }
+          {
+            cidr = "${cfg.clat.address}/128";
+            table = netnsCfg.routingTables.vrf-local;
+          }
           {
             cidr = "0.0.0.0/0";
             extraOptions.src = "192.0.0.2";
