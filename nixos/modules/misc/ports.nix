@@ -35,6 +35,7 @@ in
       prometheus-blackbox-exporter = 4071;
       vaultwarden = 4080;
       forgejo = 4090;
+      netns-enthalpy-proxy = 4100;
 
       # public ports
       ipsec-nat-traversal = 14000;

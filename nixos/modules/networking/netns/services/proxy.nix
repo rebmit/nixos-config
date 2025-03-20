@@ -23,6 +23,13 @@ let
             Path to the inbound network namespace.
           '';
         };
+        listenAddress = mkOption {
+          type = types.str;
+          default = "[::1]";
+          description = ''
+            Address for reciving connections.
+          '';
+        };
         listenPort = mkOption {
           type = types.int;
           description = ''
@@ -73,7 +80,8 @@ in
                   DynamicUser = true;
                   ExecStart = "${getExe pkgs.gost} ${
                     concatMapStringsSep " " (
-                      inbound: ''-L "auto://[::1]:${toString inbound.listenPort}?netns=${inbound.netnsPath}"''
+                      inbound:
+                      ''-L "auto://${inbound.listenAddress}:${toString inbound.listenPort}?netns=${inbound.netnsPath}"''
                     ) cfg.services.proxy.inbounds
                   }";
                   ProtectProc = "default";

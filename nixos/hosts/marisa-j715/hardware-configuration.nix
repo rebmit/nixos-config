@@ -5,7 +5,7 @@
   ];
 
   disko.devices = {
-    nodev."/".mountOptions = [ "size=4G" ];
+    nodev."/".mountOptions = [ "size=6G" ];
     disk.main.device = "/dev/vda";
   };
 

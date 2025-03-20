@@ -26,6 +26,15 @@ in
       restartIfChanged = false;
     };
 
+  networking.netns.enthalpy.services.proxy = {
+    enable = true;
+    inbounds = singleton {
+      netnsPath = "/proc/1/ns/net";
+      listenAddress = "[::]";
+      listenPort = config.ports.netns-enthalpy-proxy;
+    };
+  };
+
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;
