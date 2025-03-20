@@ -45,6 +45,13 @@ let
             Leave empty to use the default.
           '';
         };
+        vrf = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          description = ''
+            The name of VRF interface to add the link to.
+          '';
+        };
         extraArgs = mkOption {
           type = types.submodule {
             freeformType = (pkgs.formats.json { }).type;
@@ -111,6 +118,9 @@ in
                     ${optionalString (v.address != null) "address ${v.address}"} \
                     ${optionalString (v.mtu != null) "mtu ${toString v.mtu}"} \
                     type "${v.kind}" ${attrsToString v.extraArgs}
+                  ${optionalString (v.vrf != null) ''
+                    ip link set "${n}" vrf ${v.vrf}
+                  ''}
                 '';
                 postStop = ''
                   ip link delete dev "${n}" || true
