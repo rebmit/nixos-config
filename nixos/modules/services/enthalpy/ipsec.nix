@@ -71,7 +71,7 @@ in
     };
     registry = mkOption {
       type = types.str;
-      default = "https://git.rebmit.moe/rebmit/nixos-config/raw/branch/master/zones/registry.json";
+      default = "https://git.rebmit.moe/rebmit/enthalpy/raw/branch/artifacts/registry.json";
       description = ''
         URL of the registry to be used.
       '';
@@ -218,6 +218,7 @@ in
     systemd.timers.ranet-registry = {
       timerConfig = {
         OnCalendar = "*:0/15";
+        OnActiveSec = "0s";
       };
       wantedBy = [ "timers.target" ];
     };
