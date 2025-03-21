@@ -11,4 +11,8 @@
   environment.stub-ld.enable = lib.mkDefault false;
 
   documentation.nixos.enable = lib.mkForce false;
+
+  environment.sessionVariables = {
+    GOPROXY = "direct";
+  };
 }
