@@ -69,7 +69,7 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
     nixpkgs-terraform-providers-bin = {
-      url = "github:rebmit/nixpkgs-terraform-providers-bin";
+      url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-firefox-darwin = {
