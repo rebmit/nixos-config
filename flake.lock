@@ -1,20 +1,5 @@
 {
   "nodes": {
-    "crane": {
-      "locked": {
-        "lastModified": 1739936662,
-        "narHash": "sha256-x4syUjNUuRblR07nDPeLDP7DpphaBVbUaSoeZkFbGSk=",
-        "owner": "ipetkov",
-        "repo": "crane",
-        "rev": "19de14aaeb869287647d9461cbd389187d8ecdb7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ipetkov",
-        "repo": "crane",
-        "type": "github"
-      }
-    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -270,42 +255,6 @@
         "type": "github"
       }
     },
-    "lanzaboote": {
-      "inputs": {
-        "crane": [
-          "crane"
-        ],
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "pre-commit-hooks-nix": [
-          "git-hooks-nix"
-        ],
-        "rust-overlay": [
-          "rust-overlay"
-        ]
-      },
-      "locked": {
-        "lastModified": 1737639419,
-        "narHash": "sha256-AEEDktApTEZ5PZXNDkry2YV2k6t0dTgLPEmAZbnigXU=",
-        "owner": "nix-community",
-        "repo": "lanzaboote",
-        "rev": "a65905a09e2c43ff63be8c0e86a93712361f871e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "v0.4.2",
-        "repo": "lanzaboote",
-        "type": "github"
-      }
-    },
     "niri-flake": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -486,7 +435,6 @@
     },
     "root": {
       "inputs": {
-        "crane": "crane",
         "devshell": [
           "rebmit",
           "devshell"
@@ -494,10 +442,6 @@
         "disko": "disko",
         "dns": "dns",
         "enthalpy": "enthalpy",
-        "flake-compat": [
-          "rebmit",
-          "flake-compat"
-        ],
         "flake-parts": [
           "rebmit",
           "flake-parts"
@@ -508,7 +452,6 @@
           "git-hooks-nix"
         ],
         "home-manager": "home-manager",
-        "lanzaboote": "lanzaboote",
         "niri-flake": "niri-flake",
         "nix-darwin": "nix-darwin",
         "nixpkgs": [
@@ -523,32 +466,11 @@
         ],
         "preservation": "preservation",
         "rebmit": "rebmit",
-        "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "treefmt-nix": [
           "rebmit",
           "treefmt-nix"
         ]
-      }
-    },
-    "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1740018520,
-        "narHash": "sha256-mU6H0Q1WPn0XuwBO9SLZb/1yeVMfvsifBJcXNlhB+Ts=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "7f6ecf3b7c5bfcc4730943a767630122efd09dc8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
       }
     },
     "sops-nix": {

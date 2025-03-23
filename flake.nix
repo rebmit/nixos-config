@@ -44,15 +44,6 @@
       url = "github:nix-community/disko/v1.11.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.crane.follows = "crane";
-      inputs.rust-overlay.follows = "rust-overlay";
-      inputs.pre-commit-hooks-nix.follows = "git-hooks-nix";
-    };
 
     # darwin modules
 
@@ -90,14 +81,5 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-    crane.url = "github:ipetkov/crane";
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # misc
-
-    flake-compat.follows = "rebmit/flake-compat";
   };
 }
