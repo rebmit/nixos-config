@@ -5,8 +5,10 @@
   ...
 }:
 let
-  flakes = lib.filterAttrs (_name: value: value ? _type && value._type == "flake") inputs;
-  nixRegistry = (lib.mapAttrs (_name: value: { flake = value; }) flakes);
+  inherit (lib.attrsets) filterAttrs mapAttrs;
+
+  flakes = filterAttrs (_name: value: value ? _type && value._type == "flake") inputs;
+  nixRegistry = mapAttrs (_name: value: { flake = value; }) flakes;
 in
 {
   nix = {

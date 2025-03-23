@@ -5,18 +5,21 @@
   ...
 }:
 let
-  homeDirectory = "/home/rebmit";
+  inherit (lib.lists) optional;
+
+  name = "rebmit";
+  uid = config.ids.uids.${name};
+  homeDirectory = "/home/${name}";
+
   groupNameIfPresent =
-    name: lib.optional (config.users.groups ? ${name}) config.users.groups.${name}.name;
+    name: optional (config.users.groups ? ${name}) config.users.groups.${name}.name;
 in
 {
   programs.fish.enable = true;
 
-  ids.uids.rebmit = 1000;
-
-  users.users.rebmit = {
-    uid = config.ids.uids.rebmit;
-    hashedPasswordFile = config.sops.secrets."user-password/rebmit".path;
+  users.users.${name} = {
+    inherit uid;
+    hashedPasswordFile = config.sops.secrets."user-password/${name}".path;
     isNormalUser = true;
     shell = pkgs.fish;
     home = homeDirectory;
@@ -25,17 +28,16 @@ in
       [
         wheel.name
       ]
-      ++ groupNameIfPresent "libvirtd"
       ++ groupNameIfPresent "pipewire";
     openssh.authorizedKeys.keyFiles = config.users.users.root.openssh.authorizedKeys.keyFiles;
   };
 
-  sops.secrets."user-password/rebmit" = {
+  sops.secrets."user-password/${name}" = {
     neededForUsers = true;
     sopsFile = config.sops.secretFiles.get "local.yaml";
   };
 
-  home-manager.users.rebmit =
+  home-manager.users.${name} =
     { ... }:
     {
       programs.git = {

@@ -8,8 +8,7 @@
   imports =
     suites.workstation
     ++ [
-      profiles.programs.adb
-      profiles.system.boot.binfmt
+      profiles.virtualization.qemu-user-static
       profiles.users.rebmit
     ]
     ++ (mylib.path.scanPaths ./. "default.nix");

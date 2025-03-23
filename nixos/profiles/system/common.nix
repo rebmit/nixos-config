@@ -1,18 +1,17 @@
 { lib, ... }:
+let
+  inherit (lib.modules) mkDefault mkForce;
+in
 {
-  boot.tmp.useTmpfs = lib.mkDefault true;
+  boot.tmp.useTmpfs = mkDefault true;
 
-  users.mutableUsers = lib.mkDefault false;
+  i18n.defaultLocale = mkDefault "en_SG.UTF-8";
 
-  time.timeZone = lib.mkDefault "Asia/Singapore";
+  time.timeZone = mkDefault "Asia/Singapore";
 
-  i18n.defaultLocale = lib.mkDefault "en_SG.UTF-8";
+  users.mutableUsers = mkDefault false;
 
-  environment.stub-ld.enable = lib.mkDefault false;
+  environment.stub-ld.enable = mkDefault false;
 
-  documentation.nixos.enable = lib.mkForce false;
-
-  environment.sessionVariables = {
-    GOPROXY = "direct";
-  };
+  documentation.nixos.enable = mkForce false;
 }

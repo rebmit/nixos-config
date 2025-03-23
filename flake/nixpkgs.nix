@@ -25,7 +25,7 @@ let
 in
 {
   perSystem =
-    { config, lib, ... }:
+    { lib, ... }:
     {
       nixpkgs = {
         config = {

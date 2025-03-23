@@ -9,6 +9,7 @@
     }
   ];
 
+  # TODO: re-implement preservation with a more proper ordering
   preservation = {
     enable = true;
     preserveAt = lib.mkMerge (

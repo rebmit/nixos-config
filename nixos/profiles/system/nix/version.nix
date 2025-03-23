@@ -1,4 +1,7 @@
 { pkgs, lib, ... }:
+let
+  inherit (lib.modules) mkDefault;
+in
 {
-  nix.package = lib.mkDefault pkgs.nixVersions.stable;
+  nix.package = mkDefault pkgs.nixVersions.stable;
 }
