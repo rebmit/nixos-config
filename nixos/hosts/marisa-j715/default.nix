@@ -9,7 +9,8 @@
     suites.baseline
     ++ suites.network
     ++ (with profiles; [
-      profiles.users.rebmit
+      virtualization.rosetta
+      users.rebmit
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 
