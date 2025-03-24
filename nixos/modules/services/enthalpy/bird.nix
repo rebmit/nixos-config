@@ -73,7 +73,7 @@ in
           }
 
           function is_safe_prefix() -> bool {
-            return net.dst.len <= 64;
+            return net.dst.len <= 60;
           }
 
           function is_enthalpy_prefix() -> bool {

@@ -70,9 +70,9 @@ in
         '';
       }
       {
-        assertion = cidr.length cfg.prefix <= 64;
+        assertion = cidr.length cfg.prefix <= 60;
         message = ''
-          The prefix length for this node to be announced should not exceed 64.
+          The prefix length for this node to be announced should not exceed 60.
           You can forcibly ignore this assertion, but any invalid route announced
           might be rejected by other nodes in enthalpy network.
         '';
