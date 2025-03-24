@@ -13,6 +13,7 @@ mkIf cfg.enable {
 
     routingTables = {
       plat = 400;
+      warp = 401;
       localsid = 500;
       vrf-local = 600;
       vrf-other = 601;

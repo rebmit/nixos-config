@@ -29,7 +29,9 @@ in
         { config, ... }:
         {
           options.nftables = {
-            enable = mkEnableOption "per-netns nftables firewall";
+            enable = mkEnableOption "per-netns nftables firewall" // {
+              default = true;
+            };
             checkRuleset = mkOption {
               type = types.bool;
               default = true;
