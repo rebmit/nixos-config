@@ -31,7 +31,6 @@
       };
       oauth2_client = {
         ENABLE_AUTO_REGISTRATION = true;
-        USERNAME = "userid";
       };
     };
   };
