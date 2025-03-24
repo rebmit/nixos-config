@@ -42,19 +42,7 @@ in
         List of transit network entities in the enthalpy network.
       '';
     };
-    exit = {
-      enable = mkEnableOption "exit node";
-      kind = mkOption {
-        type = types.enum [
-          "transit"
-          "peer"
-        ];
-        default = "peer";
-        description = ''
-          Specifies the type of network this exit node connects to.
-        '';
-      };
-    };
+    exit.enable = mkEnableOption "exit node";
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
@@ -101,9 +89,7 @@ in
             route ${cfg.prefix} from ::/0 unreachable;
             ${optionalString cfg.bird.exit.enable ''
               route ${cfg.network} from ::/0 unreachable;
-              ${optionalString (cfg.bird.exit.kind == "transit") ''
-                route ::/0 from ${cfg.network} via fe80::ff:fe00:2 dev "host";
-              ''}
+              route ::/0 from ${cfg.network} via fe80::ff:fe00:2 dev "host";
             ''}
           }
 

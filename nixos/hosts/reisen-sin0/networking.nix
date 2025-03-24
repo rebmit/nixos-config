@@ -4,15 +4,12 @@
 
   services.enthalpy = {
     ipsec.interfaces = [ "enp1s0" ];
-    bird.exit = {
-      enable = true;
-      kind = "transit";
-    };
+    bird.exit.enable = true;
     plat.enable = true;
     srv6.enable = true;
   };
 
-  networking.nftables.tables.nat = {
+  networking.nftables.tables.nat4 = {
     family = "ip";
     content = ''
       chain postrouting {

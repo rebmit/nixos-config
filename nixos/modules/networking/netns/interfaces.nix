@@ -313,6 +313,9 @@ in
                 partOf = [
                   "netns-${name}.service"
                 ] ++ v.netdevDependencies;
+                requires = [
+                  "netns-${name}.service"
+                ] ++ v.netdevDependencies;
                 wantedBy = [
                   "netns-${name}.service"
                   "multi-user.target"

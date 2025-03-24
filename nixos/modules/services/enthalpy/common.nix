@@ -132,6 +132,7 @@ in
           name: _value:
           nameValuePair "vrf-${name}" {
             kind = "vrf";
+            mtu = 1400;
             extraArgs.table =
               if name == cfg.entity then netnsCfg.routingTables.vrf-local else netnsCfg.routingTables.vrf-other;
           }
