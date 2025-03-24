@@ -20,6 +20,10 @@ let
         ];
         doCheck = false;
       });
+      caddy-rebmit = prev.caddy.withPlugins {
+        plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250102174933-6e5f5e311ead" ];
+        hash = "sha256-j7nc+6n5iBqGyc+CM12AdFc/GJ5iA3tJ3MGPgXyqTOg=";
+      };
     })
   ];
 in

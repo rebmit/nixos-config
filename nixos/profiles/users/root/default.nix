@@ -4,7 +4,7 @@
     hashedPasswordFile = config.sops.secrets."user-password/root".path;
     openssh.authorizedKeys.keyFiles = [
       ./_ssh/marisa-7d76
-      ./_ssh/marisa-a7s
+      ./_ssh/marisa-j715
       ./_ssh/canokey-canary
     ];
   };
