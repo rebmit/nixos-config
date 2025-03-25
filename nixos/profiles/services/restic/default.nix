@@ -1,6 +1,6 @@
 # Portions of this file are sourced from
-# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/backup/default.nix
-# https://github.com/linyinfeng/dotfiles/blob/b618b0fd16fb9c79ab7199ed51c4c0f98a392cea/nixos/profiles/services/restic/default.nix
+# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/backup/default.nix (MIT License)
+# https://github.com/linyinfeng/dotfiles/blob/b618b0fd16fb9c79ab7199ed51c4c0f98a392cea/nixos/profiles/services/restic/default.nix (MIT License)
 { config, hostData, ... }:
 {
   sops.secrets."b2_backup_application_key_id" = {

@@ -1,5 +1,5 @@
 # Portions of this file are sourced from
-# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/metrics/default.nix
+# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/metrics/default.nix (MIT License)
 { config, ... }:
 {
   sops.secrets."prometheus/metrics" = {

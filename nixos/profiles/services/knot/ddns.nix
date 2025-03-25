@@ -1,6 +1,6 @@
 # Portions of this file are sourced from
 # https://gist.github.com/amphineko/615618f8026ddd4faad52c75ea9daeb0
-# https://github.com/NickCao/flakes/blob/61a81689a97e12a377ce3c14087fadbdae0301d3/nixos/rpi/configuration.nix
+# https://github.com/NickCao/flakes/blob/61a81689a97e12a377ce3c14087fadbdae0301d3/nixos/rpi/configuration.nix (MIT License)
 {
   config,
   pkgs,

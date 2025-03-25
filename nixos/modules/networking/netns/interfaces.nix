@@ -1,5 +1,5 @@
 # Portions of this file are sourced from
-# https://github.com/NixOS/nixpkgs/blob/e9b255a8c4b9df882fdbcddb45ec59866a4a8e7c/nixos/modules/tasks/network-interfaces-scripted.nix
+# https://github.com/NixOS/nixpkgs/blob/e9b255a8c4b9df882fdbcddb45ec59866a4a8e7c/nixos/modules/tasks/network-interfaces-scripted.nix (MIT License)
 {
   config,
   lib,

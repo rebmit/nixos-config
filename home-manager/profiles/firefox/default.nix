@@ -1,6 +1,6 @@
 # Portions of this file are sourced from
-# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/home.nix
-# https://github.com/llakala/nixos/blob/b3c5fbde5a5f78c91ee658250f9b42418b73a7b7/apps/gui/firefox.nix
+# https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/home.nix (MIT License)
+# https://github.com/llakala/nixos/blob/b3c5fbde5a5f78c91ee658250f9b42418b73a7b7/apps/gui/firefox.nix (MIT License)
 # https://gist.github.com/swwind/fe691c06ea53f89e02eb194df6144afa
 {
   lib,
