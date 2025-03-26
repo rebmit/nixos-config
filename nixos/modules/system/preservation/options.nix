@@ -246,7 +246,7 @@ let
                   _module.args = rec {
                     defaultOwner = attrs.config.username;
                     defaultGroup = config.users.users.${defaultOwner}.group;
-                    defaultMode = "0755";
+                    defaultMode = "0700";
                   };
                   mountOptions = attrs.config.commonMountOptions;
                 }
@@ -269,7 +269,7 @@ let
                   _module.args = rec {
                     defaultOwner = attrs.config.username;
                     defaultGroup = config.users.users.${defaultOwner}.group;
-                    defaultMode = "0644";
+                    defaultMode = "0600";
                   };
                   mountOptions = attrs.config.commonMountOptions;
                 }

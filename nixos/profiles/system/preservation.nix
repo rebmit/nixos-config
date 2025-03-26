@@ -61,35 +61,4 @@
       }
     );
   };
-
-  # https://willibutz.github.io/preservation/examples.html
-  systemd.tmpfiles.settings.preservation = lib.mkMerge (
-    lib.mapAttrsToList (name: hmCfg: {
-      "${hmCfg.home.homeDirectory}/.cache".d = {
-        user = name;
-        group = config.users.users.${name}.group;
-        mode = "0755";
-      };
-      "${hmCfg.home.homeDirectory}/.config".d = {
-        user = name;
-        group = config.users.users.${name}.group;
-        mode = "0755";
-      };
-      "${hmCfg.home.homeDirectory}/.local".d = {
-        user = name;
-        group = config.users.users.${name}.group;
-        mode = "0755";
-      };
-      "${hmCfg.home.homeDirectory}/.local/share".d = {
-        user = name;
-        group = config.users.users.${name}.group;
-        mode = "0755";
-      };
-      "${hmCfg.home.homeDirectory}/.local/state".d = {
-        user = name;
-        group = config.users.users.${name}.group;
-        mode = "0755";
-      };
-    }) (lib.filterAttrs (_: hmCfg: hmCfg.preservation.enable) config.home-manager.users)
-  );
 }

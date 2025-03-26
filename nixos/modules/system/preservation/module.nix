@@ -13,6 +13,7 @@ let
     mkInitrdTmpfilesRules
     mkRegularServiceUnit
     toTmpfilesArguments
+    mkUserParentClosureTmpfilesRule
     ;
 
   cfg = config.preservation;
@@ -47,7 +48,12 @@ in
         wantedBy = [ "sysinit.target" ];
       };
       tmpfiles.settings.preservation = mkMerge (
-        flatten (mapAttrsToList mkRegularTmpfilesRules cfg.preserveAt)
+        flatten (
+          mapAttrsToList mkRegularTmpfilesRules cfg.preserveAt
+          ++ mapAttrsToList (
+            _: stateConfig: mapAttrsToList mkUserParentClosureTmpfilesRule stateConfig.users
+          ) cfg.preserveAt
+        )
       );
       mounts = flatten (mapAttrsToList mkRegularMountUnits cfg.preserveAt);
       services = {

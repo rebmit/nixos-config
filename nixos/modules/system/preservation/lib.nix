@@ -1,5 +1,6 @@
 # Portions of this file are sourced from
 # https://github.com/nix-community/preservation/blob/2f16754f9f6b766c1429375ab7417dc81cc90a63/lib.nix (MIT License)
+# https://github.com/linyinfeng/dotfiles/blob/e87f7de2a4c11379e874c8d372e985b1836c042a/nixos/modules/environment/global-persistence/default.nix (MIT License)
 { config, lib, ... }:
 let
   inherit (lib.attrsets) mapAttrsToList optionalAttrs;
@@ -22,7 +23,11 @@ let
     filter
     optional
     optionals
+    unique
+    sort
+    remove
     ;
+  inherit (lib.trivial) lessThan;
 
   toOptionsString =
     mountOptions:
@@ -51,6 +56,16 @@ let
       len = length parts;
     in
     if len < 1 then "/" else concatPaths ([ "/" ] ++ (sublist 0 (len - 1) parts));
+
+  parentNormalize = prefix: paths: sort lessThan (filter (hasPrefix prefix) (unique paths));
+  parentDirectories = prefix: paths: parentNormalize prefix (map parentDirectory paths);
+
+  parentClosure =
+    prefix: paths:
+    let
+      iter = parentNormalize prefix (paths ++ parentDirectories prefix paths);
+    in
+    if iter == paths then iter else parentClosure prefix iter;
 
   getAllDirectories =
     stateConfig: stateConfig.directories ++ (concatLists (getUserDirectories stateConfig.users));
@@ -331,17 +346,34 @@ let
       ];
     };
   };
+
+  mkUserParentClosureTmpfilesRule =
+    username: userConfig:
+    let
+      inherit (userConfig) home;
+      directories = map (d: d.directory) userConfig.directories;
+      files = map (f: f.file) userConfig.files;
+      parents = remove home (parentClosure home (parentDirectories home (directories ++ files)));
+      rules = map (d: {
+        "${d}".d = {
+          user = username;
+          group = config.users.users.${username}.group;
+          mode = "0700";
+        };
+      }) parents;
+    in
+    rules;
 in
 {
   passthru.preservation = {
     inherit
-      parentDirectory
       mkRegularMountUnits
       mkInitrdMountUnits
       mkRegularTmpfilesRules
       mkInitrdTmpfilesRules
       mkRegularServiceUnit
       toTmpfilesArguments
+      mkUserParentClosureTmpfilesRule
       ;
   };
 }
