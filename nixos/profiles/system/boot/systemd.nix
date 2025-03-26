@@ -5,13 +5,13 @@
     mode = "direct-symlink";
   };
 
-  systemd.tmpfiles.settings.rebmit = {
-    "/var/lib/nixos/systemd".d = {
+  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+
+  boot.initrd.systemd.tmpfiles.settings.rebmit = {
+    "/sysroot/var/lib/nixos/systemd".d = {
       user = "root";
       group = "root";
       mode = "0755";
     };
   };
-
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
 }

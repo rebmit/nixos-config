@@ -74,11 +74,11 @@ in
   };
 
   config = {
-    systemd.tmpfiles.settings.rebmit = {
-      "/var/lib/nixos/sops-nix".d = {
+    boot.initrd.systemd.tmpfiles.settings.rebmit = {
+      "/sysroot/var/lib/nixos/sops-nix".d = {
         user = "root";
         group = "root";
-        mode = "0750";
+        mode = "0700";
       };
     };
 
