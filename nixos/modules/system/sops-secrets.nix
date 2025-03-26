@@ -74,9 +74,17 @@ in
   };
 
   config = {
+    systemd.tmpfiles.settings.rebmit = {
+      "/var/lib/nixos/sops-nix".d = {
+        user = "root";
+        group = "root";
+        mode = "0750";
+      };
+    };
+
     sops = {
       age = {
-        keyFile = "/var/lib/sops.key";
+        keyFile = "/var/lib/nixos/sops-nix/sops.key";
         sshKeyPaths = [ ];
       };
       gnupg.sshKeyPaths = [ ];

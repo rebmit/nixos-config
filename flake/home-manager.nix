@@ -47,7 +47,6 @@ let
           gtk
           kitty
           qt
-          valent
           xdg-user-dirs
           # keep-sorted end
         ]);

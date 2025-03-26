@@ -57,35 +57,9 @@
               group = "-";
             }
           ];
-          files = [
-            {
-              file = config.sops.age.keyFile;
-              inInitrd = true;
-              mode = "0600";
-              user = "root";
-              group = "root";
-            }
-          ];
         };
       }
     );
-  };
-
-  environment.etc."machine-id" = {
-    source = "/persist/etc/machine-id";
-    mode = "direct-symlink";
-  };
-
-  # https://github.com/NixOS/nixpkgs/pull/351151#issuecomment-2549025171
-  systemd.services.systemd-machine-id-commit = {
-    unitConfig.ConditionPathIsMountPoint = [
-      ""
-      "/persist/etc/machine-id"
-    ];
-    serviceConfig.ExecStart = [
-      ""
-      "systemd-machine-id-setup --commit --root /persist"
-    ];
   };
 
   # https://willibutz.github.io/preservation/examples.html
