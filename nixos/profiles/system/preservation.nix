@@ -33,7 +33,7 @@
             }
             {
               directory = "/var/lib/nixos";
-              inInitrd = !(config.systemd.sysusers.enable || config.services.userborn.enable);
+              inInitrd = true;
               mode = "0755";
               user = "root";
               group = "root";

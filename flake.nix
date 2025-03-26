@@ -31,7 +31,6 @@
 
     # nixos modules
 
-    preservation.url = "github:nix-community/preservation";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
