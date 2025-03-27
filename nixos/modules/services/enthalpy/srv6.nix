@@ -38,6 +38,7 @@ in
 
   config = mkIf (cfg.enable && cfg.srv6.enable) {
     services.enthalpy.srv6.actions = {
+      "${cidr.host 0 cfg.srv6.prefix}" = "End";
       "${cidr.host 1 cfg.srv6.prefix}" = "End.DT6 table ${toString netnsCfg.routingTables.main}";
     };
 
