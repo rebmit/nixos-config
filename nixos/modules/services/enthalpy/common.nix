@@ -113,7 +113,6 @@ in
         };
 
         interfaces."vrf-${cfg.entity}" = {
-          addresses = [ "${cidr.host 0 cfg.prefix}/128" ];
           routes = [
             {
               cidr = "::/0";
@@ -141,6 +140,7 @@ in
         interfaces = mapAttrs' (
           name: _value:
           nameValuePair "vrf-${name}" {
+            addresses = [ "${cidr.host 0 cfg.prefix}/128" ];
             netdevDependencies = [ netnsCfg.netdevs."vrf-${name}".service ];
           }
         ) cfg.metadata;
