@@ -80,7 +80,7 @@ in
           { cidr = "100.127.0.0/16"; }
           {
             cidr = "64:ff9b::/96";
-            extraOptions.from = cfg.network;
+            from = cfg.network;
           }
         ];
         netdevDependencies = [ warpNetnsCfg.services.tayga.plat.service ];
@@ -115,13 +115,13 @@ in
             cidr = "::/0";
             table = netnsCfg.routingTables.warp;
             via = "fe80::ff:fe00:2";
-            extraOptions.from = cfg.network;
+            from = cfg.network;
           }
           ++ map (p: {
             cidr = p;
             table = netnsCfg.routingTables.vrf-local;
             via = "fe80::ff:fe00:2";
-            extraOptions.from = cfg.network;
+            from = cfg.network;
           }) cfg.warp.prefixes;
         netdevDependencies = [ netnsCfg.netdevs.warp.service ];
       };

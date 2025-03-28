@@ -69,8 +69,8 @@ in
       interfaces.enthalpy = {
         routes = singleton {
           cidr = cfg.clat.prefix;
+          from = "${cfg.clat.address}/128";
           extraOptions = {
-            from = "${cfg.clat.address}/128";
             mtu = 1280;
             encap = "seg6 mode encap segs ${concatStringsSep "," cfg.clat.segment}";
           };

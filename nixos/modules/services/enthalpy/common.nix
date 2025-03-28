@@ -120,8 +120,8 @@ in
             }
             {
               cidr = "::/0";
+              from = cfg.network;
               table = netnsCfg.routingTables.main;
-              extraOptions.from = cfg.network;
             }
           ];
         };

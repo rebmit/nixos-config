@@ -28,6 +28,13 @@ let
             Address block of the network in CIDR representation.
           '';
         };
+        from = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+          description = ''
+            The source prefix of the route. Only available for IPv6.
+          '';
+        };
         type = mkOption {
           type = types.nullOr (
             types.enum [
@@ -224,17 +231,18 @@ in
                     let
                       inherit (route) cidr;
                       type = toString route.type;
+                      from = optionalString (route.from != null) "from \"${route.from}\"";
                       via = optionalString (route.via != null) "via \"${route.via}\"";
                       table = optionalString (route.table != null) "table \"${toString route.table}\"";
                       options = attrsToString route.extraOptions;
                     in
                     ''
-                      echo "${cidr} ${table}" >> $state
+                      echo "${cidr} ${from} ${table}" >> $state
                       echo -n "adding route ${cidr}... "
-                       if out=$(ip route replace ${type} "${cidr}" ${options} ${via} dev "${n}" ${table} proto static 2>&1); then
+                       if out=$(ip route replace ${type} "${cidr}" ${from} ${options} ${via} dev "${n}" ${table} proto static 2>&1); then
                          echo "done"
                        else
-                         echo "'ip route replace ${type} \"${cidr}\" ${options} ${via} dev \"${n}\" ${table}' failed: $out"
+                         echo "'ip route replace ${type} \"${cidr}\" ${from} ${options} ${via} dev \"${n}\" ${table}' failed: $out"
                          exit 1
                        fi
                     ''

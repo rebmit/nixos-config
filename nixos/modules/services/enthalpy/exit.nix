@@ -113,9 +113,7 @@ in
           cidr = "::/0";
           via = "fe80::ff:fe00:2";
           table = netnsCfg.routingTables.exit;
-          extraOptions = {
-            from = cfg.network;
-          };
+          from = cfg.network;
         };
         netdevDependencies = [ netnsCfg.netdevs.host.service ];
       };
