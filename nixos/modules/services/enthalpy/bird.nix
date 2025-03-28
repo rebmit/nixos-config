@@ -8,10 +8,9 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.modules) mkIf mkAfter;
+  inherit (lib.modules) mkIf;
   inherit (lib.attrsets) attrNames;
   inherit (lib.strings) concatMapStringsSep optionalString splitString;
-  inherit (lib.lists) singleton;
   inherit (lib.trivial) fromHexString;
   inherit (lib.network) ipv6;
 
@@ -42,7 +41,6 @@ in
         List of transit network entities in the enthalpy network.
       '';
     };
-    exit.enable = mkEnableOption "exit node";
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {
@@ -87,10 +85,6 @@ in
           protocol static {
             ipv6 sadr;
             route ${cfg.prefix} from ::/0 unreachable;
-            ${optionalString cfg.bird.exit.enable ''
-              route ${cfg.network} from ::/0 unreachable;
-              route ::/0 from ${cfg.network} via fe80::ff:fe00:2 dev "host";
-            ''}
           }
 
           ${concatMapStringsSep "\n" (name: ''
@@ -124,98 +118,8 @@ in
               };
             }
           '') (attrNames cfg.metadata)}
-
-          ${optionalString cfg.bird.exit.enable ''
-            protocol babel exit {
-              vrf "vrf-${cfg.entity}";
-              ipv6 sadr {
-                export filter {
-                  if !is_safe_prefix() then reject;
-                  if !is_rebmit_prefix() then reject;
-                  accept;
-                };
-                import filter {
-                  if !is_safe_prefix() then reject;
-                  if is_enthalpy_prefix() then reject;
-                  accept;
-                };
-              };
-              randomize router id;
-              interface "host" {
-                type tunnel;
-                link quality etx;
-                rxcost 32;
-                rtt cost 1024;
-                rtt max 1024 ms;
-                rx buffer 2000;
-              };
-            }
-          ''}
         '';
       };
-
-      netdevs.host = mkIf cfg.bird.exit.enable {
-        kind = "veth";
-        mtu = 1400;
-        address = "02:00:00:00:00:01";
-        vrf = "vrf-${cfg.entity}";
-        extraArgs.peer = {
-          name = "enthalpy";
-          mtu = 1400;
-          address = "02:00:00:00:00:02";
-          netns = "/proc/1/ns/net";
-        };
-      };
-
-      interfaces.host = mkIf cfg.bird.exit.enable {
-        netdevDependencies = [ netnsCfg.netdevs.host.service ];
-      };
     };
-
-    systemd.network.networks."50-enthalpy" = mkIf cfg.bird.exit.enable {
-      matchConfig.Name = "enthalpy";
-      routes = mkIf (!config.services.bird.enable) (singleton {
-        Destination = cfg.network;
-        Gateway = "fe80::ff:fe00:1";
-        GatewayOnLink = true;
-      });
-      routingPolicyRules = mkIf config.services.bird.enable (singleton {
-        Priority = config.routingPolicyPriorities.enthalpy;
-        Family = "ipv6";
-        Table = config.routingTables.enthalpy;
-      });
-      linkConfig.RequiredForOnline = false;
-    };
-
-    services.bird.config = mkIf cfg.bird.exit.enable (mkAfter ''
-      ipv6 sadr table enthalpy6;
-
-      protocol kernel {
-        kernel table ${toString config.routingTables.enthalpy};
-        ipv6 sadr {
-          table enthalpy6;
-          export all;
-          import none;
-        };
-        metric 512;
-      }
-
-      protocol babel {
-        ipv6 sadr {
-          table enthalpy6;
-          export all;
-          import all;
-        };
-        randomize router id;
-        interface "enthalpy" {
-          type tunnel;
-          link quality etx;
-          rxcost 32;
-          rtt cost 1024;
-          rtt max 1024 ms;
-          rx buffer 2000;
-        };
-      }
-    '');
   };
 }

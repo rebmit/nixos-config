@@ -21,7 +21,7 @@ in
 {
   options.services.enthalpy.warp = {
     enable = mkEnableOption "warp integration" // {
-      default = cfg.bird.exit.enable;
+      default = cfg.exit.enable;
     };
     prefixes = mkOption {
       type = types.listOf types.str;
@@ -150,7 +150,11 @@ in
           RemainAfterExit = true;
           StateDirectory = "warp";
           User = "cloudflare-warp";
+          Restart = "on-failure";
+          RestartSec = 5;
         };
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
       }
     ];
 
@@ -162,6 +166,11 @@ in
           iproute2
           gawk
         ];
+        preStart = ''
+          ip link del tmp-warp || true
+          ip -n warp link del tmp-warp || true
+          ip -n warp link del warp || true
+        '';
         script = ''
           ip link add tmp-warp mtu 1280 type wireguard
           ip link set tmp-warp netns warp
@@ -177,6 +186,8 @@ in
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = 5;
         };
         after = [
           "netns-warp.service"
@@ -199,5 +210,7 @@ in
     };
 
     users.groups.cloudflare-warp = { };
+
+    preservation.preserveAt."/persist".directories = [ "/var/lib/warp" ];
   };
 }

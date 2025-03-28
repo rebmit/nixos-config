@@ -4,8 +4,7 @@
 
   services.enthalpy = {
     ipsec.interfaces = [ "enp1s0" ];
-    bird.exit.enable = true;
-    plat.enable = true;
+    exit.enable = true;
     srv6.enable = true;
   };
 

@@ -222,5 +222,7 @@ in
       };
       wantedBy = [ "timers.target" ];
     };
+
+    preservation.preserveAt."/persist".directories = [ "/var/lib/ranet" ];
   };
 }
