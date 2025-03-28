@@ -70,6 +70,7 @@
     "browser.tabs.closeWindowWithLastTab" = false;
     "browser.tabs.inTitlebar" = 0;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+    "media.ffmpeg.vaapi.enabled" = true;
   };
 
   programs.firefox.policies.Preferences."browser.uiCustomization.state" = builtins.toJSON {
