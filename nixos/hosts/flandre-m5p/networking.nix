@@ -14,7 +14,7 @@ in
     ipsec.interfaces = [ "enp2s0" ];
     clat = {
       enable = true;
-      segment = singleton "2a0e:aa07:e21c:2546::2";
+      segment = singleton "2a0e:aa07:e21c:2546::3";
     };
   };
 
