@@ -74,14 +74,6 @@ in
   };
 
   config = {
-    boot.initrd.systemd.tmpfiles.settings.rebmit = {
-      "/sysroot/var/lib/nixos/sops-nix".d = {
-        user = "root";
-        group = "root";
-        mode = "0700";
-      };
-    };
-
     sops = {
       age = {
         keyFile = "/var/lib/nixos/sops-nix/sops.key";
