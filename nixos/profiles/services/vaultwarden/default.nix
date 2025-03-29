@@ -24,17 +24,7 @@
   };
 
   preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/vaultwarden";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-    {
-      directory = config.services.vaultwarden.backupDir;
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
+    "/var/lib/vaultwarden"
+    config.services.vaultwarden.backupDir
   ];
 }

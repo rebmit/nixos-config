@@ -31,17 +31,7 @@
   '';
 
   preservation.preserveAt."/persist".directories = [
-    {
-      directory = config.services.caddy.dataDir;
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-    {
-      directory = config.services.caddy.logDir;
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
+    config.services.caddy.dataDir
+    config.services.caddy.logDir
   ];
 }

@@ -64,12 +64,5 @@ in
     };
   };
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/knot";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }

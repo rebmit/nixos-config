@@ -183,12 +183,7 @@ in
   };
 
   preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/dovecot";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
+    { directory = "/var/lib/dovecot"; }
     {
       directory = maildir;
       mode = "0700";

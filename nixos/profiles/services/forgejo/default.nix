@@ -50,12 +50,5 @@
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = config.services.forgejo.stateDir;
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ config.services.forgejo.stateDir ];
 }

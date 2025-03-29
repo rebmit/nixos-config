@@ -179,12 +179,5 @@ in
     LoadCredential = [ "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}" ];
   };
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/knot";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }

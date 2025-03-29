@@ -10,12 +10,5 @@
     systemWide = true;
   };
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/pipewire";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ "/var/lib/pipewire" ];
 }

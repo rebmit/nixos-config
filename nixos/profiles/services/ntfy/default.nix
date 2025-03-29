@@ -28,12 +28,5 @@
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/ntfy-sh";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ "/var/lib/ntfy-sh" ];
 }

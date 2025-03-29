@@ -20,17 +20,15 @@ mkMerge [
 
     preservation.enable = true;
 
-    preservation.preserveAt."/persist" = {
-      directories = [
-        {
-          directory = "/var/lib/nixos";
-          inInitrd = true;
-          mode = "0755";
-          user = "root";
-          group = "root";
-        }
-      ];
-    };
+    preservation.preserveAt."/persist".directories = [
+      {
+        directory = "/var/lib/nixos";
+        inInitrd = true;
+        mode = "0755";
+        user = "root";
+        group = "root";
+      }
+    ];
   }
   {
     preservation.preserveAt = mkMerge (

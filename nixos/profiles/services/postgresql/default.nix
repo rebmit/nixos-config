@@ -50,12 +50,7 @@ in
   };
 
   preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/lib/postgresql";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
+    { directory = "/var/lib/postgresql"; }
     {
       directory = config.services.postgresqlBackup.location;
       mode = "0700";
