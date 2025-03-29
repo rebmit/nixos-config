@@ -43,6 +43,10 @@
                     mountpoint = "/persist";
                     mountOptions = [ "compress=zstd" ];
                   };
+                  "/var/tmp" = {
+                    mountpoint = "/var/tmp";
+                    mountOptions = [ "compress=zstd" ];
+                  };
                 };
               };
             };

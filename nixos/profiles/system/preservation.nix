@@ -29,7 +29,6 @@ mkMerge [
           user = "root";
           group = "root";
         }
-        { directory = "/var/tmp"; }
       ];
     };
   }
