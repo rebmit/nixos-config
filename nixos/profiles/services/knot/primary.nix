@@ -187,6 +187,4 @@ in
       group = "-";
     }
   ];
-
-  services.restic.backups.b2.paths = [ "/persist/var/lib/knot" ];
 }

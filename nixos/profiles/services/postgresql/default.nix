@@ -64,10 +64,6 @@ in
     }
   ];
 
-  services.restic.backups.b2.paths = [
-    "/persist${config.services.postgresqlBackup.location}"
-  ];
-
   systemd.services."restic-backups-b2" = {
     requires = [ "postgresqlBackup.service" ];
     after = [ "postgresqlBackup.service" ];

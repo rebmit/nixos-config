@@ -44,8 +44,4 @@
       group = "-";
     }
   ];
-
-  services.restic.backups.b2.paths = [
-    "/persist${config.services.caddy.dataDir}"
-  ];
 }

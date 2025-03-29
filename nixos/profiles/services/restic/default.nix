@@ -37,6 +37,7 @@
     environmentFile = config.sops.templates."restic_b2_envs".path;
     passwordFile = config.sops.secrets."restic_password".path;
     initialize = true;
+    paths = [ "/persist" ];
     extraBackupArgs = [
       "--one-file-system"
       "--exclude-caches"
@@ -62,12 +63,6 @@
       user = "root";
       group = "root";
     }
-  ];
-
-  services.restic.backups.b2.paths = [
-    "/persist/etc/machine-id"
-    "/persist${config.sops.age.keyFile}"
-    "/persist/var/lib/nixos"
   ];
 
   systemd.services.restic-backups-b2.serviceConfig.Environment = [ "GOGC=20" ];

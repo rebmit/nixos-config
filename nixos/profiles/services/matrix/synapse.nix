@@ -87,6 +87,4 @@
       group = config.systemd.services.matrix-synapse.serviceConfig.Group;
     }
   ];
-
-  services.restic.backups.b2.paths = [ "/persist/var/lib/matrix-synapse" ];
 }

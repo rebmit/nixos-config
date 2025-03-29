@@ -196,8 +196,4 @@ in
       group = config.services.dovecot2.mailGroup;
     }
   ];
-
-  services.restic.backups.b2.paths = [
-    "/persist${maildir}"
-  ];
 }
