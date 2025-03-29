@@ -23,4 +23,6 @@ in
       mkdir -p /var/lib/nixos/systemd
     '';
   };
+
+  preservation.preserveAt."/persist".directories = [ "/var/lib/systemd" ];
 }

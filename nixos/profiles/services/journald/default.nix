@@ -4,12 +4,5 @@
     SystemMaxUse=1G
   '';
 
-  preservation.preserveAt."/persist".directories = [
-    {
-      directory = "/var/log/journal";
-      mode = "-";
-      user = "-";
-      group = "-";
-    }
-  ];
+  preservation.preserveAt."/persist".directories = [ "/var/log/journal" ];
 }
