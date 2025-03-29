@@ -4,6 +4,7 @@ keys:
     - &flandre age166kxtrcx99fxlgtvz5mvyt5ctvk3dt09f42gvm94ngnkyztmmelsyzdn77
     - &reisen age1uf2h3hlv373ppdstjlngyuu7q5mee3u3ww3674lsj9rlt9ax7vqsv7wpe8
     - &suwako age1p9xzkzc3zxasgxtd75html0pvrtd6fzvmhz6n388vtjg36d3zffsvma0j0
+    - &kanako age1vaec8azhkwnqre8wnwnjx43s2qfthnlu035a4du0m8arg8cwcsaq3xvxeq
 creation_rules:
   - path_regex: infra/.*
     key_groups:
@@ -21,6 +22,7 @@ creation_rules:
           - *flandre
           - *reisen
           - *suwako
+          - *kanako
   - path_regex: secrets/hosts/(opentofu/)?marisa-.*
     key_groups:
       - age:
@@ -40,3 +42,8 @@ creation_rules:
       - age:
           - *marisa
           - *suwako
+  - path_regex: secrets/hosts/(opentofu/)?kanako-.*
+    key_groups:
+      - age:
+          - *marisa
+          - *kanako
