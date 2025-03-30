@@ -4,7 +4,6 @@
   config,
   lib,
   pkgs,
-  data,
   ...
 }:
 let
@@ -68,16 +67,6 @@ in
         job_name = "caddy";
         scheme = "https";
         metrics_path = "/caddy";
-        basic_auth = {
-          username = "prometheus";
-          password_file = config.sops.secrets."prom/password".path;
-        };
-        static_configs = [ { inherit targets; } ];
-      }
-      {
-        job_name = "ping";
-        scheme = "https";
-        metrics_path = "/ping";
         basic_auth = {
           username = "prometheus";
           password_file = config.sops.secrets."prom/password".path;
@@ -219,14 +208,7 @@ in
   };
 
   services.caddy.virtualHosts."prom.rebmit.moe" = {
-    serverAliases = [ "prom.rebmit.workers.moe" ];
     extraConfig = with config.services.prometheus; ''
-      tls internal {
-        client_auth {
-          mode require_and_verify
-          trust_pool file ${builtins.toFile "cloudflare_aop_ca_certificate" data.cloudflare_aop_ca_certificate}
-        }
-      }
       reverse_proxy ${listenAddress}:${toString port}
     '';
   };

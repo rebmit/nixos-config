@@ -1,5 +1,4 @@
 {
-  "cloudflare_aop_ca_certificate": "-----BEGIN CERTIFICATE-----\nMIIBzDCCAVKgAwIBAgIRAJCGHkUUj6Dihk9xz84mW7wwCgYIKoZIzj0EAwMwJzEP\nMA0GA1UEChMGcmVibWl0MRQwEgYDVQQDEwt3b3JrZXJzLm1vZTAeFw0yNTAxMDMx\nMjUzMTRaFw0yNjAxMDMxMjUzMTRaMCcxDzANBgNVBAoTBnJlYm1pdDEUMBIGA1UE\nAxMLd29ya2Vycy5tb2UwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAATtv7AP+CNni3kM\nrV6wO8zolfrOM5jBRTRSEfRcyzgsC8lSt/CXUF5bdFkFkgqb1XqXVJA1qhRaEEKj\naaHZiWRZsl4YNfXYIoMEhr0cUyBXXZo+eL/DaYtR1JlcOJ9gIyGjQjBAMA4GA1Ud\nDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTkDXkFx7XVqGA+\nb0t4gc7pI6NhXjAKBggqhkjOPQQDAwNoADBlAjABJIne3vOoNn8Om/Vs8XTLR0tM\nxxBzO6CRFm5Mp9cnzMYD60mFox6gEDRyb4Au6tYCMQDIVZUsDEFukk+NV91+97Yz\nB3tOVSMdICqkC8VTaoBqSxrkBzb2+T4lzZUyYC+Bknk=\n-----END CERTIFICATE-----\n",
   "enthalpy_organizations": {
     "core": "rebmit's core network",
     "edge": "rebmit's edge network"
