@@ -16,6 +16,7 @@ dns.lib.toString "rebmit.moe" {
     NS
     DKIM
     DMARC
+    CAA
     ;
   A = suwako-vie0.endpoints_v4;
   AAAA = suwako-vie0.endpoints_v6;

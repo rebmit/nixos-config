@@ -12,6 +12,7 @@ dns.lib.toString "rebmit.link" {
     NS
     DKIM
     DMARC
+    CAA
     ;
   MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];

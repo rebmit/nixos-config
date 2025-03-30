@@ -32,6 +32,13 @@ rec {
       ri = 604800;
     }
   ];
+  CAA = [
+    {
+      issuerCritical = false;
+      tag = "issue";
+      value = "letsencrypt.org";
+    }
+  ];
 
   primary = "reisen-sea0";
   secondary = [
