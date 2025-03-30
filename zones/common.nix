@@ -1,7 +1,8 @@
 let
   data = builtins.fromJSON (builtins.readFile ./data.json);
+  inherit (data.nameservers) primary secondary;
 in
-rec {
+{
   TTL = 60;
   SOA = {
     nameServer = "${primary}.rebmit.link.";
@@ -12,7 +13,7 @@ rec {
     expire = 604800;
     minimum = 300;
   };
-  NS = map (name: "${name}.rebmit.link.") nameservers;
+  NS = map (name: "${name}.rebmit.link.") secondary;
   DKIM = [
     {
       selector = "20241219";
@@ -40,12 +41,5 @@ rec {
     }
   ];
 
-  primary = "reisen-sea0";
-  secondary = [
-    "reisen-nrt0"
-    "reisen-sin0"
-    "suwako-vie1"
-  ];
-  nameservers = [ primary ] ++ secondary;
   hosts = data.hosts;
 }
