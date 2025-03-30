@@ -23,14 +23,22 @@ dns.lib.toString "rebmit.link" {
           lib.nameValuePair name {
             A = value.endpoints_v4;
             AAAA = value.endpoints_v6;
-            HTTPS = [
+            HTTPS = lib.singleton (
               {
+                svcPriority = 1;
+                targetName = ".";
                 alpn = [
                   "h3"
                   "h2"
                 ];
               }
-            ];
+              // (lib.optionalAttrs (value.endpoints_v4 != [ ])) {
+                ipv4hint = value.endpoints_v4;
+              }
+              // (lib.optionalAttrs (value.endpoints_v6 != [ ])) {
+                ipv6hint = value.endpoints_v6;
+              }
+            );
           }
         ) publicHosts
       ))

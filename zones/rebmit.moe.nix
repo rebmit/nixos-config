@@ -19,14 +19,22 @@ dns.lib.toString "rebmit.moe" {
     ;
   A = suwako-vie0.endpoints_v4;
   AAAA = suwako-vie0.endpoints_v6;
-  HTTPS = [
+  HTTPS = lib.singleton (
     {
+      svcPriority = 1;
+      targetName = ".";
       alpn = [
         "h3"
         "h2"
       ];
     }
-  ];
+    // (lib.optionalAttrs (suwako-vie0.endpoints_v4 != [ ])) {
+      ipv4hint = suwako-vie0.endpoints_v4;
+    }
+    // (lib.optionalAttrs (suwako-vie0.endpoints_v6 != [ ])) {
+      ipv6hint = suwako-vie0.endpoints_v6;
+    }
+  );
   SRV = [
     {
       service = "imaps";

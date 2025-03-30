@@ -53,11 +53,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716554081,
-        "narHash": "sha256-N70c7NLGdp4zmKTEJa0zViJ8SRIN2OFi22cxN7NR1bk=",
+        "lastModified": 1740456938,
+        "narHash": "sha256-9UpdosY7jDdlxsuJ6LbdbKRlXPUstZKBHZkJFf4fEDE=",
         "owner": "NickCao",
         "repo": "dns.nix",
-        "rev": "cd98f05212793e9e8102fcb101748aa135a719b3",
+        "rev": "47339a0a574389800376131db586aedb093dbfe5",
         "type": "github"
       },
       "original": {
