@@ -5,11 +5,11 @@
   config,
   pkgs,
   mylib,
+  data,
   ...
 }:
 let
-  common = import ../../../../zones/common.nix;
-  primary = common.hosts.${common.primary};
+  primary = data.hosts.${data.nameservers.primary};
 in
 {
   systemd.services.knot-ddns = {

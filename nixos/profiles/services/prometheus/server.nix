@@ -9,8 +9,7 @@
 }:
 let
   cfg = config.services.prometheus;
-  common = import ../../../../zones/common.nix;
-  publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) common.hosts;
+  publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) data.hosts;
   targets = lib.mapAttrsToList (name: _value: "${name}.rebmit.link") publicHosts;
   primaryNameserver = "${data.nameservers.primary}.rebmit.link";
   nameservers = map (ns: "${ns}.rebmit.link") data.nameservers.secondary;
