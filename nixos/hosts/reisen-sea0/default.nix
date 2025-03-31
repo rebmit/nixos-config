@@ -10,7 +10,7 @@
     ++ (with profiles; [
       services.bgp
       services.caddy
-      services.knot.primary
+      services.knot.secondary
     ])
     ++ (mylib.path.scanPaths ./. "default.nix");
 

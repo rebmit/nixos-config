@@ -9,7 +9,7 @@
     suites.server
     ++ (with profiles; [
       services.caddy
-      services.knot.secondary
+      services.knot.primary
       services.mail.dovecot
       services.mail.postfix
       services.mail.rspamd

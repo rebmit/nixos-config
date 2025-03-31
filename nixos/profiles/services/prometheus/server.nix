@@ -4,6 +4,7 @@
   config,
   lib,
   pkgs,
+  data,
   ...
 }:
 let
@@ -11,8 +12,8 @@ let
   common = import ../../../../zones/common.nix;
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) common.hosts;
   targets = lib.mapAttrsToList (name: _value: "${name}.rebmit.link") publicHosts;
-  primaryNameserver = "${common.primary}.rebmit.link";
-  nameservers = map (ns: "${ns}.rebmit.link") common.nameservers;
+  primaryNameserver = "${data.nameservers.primary}.rebmit.link";
+  nameservers = map (ns: "${ns}.rebmit.link") data.nameservers.secondary;
   relabel_configs = [
     {
       source_labels = [ "__address__" ];

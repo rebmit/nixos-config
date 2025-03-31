@@ -5,21 +5,21 @@
   inputs,
   lib,
   pkgs,
+  data,
   ...
 }:
 let
-  common = import ../../../../zones/common.nix;
   secondary = lib.listToAttrs (
     builtins.map (
       name:
       lib.nameValuePair name {
         id = name;
         address = [
-          (builtins.elemAt common.hosts.${name}.endpoints_v4 0)
-          (builtins.elemAt common.hosts.${name}.endpoints_v6 0)
+          (builtins.elemAt data.hosts.${name}.endpoints_v4 0)
+          (builtins.elemAt data.hosts.${name}.endpoints_v6 0)
         ];
       }
-    ) common.secondary
+    ) data.nameservers.secondary
   );
 in
 {
