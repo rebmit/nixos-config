@@ -28,7 +28,11 @@ in
     };
     prefixes = mkOption {
       type = types.listOf types.str;
-      default = [ "2a0e:aa07:e210::/44" ];
+      default = [
+        "2a0e:aa07:e210::/48"
+        "2a0e:aa07:e21c::/48"
+        "2a0e:aa07:e21d::/48"
+      ];
       readOnly = true;
       description = ''
         List of prefixes that this autonomous system is allowed to announce.
