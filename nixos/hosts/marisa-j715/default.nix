@@ -15,7 +15,8 @@
   home-manager.users.rebmit =
     { suites, profiles, ... }:
     {
-      imports = suites.workstation ++ [
+      imports = [
+        suites.workstation
         profiles.syncthing
       ];
     };
