@@ -3,7 +3,7 @@ let
   inherit (data.nameservers) primary;
 in
 {
-  TTL = 60;
+  TTL = 300;
   SOA = {
     nameServer = "${primary}.rebmit.link.";
     adminEmail = "noc@rebmit.moe";
