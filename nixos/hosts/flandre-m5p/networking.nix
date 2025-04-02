@@ -16,6 +16,7 @@ in
       enable = true;
       segment = singleton "2a0e:aa07:e21c:2546::3";
     };
+    srv6.enable = true;
   };
 
   systemd.services.nix-daemon = config.networking.netns.enthalpy.config;
