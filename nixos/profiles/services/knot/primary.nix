@@ -23,6 +23,7 @@ let
     ++ lib.singleton (
       lib.nameValuePair "he-ns1" {
         id = "he-ns1";
+        key = "1c8fc5fc-41a3-4c83-b663-07828405e2ec";
         address = [
           "216.218.130.2"
           "2001:470:100::2"
@@ -34,7 +35,10 @@ in
 {
   services.knot = {
     enable = true;
-    keyFiles = [ "/run/credentials/knot.service/tsig_ddns_conf" ];
+    keyFiles = [
+      "/run/credentials/knot.service/tsig_ddns_conf"
+      "/run/credentials/knot.service/tsig_he_conf"
+    ];
     settings = {
       server = {
         async-start = true;
@@ -81,6 +85,7 @@ in
         }
         {
           id = "he-slave";
+          key = "1c8fc5fc-41a3-4c83-b663-07828405e2ec";
           address = [
             "216.218.133.2"
             "2001:470:600::2"
@@ -189,6 +194,13 @@ in
     restartUnits = [ "knot.service" ];
   };
 
+  sops.secrets."knot_he_tsig_secret" = {
+    opentofu = {
+      enable = true;
+    };
+    restartUnits = [ "knot.service" ];
+  };
+
   sops.templates."knot_tsig_ddns_conf".content = ''
     key:
     - id: ddns
@@ -196,8 +208,18 @@ in
       secret: ${config.sops.placeholder."knot_ddns_tsig_secret"}
   '';
 
+  sops.templates."knot_tsig_he_conf".content = ''
+    key:
+    - id: 1c8fc5fc-41a3-4c83-b663-07828405e2ec
+      algorithm: hmac-sha256
+      secret: ${config.sops.placeholder."knot_he_tsig_secret"}
+  '';
+
   systemd.services.knot.serviceConfig = {
-    LoadCredential = [ "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}" ];
+    LoadCredential = [
+      "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}"
+      "tsig_he_conf:${config.sops.templates."knot_tsig_he_conf".path}"
+    ];
   };
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
