@@ -10,8 +10,8 @@
       };
     };
     networks = {
-      "30-enp6s18" = {
-        matchConfig.Name = "enp6s18";
+      "30-ens18" = {
+        matchConfig.Name = "ens18";
         networkConfig = {
           Address = hostData.endpoints;
           DHCP = false;
@@ -20,6 +20,8 @@
         routes = [
           { Destination = "91.108.80.1"; }
           { Gateway = "91.108.80.1"; }
+          { Destination = "2a05:901:6::1"; }
+          { Gateway = "2a05:901:6::1"; }
         ];
         dhcpV4Config.RouteMetric = 1024;
         dhcpV6Config.RouteMetric = 1024;
