@@ -5,14 +5,12 @@
   ...
 }:
 {
-  imports =
+  imports = [
     suites.baseline
-    ++ suites.network
-    ++ (with profiles; [
-      virtualization.rosetta
-      users.rebmit
-    ])
-    ++ (mylib.path.scanPaths ./. "default.nix");
+    suites.network
+    profiles.virtualization.rosetta
+    profiles.users.rebmit
+  ] ++ (mylib.path.scanPaths ./. "default.nix");
 
   home-manager.users.rebmit =
     { suites, profiles, ... }:

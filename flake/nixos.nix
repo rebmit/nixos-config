@@ -7,82 +7,10 @@
 }:
 let
   inherit (inputs.rebmit.lib.path) buildModuleList rakeLeaves;
-  buildSuites = profiles: f: lib.mapAttrs (_: lib.flatten) (lib.fix (f profiles));
 
   nixosModules = buildModuleList ../nixos/modules;
   nixosProfiles = rakeLeaves ../nixos/profiles;
-  nixosSuites = buildSuites nixosProfiles (
-    profiles: suites: {
-      baseline = with profiles; [
-        # keep-sorted start
-        programs.tools.common
-        security.polkit
-        security.sudo
-        services.btrfs-auto-scrub
-        services.dbus
-        services.journald
-        services.logrotate
-        services.nscd
-        services.openssh
-        services.zram-generator
-        system.boot.etc-overlay
-        system.boot.initrd.systemd
-        system.boot.kernel.latest
-        system.boot.systemd
-        system.boot.userborn
-        system.common
-        system.nix.gc
-        system.nix.registry
-        system.nix.settings
-        system.nix.version
-        system.preservation
-        users.root
-        # keep-sorted end
-      ];
-
-      network = with profiles; [
-        # keep-sorted start
-        programs.tools.network
-        services.firewall
-        services.networkd
-        services.resolved
-        services.vnstat
-        system.boot.sysctl.tcp-bbr
-        system.boot.sysctl.udp-buffer-size
-        # keep-sorted end
-      ];
-
-      desktop = with profiles; [
-        # keep-sorted start
-        programs.dconf
-        programs.tools.system
-        security.rtkit
-        services.gnome-keyring
-        services.greetd
-        services.pipewire
-        # keep-sorted end
-      ];
-
-      backup = with profiles; [
-        services.restic
-      ];
-
-      monitoring = with profiles; [
-        services.prometheus.node-exporter
-      ];
-
-      workstation =
-        suites.baseline
-        ++ suites.network
-        ++ suites.desktop
-        ++ suites.backup
-        ++ (with profiles; [
-          security.hardware-keys
-        ]);
-
-      server = suites.baseline ++ suites.network ++ suites.backup ++ suites.monitoring;
-    }
-  );
+  nixosSuites = rakeLeaves ../nixos/suites;
 in
 {
   passthru = {

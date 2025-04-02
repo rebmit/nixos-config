@@ -5,19 +5,17 @@
   ...
 }:
 {
-  imports =
+  imports = [
     suites.server
-    ++ (with profiles; [
-      services.caddy
-      services.knot.primary
-      services.mail.dovecot
-      services.mail.postfix
-      services.mail.rspamd
-      services.ntfy
-      services.prometheus.server
-      services.vaultwarden
-    ])
-    ++ (mylib.path.scanPaths ./. "default.nix");
+    profiles.services.caddy
+    profiles.services.knot.primary
+    profiles.services.mail.dovecot
+    profiles.services.mail.postfix
+    profiles.services.mail.rspamd
+    profiles.services.ntfy
+    profiles.services.prometheus.server
+    profiles.services.vaultwarden
+  ] ++ (mylib.path.scanPaths ./. "default.nix");
 
   system.stateVersion = "24.11";
 }
