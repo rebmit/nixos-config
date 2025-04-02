@@ -42,6 +42,20 @@ dns.lib.toString "rebmit.link" {
             );
           }
         ) publicHosts
+        ++ lib.singleton (
+          lib.nameValuePair "reisen.any" {
+            AAAA = [ "2a0e:aa07:e210:100::1" ];
+            HTTPS = lib.singleton {
+              svcPriority = 1;
+              targetName = ".";
+              alpn = [
+                "h3"
+                "h2"
+              ];
+              ipv6hint = [ "2a0e:aa07:e210:100::1" ];
+            };
+          }
+        )
       ))
       {
         "suwako-vie1".DMARC = [

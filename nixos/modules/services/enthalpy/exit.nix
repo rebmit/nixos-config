@@ -9,7 +9,7 @@
 }:
 let
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkIf mkAfter;
+  inherit (lib.modules) mkIf mkAfter mkOrder;
   inherit (lib.lists) singleton;
   inherit (lib.meta) getExe;
   inherit (mylib.network) cidr;
@@ -159,7 +159,7 @@ in
       };
     };
 
-    services.bird.config = mkAfter ''
+    services.bird.config = mkOrder 1500 ''
       ipv6 sadr table enthalpy6;
 
       protocol kernel {

@@ -14,6 +14,7 @@ in
     minimum = 300;
   };
   NS = [
+    "reisen.any.rebmit.link."
     "ns1.he.net."
     "ns2.he.net."
   ];
