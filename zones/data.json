@@ -32,6 +32,16 @@
       "labels": [],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+xuD9lrZK6zhaeSGO25O6YQR92UVjv2ovhz6zdPD8w"
     },
+    "kanako-ham1": {
+      "b2_backup_bucket_name": "rebmit-backup-kanako-ham1",
+      "endpoints": ["91.108.80.168"],
+      "endpoints_v4": ["91.108.80.168"],
+      "endpoints_v6": [],
+      "enthalpy_node_id": null,
+      "enthalpy_node_organization": null,
+      "labels": [],
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaa8stwLcjYHdzsz5SpUzLQySDqKlWXcGdQ6M52jRNh"
+    },
     "marisa-7d76": {
       "b2_backup_bucket_name": "rebmit-backup-marisa-7d76",
       "endpoints": [],

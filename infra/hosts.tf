@@ -28,6 +28,13 @@ locals {
       enthalpy_node_id           = null
       enthalpy_node_organization = null
     }
+    "kanako-ham1" = {
+      labels                     = []
+      endpoints_v4               = ["91.108.80.168"]
+      endpoints_v6               = []
+      enthalpy_node_id           = null
+      enthalpy_node_organization = null
+    }
     "suwako-vie0" = {
       labels                     = []
       endpoints_v4               = ["203.34.137.22"]

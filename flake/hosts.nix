@@ -211,6 +211,11 @@ in
     })
 
     (mkHost {
+      name = "kanako-ham1";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
       name = "suwako-vie0";
       system = "x86_64-linux";
     })
