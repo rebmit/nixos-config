@@ -36,7 +36,7 @@ in
 
   systemd.timers.knot-ddns = {
     timerConfig = {
-      OnCalendar = "*:0/1";
+      OnCalendar = "*:0/5";
     };
     wantedBy = [ "timers.target" ];
   };

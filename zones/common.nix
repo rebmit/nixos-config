@@ -1,6 +1,6 @@
 let
   data = builtins.fromJSON (builtins.readFile ./data.json);
-  inherit (data.nameservers) primary secondary;
+  inherit (data.nameservers) primary;
 in
 {
   TTL = 60;
@@ -13,7 +13,10 @@ in
     expire = 604800;
     minimum = 300;
   };
-  NS = map (name: "${name}.rebmit.link.") secondary;
+  NS = [
+    "ns1.he.net."
+    "ns2.he.net."
+  ];
   DKIM = [
     {
       selector = "20241219";

@@ -20,6 +20,15 @@ let
         ];
       }
     ) data.nameservers.secondary
+    ++ lib.singleton (
+      lib.nameValuePair "he-ns1" {
+        id = "he-ns1";
+        address = [
+          "216.218.130.2"
+          "2001:470:100::2"
+        ];
+      }
+    )
   );
 in
 {
@@ -70,6 +79,14 @@ in
           update-owner-match = "sub";
           update-owner-name = "dyn";
         }
+        {
+          id = "he-slave";
+          address = [
+            "216.218.133.2"
+            "2001:470:600::2"
+          ];
+          action = "transfer";
+        }
       ];
       policy = [
         {
@@ -105,7 +122,6 @@ in
           zonefile-load = "difference-no-serial";
           zonefile-sync = "-1";
           journal-content = "all";
-          zonemd-generate = "zonemd-sha512";
         }
         {
           id = "catalog";
@@ -131,7 +147,10 @@ in
         }
         {
           domain = "rebmit.link";
-          acl = "ddns";
+          acl = [
+            "ddns"
+            "he-slave"
+          ];
           file = pkgs.writeText "db.link.rebmit" (
             import ../../../../zones/rebmit.link.nix {
               inherit (inputs) dns;
@@ -141,6 +160,7 @@ in
         }
         {
           domain = "rebmit.moe";
+          acl = [ "he-slave" ];
           file = pkgs.writeText "db.moe.rebmit" (
             import ../../../../zones/rebmit.moe.nix {
               inherit (inputs) dns;
@@ -150,6 +170,7 @@ in
         }
         {
           domain = "1.2.e.7.0.a.a.e.0.a.2.ip6.arpa";
+          acl = [ "he-slave" ];
           file = pkgs.writeText "db.arpa.ip6.2.a.0.e.a.a.0.7.e.2.1" (
             import ../../../../zones/1.2.e.7.0.a.a.e.0.a.2.ip6.arpa.nix {
               inherit (inputs) dns;

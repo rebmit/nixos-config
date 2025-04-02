@@ -42,7 +42,6 @@ in
         {
           id = "member";
           master = "transfer";
-          zonemd-verify = true;
         }
       ];
       mod-rrl = [
