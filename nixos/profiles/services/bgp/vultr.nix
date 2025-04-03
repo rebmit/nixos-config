@@ -1,11 +1,5 @@
 { config, ... }:
 {
-  sops.secrets."bgp/vultr" = {
-    sopsFile = config.sops.secretFiles.get "common.yaml";
-    owner = config.systemd.services.bird.serviceConfig.User;
-    reloadUnits = [ "bird.service" ];
-  };
-
   services.bird = {
     enable = true;
     checkConfig = false;
@@ -13,12 +7,14 @@
       protocol device {
         scan time 5;
       }
+
       protocol static announce6 {
         ipv6;
         route 2a0e:aa07:e210::/48 unreachable;
         route 2a0e:aa07:e21c::/48 unreachable;
         route 2a0e:aa07:e21d::/48 unreachable;
       }
+
       protocol kernel kernel6 {
         ipv6 {
           export where proto = "announce6";
@@ -26,7 +22,9 @@
         };
         learn;
       }
+
       include "${config.sops.secrets."bgp/vultr".path}";
+
       protocol bgp vultr6 {
         ipv6 {
           import none;
@@ -39,5 +37,11 @@
         password VULTR_BGP_PASSWD;
       }
     '';
+  };
+
+  sops.secrets."bgp/vultr" = {
+    sopsFile = config.sops.secretFiles.get "common.yaml";
+    owner = config.systemd.services.bird.serviceConfig.User;
+    reloadUnits = [ "bird.service" ];
   };
 }

@@ -1,7 +1,10 @@
 { lib, ... }:
+let
+  inherit (lib.modules) mkDefault;
+in
 {
   networking = {
     nftables.enable = true;
-    firewall.enable = lib.mkDefault false;
+    firewall.enable = mkDefault false;
   };
 }

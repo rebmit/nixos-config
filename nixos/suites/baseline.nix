@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     # keep-sorted start
-    programs.tools.common
+    programs.common
     security.polkit
     security.sudo
     services.btrfs-auto-scrub

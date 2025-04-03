@@ -2,7 +2,7 @@
 {
   imports = with profiles; [
     # keep-sorted start
-    programs.tools.network
+    programs.network
     services.firewall
     services.networkd
     services.resolved

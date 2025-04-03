@@ -6,9 +6,10 @@
     UseUTC 1
   '';
 
-  systemd.services.vnstat.restartTriggers = [ config.environment.etc."vnstat.conf".text ];
-
-  systemd.services.vnstat.serviceConfig = mylib.misc.serviceHardened;
+  systemd.services.vnstat = {
+    serviceConfig = mylib.misc.serviceHardened;
+    restartTriggers = [ config.environment.etc."vnstat.conf".text ];
+  };
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/vnstat" ];
 }

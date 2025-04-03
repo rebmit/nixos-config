@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [
     # keep-sorted start
     aria2
-    curl
+    curlHTTP3
     dnsutils
     ethtool
     ipcalc
@@ -18,6 +18,7 @@
     socat
     tcpdump
     wget
+    whois
     # keep-sorted end
   ];
 }
