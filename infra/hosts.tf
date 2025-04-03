@@ -50,28 +50,28 @@ locals {
       enthalpy_node_organization = null
     }
     "reisen-sea0" = {
-      labels                     = ["dns/secondary", "enthalpy/core"]
+      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-sea0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-sea0"].ipv6]
       enthalpy_node_id           = parseint("6b8", 16)
       enthalpy_node_organization = "core"
     }
     "reisen-nrt0" = {
-      labels                     = ["dns/secondary", "enthalpy/core"]
+      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-nrt0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-nrt0"].ipv6]
       enthalpy_node_id           = parseint("586", 16)
       enthalpy_node_organization = "core"
     }
     "reisen-sin0" = {
-      labels                     = ["dns/secondary", "enthalpy/core"]
+      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-sin0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-sin0"].ipv6]
       enthalpy_node_id           = parseint("254", 16)
       enthalpy_node_organization = "core"
     }
     "reisen-ams0" = {
-      labels                     = ["dns/secondary", "enthalpy/core"]
+      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-ams0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-ams0"].ipv6]
       enthalpy_node_id           = parseint("38c", 16)

@@ -8,7 +8,6 @@
   imports = [
     suites.server
     profiles.services.caddy
-    profiles.services.knot.primary
     profiles.services.mail.dovecot
     profiles.services.mail.postfix
     profiles.services.mail.rspamd
