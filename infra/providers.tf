@@ -9,9 +9,6 @@ terraform {
     random = {
       source = "hashicorp/random"
     }
-    cloudflare = {
-      source = "cloudflare/cloudflare"
-    }
     b2 = {
       source = "registry.terraform.io/backblaze/b2"
     }
