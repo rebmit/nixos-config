@@ -29,6 +29,8 @@
     ];
   };
 
+  systemd.services.caddy-api.enable = false;
+
   preservation.preserveAt."/persist".directories = [
     config.services.caddy.dataDir
     config.services.caddy.logDir

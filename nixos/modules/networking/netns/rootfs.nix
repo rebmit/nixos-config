@@ -160,8 +160,8 @@ in
               confext = {
                 "resolv.conf" = mkDefault {
                   text = ''
-                    nameserver 2606:4700:4700::1111
                     nameserver 2001:4860:4860::8888
+                    nameserver 2606:4700:4700::1111
                     nameserver 1.1.1.1
                     nameserver 8.8.8.8
                   '';

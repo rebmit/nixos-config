@@ -12,7 +12,7 @@ locals {
 
 resource "cloudflare_record" "push_a" {
   name     = "push.rebmit"
-  for_each = toset(module.hosts["suwako-vie1"].endpoints_v4)
+  for_each = toset(module.hosts["kanako-ham0"].endpoints_v4)
   proxied  = false
   ttl      = 1
   type     = "A"
@@ -22,7 +22,7 @@ resource "cloudflare_record" "push_a" {
 
 resource "cloudflare_record" "push_aaaa" {
   name     = "push.rebmit"
-  for_each = toset(module.hosts["suwako-vie1"].endpoints_v6)
+  for_each = toset(module.hosts["kanako-ham0"].endpoints_v6)
   proxied  = false
   ttl      = 1
   type     = "AAAA"
