@@ -10,12 +10,12 @@ resource "tls_private_key" "enthalpy" {
   algorithm = "ED25519"
 }
 
-output "enthalpy_organizations" {
-  value     = local.enthalpy_organizations
-  sensitive = false
-}
-
-output "enthalpy_public_key_pem" {
-  value     = { for k, v in tls_private_key.enthalpy : k => trimspace(v.public_key_pem) }
+output "enthalpy" {
+  value = {
+    for key, name in local.enthalpy_organizations : name => {
+      public_key_pem = trimspace(tls_private_key.enthalpy[key].public_key_pem)
+      nodes          = [for k, v in local.hosts : k if contains(v.labels, "enthalpy/${key}")]
+    }
+  }
   sensitive = false
 }

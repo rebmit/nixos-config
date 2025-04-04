@@ -1,11 +1,13 @@
 {
-  "enthalpy_organizations": {
-    "core": "rebmit's core network",
-    "edge": "rebmit's edge network"
-  },
-  "enthalpy_public_key_pem": {
-    "core": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA8Oqlkh1JAW6IbMOVlhdlVKC9xQ75hzBeWHklcdJENFE=\n-----END PUBLIC KEY-----",
-    "edge": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAXaBaGumao95/j4M7nWNNytd8u8r1KAGSbKDs0aT2mVU=\n-----END PUBLIC KEY-----"
+  "enthalpy": {
+    "rebmit's core network": {
+      "nodes": ["reisen-ams0", "reisen-nrt0", "reisen-sea0", "reisen-sin0"],
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA8Oqlkh1JAW6IbMOVlhdlVKC9xQ75hzBeWHklcdJENFE=\n-----END PUBLIC KEY-----"
+    },
+    "rebmit's edge network": {
+      "nodes": ["flandre-m5p", "marisa-7d76", "marisa-j715"],
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAXaBaGumao95/j4M7nWNNytd8u8r1KAGSbKDs0aT2mVU=\n-----END PUBLIC KEY-----"
+    }
   },
   "nameservers": {
     "primary": "suwako-vie1",
