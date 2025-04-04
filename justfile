@@ -3,6 +3,7 @@ set shell := ["bash", "-c"]
 [linux]
 [group('nix')]
 remote name:
+  nix copy --substitute-on-destination --no-check-sigs --to ssh-ng://root@{{name}} .#nixosConfigurations.{{name}}.config.system.build.toplevel --verbose --show-trace
   nixos-rebuild switch --flake .#{{name}} --target-host root@{{name}} --verbose --show-trace
 
 [linux]

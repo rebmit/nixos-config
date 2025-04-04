@@ -38,9 +38,10 @@ in
       };
   };
 
+  environment.systemPackages = [ pkgs.dovecot_pigeonhole ];
+
   services.dovecot2 = {
     enable = true;
-    modules = [ pkgs.dovecot_pigeonhole ];
     mailUser = "dovemail";
     mailGroup = "dovemail";
     sieve = {

@@ -24,16 +24,6 @@
     sopsFile = config.sops.secretFiles.host;
   };
 
-  services.matrix-synapse.settings = {
-    app_service_config_files = [ "/run/credentials/matrix-synapse.service/mautrix-telegram" ];
-  };
-
-  systemd.services.matrix-synapse.serviceConfig = {
-    LoadCredential = [
-      "mautrix-telegram:${config.sops.templates."mautrix_telegram_appservice_registration".path}"
-    ];
-  };
-
   sops.templates."mautrix_telegram_appservice_registration" = {
     content = builtins.toJSON {
       id = "telegram";
@@ -64,6 +54,9 @@
       de.sorunome.msc2409.push_ephemeral = true;
       push_ephemeral = true;
     };
+    path = "/var/lib/mautrix-telegram/telegram-registration.yaml";
+    owner = config.systemd.services.mautrix-telegram.serviceConfig.User;
+    mode = "0440";
     restartUnits = [
       "matrix-synapse.service"
     ];

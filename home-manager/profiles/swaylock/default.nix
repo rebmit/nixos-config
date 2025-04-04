@@ -10,7 +10,7 @@ let
   mkBlurredWallpaper =
     mode:
     pkgs.runCommand "wallpaper-blurred-${mode}" { nativeBuildInputs = with pkgs; [ imagemagick ]; } ''
-      magick convert -blur 14x5 ${config.theme.${mode}.wallpaper} $out
+      magick ${config.theme.${mode}.wallpaper} -blur 14x5 $out
     '';
 in
 {

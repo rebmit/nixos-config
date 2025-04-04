@@ -99,7 +99,7 @@
     isDefault = true;
     search = {
       force = true;
-      default = "Google";
+      default = "google";
     };
     containersForce = true;
     containers = {
@@ -142,10 +142,10 @@
   };
 
   programs.firefox.profiles.default.search.engines = {
-    "Bing".metaData.hidden = true;
-    "eBay".metaData.hidden = true;
-    "Amazon.com".metaData.hidden = true;
-    "Wikipedia (en)".metaData.hidden = true;
+    "bing".metaData.hidden = true;
+    "ebay".metaData.hidden = true;
+    "amazondotcom-us".metaData.hidden = true;
+    "wikipedia".metaData.hidden = true;
     "Nixpkgs" = {
       urls = lib.singleton {
         template = "https://search.nixos.org/packages";
@@ -176,7 +176,7 @@
           "query" = "{searchTerms}";
         };
       };
-      iconUpdateURL = "https://home-manager-options.extranix.com/images/favicon.png";
+      icon = "https://home-manager-options.extranix.com/images/favicon.png";
       definedAliases = [ "@ho" ];
     };
   };

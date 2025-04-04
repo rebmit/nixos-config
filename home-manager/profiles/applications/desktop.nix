@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     # keep-sorted start
     celluloid
+    dmlive
     foliate
     libreoffice-fresh
     loupe
@@ -12,9 +13,7 @@
     seahorse
     tdesktop
     thunderbird
-    virt-manager
-    virt-viewer
-    zotero-beta
+    zotero
     # keep-sorted end
   ];
 
