@@ -1,4 +1,7 @@
 { config, ... }:
+let
+  cfg = config.services.vaultwarden;
+in
 {
   services.vaultwarden = {
     enable = true;
@@ -8,7 +11,6 @@
       DOMAIN = "https://vault.rebmit.moe";
       SIGNUPS_ALLOWED = false;
       EMERGENCY_ACCESS_ALLOWED = false;
-      SENDS_ALLOWED = false;
       ORG_CREATION_USERS = "none";
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = config.ports.vaultwarden;
@@ -18,8 +20,8 @@
   };
 
   services.caddy.virtualHosts."vault.rebmit.moe" = {
-    extraConfig = with config.services.vaultwarden.config; ''
-      reverse_proxy ${ROCKET_ADDRESS}:${toString ROCKET_PORT}
+    extraConfig = ''
+      reverse_proxy ${cfg.config.ROCKET_ADDRESS}:${toString cfg.config.ROCKET_PORT}
     '';
   };
 

@@ -6,28 +6,31 @@
   data,
   ...
 }:
-with lib;
 let
+  inherit (lib.attrsets) mapAttrs' nameValuePair attrNames;
+  inherit (lib.strings) concatMapStringsSep;
+
   aliveInterval = "15";
   aliveCountMax = "4";
-  knownHosts = listToAttrs (
-    flatten (
-      mapAttrsToList (host: hostData: [
-        (nameValuePair "${host}-ed25519" {
-          hostNames = [
-            "${host}.rebmit.link"
-            "${host}.enta.rebmit.link"
-          ];
-          publicKey = hostData.ssh_host_ed25519_key_pub;
-        })
-      ]) data.hosts
-    )
-  );
+
+  knownHosts = mapAttrs' (
+    host: hostData:
+    nameValuePair "${host}-ed25519" {
+      hostNames = [
+        "${host}.rebmit.link"
+        "${host}.enta.rebmit.link"
+      ];
+      publicKey = hostData.ssh_host_ed25519_key_pub;
+    }
+  ) data.hosts;
 in
 {
   services.openssh = {
     enable = true;
-    ports = [ config.ports.ssh ];
+    ports = with config.ports; [
+      ssh
+      ssh-alt
+    ];
     openFirewall = true;
     settings = {
       PermitRootLogin = "prohibit-password";
@@ -46,7 +49,6 @@ in
   };
 
   programs.ssh = {
-    startAgent = true;
     knownHosts = knownHosts;
     extraConfig =
       ''

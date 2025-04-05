@@ -4,6 +4,11 @@
   mylib,
   ...
 }:
+let
+  inherit (lib.modules) mkForce;
+
+  cfg = config.services.ntfy-sh;
+in
 {
   services.ntfy-sh = {
     enable = true;
@@ -16,15 +21,15 @@
   };
 
   systemd.services.ntfy-sh.serviceConfig = mylib.misc.serviceHardened // {
-    AmbientCapabilities = lib.mkForce [ "" ];
-    CapabilityBoundingSet = lib.mkForce [ "" ];
-    DynamicUser = lib.mkForce false;
+    AmbientCapabilities = mkForce [ "" ];
+    CapabilityBoundingSet = mkForce [ "" ];
+    DynamicUser = mkForce false;
   };
 
   services.caddy.virtualHosts."push.rebmit.moe" = {
-    serverAliases = [ "push.rebmit.workers.moe" ];
+    serverAliases = [ "push.workers.moe" ];
     extraConfig = ''
-      reverse_proxy ${config.services.ntfy-sh.settings.listen-http}
+      reverse_proxy ${cfg.settings.listen-http}
     '';
   };
 

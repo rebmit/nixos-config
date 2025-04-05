@@ -158,7 +158,7 @@ in
             name = "ntfy";
             webhook_configs = [
               {
-                url = "https://push.rebmit.workers.moe/alert?tpl=yes&m=${lib.escapeURL ''
+                url = "https://push.workers.moe/alert?tpl=yes&m=${lib.escapeURL ''
                   Alert {{.status}}
                   {{range .alerts}}-----{{range $k,$v := .labels}}
                   {{$k}}={{$v}}{{end}}

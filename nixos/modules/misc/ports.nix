@@ -9,6 +9,7 @@ in
     type = with types; attrsOf port;
     default = {
       # standard ports
+      ssh = 22;
       smtp = 25;
       dns = 53;
       http = 80;
@@ -17,7 +18,7 @@ in
       smtp-submission = 587;
       imap-tls = 993;
       socks = 1080;
-      ssh = 2222;
+      ssh-alt = 2222;
 
       # local ports
       ntfy = 4000;

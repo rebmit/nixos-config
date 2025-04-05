@@ -174,6 +174,16 @@ in
           );
         }
         {
+          domain = "rebmit.workers.moe";
+          acl = [ "he-slave" ];
+          file = pkgs.writeText "db.moe.workers.rebmit" (
+            import ../../../../zones/rebmit.workers.moe.nix {
+              inherit (inputs) dns;
+              inherit lib config;
+            }
+          );
+        }
+        {
           domain = "1.2.e.7.0.a.a.e.0.a.2.ip6.arpa";
           acl = [ "he-slave" ];
           file = pkgs.writeText "db.arpa.ip6.2.a.0.e.a.a.0.7.e.2.1" (
