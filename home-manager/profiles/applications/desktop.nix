@@ -13,20 +13,24 @@
     papers
     seahorse
     tdesktop
-    thunderbird
     zotero
     # keep-sorted end
   ];
 
   preservation.preserveAt."/persist".directories = [
-    ".thunderbird"
     ".zotero"
 
+    ".cache/evolution"
+    ".cache/org.gnome.Evolution"
     ".config/dconf"
+    ".config/evolution"
     ".config/nheko"
-
+    ".local/share/evolution"
+    ".local/share/org.gnome.Evolution"
     ".local/share/nheko"
     ".local/share/TelegramDesktop"
+
+    ".pki/nssdb"
 
     "Zotero"
   ];

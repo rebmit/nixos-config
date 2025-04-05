@@ -6,6 +6,7 @@
     fd
     ffmpeg
     fzf
+    nixd
     numbat
     ripgrep
     # keep-sorted end
