@@ -30,7 +30,7 @@
   }
 
   #workspaces button {
-    padding: 0pt;
+    padding: 5pt;
     background: transparent;
     color: #${base05};
     border-bottom: 2pt solid transparent;

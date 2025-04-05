@@ -4,6 +4,7 @@
     # keep-sorted start
     celluloid
     dmlive
+    evolution
     foliate
     libreoffice-fresh
     loupe

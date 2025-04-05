@@ -6,7 +6,7 @@
     fish
     helix
     preservation
-    theme.catppuccin
+    theme.adwaita
     tmux
     yazi
     # keep-sorted end

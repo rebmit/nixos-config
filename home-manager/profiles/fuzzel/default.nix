@@ -10,7 +10,7 @@ let
     let
       inherit (config.theme.${mode}.base24Theme)
         base00
-        base04
+        base02
         base05
         base08
         base0D
@@ -21,7 +21,7 @@ let
         background = "${base00}dd";
         text = "${base05}ff";
         match = "${base08}ff";
-        selection = "${base04}ff";
+        selection = "${base02}ff";
         selection-text = "${base05}ff";
         selection-match = "${base08}ff";
         border = "${base0D}ff";
@@ -39,8 +39,8 @@ in
         layer = "overlay";
       };
       border = {
-        width = "2";
-        radius = "0";
+        width = "4";
+        radius = "32";
       };
     };
   };
