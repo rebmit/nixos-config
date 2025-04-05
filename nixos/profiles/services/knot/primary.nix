@@ -36,8 +36,8 @@ in
   services.knot = {
     enable = true;
     keyFiles = [
-      "/run/credentials/knot.service/tsig_ddns_conf"
-      "/run/credentials/knot.service/tsig_he_conf"
+      "/run/credentials/knot.service/ddns-tsig-conf"
+      "/run/credentials/knot.service/he-tsig-conf"
     ];
     settings = {
       server = {
@@ -197,40 +197,35 @@ in
     };
   };
 
-  sops.secrets."knot_ddns_tsig_secret" = {
-    opentofu = {
-      enable = true;
-    };
-    restartUnits = [ "knot.service" ];
-  };
-
-  sops.secrets."knot_he_tsig_secret" = {
-    opentofu = {
-      enable = true;
-    };
-    restartUnits = [ "knot.service" ];
-  };
-
-  sops.templates."knot_tsig_ddns_conf".content = ''
-    key:
-    - id: ddns
-      algorithm: hmac-sha256
-      secret: ${config.sops.placeholder."knot_ddns_tsig_secret"}
-  '';
-
-  sops.templates."knot_tsig_he_conf".content = ''
-    key:
-    - id: 1c8fc5fc-41a3-4c83-b663-07828405e2ec
-      algorithm: hmac-sha256
-      secret: ${config.sops.placeholder."knot_he_tsig_secret"}
-  '';
-
   systemd.services.knot.serviceConfig = {
     LoadCredential = [
-      "tsig_ddns_conf:${config.sops.templates."knot_tsig_ddns_conf".path}"
-      "tsig_he_conf:${config.sops.templates."knot_tsig_he_conf".path}"
+      "ddns-tsig-conf:${config.sops.templates.knot-ddns-tsig-conf.path}"
+      "he-tsig-conf:${config.sops.templates.knot-he-tsig-conf.path}"
     ];
   };
+
+  sops.templates.knot-ddns-tsig-conf = {
+    content = ''
+      key:
+      - id: ddns
+        algorithm: hmac-sha256
+        secret: ${config.sops.placeholder.knot-ddns-tsig-secret}
+    '';
+    restartUnits = [ "knot.service" ];
+  };
+
+  sops.templates.knot-he-tsig-conf = {
+    content = ''
+      key:
+      - id: 1c8fc5fc-41a3-4c83-b663-07828405e2ec
+        algorithm: hmac-sha256
+        secret: ${config.sops.placeholder.knot-he-tsig-secret}
+    '';
+    restartUnits = [ "knot.service" ];
+  };
+
+  sops.secrets.knot-ddns-tsig-secret.opentofu.enable = true;
+  sops.secrets.knot-he-tsig-secret.opentofu.enable = true;
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }

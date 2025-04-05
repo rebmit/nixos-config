@@ -19,9 +19,9 @@ let
           type = lib.types.str;
           default =
             if config.opentofu.useHostOutput then
-              ".hosts.value.\"${hostName}\".${config.name}"
+              ".hosts.value.\"${hostName}\".${builtins.replaceStrings [ "-" ] [ "_" ] config.name}"
             else
-              ".${config.name}.value";
+              ".${builtins.replaceStrings [ "-" ] [ "_" ] config.name}.value";
           description = ''
             The path used by jq to extract data from the output of OpenTofu.
           '';

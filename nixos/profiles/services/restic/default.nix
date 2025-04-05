@@ -13,8 +13,8 @@ in
 {
   services.restic.backups.b2 = {
     repository = "b2:${hostData.b2_backup_bucket_name}";
-    environmentFile = config.sops.templates."restic_b2_envs".path;
-    passwordFile = config.sops.secrets."restic_password".path;
+    environmentFile = config.sops.templates.restic-b2-envs.path;
+    passwordFile = config.sops.secrets.restic-password.path;
     initialize = true;
     paths = [ "/persist" ];
     extraBackupArgs = [
@@ -37,7 +37,7 @@ in
 
   systemd.services.restic-backups-b2.serviceConfig.Environment = [ "GOGC=20" ];
 
-  sops.secrets."b2_backup_application_key_id" = {
+  sops.secrets.b2-backup-application-key-id = {
     opentofu = {
       enable = true;
       useHostOutput = true;
@@ -45,7 +45,7 @@ in
     restartUnits = [ "restic-backups-b2.service" ];
   };
 
-  sops.secrets."b2_backup_application_key" = {
+  sops.secrets.b2-backup-application-key = {
     opentofu = {
       enable = true;
       useHostOutput = true;
@@ -53,7 +53,7 @@ in
     restartUnits = [ "restic-backups-b2.service" ];
   };
 
-  sops.secrets."restic_password" = {
+  sops.secrets.restic-password = {
     opentofu = {
       enable = true;
       useHostOutput = true;
@@ -61,9 +61,9 @@ in
     restartUnits = [ "restic-backups-b2.service" ];
   };
 
-  sops.templates."restic_b2_envs".content = ''
-    B2_ACCOUNT_ID="${config.sops.placeholder."b2_backup_application_key_id"}"
-    B2_ACCOUNT_KEY="${config.sops.placeholder."b2_backup_application_key"}"
+  sops.templates.restic-b2-envs.content = ''
+    B2_ACCOUNT_ID="${config.sops.placeholder.b2-backup-application-key-id}"
+    B2_ACCOUNT_KEY="${config.sops.placeholder.b2-backup-application-key}"
   '';
 
   preservation.preserveAt."/persist".directories = singleton {

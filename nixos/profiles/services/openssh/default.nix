@@ -42,7 +42,7 @@ in
     '';
     hostKeys = [
       {
-        inherit (config.sops.secrets."ssh_host_ed25519_key") path;
+        inherit (config.sops.secrets.ssh-host-ed25519-key) path;
         type = "ed25519";
       }
     ];
@@ -65,7 +65,7 @@ in
       '') (attrNames data.hosts);
   };
 
-  sops.secrets."ssh_host_ed25519_key" = {
+  sops.secrets.ssh-host-ed25519-key = {
     opentofu = {
       enable = true;
       useHostOutput = true;

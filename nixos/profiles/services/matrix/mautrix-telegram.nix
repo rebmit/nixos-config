@@ -8,78 +8,9 @@
   ...
 }:
 {
-  sops.secrets."mautrix_telegram_appservice_hs_token" = {
-    opentofu = {
-      enable = true;
-    };
-  };
-
-  sops.secrets."mautrix_telegram_appservice_as_token" = {
-    opentofu = {
-      enable = true;
-    };
-  };
-
-  sops.secrets."synapse/mautrix-telegram-bot-token" = {
-    sopsFile = config.sops.secretFiles.host;
-  };
-
-  sops.templates."mautrix_telegram_appservice_registration" = {
-    content = builtins.toJSON {
-      id = "telegram";
-      namespaces = {
-        aliases = [
-          {
-            exclusive = true;
-            regex = "\\#telegram_.*:rebmit\\.moe";
-          }
-        ];
-        rooms = [ ];
-        users = [
-          {
-            exclusive = true;
-            regex = "@telegram_.*:rebmit\\.moe";
-          }
-          {
-            exclusive = true;
-            regex = "@telegrambot:rebmit\\.moe";
-          }
-        ];
-      };
-      rate_limited = false;
-      sender_localpart = "mautrix-telegram";
-      url = "http://127.0.0.1:${toString config.ports.mautrix-telegram}";
-      as_token = config.sops.placeholder."mautrix_telegram_appservice_as_token";
-      hs_token = config.sops.placeholder."mautrix_telegram_appservice_hs_token";
-      de.sorunome.msc2409.push_ephemeral = true;
-      push_ephemeral = true;
-    };
-    path = "/var/lib/mautrix-telegram/telegram-registration.yaml";
-    owner = config.systemd.services.mautrix-telegram.serviceConfig.User;
-    mode = "0440";
-    restartUnits = [
-      "matrix-synapse.service"
-    ];
-  };
-
-  sops.templates."mautrix_telegram_config" = {
-    content = ''
-      MAUTRIX_TELEGRAM_APPSERVICE_AS_TOKEN=${
-        config.sops.placeholder."mautrix_telegram_appservice_as_token"
-      }
-      MAUTRIX_TELEGRAM_APPSERVICE_HS_TOKEN=${
-        config.sops.placeholder."mautrix_telegram_appservice_hs_token"
-      }
-      MAUTRIX_TELEGRAM_TELEGRAM_BOT_TOKEN=${config.sops.placeholder."synapse/mautrix-telegram-bot-token"}
-    '';
-    restartUnits = [
-      "mautrix-telegram.service"
-    ];
-  };
-
   services.mautrix-telegram = {
     enable = true;
-    environmentFile = config.sops.templates."mautrix_telegram_config".path;
+    environmentFile = config.sops.templates.mautrix-telegram-config.path;
     serviceDependencies = [ config.systemd.services.matrix-synapse.name ];
     settings = {
       homeserver = {
@@ -135,4 +66,59 @@
   };
 
   systemd.services.mautrix-telegram.serviceConfig = mylib.misc.serviceHardened;
+
+  sops.templates.mautrix-telegram-appservice-registration = {
+    path = "/var/lib/mautrix-telegram/telegram-registration.yaml";
+    owner = config.systemd.services.mautrix-telegram.serviceConfig.User;
+    mode = "0440";
+    content = builtins.toJSON {
+      id = "telegram";
+      namespaces = {
+        aliases = [
+          {
+            exclusive = true;
+            regex = "\\#telegram_.*:rebmit\\.moe";
+          }
+        ];
+        rooms = [ ];
+        users = [
+          {
+            exclusive = true;
+            regex = "@telegram_.*:rebmit\\.moe";
+          }
+          {
+            exclusive = true;
+            regex = "@telegrambot:rebmit\\.moe";
+          }
+        ];
+      };
+      rate_limited = false;
+      sender_localpart = "mautrix-telegram";
+      url = "http://127.0.0.1:${toString config.ports.mautrix-telegram}";
+      as_token = config.sops.placeholder.mautrix-telegram-appservice-as-token;
+      hs_token = config.sops.placeholder.mautrix-telegram-appservice-hs-token;
+      de.sorunome.msc2409.push_ephemeral = true;
+      push_ephemeral = true;
+    };
+    restartUnits = [
+      "mautrix-telegram.service"
+      "matrix-synapse.service"
+    ];
+  };
+
+  sops.templates.mautrix-telegram-config = {
+    content = ''
+      MAUTRIX_TELEGRAM_APPSERVICE_AS_TOKEN=${config.sops.placeholder.mautrix-telegram-appservice-as-token}
+      MAUTRIX_TELEGRAM_APPSERVICE_HS_TOKEN=${config.sops.placeholder.mautrix-telegram-appservice-hs-token}
+      MAUTRIX_TELEGRAM_TELEGRAM_BOT_TOKEN=${config.sops.placeholder."synapse/mautrix-telegram-bot-token"}
+    '';
+    restartUnits = [
+      "mautrix-telegram.service"
+    ];
+  };
+
+  sops.secrets.mautrix-telegram-appservice-as-token.opentofu.enable = true;
+  sops.secrets.mautrix-telegram-appservice-hs-token.opentofu.enable = true;
+
+  sops.secrets."synapse/mautrix-telegram-bot-token".sopsFile = config.sops.secretFiles.host;
 }

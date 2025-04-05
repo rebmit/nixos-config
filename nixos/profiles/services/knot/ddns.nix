@@ -18,7 +18,7 @@ in
       knot-dns
     ];
     script = ''
-      knsupdate -k ''${CREDENTIALS_DIRECTORY}/tsig_ddns_key << EOT
+      knsupdate -k ''${CREDENTIALS_DIRECTORY}/ddns-tsig-key << EOT
       server ${builtins.elemAt primary.endpoints_v4 0}
       zone rebmit.link
       origin rebmit.link
@@ -30,7 +30,7 @@ in
     serviceConfig = mylib.misc.serviceHardened // {
       Type = "oneshot";
       DynamicUser = true;
-      LoadCredential = [ "tsig_ddns_key:${config.sops.templates."knot_tsig_ddns_key".path}" ];
+      LoadCredential = [ "ddns-tsig-key:${config.sops.templates.knot-ddns-tsig-key.path}" ];
     };
   };
 
@@ -41,14 +41,12 @@ in
     wantedBy = [ "timers.target" ];
   };
 
-  sops.secrets."knot_ddns_tsig_secret" = {
+  sops.secrets.knot-ddns-tsig-secret = {
     opentofu = {
       enable = true;
     };
     restartUnits = [ "knot-ddns.service" ];
   };
 
-  sops.templates."knot_tsig_ddns_key".content = "hmac-sha256:ddns:${
-    config.sops.placeholder."knot_ddns_tsig_secret"
-  }";
+  sops.templates.knot-ddns-tsig-key.content = "hmac-sha256:ddns:${config.sops.placeholder.knot-ddns-tsig-secret}";
 }

@@ -10,11 +10,6 @@ let
   cfg = config.services.enthalpy;
 in
 {
-  sops.secrets."enthalpy_node_private_key_pem".opentofu = {
-    enable = true;
-    useHostOutput = true;
-  };
-
   services.enthalpy = {
     enable = true;
     entity = "rebmit";
@@ -32,7 +27,7 @@ in
           addressFamily = "ip6";
         }
       ];
-      privateKeyPath = config.sops.secrets."enthalpy_node_private_key_pem".path;
+      privateKeyPath = config.sops.secrets.enthalpy-node-private-key-pem.path;
     };
 
     warp.prefixes = [
@@ -52,5 +47,10 @@ in
       "2a00:1450::/32"
       "2c0f:fb50::/32"
     ];
+  };
+
+  sops.secrets.enthalpy-node-private-key-pem.opentofu = {
+    enable = true;
+    useHostOutput = true;
   };
 }
