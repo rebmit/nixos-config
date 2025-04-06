@@ -58,6 +58,7 @@ in
     retentionTime = "7d";
     globalConfig = {
       scrape_interval = "1m";
+      scrape_timeout = "30s";
       evaluation_interval = "1m";
     };
     scrapeConfigs = [
@@ -106,15 +107,16 @@ in
         scheme = "http";
         metrics_path = "/probe";
         params = {
-          module = [ "http_2xx" ];
+          module = [ "http" ];
         };
         static_configs = [
           {
             targets = [
-              "https://rebmit.moe"
-              "https://chat.rebmit.moe"
-              "https://idp.rebmit.moe"
-              "https://rss.rebmit.moe"
+              "https://rebmit.moe/.well-known/matrix/server"
+              "https://chat.rebmit.moe/_matrix/federation/v1/version"
+              "https://git.rebmit.moe/api/v1/version"
+              "https://idp.rebmit.moe/realms/rebmit/.well-known/openid-configuration"
+              "https://rss.rebmit.moe/healthcheck"
             ];
           }
         ];
@@ -143,6 +145,11 @@ in
               {
                 alert = "UnitFailed";
                 expr = ''node_systemd_unit_state{state="failed"} == 1'';
+              }
+              {
+                alert = "HttpFailure";
+                expr = ''probe_http_status_code != 200'';
+                for = "5m";
               }
               {
                 alert = "ZoneStale";
@@ -211,7 +218,7 @@ in
     port = config.ports.prometheus-blackbox-exporter;
     configFile = (pkgs.formats.yaml { }).generate "config.yml" {
       modules = {
-        http_2xx = {
+        http = {
           prober = "http";
         };
         "dns_soa/rebmit.moe" = {
