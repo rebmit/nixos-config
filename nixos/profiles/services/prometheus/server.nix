@@ -8,11 +8,19 @@
   ...
 }:
 let
+  inherit (lib.lists) singleton;
+  inherit (data.nameservers) primary secondary;
+
   cfg = config.services.prometheus;
+
+  nameservers = [
+    "ns1.he.net"
+    "ns2.he.net"
+    "reisen.any.rebmit.link"
+  ] ++ map (ns: "${ns}.rebmit.link") (secondary ++ singleton primary);
+
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) data.hosts;
   targets = lib.mapAttrsToList (name: _value: "${name}.rebmit.link") publicHosts;
-  primaryNameserver = "${data.nameservers.primary}.rebmit.link";
-  nameservers = map (ns: "${ns}.rebmit.link") data.nameservers.secondary;
   relabel_configs = [
     {
       source_labels = [ "__address__" ];
@@ -74,11 +82,21 @@ in
         static_configs = [ { inherit targets; } ];
       }
       {
-        job_name = "dns";
+        job_name = "dns/rebmit.moe";
         scheme = "http";
         metrics_path = "/probe";
         params = {
-          module = [ "dns_soa" ];
+          module = [ "dns_soa/rebmit.moe" ];
+        };
+        static_configs = [ { targets = nameservers; } ];
+        inherit relabel_configs;
+      }
+      {
+        job_name = "dns/rebmit.link";
+        scheme = "http";
+        metrics_path = "/probe";
+        params = {
+          module = [ "dns_soa/rebmit.link" ];
         };
         static_configs = [ { targets = nameservers; } ];
         inherit relabel_configs;
@@ -128,8 +146,8 @@ in
               }
               {
                 alert = "ZoneStale";
-                expr = ''probe_dns_serial{instance="${primaryNameserver}"} != ignoring(instance) group_right() probe_dns_serial'';
-                for = "5m";
+                expr = ''probe_dns_serial{instance="${primary}.rebmit.link"} != ignoring(instance) group_right() probe_dns_serial'';
+                for = "10m";
               }
             ];
           }
@@ -196,10 +214,17 @@ in
         http_2xx = {
           prober = "http";
         };
-        dns_soa = {
+        "dns_soa/rebmit.moe" = {
           prober = "dns";
           dns = {
             query_name = "rebmit.moe";
+            query_type = "SOA";
+          };
+        };
+        "dns_soa/rebmit.link" = {
+          prober = "dns";
+          dns = {
+            query_name = "rebmit.link";
             query_type = "SOA";
           };
         };
