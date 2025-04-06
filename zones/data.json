@@ -21,6 +21,7 @@
       "endpoints_v6": [],
       "enthalpy_node_id": 2595,
       "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:a230::/60",
       "labels": ["enthalpy/edge"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDVLnLJQLiSquUSKC1aH9+mZuCHJex5B73BGY4TNDlxv"
     },
@@ -31,6 +32,7 @@
       "endpoints_v6": ["2a05:901:6:1014::1"],
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
+      "enthalpy_node_prefix": null,
       "labels": [],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+xuD9lrZK6zhaeSGO25O6YQR92UVjv2ovhz6zdPD8w"
     },
@@ -41,6 +43,7 @@
       "endpoints_v6": ["2a05:901:6:1015::1"],
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
+      "enthalpy_node_prefix": null,
       "labels": [],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaa8stwLcjYHdzsz5SpUzLQySDqKlWXcGdQ6M52jRNh"
     },
@@ -51,6 +54,7 @@
       "endpoints_v6": [],
       "enthalpy_node_id": 3449,
       "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:d790::/60",
       "labels": ["enthalpy/edge"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBdcVQak4mnur3LpBd9TMWeOdh8LBeWkNQKQtNmK03x"
     },
@@ -61,6 +65,7 @@
       "endpoints_v6": [],
       "enthalpy_node_id": 1394,
       "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:5720::/60",
       "labels": ["enthalpy/edge"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6aUERU0Suxg3ycqs1dCfcnvLkOipQN0NBeUKmqProl"
     },
@@ -71,6 +76,7 @@
       "endpoints_v6": ["2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
       "enthalpy_node_id": 908,
       "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:38c0::/60",
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQrE6Kza1z2rJWtRuHqUNv58b6wPSwqQz4hAke/z+9F"
     },
@@ -81,6 +87,7 @@
       "endpoints_v6": ["2001:19f0:7002:0f85:5400:05ff:fe35:27dc"],
       "enthalpy_node_id": 1414,
       "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:5860::/60",
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkqmL+uYIEuN4rNClXuZN7xEnZ8CsZyiNpoVHRprB1i"
     },
@@ -91,6 +98,7 @@
       "endpoints_v6": ["2001:19f0:8001:09c8:5400:05ff:fe35:27dd"],
       "enthalpy_node_id": 1720,
       "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:6b80::/60",
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjEgqwwhXxVAGXzz0sNuUs5TmLct+qNR/Xe/bcpmn4t"
     },
@@ -101,6 +109,7 @@
       "endpoints_v6": ["2401:c080:1400:1674:5400:05ff:fe35:ea5e"],
       "enthalpy_node_id": 596,
       "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:2540::/60",
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1BhcBQvjVZH/ItFXLVuxUblvv/v7LU6qzu07BCWHfH"
     },
@@ -111,6 +120,7 @@
       "endpoints_v6": ["2a0d:f302:137:fd9c::1"],
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
+      "enthalpy_node_prefix": null,
       "labels": [],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDMJ1nNhJTdBjPZKTcxZv9uqdNXjysc/v+MuSobZtTX"
     },
@@ -121,6 +131,7 @@
       "endpoints_v6": ["2a0d:f302:102:8e05::1"],
       "enthalpy_node_id": null,
       "enthalpy_node_organization": null,
+      "enthalpy_node_prefix": null,
       "labels": ["dns/primary"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFI0Y8Hwaoz9fx1MAn+BLWpTxWeoIzwXPLUp3xCcWXN"
     }

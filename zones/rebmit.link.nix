@@ -1,9 +1,17 @@
-{ dns, lib, ... }:
+{
+  dns,
+  lib,
+  mylib,
+  ...
+}:
 with dns.lib.combinators;
 let
+  inherit (mylib.network) cidr;
+
   common = import ./common.nix;
   inherit (common) hosts;
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) hosts;
+  enthalpyHosts = lib.filterAttrs (_name: value: value.enthalpy_node_prefix != null) hosts;
 in
 dns.lib.toString "rebmit.link" {
   inherit (common)
@@ -42,6 +50,21 @@ dns.lib.toString "rebmit.link" {
             );
           }
         ) publicHosts
+        ++ lib.mapAttrsToList (
+          name: value:
+          lib.nameValuePair "${name}.enta" {
+            AAAA = [ (cidr.host 1 value.enthalpy_node_prefix) ];
+            HTTPS = lib.singleton {
+              svcPriority = 1;
+              targetName = ".";
+              alpn = [
+                "h3"
+                "h2"
+              ];
+              ipv6hint = [ (cidr.host 1 value.enthalpy_node_prefix) ];
+            };
+          }
+        ) enthalpyHosts
         ++ lib.singleton (
           lib.nameValuePair "reisen.any" {
             AAAA = [ "2a0e:aa07:e210:100::1" ];
