@@ -147,7 +147,7 @@ in
               {
                 alert = "ZoneStale";
                 expr = ''probe_dns_serial{instance="${primary}.rebmit.link"} != ignoring(instance) group_right() probe_dns_serial'';
-                for = "10m";
+                for = "30m";
               }
             ];
           }
