@@ -377,15 +377,15 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1743583204,
-        "narHash": "sha256-F7n4+KOIfWrwoQjXrL2wD9RhFYLs2/GGe/MQY1sSdlE=",
-        "owner": "NixOS",
+        "lastModified": 1743947450,
+        "narHash": "sha256-bt8tc7rUoVnJrjxI6/kLIIO0Gff+SOIYUUppJ7qtLOs=",
+        "owner": "rebmit",
         "repo": "nixpkgs",
-        "rev": "2c8d3f48d33929642c1c12cd243df4cc7d2ce434",
+        "rev": "2e3ce1ac019bf70675d64a76ce18df90ffb87ab9",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "rebmit",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -407,11 +407,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1743774922,
-        "narHash": "sha256-KY8P9ilN2Im665TMxeauYpy4Aeull3rNZUuAz1g/wWU=",
-        "rev": "8cbf31ef179f889ef666f9897489a47138895b46",
+        "lastModified": 1743947617,
+        "narHash": "sha256-gALUbwxlsNjQTEC07Bb376nCgkLqX+uW67774ZGGvs8=",
+        "rev": "d5c8473eaacdc696a732c07c333ffe4f835ec4e3",
         "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/8cbf31ef179f889ef666f9897489a47138895b46.tar.gz"
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/d5c8473eaacdc696a732c07c333ffe4f835ec4e3.tar.gz"
       },
       "original": {
         "type": "tarball",

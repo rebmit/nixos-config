@@ -11,4 +11,6 @@
     ripgrep
     # keep-sorted end
   ];
+
+  services.ssh-agent.enable = true;
 }
