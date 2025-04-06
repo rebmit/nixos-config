@@ -12,6 +12,9 @@ in
 {
   services.knot = {
     enable = true;
+    keyFiles = [
+      "/run/credentials/knot.service/reisen-tsig-conf"
+    ];
     settings = {
       server = {
         async-start = true;
@@ -33,6 +36,7 @@ in
       remote = [
         {
           id = "transfer";
+          key = "e7816061-ec90-489c-8f3b-18206fa2d3d2";
           address = [
             (builtins.elemAt primary.endpoints_v4 0)
             (builtins.elemAt primary.endpoints_v6 0)
@@ -95,6 +99,24 @@ in
           }
         ''
       );
+
+  systemd.services.knot.serviceConfig = {
+    LoadCredential = [
+      "reisen-tsig-conf:${config.sops.templates.knot-reisen-tsig-conf.path}"
+    ];
+  };
+
+  sops.templates.knot-reisen-tsig-conf = {
+    content = ''
+      key:
+      - id: e7816061-ec90-489c-8f3b-18206fa2d3d2
+        algorithm: hmac-sha256
+        secret: ${config.sops.placeholder.knot-reisen-tsig-secret}
+    '';
+    restartUnits = [ "knot.service" ];
+  };
+
+  sops.secrets.knot-reisen-tsig-secret.opentofu.enable = true;
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }

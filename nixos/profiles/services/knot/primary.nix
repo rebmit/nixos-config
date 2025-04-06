@@ -15,6 +15,7 @@ let
       name:
       lib.nameValuePair name {
         id = name;
+        key = "e7816061-ec90-489c-8f3b-18206fa2d3d2";
         address = [
           (builtins.elemAt data.hosts.${name}.endpoints_v4 0)
           (builtins.elemAt data.hosts.${name}.endpoints_v6 0)
@@ -39,6 +40,7 @@ in
     keyFiles = [
       "/run/credentials/knot.service/ddns-tsig-conf"
       "/run/credentials/knot.service/he-tsig-conf"
+      "/run/credentials/knot.service/reisen-tsig-conf"
     ];
     settings = {
       server = {
@@ -202,6 +204,7 @@ in
     LoadCredential = [
       "ddns-tsig-conf:${config.sops.templates.knot-ddns-tsig-conf.path}"
       "he-tsig-conf:${config.sops.templates.knot-he-tsig-conf.path}"
+      "reisen-tsig-conf:${config.sops.templates.knot-reisen-tsig-conf.path}"
     ];
   };
 
@@ -225,8 +228,19 @@ in
     restartUnits = [ "knot.service" ];
   };
 
+  sops.templates.knot-reisen-tsig-conf = {
+    content = ''
+      key:
+      - id: e7816061-ec90-489c-8f3b-18206fa2d3d2
+        algorithm: hmac-sha256
+        secret: ${config.sops.placeholder.knot-reisen-tsig-secret}
+    '';
+    restartUnits = [ "knot.service" ];
+  };
+
   sops.secrets.knot-ddns-tsig-secret.opentofu.enable = true;
   sops.secrets.knot-he-tsig-secret.opentofu.enable = true;
+  sops.secrets.knot-reisen-tsig-secret.opentofu.enable = true;
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }
