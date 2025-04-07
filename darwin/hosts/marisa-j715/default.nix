@@ -12,6 +12,7 @@
     htop
     openssh
     utm
+    zotero
   ];
 
   launchd.user.agents.ssh-agent = {
@@ -33,11 +34,10 @@
       ...
     }:
     {
-      imports =
+      imports = [
         suites.workstation
-        ++ (with profiles; [
-          kitty
-        ]);
+        profiles.kitty
+      ];
 
       programs.git = {
         userName = "Lu Wang";
@@ -48,6 +48,8 @@
       programs.kitty.font.size = lib.mkForce 16.0;
 
       programs.helix.settings.theme = lib.mkForce "catppuccin_mocha";
+
+      services.ssh-agent.enable = lib.mkForce false;
 
       xdg.configFile."kitty/theme.conf".source =
         lib.mkForce "${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf";
@@ -70,7 +72,13 @@
 
   users.knownUsers = [ "rebmit" ];
 
-  nix.settings.experimental-features = "nix-command flakes";
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+    trusted-users = [
+      "root"
+      "@admin"
+    ];
+  };
 
   programs.fish.enable = true;
 
