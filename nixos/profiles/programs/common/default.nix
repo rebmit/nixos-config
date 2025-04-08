@@ -40,12 +40,19 @@ in
     with pkgs;
     [
       # keep-sorted start
-      coreutils
+      attr
+      bashInteractive
+      coreutils-full
+      cpio
+      diffutils
       fd
       file
       findutils
       gawk
+      getconf
+      getent
       gnugrep
+      gnupatch
       gnused
       gnutar
       jq
@@ -54,8 +61,10 @@ in
       nix-tree
       openssl
       p7zip
+      procps
       psmisc
       ripgrep
+      su
       tree
       unar
       unzipNLS

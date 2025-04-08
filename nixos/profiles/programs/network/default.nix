@@ -13,6 +13,7 @@
     ipcalc
     iperf3
     knot-dns
+    netcat
     nmap
     rsync
     socat

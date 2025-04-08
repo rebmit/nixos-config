@@ -377,11 +377,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1743947450,
-        "narHash": "sha256-bt8tc7rUoVnJrjxI6/kLIIO0Gff+SOIYUUppJ7qtLOs=",
+        "lastModified": 1744082711,
+        "narHash": "sha256-Dw2E+cuddSaePKPpe/bwkNmU9ZZXaSBCjelsSflGMt8=",
         "owner": "rebmit",
         "repo": "nixpkgs",
-        "rev": "2e3ce1ac019bf70675d64a76ce18df90ffb87ab9",
+        "rev": "2dc15c9a4cd6d19c16bde5e346caa60166a31079",
         "type": "github"
       },
       "original": {
@@ -400,10 +400,11 @@
         "gitignore-nix": "gitignore-nix",
         "haumea": "haumea",
         "nixpkgs": [
-          "rebmit",
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
           "nixpkgs-unstable"
         ],
-        "nixpkgs-unstable": "nixpkgs-unstable",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -440,15 +441,11 @@
         "niri-flake": "niri-flake",
         "nix-darwin": "nix-darwin",
         "nixpkgs": [
-          "rebmit",
-          "nixpkgs"
+          "nixpkgs-unstable"
         ],
         "nixpkgs-firefox-darwin": "nixpkgs-firefox-darwin",
         "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",
-        "nixpkgs-unstable": [
-          "rebmit",
-          "nixpkgs-unstable"
-        ],
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "rebmit": "rebmit",
         "sops-nix": "sops-nix",
         "treefmt-nix": [

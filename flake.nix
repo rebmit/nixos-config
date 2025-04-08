@@ -20,8 +20,8 @@
 
     # nixpkgs
 
-    nixpkgs.follows = "rebmit/nixpkgs";
-    nixpkgs-unstable.follows = "rebmit/nixpkgs-unstable";
+    nixpkgs.follows = "nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:rebmit/nixpkgs/nixos-unstable";
 
     # flake modules
 
@@ -69,7 +69,11 @@
 
     # libraries
 
-    rebmit.url = "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz";
+    rebmit = {
+      url = "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+    };
     enthalpy = {
       url = "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz";
       inputs.rebmit.follows = "rebmit";
