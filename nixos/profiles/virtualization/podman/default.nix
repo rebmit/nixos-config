@@ -1,4 +1,7 @@
-{ ... }:
+{ lib, ... }:
+let
+  inherit (lib.modules) mkForce;
+in
 {
   virtualisation.oci-containers.backend = "podman";
 
@@ -12,4 +15,7 @@
     };
     defaultNetwork.settings.dns_enabled = false;
   };
+
+  # TODO: remove this workaround
+  system.etc.overlay.mutable = mkForce true;
 }
