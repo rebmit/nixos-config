@@ -13,6 +13,12 @@
     openssh
     utm
     zotero
+    (writeShellApplication {
+      name = "nixos";
+      text = ''
+        ssh -t rebmit@nixos systemd-run --user --pipe --pty --same-dir --wait -S
+      '';
+    })
   ];
 
   launchd.user.agents.ssh-agent = {
