@@ -10,7 +10,7 @@ terraform {
       source = "hashicorp/random"
     }
     b2 = {
-      source = "registry.terraform.io/backblaze/b2"
+      source = "backblaze/b2"
     }
     vultr = {
       source = "vultr/vultr"
