@@ -98,11 +98,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742839291,
-        "narHash": "sha256-EobUdWtUgkX/EaDpHApbVTGQoqliVX2tQnPXeeZJTrs=",
-        "rev": "a9de7ae5d88f84c2a5cfb99f7f7f8176d4c6b05c",
+        "lastModified": 1744392089,
+        "narHash": "sha256-J+k/UvyDWDqUdpwLnutXtJ7syKqqIdq/vsZphLBndDs=",
+        "rev": "d6773c2a2d9d89520d51bac8cf4860dac2f1221d",
         "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/enthalpy/archive/a9de7ae5d88f84c2a5cfb99f7f7f8176d4c6b05c.tar.gz"
+        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/enthalpy/archive/d6773c2a2d9d89520d51bac8cf4860dac2f1221d.tar.gz"
       },
       "original": {
         "type": "tarball",

@@ -12,7 +12,8 @@
 }:
 let
   inherit (lib.modules) mkDefault mkMerge;
-  inherit (lib.lists) singleton optional;
+  inherit (lib.lists) singleton optional fold;
+  inherit (lib.attrsets) recursiveUpdate mapAttrsToList;
   inherit (mylib.path) buildModuleList rakeLeaves;
   inherit (config.passthru) homeSpecialArgs homeCommonModules;
 
@@ -84,6 +85,15 @@ let
           ];
       };
     };
+
+  getHostToplevel =
+    name: cfg:
+    let
+      inherit (cfg.pkgs.stdenv.hostPlatform) system;
+    in
+    {
+      "${system}"."nixos-system-${name}" = cfg.config.system.build.toplevel;
+    };
 in
 {
   passthru = {
@@ -152,4 +162,6 @@ in
       system = "x86_64-linux";
     })
   ];
+
+  flake.checks = fold recursiveUpdate { } (mapAttrsToList getHostToplevel self.nixosConfigurations);
 }
