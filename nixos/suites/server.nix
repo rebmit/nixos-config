@@ -2,13 +2,13 @@
   profiles,
   suites,
   lib,
-  hostData,
+  host,
   ...
 }:
 let
   inherit (lib.lists) elem optionals;
 
-  inherit (hostData) labels;
+  inherit (host) labels;
 in
 {
   imports =

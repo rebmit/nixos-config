@@ -1,5 +1,5 @@
 {
-  hostData,
+  host,
   config,
   mylib,
   ...
@@ -13,10 +13,10 @@ in
   services.enthalpy = {
     enable = true;
     entity = "rebmit";
-    prefix = cidr.subnet (60 - cidr.length cfg.network) hostData.enthalpy_node_id cfg.network;
+    prefix = cidr.subnet (60 - cidr.length cfg.network) host.enthalpy_node_id cfg.network;
 
     ipsec = {
-      organization = hostData.enthalpy_node_organization;
+      organization = host.enthalpy_node_organization;
       endpoints = [
         {
           serialNumber = "0";

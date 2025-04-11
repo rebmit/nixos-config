@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 let
   overlays = [
     inputs.rebmit.overlays.default
@@ -24,13 +21,17 @@ in
 {
   perSystem =
     { lib, ... }:
+    let
+      inherit (lib.lists) elem;
+      inherit (lib.strings) getName;
+    in
     {
       nixpkgs = {
         config = {
           allowUnfree = false;
           allowUnfreePredicate =
             p:
-            builtins.elem (lib.getName p) [
+            elem (getName p) [
               # keep-sorted start
               # keep-sorted end
             ];
@@ -38,7 +39,7 @@ in
           allowNonSource = false;
           allowNonSourcePredicate =
             p:
-            builtins.elem (lib.getName p) [
+            elem (getName p) [
               # keep-sorted start
               "Microsoft.AspNetCore.App.Ref"
               "Microsoft.AspNetCore.App.Runtime.linux-arm64"

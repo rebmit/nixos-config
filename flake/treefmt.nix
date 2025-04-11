@@ -1,10 +1,11 @@
 {
   perSystem =
-    {
-      config,
-      lib,
-      ...
-    }:
+    { config, lib, ... }:
+    let
+      inherit (lib.modules) mkForce;
+      inherit (lib.lists) singleton;
+      inherit (lib.meta) getExe;
+    in
     {
       treefmt = {
         projectRootFile = "flake.nix";
@@ -17,18 +18,18 @@
         };
         settings.formatter = {
           keep-sorted = {
-            includes = lib.mkForce [ "*.nix" ];
+            includes = mkForce [ "*.nix" ];
           };
         };
       };
 
-      devshells.default.packages = lib.singleton config.treefmt.build.wrapper;
+      devshells.default.packages = singleton config.treefmt.build.wrapper;
 
       pre-commit.settings.hooks = {
         treefmt = {
           enable = true;
           name = "treefmt";
-          entry = lib.getExe config.treefmt.build.wrapper;
+          entry = getExe config.treefmt.build.wrapper;
           pass_filenames = false;
         };
       };

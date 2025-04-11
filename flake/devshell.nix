@@ -2,10 +2,13 @@
   perSystem =
     {
       config,
-      pkgs,
       lib,
+      pkgs,
       ...
     }:
+    let
+      inherit (lib.attrsets) nameValuePair;
+    in
     {
       devshells.default = {
         packages = with pkgs; [
@@ -23,7 +26,7 @@
           ))
         ];
         env = [
-          (lib.nameValuePair "DEVSHELL_NO_MOTD" 1)
+          (nameValuePair "DEVSHELL_NO_MOTD" 1)
         ];
         devshell.startup.pre-commit-hook.text = config.pre-commit.installationScript;
       };

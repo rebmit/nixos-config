@@ -2,16 +2,27 @@
   description = "a nixos configuration collection by rebmit";
 
   outputs =
-    inputs@{ flake-parts, rebmit, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      inherit (rebmit.lib) systems;
-      imports = [
-        inputs.devshell.flakeModule
-        inputs.git-hooks-nix.flakeModule
-        inputs.treefmt-nix.flakeModule
-        inputs.rebmit.flakeModule
-      ] ++ rebmit.lib.path.buildModuleList ./flake;
-    };
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      let
+        inherit (lib.strings) fromJSON;
+        inherit (lib.trivial) readFile;
+
+        data = fromJSON (readFile ./zones/data.json);
+        mylib = inputs.rebmit.lib;
+      in
+      {
+        _module.args = { inherit data mylib; };
+        inherit (mylib) systems;
+        imports = [
+          inputs.devshell.flakeModule
+          inputs.git-hooks-nix.flakeModule
+          inputs.treefmt-nix.flakeModule
+          inputs.rebmit.flakeModule
+        ] ++ mylib.path.buildModuleList ./flake;
+      }
+    );
 
   inputs = {
     # flake-parts

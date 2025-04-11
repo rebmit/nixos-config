@@ -1,4 +1,4 @@
-{ hostData, ... }:
+{ host, ... }:
 {
   systemd.network = {
     enable = true;
@@ -13,7 +13,7 @@
       "30-ens18" = {
         matchConfig.Name = "ens18";
         networkConfig = {
-          Address = hostData.endpoints;
+          Address = host.endpoints;
           DHCP = false;
           IPv6AcceptRA = false;
         };

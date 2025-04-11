@@ -4,7 +4,7 @@
 {
   config,
   lib,
-  hostData,
+  host,
   ...
 }:
 let
@@ -12,7 +12,7 @@ let
 in
 {
   services.restic.backups.b2 = {
-    repository = "b2:${hostData.b2_backup_bucket_name}";
+    repository = "b2:${host.b2_backup_bucket_name}";
     environmentFile = config.sops.templates.restic-b2-envs.path;
     passwordFile = config.sops.secrets.restic-password.path;
     initialize = true;
