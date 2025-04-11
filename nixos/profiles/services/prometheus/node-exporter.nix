@@ -1,16 +1,10 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/metrics/default.nix (MIT License)
 { config, ... }:
+let
+  cfg = config.services.prometheus.exporters.node;
+in
 {
-  sops.secrets."prometheus/metrics" = {
-    sopsFile = config.sops.secretFiles.get "common.yaml";
-    restartUnits = [ "caddy.service" ];
-  };
-
-  systemd.services.caddy.serviceConfig = {
-    EnvironmentFile = [ config.sops.secrets."prometheus/metrics".path ];
-  };
-
   services.prometheus.exporters.node = {
     enable = true;
     listenAddress = "127.0.0.1";
@@ -19,13 +13,17 @@
     disabledCollectors = [ "arp" ];
   };
 
+  systemd.services.caddy.serviceConfig = {
+    EnvironmentFile = [ config.sops.secrets."prometheus/metrics".path ];
+  };
+
   services.caddy.virtualHosts."${config.networking.fqdn}" = {
-    extraConfig = with config.services.prometheus.exporters.node; ''
+    extraConfig = ''
       route /metrics {
         basic_auth {
           prometheus {$PROM_PASSWD}
         }
-        reverse_proxy ${listenAddress}:${toString port}
+        reverse_proxy ${cfg.listenAddress}:${toString cfg.port}
       }
 
       route /caddy {
@@ -35,5 +33,10 @@
         metrics
       }
     '';
+  };
+
+  sops.secrets."prometheus/metrics" = {
+    sopsFile = config.sops.secretFiles.get "common.yaml";
+    restartUnits = [ "caddy.service" ];
   };
 }

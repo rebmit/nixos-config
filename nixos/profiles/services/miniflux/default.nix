@@ -1,15 +1,8 @@
 { config, ... }:
+let
+  cfg = config.services.miniflux;
+in
 {
-  sops.secrets."miniflux/oidc-client-secret" = {
-    sopsFile = config.sops.secretFiles.host;
-  };
-
-  systemd.services.miniflux.serviceConfig = {
-    LoadCredential = [
-      "oidc-client-secret:${config.sops.secrets."miniflux/oidc-client-secret".path}"
-    ];
-  };
-
   services.miniflux = {
     enable = true;
     config = rec {
@@ -26,9 +19,19 @@
     };
   };
 
+  systemd.services.miniflux.serviceConfig = {
+    LoadCredential = [
+      "oidc-client-secret:${config.sops.secrets."miniflux/oidc-client-secret".path}"
+    ];
+  };
+
   services.caddy.virtualHosts."rss.rebmit.moe" = {
     extraConfig = ''
-      reverse_proxy ${config.services.miniflux.config.LISTEN_ADDR}
+      reverse_proxy ${cfg.config.LISTEN_ADDR}
     '';
+  };
+
+  sops.secrets."miniflux/oidc-client-secret" = {
+    sopsFile = config.sops.secretFiles.host;
   };
 }

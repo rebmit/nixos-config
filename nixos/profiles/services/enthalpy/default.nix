@@ -1,19 +1,9 @@
-{
-  host,
-  config,
-  mylib,
-  ...
-}:
-let
-  inherit (mylib.network) cidr;
-
-  cfg = config.services.enthalpy;
-in
+{ config, host, ... }:
 {
   services.enthalpy = {
     enable = true;
     entity = "rebmit";
-    prefix = cidr.subnet (60 - cidr.length cfg.network) host.enthalpy_node_id cfg.network;
+    prefix = host.enthalpy_node_prefix;
 
     ipsec = {
       organization = host.enthalpy_node_organization;

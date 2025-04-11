@@ -12,6 +12,7 @@ let
   inherit (data.nameservers) primary secondary;
 
   cfg = config.services.prometheus;
+  blackboxCfg = config.services.prometheus.exporters.blackbox;
 
   nameservers = [
     "ns1.he.net"
@@ -32,24 +33,11 @@ let
     }
     {
       target_label = "__address__";
-      replacement =
-        with config.services.prometheus.exporters.blackbox;
-        "${listenAddress}:${toString port}";
+      replacement = "${blackboxCfg.listenAddress}:${toString blackboxCfg.port}";
     }
   ];
 in
 {
-  sops.secrets."prom/password" = {
-    sopsFile = config.sops.secretFiles.host;
-    owner = config.systemd.services.prometheus.serviceConfig.User;
-    restartUnits = [ "prometheus.service" ];
-  };
-
-  sops.secrets."prom/alertmanager-ntfy" = {
-    sopsFile = config.sops.secretFiles.host;
-    restartUnits = [ "alertmanager.service" ];
-  };
-
   services.prometheus = {
     enable = true;
     webExternalUrl = "https://prom.rebmit.moe";
@@ -240,9 +228,20 @@ in
   };
 
   services.caddy.virtualHosts."prom.rebmit.moe" = {
-    extraConfig = with config.services.prometheus; ''
-      reverse_proxy ${listenAddress}:${toString port}
+    extraConfig = ''
+      reverse_proxy ${cfg.listenAddress}:${toString cfg.port}
     '';
+  };
+
+  sops.secrets."prom/password" = {
+    sopsFile = config.sops.secretFiles.host;
+    owner = config.systemd.services.prometheus.serviceConfig.User;
+    restartUnits = [ "prometheus.service" ];
+  };
+
+  sops.secrets."prom/alertmanager-ntfy" = {
+    sopsFile = config.sops.secretFiles.host;
+    restartUnits = [ "alertmanager.service" ];
   };
 
   preservation.preserveAt."/persist".directories = [

@@ -1,5 +1,7 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
+  inherit (lib.modules) mkForce;
+
   cfg = config.services.vaultwarden;
 in
 {
@@ -18,6 +20,13 @@ in
       ENABLE_WEBSOCKET = false;
     };
   };
+
+  systemd.services.backup-vaultwarden.serviceConfig = {
+    StateDirectory = "backup/vaultwarden";
+    StateDirectoryMode = "0700";
+  };
+
+  systemd.tmpfiles.settings."10-vaultwarden" = mkForce { };
 
   services.caddy.virtualHosts."vault.rebmit.moe" = {
     extraConfig = ''

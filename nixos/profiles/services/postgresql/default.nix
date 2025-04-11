@@ -49,14 +49,14 @@ in
     backupAll = true;
   };
 
+  systemd.services.postgresqlBackup.serviceConfig = {
+    StateDirectory = "backup/postgresql";
+    StateDirectoryMode = "0700";
+  };
+
   preservation.preserveAt."/persist".directories = [
-    { directory = "/var/lib/postgresql"; }
-    {
-      directory = config.services.postgresqlBackup.location;
-      mode = "0700";
-      user = "postgres";
-      group = "postgres";
-    }
+    "/var/lib/postgresql"
+    config.services.postgresqlBackup.location
   ];
 
   systemd.services."restic-backups-b2" = {

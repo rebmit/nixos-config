@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  cfg = config.services.forgejo;
+in
 {
   services.forgejo = {
     enable = true;
@@ -45,8 +48,8 @@
   users.groups.git = { };
 
   services.caddy.virtualHosts."git.rebmit.moe" = {
-    extraConfig = with config.services.forgejo.settings.server; ''
-      reverse_proxy ${HTTP_ADDR}:${toString HTTP_PORT}
+    extraConfig = ''
+      reverse_proxy ${cfg.settings.server.HTTP_ADDR}:${toString cfg.settings.server.HTTP_PORT}
     '';
   };
 
