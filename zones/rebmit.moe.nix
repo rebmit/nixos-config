@@ -57,9 +57,9 @@ dns.lib.toString "rebmit.moe" {
     git.CNAME = [ "suwako-vie0.rebmit.link." ];
     idp.CNAME = [ "suwako-vie0.rebmit.link." ];
     net.CNAME = [ "suwako-vie0.rebmit.link." ];
-    prom.CNAME = [ "kanako-ham1.rebmit.link." ];
-    push.CNAME = [ "kanako-ham1.rebmit.link." ];
+    prom.CNAME = [ "kanako-ham0.rebmit.link." ];
+    push.CNAME = [ "kanako-ham0.rebmit.link." ];
     rss.CNAME = [ "suwako-vie0.rebmit.link." ];
-    vault.CNAME = [ "kanako-ham1.rebmit.link." ];
+    vault.CNAME = [ "kanako-ham0.rebmit.link." ];
   };
 }
