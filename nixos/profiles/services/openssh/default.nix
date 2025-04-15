@@ -33,8 +33,18 @@ in
     ];
     openFirewall = true;
     settings = {
-      PermitRootLogin = "prohibit-password";
+      Ciphers = [
+        "chacha20-poly1305@openssh.com"
+        "aes256-gcm@openssh.com"
+      ];
+      KexAlgorithms = [
+        "mlkem768x25519-sha256"
+        "sntrup761x25519-sha512"
+        "sntrup761x25519-sha512@openssh.com"
+      ];
+      Macs = [ "hmac-sha2-512-etm@openssh.com" ];
       PasswordAuthentication = false;
+      PermitRootLogin = "prohibit-password";
     };
     extraConfig = ''
       ClientAliveInterval ${aliveInterval}
