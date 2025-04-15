@@ -123,11 +123,6 @@ in
     })
 
     (mkHost {
-      name = "kanako-ham0";
-      system = "x86_64-linux";
-    })
-
-    (mkHost {
       name = "kanako-ham1";
       system = "x86_64-linux";
     })
