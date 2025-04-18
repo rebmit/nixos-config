@@ -63,6 +63,18 @@
       installation_mode = "force_installed";
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
     };
+    "zotero@chnm.gmu.edu" = {
+      installation_mode = "force_installed";
+      install_url = "https://www.zotero.org/download/connector/dl?browser=firefox";
+    };
+    "firefox@tampermonkey.net" = {
+      installation_mode = "force_installed";
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/tampermonkey/latest.xpi";
+    };
+    "containerise@kinte.sh" = {
+      installation_mode = "force_installed";
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/containerise/latest.xpi";
+    };
   };
 
   programs.firefox.policies.Preferences = {
@@ -102,7 +114,7 @@
     };
     containersForce = true;
     containers = {
-      "Domestic" = {
+      "Underlay" = {
         id = 1;
         color = "green";
         icon = "fingerprint";
