@@ -13,7 +13,7 @@ let
       });
       caddy-rebmit = prev.caddy.withPlugins {
         plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250124234235-87e3e5e2c7f9" ];
-        hash = "sha256-uXAgpvikAhVp/1JXQ1ud0kyRUbUiV5pv7HlMD51Vbuw=";
+        hash = "sha256-q0CJjGRpDZCsdSf2E2hij11N0pDJALI6Aop7ImWLuow=";
       };
     })
   ];
