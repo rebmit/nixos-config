@@ -59,6 +59,7 @@ in
       libtree
       nix-melt
       nix-tree
+      nix-weather
       openssl
       p7zip
       procps
