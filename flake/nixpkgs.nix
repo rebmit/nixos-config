@@ -2,7 +2,6 @@
 let
   overlays = [
     inputs.rebmit.overlays.default
-    inputs.enthalpy.overlays.default
     inputs.nixpkgs-terraform-providers-bin.overlay
 
     (_final: prev: {

@@ -3,6 +3,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -56,6 +57,7 @@ in
     networking.netns.enthalpy = {
       services.bird = {
         enable = true;
+        package = pkgs.bird2-rebmit;
         config = ''
           router id ${toString routerId};
 

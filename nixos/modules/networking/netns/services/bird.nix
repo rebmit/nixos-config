@@ -18,7 +18,7 @@ in
   options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
-        { name, config, ... }:
+        { config, ... }:
         {
           options.services.bird = {
             enable = mkEnableOption "bird internet routing daemon";

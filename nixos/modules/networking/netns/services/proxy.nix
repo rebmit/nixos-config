@@ -78,7 +78,7 @@ in
                   Restart = "on-failure";
                   RestartSec = 5;
                   DynamicUser = true;
-                  ExecStart = "${getExe pkgs.gost} ${
+                  ExecStart = "${getExe pkgs.gost3} ${
                     concatMapStringsSep " " (
                       inbound:
                       ''-L "auto://${inbound.listenAddress}:${toString inbound.listenPort}?netns=${inbound.netnsPath}"''
