@@ -5,6 +5,7 @@ keys:
     - &reisen age1uf2h3hlv373ppdstjlngyuu7q5mee3u3ww3674lsj9rlt9ax7vqsv7wpe8
     - &suwako age1p9xzkzc3zxasgxtd75html0pvrtd6fzvmhz6n388vtjg36d3zffsvma0j0
     - &kanako age1vaec8azhkwnqre8wnwnjx43s2qfthnlu035a4du0m8arg8cwcsaq3xvxeq
+    - &kogasa-iad0 age1jsqn7nxp2sanetkaa8qz5q79ty6agz8ql95y6x2q92z4vpht6v4swjevqd
 creation_rules:
   - path_regex: infra/.*
     key_groups:
@@ -23,6 +24,7 @@ creation_rules:
           - *reisen
           - *suwako
           - *kanako
+          - *kogasa-iad0
   - path_regex: secrets/hosts/(opentofu/)?marisa-.*
     key_groups:
       - age:
@@ -47,3 +49,8 @@ creation_rules:
       - age:
           - *marisa
           - *kanako
+  - path_regex: secrets/hosts/(opentofu/)?kogasa-iad0
+    key_groups:
+      - age:
+          - *marisa
+          - *kogasa-iad0

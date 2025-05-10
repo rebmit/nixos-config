@@ -36,6 +36,17 @@
       "labels": [],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGEkLMkzqrWp03DwgLTp+vXhKSfZvvRGdcY7UHhraKtD"
     },
+    "kogasa-iad0": {
+      "b2_backup_bucket_name": "rebmit-backup-kogasa-iad0",
+      "endpoints": ["152.53.167.21", "2a0a:4cc0:2000:9bab::1"],
+      "endpoints_v4": ["152.53.167.21"],
+      "endpoints_v6": ["2a0a:4cc0:2000:9bab::1"],
+      "enthalpy_node_id": null,
+      "enthalpy_node_organization": null,
+      "enthalpy_node_prefix": null,
+      "labels": [],
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2M0h8k/Xpm0wdvINVu4ABAq8OQgAbzfnHL0ci0C7Ko"
+    },
     "marisa-7d76": {
       "b2_backup_bucket_name": "rebmit-backup-marisa-7d76",
       "endpoints": [],
