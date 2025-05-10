@@ -51,7 +51,10 @@
         signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
       };
 
-      programs.kitty.font.size = lib.mkForce 16.0;
+      programs.kitty = {
+        font.size = lib.mkForce 16.0;
+        settings.background_opacity = lib.mkForce "1.00";
+      };
 
       programs.helix.settings.theme = lib.mkForce "catppuccin_mocha";
 
@@ -66,7 +69,6 @@
 
       home.packages = with pkgs; [
         cinny-desktop
-        librewolf
       ];
     };
 
