@@ -49,6 +49,11 @@ in
 
   services.caddy.virtualHosts."git.rebmit.moe" = {
     extraConfig = ''
+      redir /user/login /user/oauth2/idp.rebmit.moe 307
+      handle_path /robots.txt {
+        respond "User-agent: *
+      Disallow: /" 200
+      }
       reverse_proxy ${cfg.settings.server.HTTP_ADDR}:${toString cfg.settings.server.HTTP_PORT}
     '';
   };
