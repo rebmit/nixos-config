@@ -72,10 +72,6 @@
       url = "github:nix-community/nixpkgs-terraform-providers-bin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-firefox-darwin = {
-      url = "github:bandithedoge/nixpkgs-firefox-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # libraries
 
@@ -86,6 +82,7 @@
     enthalpy = {
       url = "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz";
       inputs.rebmit.follows = "rebmit";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
     dns = {

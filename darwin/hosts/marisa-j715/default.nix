@@ -1,5 +1,4 @@
 {
-  inputs,
   lib,
   pkgs,
   self,
@@ -30,8 +29,6 @@
   };
 
   environment.variables.SSH_AUTH_SOCK = "$HOME/.run/ssh-agent";
-
-  nixpkgs.overlays = [ inputs.nixpkgs-firefox-darwin.overlay ];
 
   home-manager.users.rebmit =
     {

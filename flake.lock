@@ -83,7 +83,9 @@
           "rebmit",
           "git-hooks-nix"
         ],
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "rebmit": [
           "rebmit"
         ],
@@ -347,26 +349,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-firefox-darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746666306,
-        "narHash": "sha256-mdiuNdnEgal87qqcdhIrM3PruskguEDDrib3EXELb8w=",
-        "owner": "bandithedoge",
-        "repo": "nixpkgs-firefox-darwin",
-        "rev": "4e147a683f596b23d14de0326c11171d6c7bffeb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "bandithedoge",
-        "repo": "nixpkgs-firefox-darwin",
-        "type": "github"
-      }
-    },
     "nixpkgs-terraform-providers-bin": {
       "inputs": {
         "nixpkgs": [
@@ -384,22 +366,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nixpkgs-terraform-providers-bin",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1745652994,
-        "narHash": "sha256-cke4TcIKIrapior89XpWcPlFg5h4lJPg7s9G+n6+1s4=",
-        "owner": "rebmit",
-        "repo": "nixpkgs",
-        "rev": "58a60e1246695e334d6e28c28b613834c697ffe8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rebmit",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
         "type": "github"
       }
     },
@@ -449,8 +415,7 @@
         "home-manager": "home-manager",
         "niri-flake": "niri-flake",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-firefox-darwin": "nixpkgs-firefox-darwin",
+        "nixpkgs": "nixpkgs",
         "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",
         "rebmit": "rebmit",
         "sops-nix": "sops-nix",
