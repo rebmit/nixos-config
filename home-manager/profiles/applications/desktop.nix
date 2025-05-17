@@ -2,12 +2,13 @@
 {
   home.packages = with pkgs; [
     # keep-sorted start
-    celluloid
     dmlive
     evolution
     foliate
+    gimp
     libreoffice-fresh
     loupe
+    mpv
     nautilus
     nheko
     papers
