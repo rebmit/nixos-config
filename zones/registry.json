@@ -4,6 +4,23 @@
     "organization": "rebmit's core network",
     "nodes": [
       {
+        "common_name": "momiji-hkg0",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "momiji-hkg0.rebmit.link",
+            "port": 14000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "momiji-hkg0.rebmit.link",
+            "port": 14000
+          }
+        ]
+      },
+      {
         "common_name": "reisen-ams0",
         "endpoints": [
           {
