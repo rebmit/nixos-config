@@ -102,6 +102,9 @@ in
       enable = true;
       strongswan.extraConfig = ''
         charon {
+          ikesa_table_size = 32
+          ikesa_table_segments = 4
+          reuse_ikesa = no
           interfaces_use = ${concatStringsSep "," cfg.ipsec.interfaces}
           port = 0
           port_nat_t = ${toString config.ports.ipsec-nat-traversal}
