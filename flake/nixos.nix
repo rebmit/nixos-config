@@ -143,11 +143,6 @@ in
     })
 
     (mkHost {
-      name = "momiji-hkg0";
-      system = "x86_64-linux";
-    })
-
-    (mkHost {
       name = "reisen-sea0";
       system = "x86_64-linux";
     })

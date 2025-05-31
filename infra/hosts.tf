@@ -77,13 +77,6 @@ locals {
       enthalpy_node_id           = parseint("38c", 16)
       enthalpy_node_organization = "core"
     }
-    "momiji-hkg0" = {
-      labels                     = ["enthalpy/core"]
-      endpoints_v4               = ["103.73.67.146"]
-      endpoints_v6               = ["2406:ef80:1:1919::1"]
-      enthalpy_node_id           = parseint("884", 16)
-      enthalpy_node_organization = "core"
-    }
   }
 }
 
