@@ -15,6 +15,7 @@
           just
           sops
           rage
+          age-plugin-yubikey
           (opentofu.withPlugins (
             ps: with ps; [
               sops

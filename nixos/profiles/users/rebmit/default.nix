@@ -33,7 +33,7 @@ in
 
   sops.secrets."user-password/${name}" = {
     neededForUsers = true;
-    sopsFile = config.sops.secretFiles.get "local.yaml";
+    sopsFile = config.sops.secretFiles.get "common.yaml";
   };
 
   home-manager.users.${name} =
