@@ -9,7 +9,6 @@
     suites.server
     profiles.services.caddy
     profiles.services.ntfy
-    profiles.services.prometheus.server
     profiles.services.vaultwarden
   ] ++ (mylib.path.scanPaths ./. "default.nix");
 

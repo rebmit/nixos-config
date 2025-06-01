@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   services.bird = {
     enable = true;
+    package = pkgs.bird2-rebmit;
     checkConfig = false;
     config = ''
       protocol device {
