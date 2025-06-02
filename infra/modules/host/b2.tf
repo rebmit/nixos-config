@@ -15,7 +15,7 @@ resource "b2_bucket" "backup" {
 }
 
 resource "b2_application_key" "backup" {
-  key_name  = "backup-${var.name}"
+  key_name  = "backup-${var.name}-20250602"
   bucket_id = b2_bucket.backup.id
   capabilities = [
     "deleteFiles",

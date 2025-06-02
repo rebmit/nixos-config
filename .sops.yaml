@@ -2,16 +2,17 @@ keys:
   age:
     - &self0 age1yubikey1qt4k5tkk47fm58cj66s7cr8z9mete4jkyv2xjdfexcfwc0cw9c9jx7xgpwc
     - &self1 age1wg5kd692d3m4mh83qt5smzeu48j8w2gjspxk4l5svlg92fumqefqvkp3kx
-    - &flandre-m5p age1k0vxl79ulfjsmpk48crm5fsuepyhgvjgg9nqtt38ffz7wp3em96scvgkuh
-    - &marisa-7d76 age1w66uztjxshlg5yvt9qfkwsassqlzthqlt8zs626h9jqns56xpqqq3xcqqw
-    - &marisa-j715 age1vv2l70nrplhhw0x65yvsf00gmrnfw5myqdeczzu3p5ltx54tzpgq0nhx2c
-    - &reisen-ams0 age1z2lmssgkhegaqrs2jvt7ye4zftz6ulk0033xc5hkx3z8w043l5xqqqzfad
-    - &reisen-nrt0 age1scjnaea3l8gmczqj0m7uwv94j8l0psszer7n2gmh64et57tsz33qwxuv2m
-    - &reisen-sea0 age10vlfrurcsv752ssl05n9drwe9tt6zd3af743aqu6tmpwdf8usyjsa7sl8f
-    - &reisen-sin0 age17n2g5fvqsqzh7506gnfa8tkjs7exeeem2n4tdrwz4nqh4md02vxs98eg7k
-    - &kogasa-iad0 age1jsqn7nxp2sanetkaa8qz5q79ty6agz8ql95y6x2q92z4vpht6v4swjevqd
-    - &suwako age1p9xzkzc3zxasgxtd75html0pvrtd6fzvmhz6n388vtjg36d3zffsvma0j0
-    - &kanako age1vaec8azhkwnqre8wnwnjx43s2qfthnlu035a4du0m8arg8cwcsaq3xvxeq
+    - &flandre-m5p age18ktzczpaufkp34j42plxlyl94yu3tusvpad6mfperpw7stypdfxqdn4au8
+    - &marisa-7d76 age1zufm5x7xk8xt3pfzfkdj60z9sd7vnmq739udpwwp4h8qd7nujqesusm4vq
+    - &marisa-j715 age1mc0nfucl68cswqd9xkcmv4l003wan84yked7tspsjtl4ya40p99q6sx9l3
+    - &reisen-ams0 age1033cpzwt608pslj3fn7pqgx2cnsd9rvr5tnzwhmn89tuvsd90els8xxjgm
+    - &reisen-nrt0 age1yn8a3m66ccsgdgp9fnguavnx3hz9e0wwz594jk0v8hhq84rs8utq4ggtww
+    - &reisen-sea0 age1cy0r5j5m4r98srahv0g6tr4xxhc543sc577y3f49vya7sxs5es4sldp0vt
+    - &reisen-sin0 age10jyxva6hwwesdckff5xuhk8d9askpqc605spfxjxpvsqtllqgeps6q9s9m
+    - &kogasa-iad0 age1q5rv9w3e33xhkjyacnwjrxe4asm4t6wkpqlstq6ryxherx4f04hsz99t07
+    - &suwako-vie0 age1myxcefjtnhtjsnvh9w9ntzqncgu02l4lg27gvqna2te3nflz4vlqj7nmer
+    - &suwako-vie1 age10facvdx4y8q8rz9fpf2w566283e9nglhx9tkr90e6uetem8hkyaqffqqa9
+    - &kanako-ham0 age1qdunuzv0wwn2xqgt54s64v28488gsz4ky7u5zcv4yt26n7wn8gesx3x3za
 creation_rules:
   - path_regex: infra/.*
     key_groups:
@@ -31,8 +32,9 @@ creation_rules:
           - *reisen-sea0
           - *reisen-sin0
           - *kogasa-iad0
-          - *suwako
-          - *kanako
+          - *suwako-vie0
+          - *suwako-vie1
+          - *kanako-ham0
   - path_regex: secrets/hosts/(opentofu/)?flandre-m5p
     key_groups:
       - age:
@@ -81,15 +83,21 @@ creation_rules:
           - *self0
           - *self1
           - *kogasa-iad0
-  - path_regex: secrets/hosts/(opentofu/)?suwako-.*
+  - path_regex: secrets/hosts/(opentofu/)?suwako-vie0
     key_groups:
       - age:
           - *self0
           - *self1
-          - *suwako
-  - path_regex: secrets/hosts/(opentofu/)?kanako-.*
+          - *suwako-vie0
+  - path_regex: secrets/hosts/(opentofu/)?suwako-vie1
     key_groups:
       - age:
           - *self0
           - *self1
-          - *kanako
+          - *suwako-vie1
+  - path_regex: secrets/hosts/(opentofu/)?kanako-ham0
+    key_groups:
+      - age:
+          - *self0
+          - *self1
+          - *kanako-ham0
