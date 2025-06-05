@@ -5,6 +5,15 @@
   ...
 }:
 {
+  system.defaults.dock.persistent-apps = [
+    { app = "/Applications/Firefox Developer Edition.app"; }
+    { app = "/Users/rebmit/Applications/Home Manager Apps/kitty.app"; }
+    { app = "/Users/rebmit/Applications/Home Manager Apps/Cinny.app"; }
+    { app = "/Applications/Nix Apps/UTM.app"; }
+    { app = "/Applications/Nix Apps/Zotero.app"; }
+    { app = "/Applications/WeChat.app"; }
+  ];
+
   environment.systemPackages = with pkgs; [
     git
     coreutils
