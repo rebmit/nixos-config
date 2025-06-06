@@ -1,7 +1,6 @@
 # Portions of this file are sourced from
 # https://github.com/linyinfeng/dotfiles/blob/d40b75ca0955d2a999b36fa1bd0f8b3a6e061ef3/home-manager/profiles/niri/default.nix (MIT License)
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -38,7 +37,7 @@ in
     # niri
     {
       programs.niri = {
-        package = inputs.niri-flake.packages.x86_64-linux.niri-unstable;
+        package = pkgs.niri;
         settings = {
           input = {
             touchpad = {

@@ -11,7 +11,7 @@ let
   inherit (lib.modules) mkMerge mkIf;
   inherit (lib.attrsets) mapAttrs' nameValuePair;
   inherit (lib.strings) concatMapStringsSep;
-  inherit (lib.meta) getExe;
+  inherit (lib.meta) getExe';
 
   inboundOptions =
     { ... }:
@@ -78,7 +78,7 @@ in
                   Restart = "on-failure";
                   RestartSec = 5;
                   DynamicUser = true;
-                  ExecStart = "${getExe pkgs.gost3} ${
+                  ExecStart = "${getExe' pkgs.gost3 "gost"} ${
                     concatMapStringsSep " " (
                       inbound:
                       ''-L "auto://${inbound.listenAddress}:${toString inbound.listenPort}?netns=${inbound.netnsPath}"''

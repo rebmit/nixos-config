@@ -50,14 +50,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     disko = {
-      url = "github:nix-community/disko/v1.11.0";
+      url = "github:nix-community/disko/v1.12.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # darwin modules
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
