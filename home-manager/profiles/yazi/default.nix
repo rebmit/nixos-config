@@ -6,7 +6,7 @@
     enableFishIntegration = true;
     shellWrapperName = "ra";
     settings = {
-      manager = {
+      mgr = {
         sort_by = "natural";
         linemode = "size";
       };
@@ -100,7 +100,7 @@
       ];
     };
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         {
           on = [ "J" ];
           run = "arrow 5";
