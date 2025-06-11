@@ -42,6 +42,7 @@ in
       # keep-sorted start
       attr
       bashInteractive
+      binutils
       coreutils-full
       cpio
       diffutils

@@ -5,7 +5,7 @@
     dmlive
     evolution
     foliate
-    gimp
+    gimp3
     libreoffice-fresh
     loupe
     mpv
@@ -13,6 +13,7 @@
     nheko
     papers
     seahorse
+    swappy
     tdesktop
     zotero
     # keep-sorted end
