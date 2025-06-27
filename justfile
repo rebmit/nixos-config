@@ -9,7 +9,7 @@ remote name:
 [linux]
 [group('nix')]
 local name:
-  nixos-rebuild switch --use-remote-sudo --flake .#{{name}} --verbose --show-trace
+  nixos-rebuild switch --sudo --flake .#{{name}} --verbose --show-trace
 
 [macos]
 [group('nix')]
