@@ -16,6 +16,7 @@
           sops
           rage
           age-plugin-yubikey
+          nixos-anywhere
           (opentofu.withPlugins (
             ps: with ps; [
               sops

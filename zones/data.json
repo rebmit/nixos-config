@@ -93,14 +93,14 @@
     },
     "reisen-sin0": {
       "b2_backup_bucket_name": "rebmit-backup-reisen-sin0",
-      "endpoints": ["45.32.101.163", "2401:c080:1400:1674:5400:05ff:fe35:ea5e"],
+      "endpoints": ["45.32.101.163", "2401:c080:1400:5b6f:5400:05ff:fe83:a4be"],
       "endpoints_v4": ["45.32.101.163"],
-      "endpoints_v6": ["2401:c080:1400:1674:5400:05ff:fe35:ea5e"],
+      "endpoints_v6": ["2401:c080:1400:5b6f:5400:05ff:fe83:a4be"],
       "enthalpy_node_id": 596,
       "enthalpy_node_organization": "rebmit's core network",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:2540::/60",
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1BhcBQvjVZH/ItFXLVuxUblvv/v7LU6qzu07BCWHfH"
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICBN6drAOvIyxUOzqTOvEXL29QDuIfy2Uo1v3M4QQfov"
     },
     "suwako-vie0": {
       "b2_backup_bucket_name": "rebmit-backup-suwako-vie0",
