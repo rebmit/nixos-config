@@ -1,7 +1,7 @@
 {
   "enthalpy": {
     "rebmit's core network": {
-      "nodes": ["reisen-ams0", "reisen-nrt0", "reisen-sea0", "reisen-sin0"],
+      "nodes": ["reisen-nrt0", "reisen-sea0", "reisen-sin0"],
       "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA8Oqlkh1JAW6IbMOVlhdlVKC9xQ75hzBeWHklcdJENFE=\n-----END PUBLIC KEY-----"
     },
     "rebmit's edge network": {
@@ -11,7 +11,7 @@
   },
   "nameservers": {
     "primary": "suwako-vie1",
-    "secondary": ["reisen-ams0", "reisen-nrt0", "reisen-sea0", "reisen-sin0"]
+    "secondary": ["reisen-nrt0", "reisen-sea0", "reisen-sin0"]
   },
   "hosts": {
     "flandre-m5p": {
@@ -68,17 +68,6 @@
       "enthalpy_node_prefix": "2a0e:aa07:e21c:5720::/60",
       "labels": ["enthalpy/edge"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6aUERU0Suxg3ycqs1dCfcnvLkOipQN0NBeUKmqProl"
-    },
-    "reisen-ams0": {
-      "b2_backup_bucket_name": "rebmit-backup-reisen-ams0",
-      "endpoints": ["45.76.35.203", "2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
-      "endpoints_v4": ["45.76.35.203"],
-      "endpoints_v6": ["2001:19f0:5001:0da9:5400:05ff:fe4e:4109"],
-      "enthalpy_node_id": 908,
-      "enthalpy_node_organization": "rebmit's core network",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:38c0::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQrE6Kza1z2rJWtRuHqUNv58b6wPSwqQz4hAke/z+9F"
     },
     "reisen-nrt0": {
       "b2_backup_bucket_name": "rebmit-backup-reisen-nrt0",

@@ -16,10 +16,6 @@ locals {
       region = "sgp"
       plan   = "vhp-1c-1gb-amd"
     }
-    "reisen-ams0" = {
-      region = "ams"
-      plan   = "vhp-1c-1gb-amd"
-    }
   }
 }
 
