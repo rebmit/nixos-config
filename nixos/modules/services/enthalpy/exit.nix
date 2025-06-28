@@ -99,7 +99,6 @@ in
         kind = "veth";
         mtu = 1400;
         address = "02:00:00:00:00:01";
-        vrf = "vrf-${cfg.entity}";
         extraArgs.peer = {
           name = "enthalpy";
           mtu = 1400;
@@ -126,7 +125,6 @@ in
         }
 
         protocol babel exit {
-          vrf "vrf-${cfg.entity}";
           ipv6 sadr {
             export filter {
               if !is_safe_prefix() then reject;

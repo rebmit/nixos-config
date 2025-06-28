@@ -15,14 +15,10 @@ mkIf cfg.enable {
       exit = 400;
       warp = 401;
       localsid = 500;
-      vrf-local = 600;
-      vrf-other = 601;
     };
 
     routingPolicyPriorities = {
       localsid = 500;
-      l3mdev = 1000;
-      l3mdev-unreachable = 2000;
     };
   };
 }

@@ -56,7 +56,6 @@ in
         routes = [
           {
             cidr = "${cfg.clat.address}/128";
-            table = netnsCfg.routingTables.vrf-local;
           }
           {
             cidr = "0.0.0.0/0";

@@ -100,7 +100,6 @@ in
         kind = "veth";
         mtu = 1400;
         address = "02:00:00:00:00:01";
-        vrf = "vrf-${cfg.entity}";
         extraArgs.peer = {
           name = "enthalpy";
           mtu = 1400;
@@ -119,7 +118,6 @@ in
           }
           ++ map (p: {
             cidr = p;
-            table = netnsCfg.routingTables.vrf-local;
             via = "fe80::ff:fe00:2";
             from = cfg.network;
           }) cfg.warp.prefixes;

@@ -11,9 +11,8 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.modules) mkIf mkMerge;
-  inherit (lib.attrsets) mapAttrs' nameValuePair;
-  inherit (lib.lists) singleton any;
+  inherit (lib.modules) mkIf;
+  inherit (lib.lists) any;
   inherit (lib.network) ipv6;
   inherit (mylib.network) cidr;
 
@@ -79,72 +78,20 @@ in
       }
     ];
 
-    boot.kernelModules = [ "vrf" ];
+    networking.netns.enthalpy = {
+      sysctl = {
+        "net.ipv6.conf.all.forwarding" = 1;
+        "net.ipv6.conf.default.forwarding" = 1;
+      };
 
-    networking.netns.enthalpy = mkMerge [
-      {
-        sysctl = {
-          "net.ipv6.conf.all.forwarding" = 1;
-          "net.ipv6.conf.default.forwarding" = 1;
+      netdevs.enthalpy = {
+        kind = "dummy";
+      };
 
-          # https://www.kernel.org/doc/html/latest/networking/vrf.html#applications
-          "net.vrf.strict_mode" = 0;
-          "net.ipv4.tcp_l3mdev_accept" = 1;
-          "net.ipv4.udp_l3mdev_accept" = 1;
-          "net.ipv4.raw_l3mdev_accept" = 1;
-        };
-
-        netdevs.enthalpy = {
-          kind = "dummy";
-        };
-
-        interfaces.enthalpy = {
-          addresses = [ "${cidr.host 1 cfg.prefix}/128" ];
-          routingPolicyRules = singleton {
-            priority = netnsCfg.routingPolicyPriorities.l3mdev-unreachable;
-            family = [
-              "ipv4"
-              "ipv6"
-            ];
-            selector.l3mdev = { };
-            action.unreachable = { };
-          };
-          netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
-        };
-
-        interfaces."vrf-${cfg.entity}" = {
-          routes = [
-            {
-              cidr = "::/0";
-              table = netnsCfg.routingTables.vrf-other;
-            }
-            {
-              cidr = "::/0";
-              from = cfg.network;
-              table = netnsCfg.routingTables.main;
-            }
-          ];
-        };
-      }
-      {
-        netdevs = mapAttrs' (
-          name: _value:
-          nameValuePair "vrf-${name}" {
-            kind = "vrf";
-            mtu = 1400;
-            extraArgs.table =
-              if name == cfg.entity then netnsCfg.routingTables.vrf-local else netnsCfg.routingTables.vrf-other;
-          }
-        ) cfg.metadata;
-
-        interfaces = mapAttrs' (
-          name: _value:
-          nameValuePair "vrf-${name}" {
-            addresses = [ "${cidr.host 0 cfg.prefix}/128" ];
-            netdevDependencies = [ netnsCfg.netdevs."vrf-${name}".service ];
-          }
-        ) cfg.metadata;
-      }
-    ];
+      interfaces.enthalpy = {
+        addresses = [ "${cidr.host 1 cfg.prefix}/128" ];
+        netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
+      };
+    };
   };
 }

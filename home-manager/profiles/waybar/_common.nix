@@ -21,18 +21,6 @@
   clock = {
     format = "{:%a %b %d %H:%M}";
   };
-  network = {
-    interval = 1;
-    format = "{ifname}";
-    format-wifi = "󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}";
-    format-ethernet = "󰇚 {bandwidthDownBytes} 󰕒 {bandwidthUpBytes}";
-    format-disconnected = "";
-    tooltip-format = "{ifname} via {gwaddr}";
-    tooltip-format-wifi = "{essid} {signalStrength}%";
-    tooltip-format-ethernet = "{ifname}";
-    tooltip-format-disconnected = "disconnected";
-    max-length = 40;
-  };
   pulseaudio = {
     format = "{icon} {volume}% {format_source}";
     format-bluetooth = "󰂯 {volume}% {format_source}";

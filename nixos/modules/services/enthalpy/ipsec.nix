@@ -12,14 +12,12 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-  inherit (lib.attrsets) mapAttrsToList attrNames;
+  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.strings) concatStringsSep concatMapStringsSep;
   inherit (lib.lists) flatten singleton all;
 
   cfg = config.services.enthalpy;
-  netnsCfg = config.networking.netns.enthalpy;
   organizations = flatten (mapAttrsToList (_name: value: value.organizations) cfg.metadata);
-  netdevDependencies = map (name: netnsCfg.netdevs."vrf-${name}".service) (attrNames cfg.metadata);
 in
 {
   options.services.enthalpy.ipsec = {
@@ -91,10 +89,6 @@ in
       message = ''
         All organizations listed in the whitelist must exist in
         `config.services.enthalpy.metadata`.
-
-        We perform this assertion because newly joined organizations do not
-        have a corresponding VRF to set, as we currently do not support creating
-        VRFs and configuring routing daemon dynamically.
       '';
     };
 
@@ -146,7 +140,6 @@ in
             up-client)
               ip link add "$LINK" type xfrm if_id "$PLUTO_IF_ID_OUT"
               ip link set "$LINK" netns enthalpy multicast on mtu 1400 up
-              ip -n enthalpy link set "$LINK" vrf "vrf-$ENTITY"
               ;;
             down-client)
               ip -n enthalpy link del "$LINK"
@@ -188,8 +181,7 @@ in
           "network-online.target"
           "netns-enthalpy.service"
           "strongswan-swanctl.service"
-        ] ++ netdevDependencies;
-        requires = netdevDependencies;
+        ];
         partOf = [ "netns-enthalpy.service" ];
         wantedBy = [
           "multi-user.target"

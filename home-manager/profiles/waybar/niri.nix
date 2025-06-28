@@ -21,7 +21,6 @@ in
         "niri/window"
       ];
       modules-right = [
-        "network"
         "pulseaudio"
         "clock"
         "tray"
