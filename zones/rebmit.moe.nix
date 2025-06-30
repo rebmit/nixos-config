@@ -7,7 +7,7 @@
 with dns.lib.combinators;
 let
   common = import ./common.nix;
-  inherit (common.hosts) suwako-vie0;
+  inherit (common.hosts) kogasa-iad0;
 in
 dns.lib.toString "rebmit.moe" {
   inherit (common)
@@ -18,8 +18,8 @@ dns.lib.toString "rebmit.moe" {
     DMARC
     CAA
     ;
-  A = suwako-vie0.endpoints_v4;
-  AAAA = suwako-vie0.endpoints_v6;
+  A = kogasa-iad0.endpoints_v4;
+  AAAA = kogasa-iad0.endpoints_v6;
   HTTPS = lib.singleton (
     {
       svcPriority = 1;
@@ -29,11 +29,11 @@ dns.lib.toString "rebmit.moe" {
         "h2"
       ];
     }
-    // (lib.optionalAttrs (suwako-vie0.endpoints_v4 != [ ])) {
-      ipv4hint = suwako-vie0.endpoints_v4;
+    // (lib.optionalAttrs (kogasa-iad0.endpoints_v4 != [ ])) {
+      ipv4hint = kogasa-iad0.endpoints_v4;
     }
-    // (lib.optionalAttrs (suwako-vie0.endpoints_v6 != [ ])) {
-      ipv6hint = suwako-vie0.endpoints_v6;
+    // (lib.optionalAttrs (kogasa-iad0.endpoints_v6 != [ ])) {
+      ipv6hint = kogasa-iad0.endpoints_v6;
     }
   );
   SRV = [
@@ -56,7 +56,7 @@ dns.lib.toString "rebmit.moe" {
     chat.CNAME = [ "suwako-vie0.rebmit.link." ];
     git.CNAME = [ "suwako-vie0.rebmit.link." ];
     idp.CNAME = [ "suwako-vie0.rebmit.link." ];
-    net.CNAME = [ "suwako-vie0.rebmit.link." ];
+    net.CNAME = [ "kogasa-iad0.rebmit.link." ];
     prom.CNAME = [ "kanako-ham0.rebmit.link." ];
     push.CNAME = [ "kanako-ham0.rebmit.link." ];
     rss.CNAME = [ "suwako-vie0.rebmit.link." ];

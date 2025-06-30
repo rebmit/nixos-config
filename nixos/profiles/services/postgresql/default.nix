@@ -64,5 +64,7 @@ in
     after = [ "postgresqlBackup.service" ];
   };
 
+  i18n.extraLocales = [ "en_SG.UTF-8/UTF-8" ];
+
   environment.systemPackages = lib.mkIf config.system.pendingStateVersionUpgrade [ upgradePGCluster ];
 }
