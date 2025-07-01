@@ -53,13 +53,13 @@ dns.lib.toString "rebmit.moe" {
   MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains = {
-    chat.CNAME = [ "suwako-vie0.rebmit.link." ];
-    git.CNAME = [ "suwako-vie0.rebmit.link." ];
-    idp.CNAME = [ "suwako-vie0.rebmit.link." ];
+    chat.CNAME = [ "kogasa-iad0.rebmit.link." ];
+    git.CNAME = [ "kogasa-iad0.rebmit.link." ];
+    idp.CNAME = [ "kogasa-iad0.rebmit.link." ];
     net.CNAME = [ "kogasa-iad0.rebmit.link." ];
     prom.CNAME = [ "kanako-ham0.rebmit.link." ];
     push.CNAME = [ "kanako-ham0.rebmit.link." ];
-    rss.CNAME = [ "suwako-vie0.rebmit.link." ];
+    rss.CNAME = [ "kogasa-iad0.rebmit.link." ];
     vault.CNAME = [ "kanako-ham0.rebmit.link." ];
   };
 }
