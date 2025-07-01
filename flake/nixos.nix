@@ -133,11 +133,6 @@ in
     })
 
     (mkHost {
-      name = "suwako-vie0";
-      system = "x86_64-linux";
-    })
-
-    (mkHost {
       name = "suwako-vie1";
       system = "x86_64-linux";
     })

@@ -35,13 +35,6 @@ locals {
       enthalpy_node_id           = null
       enthalpy_node_organization = null
     }
-    "suwako-vie0" = {
-      labels                     = []
-      endpoints_v4               = ["203.34.137.22"]
-      endpoints_v6               = ["2a0d:f302:137:fd9c::1"]
-      enthalpy_node_id           = null
-      enthalpy_node_organization = null
-    }
     "suwako-vie1" = {
       labels                     = ["dns/primary"]
       endpoints_v4               = ["46.102.157.144"]

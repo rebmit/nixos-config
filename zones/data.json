@@ -102,17 +102,6 @@
       "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICBN6drAOvIyxUOzqTOvEXL29QDuIfy2Uo1v3M4QQfov"
     },
-    "suwako-vie0": {
-      "b2_backup_bucket_name": "rebmit-backup-suwako-vie0",
-      "endpoints": ["203.34.137.22", "2a0d:f302:137:fd9c::1"],
-      "endpoints_v4": ["203.34.137.22"],
-      "endpoints_v6": ["2a0d:f302:137:fd9c::1"],
-      "enthalpy_node_id": null,
-      "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
-      "labels": [],
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDMJ1nNhJTdBjPZKTcxZv9uqdNXjysc/v+MuSobZtTX"
-    },
     "suwako-vie1": {
       "b2_backup_bucket_name": "rebmit-backup-suwako-vie1",
       "endpoints": ["46.102.157.144", "2a0d:f302:102:8e05::1"],
