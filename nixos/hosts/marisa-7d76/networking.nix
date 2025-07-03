@@ -33,8 +33,9 @@ in
         chain input {
           type filter hook input priority filter; policy accept;
           icmpv6 type { nd-neighbor-solicit, nd-router-advert, nd-neighbor-advert } counter accept
+          ip6 nexthdr icmpv6 ip6 saddr { fe80::/10, ff00::/8 } counter accept
           ip6 nexthdr icmpv6 ct state established,related counter accept
-          ip6 nexthdr icmpv6 ip6 saddr { fe80::/10, ff00::/8, 2a0e:aa07:e21c::/47 } ct state new counter accept
+          ip6 nexthdr icmpv6 ip6 saddr 2a0e:aa07:e21c::/47 ct state new counter accept
           ip6 nexthdr icmpv6 counter drop
         }
       '';

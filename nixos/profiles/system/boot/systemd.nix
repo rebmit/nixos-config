@@ -1,6 +1,12 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.modules) mkIf;
+  inherit (lib.meta) getExe;
 in
 {
   environment.etc."machine-id" = {
@@ -8,7 +14,34 @@ in
     mode = "direct-symlink";
   };
 
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+  systemd.services.systemd-machine-id-commit = {
+    unitConfig.ConditionPathIsMountPoint = [
+      ""
+      "/var/lib/nixos/systemd/machine-id"
+    ];
+    serviceConfig.ExecStart = [
+      ""
+      (getExe (
+        pkgs.writeShellApplication {
+          name = "machine-id-commit";
+          runtimeInputs = with pkgs; [
+            bash
+            coreutils
+            util-linux
+          ];
+          text = ''
+            MACHINE_ID=$(/run/current-system/systemd/bin/systemd-id128 machine-id)
+            export MACHINE_ID
+            unshare --mount --propagation slave bash ${pkgs.writeShellScript "machine-id-commit" ''
+              umount /var/lib/nixos/systemd/machine-id
+              printf "$MACHINE_ID" > /var/lib/nixos/systemd/machine-id
+            ''}
+            umount /var/lib/nixos/systemd/machine-id
+          '';
+        }
+      ))
+    ];
+  };
 
   boot.initrd.systemd.tmpfiles.settings.rebmit = mkIf config.boot.initrd.systemd.enable {
     "/sysroot/var/lib/nixos/systemd".d = {
