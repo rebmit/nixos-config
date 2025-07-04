@@ -138,12 +138,22 @@ in
     })
 
     (mkHost {
-      name = "reisen-sea0";
+      name = "reisen-ewr0";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
+      name = "reisen-fra0";
       system = "x86_64-linux";
     })
 
     (mkHost {
       name = "reisen-nrt0";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
+      name = "reisen-sea0";
       system = "x86_64-linux";
     })
 

@@ -4,6 +4,40 @@
     "organization": "rebmit's core network",
     "nodes": [
       {
+        "common_name": "reisen-ewr0",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "reisen-ewr0.rebmit.link",
+            "port": 14000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "reisen-ewr0.rebmit.link",
+            "port": 14000
+          }
+        ]
+      },
+      {
+        "common_name": "reisen-fra0",
+        "endpoints": [
+          {
+            "serial_number": "0",
+            "address_family": "ip4",
+            "address": "reisen-fra0.rebmit.link",
+            "port": 14000
+          },
+          {
+            "serial_number": "1",
+            "address_family": "ip6",
+            "address": "reisen-fra0.rebmit.link",
+            "port": 14000
+          }
+        ]
+      },
+      {
         "common_name": "reisen-nrt0",
         "endpoints": [
           {

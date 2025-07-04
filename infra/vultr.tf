@@ -4,12 +4,20 @@ provider "vultr" {
 
 locals {
   vultr_nodes = {
-    "reisen-sea0" = {
-      region = "sea"
+    "reisen-ewr0" = {
+      region = "ewr"
+      plan   = "vhp-1c-1gb-amd"
+    }
+    "reisen-fra0" = {
+      region = "fra"
       plan   = "vhp-1c-1gb-amd"
     }
     "reisen-nrt0" = {
       region = "nrt"
+      plan   = "vhp-1c-1gb-amd"
+    }
+    "reisen-sea0" = {
+      region = "sea"
       plan   = "vhp-1c-1gb-amd"
     }
     "reisen-sin0" = {
