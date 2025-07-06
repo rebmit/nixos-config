@@ -32,11 +32,15 @@ in
       content = ''
         chain input {
           type filter hook input priority filter; policy accept;
-          icmpv6 type { nd-neighbor-solicit, nd-router-advert, nd-neighbor-advert } counter accept
-          ip6 nexthdr icmpv6 ip6 saddr { fe80::/10, ff00::/8 } counter accept
-          ip6 nexthdr icmpv6 ct state established,related counter accept
-          ip6 nexthdr icmpv6 ip6 saddr 2a0e:aa07:e21c::/47 ct state new counter accept
-          ip6 nexthdr icmpv6 counter drop
+          iifname "enta*" ct state established,related counter accept
+          iifname "enta*" ip6 saddr { fe80::/64, 2a0e:aa07:e21c::/47 } counter accept
+          iifname "enta*" counter drop
+        }
+
+        chain output {
+          type filter hook output priority filter; policy accept;
+          oifname "enta*" ip6 daddr != { fe80::/64, 2a0e:aa07:e21c::/47 } \
+            icmpv6 type time-exceeded counter drop
         }
       '';
     };

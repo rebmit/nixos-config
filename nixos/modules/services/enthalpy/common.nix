@@ -92,6 +92,13 @@ in
         addresses = [ "${cidr.host 1 cfg.prefix}/128" ];
         netdevDependencies = [ netnsCfg.netdevs.enthalpy.service ];
       };
+
+      confext."resolv.conf" = {
+        text = ''
+          nameserver 2001:4860:4860::8888
+          nameserver 2606:4700:4700::1111
+        '';
+      };
     };
   };
 }
