@@ -74,6 +74,8 @@ in
               "System.Reflection.Metadata"
               "ant"
               "aspnetcore-runtime"
+              "bazel"
+              "bazel-hacks"
               "cargo-bootstrap"
               "dart"
               "dotnet-runtime"

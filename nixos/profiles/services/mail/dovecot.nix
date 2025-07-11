@@ -4,7 +4,6 @@
   config,
   lib,
   pkgs,
-  mylib,
   ...
 }:
 let
@@ -165,22 +164,9 @@ in
     }
   '';
 
-  systemd.services.dovecot2.serviceConfig = mylib.misc.serviceHardened // {
+  systemd.services.dovecot.serviceConfig = {
     StateDirectory = "dovecot";
     ReadWritePaths = [ maildir ];
-    CapabilityBoundingSet = [
-      "CAP_CHOWN"
-      "CAP_KILL"
-      "CAP_SYS_CHROOT"
-      "CAP_SETUID"
-      "CAP_SETGID"
-      "CAP_NET_BIND_SERVICE"
-      "CAP_DAC_OVERRIDE"
-    ];
-    SystemCallFilter = [
-      "@system-service"
-      "chroot"
-    ];
   };
 
   preservation.preserveAt."/persist".directories = [
