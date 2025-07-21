@@ -306,26 +306,24 @@ let
       "systemd-sysusers.service"
       "systemd-journald.service"
     ];
-    before =
-      [
-        "shutdown.target"
-      ]
-      ++ optionals onBoot [
-        "sysinit.target"
-        "initrd-switch-root.target"
-        "systemd-tmpfiles-setup.service"
-      ]
-      ++ optionals (!onBoot) [
-        "sysinit-reactivation.target"
-        "systemd-tmpfiles-resetup.service"
-      ];
-    conflicts =
-      [
-        "shutdown.target"
-      ]
-      ++ optionals onBoot [
-        "initrd-switch-root.target"
-      ];
+    before = [
+      "shutdown.target"
+    ]
+    ++ optionals onBoot [
+      "sysinit.target"
+      "initrd-switch-root.target"
+      "systemd-tmpfiles-setup.service"
+    ]
+    ++ optionals (!onBoot) [
+      "sysinit-reactivation.target"
+      "systemd-tmpfiles-resetup.service"
+    ];
+    conflicts = [
+      "shutdown.target"
+    ]
+    ++ optionals onBoot [
+      "initrd-switch-root.target"
+    ];
     restartTriggers = optionals (!onBoot) [ config.environment.etc."tmpfiles.d".source ];
     unitConfig = {
       DefaultDependencies = false;

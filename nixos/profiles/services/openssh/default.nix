@@ -60,19 +60,18 @@ in
 
   programs.ssh = {
     knownHosts = knownHosts;
-    extraConfig =
-      ''
-        ServerAliveInterval ${aliveInterval}
-        ServerAliveCountMax ${aliveCountMax}
-      ''
-      + concatMapStringsSep "\n" (h: ''
-        Host ${h}
-          Hostname ${h}.rebmit.link
-          Port ${toString config.ports.ssh}
-        Host ${h}.enta
-          Hostname ${h}.enta.rebmit.link
-          Port ${toString config.ports.ssh}
-      '') (attrNames data.hosts);
+    extraConfig = ''
+      ServerAliveInterval ${aliveInterval}
+      ServerAliveCountMax ${aliveCountMax}
+    ''
+    + concatMapStringsSep "\n" (h: ''
+      Host ${h}
+        Hostname ${h}.rebmit.link
+        Port ${toString config.ports.ssh}
+      Host ${h}.enta
+        Hostname ${h}.enta.rebmit.link
+        Port ${toString config.ports.ssh}
+    '') (attrNames data.hosts);
   };
 
   sops.secrets.ssh-host-ed25519-key = {

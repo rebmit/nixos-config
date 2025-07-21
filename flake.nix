@@ -20,7 +20,8 @@
           inputs.git-hooks-nix.flakeModule
           inputs.treefmt-nix.flakeModule
           inputs.rebmit.flakeModule
-        ] ++ mylib.path.buildModuleList ./flake;
+        ]
+        ++ mylib.path.buildModuleList ./flake;
       }
     );
 

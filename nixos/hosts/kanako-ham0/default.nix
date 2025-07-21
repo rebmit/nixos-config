@@ -10,7 +10,8 @@
     profiles.services.caddy
     profiles.services.ntfy
     profiles.services.vaultwarden
-  ] ++ (mylib.path.scanPaths ./. "default.nix");
+  ]
+  ++ (mylib.path.scanPaths ./. "default.nix");
 
   system.stateVersion = "24.11";
 }

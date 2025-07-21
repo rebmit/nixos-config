@@ -17,7 +17,8 @@
     profiles.services.miniflux
     profiles.services.postgresql
     profiles.services.well-known
-  ] ++ (mylib.path.scanPaths ./. "default.nix");
+  ]
+  ++ (mylib.path.scanPaths ./. "default.nix");
 
   system.stateVersion = "24.11";
 }

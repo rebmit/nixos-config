@@ -70,7 +70,8 @@ in
             "2606:4700:4700::1001"
           ];
         }
-      ] ++ builtins.attrValues secondary;
+      ]
+      ++ builtins.attrValues secondary;
       remotes = [
         {
           id = "secondary";

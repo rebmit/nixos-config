@@ -12,7 +12,8 @@
     profiles.services.nixseparatedebuginfod
     profiles.virtualization.rosetta
     profiles.users.rebmit
-  ] ++ (mylib.path.scanPaths ./. "default.nix");
+  ]
+  ++ (mylib.path.scanPaths ./. "default.nix");
 
   home-manager.users.rebmit =
     { suites, profiles, ... }:

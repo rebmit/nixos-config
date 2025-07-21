@@ -317,17 +317,21 @@ in
                 };
                 after = [
                   "netns-${name}.service"
-                ] ++ v.netdevDependencies;
+                ]
+                ++ v.netdevDependencies;
                 partOf = [
                   "netns-${name}.service"
-                ] ++ v.netdevDependencies;
+                ]
+                ++ v.netdevDependencies;
                 requires = [
                   "netns-${name}.service"
-                ] ++ v.netdevDependencies;
+                ]
+                ++ v.netdevDependencies;
                 wantedBy = [
                   "netns-${name}.service"
                   "multi-user.target"
-                ] ++ v.netdevDependencies;
+                ]
+                ++ v.netdevDependencies;
               }
             )
           ) cfg.interfaces

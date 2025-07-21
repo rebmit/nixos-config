@@ -18,7 +18,8 @@ let
     "ns1.he.net"
     "ns2.he.net"
     "reisen.any.rebmit.link"
-  ] ++ map (ns: "${ns}.rebmit.link") (secondary ++ singleton primary);
+  ]
+  ++ map (ns: "${ns}.rebmit.link") (secondary ++ singleton primary);
 
   publicHosts = lib.filterAttrs (_name: value: value.endpoints != [ ]) data.hosts;
   targets = lib.mapAttrsToList (name: _value: "${name}.rebmit.link") publicHosts;

@@ -9,7 +9,8 @@
     suites.workstation
     profiles.virtualization.qemu-user-static
     profiles.users.rebmit
-  ] ++ (mylib.path.scanPaths ./. "default.nix");
+  ]
+  ++ (mylib.path.scanPaths ./. "default.nix");
 
   home-manager.users.rebmit =
     { suites, profiles, ... }:

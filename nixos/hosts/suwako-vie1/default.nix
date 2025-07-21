@@ -11,7 +11,8 @@
     profiles.services.mail.dovecot
     profiles.services.mail.postfix
     profiles.services.mail.rspamd
-  ] ++ (mylib.path.scanPaths ./. "default.nix");
+  ]
+  ++ (mylib.path.scanPaths ./. "default.nix");
 
   system.stateVersion = "24.11";
 }
