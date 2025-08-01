@@ -81,6 +81,7 @@ in
               "dotnet-runtime"
               "dotnet-sdk"
               "go"
+              "gradle"
               "keycloak"
               "libreoffice"
               "runtime.linux-arm64.Microsoft.DotNet.ILCompiler"
