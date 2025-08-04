@@ -13,7 +13,7 @@ let
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
   inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.strings) concatStringsSep concatMapStringsSep;
+  inherit (lib.strings) concatStringsSep;
   inherit (lib.lists) flatten singleton all;
 
   cfg = config.services.enthalpy;
@@ -199,10 +199,7 @@ in
       script = ''
         set -euo pipefail
         curl --fail --retry 5 --retry-delay 30 --retry-connrefused "${cfg.ipsec.registry}" --output /var/lib/ranet/registry.json.new
-        jq "[.[] | select(.organization | IN(${
-          concatMapStringsSep "," (org: ''\"${org}\"'') cfg.ipsec.whitelist
-        }))]" /var/lib/ranet/registry.json.new > /var/lib/ranet/registry.json.filtered
-        mv /var/lib/ranet/registry.json.filtered /var/lib/ranet/registry.json
+        mv /var/lib/ranet/registry.json.new /var/lib/ranet/registry.json
         /run/current-system/systemd/bin/systemctl reload-or-restart --no-block ranet || true
       '';
       serviceConfig.Type = "oneshot";

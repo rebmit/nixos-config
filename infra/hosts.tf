@@ -1,81 +1,81 @@
 locals {
   hosts = {
-    "flandre-m5p" = {
-      labels                     = ["enthalpy/edge"]
-      endpoints_v4               = []
-      endpoints_v6               = []
-      enthalpy_node_id           = parseint("a23", 16)
-      enthalpy_node_organization = "edge"
-    }
     "marisa-7d76" = {
-      labels                     = ["enthalpy/edge"]
+      labels                     = ["enthalpy/enta0004"]
       endpoints_v4               = []
       endpoints_v6               = []
       enthalpy_node_id           = parseint("d79", 16)
-      enthalpy_node_organization = "edge"
+      enthalpy_node_organization = "enta0004"
     }
     "marisa-j715" = {
-      labels                     = ["enthalpy/edge"]
+      labels                     = ["enthalpy/enta0004"]
       endpoints_v4               = []
       endpoints_v6               = []
       enthalpy_node_id           = parseint("572", 16)
-      enthalpy_node_organization = "edge"
+      enthalpy_node_organization = "enta0004"
+    }
+    "flandre-m5p" = {
+      labels                     = ["enthalpy/enta0003"]
+      endpoints_v4               = []
+      endpoints_v6               = []
+      enthalpy_node_id           = parseint("a23", 16)
+      enthalpy_node_organization = "enta0003"
     }
     "kogasa-iad0" = {
-      labels                     = []
+      labels                     = ["enthalpy/enta0002"]
       endpoints_v4               = ["152.53.167.21"]
       endpoints_v6               = ["2a0a:4cc0:2000:9bab::1"]
-      enthalpy_node_id           = null
-      enthalpy_node_organization = null
+      enthalpy_node_id           = parseint("3f9", 16)
+      enthalpy_node_organization = "enta0002"
     }
     "kanako-ham0" = {
-      labels                     = []
+      labels                     = ["enthalpy/enta0002"]
       endpoints_v4               = ["91.108.80.168"]
       endpoints_v6               = ["2a05:901:6:1015::1"]
-      enthalpy_node_id           = null
-      enthalpy_node_organization = null
+      enthalpy_node_id           = parseint("2d8", 16)
+      enthalpy_node_organization = "enta0002"
     }
     "suwako-vie1" = {
-      labels                     = ["dns/primary"]
+      labels                     = ["dns/primary", "enthalpy/enta0002"]
       endpoints_v4               = ["46.102.157.144"]
       endpoints_v6               = ["2a0d:f302:102:8e05::1"]
-      enthalpy_node_id           = null
-      enthalpy_node_organization = null
+      enthalpy_node_id           = parseint("410", 16)
+      enthalpy_node_organization = "enta0002"
     }
     "reisen-ewr0" = {
-      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
+      labels                     = ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-ewr0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-ewr0"].ipv6]
       enthalpy_node_id           = parseint("e5e", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_organization = "enta0001"
     }
     "reisen-fra0" = {
-      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
+      labels                     = ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-fra0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-fra0"].ipv6]
       enthalpy_node_id           = parseint("38c", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_organization = "enta0001"
     }
     "reisen-nrt0" = {
-      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
+      labels                     = ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-nrt0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-nrt0"].ipv6]
       enthalpy_node_id           = parseint("586", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_organization = "enta0001"
     }
     "reisen-sea0" = {
-      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
+      labels                     = ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-sea0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-sea0"].ipv6]
       enthalpy_node_id           = parseint("6b8", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_organization = "enta0001"
     }
     "reisen-sin0" = {
-      labels                     = ["dns/secondary", "enthalpy/core", "bgp/vultr"]
+      labels                     = ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"]
       endpoints_v4               = [module.vultr_instances["reisen-sin0"].ipv4]
       endpoints_v6               = [module.vultr_instances["reisen-sin0"].ipv6]
       enthalpy_node_id           = parseint("254", 16)
-      enthalpy_node_organization = "core"
+      enthalpy_node_organization = "enta0001"
     }
   }
 }

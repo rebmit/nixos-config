@@ -1,6 +1,6 @@
 {
   "enthalpy": {
-    "rebmit's core network": {
+    "NET-ENTHALPY-ORIGIN": {
       "nodes": [
         "reisen-ewr0",
         "reisen-fra0",
@@ -8,11 +8,19 @@
         "reisen-sea0",
         "reisen-sin0"
       ],
-      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEA8Oqlkh1JAW6IbMOVlhdlVKC9xQ75hzBeWHklcdJENFE=\n-----END PUBLIC KEY-----"
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATDD7brJdPxIKbYsbmdHdfZ2u70iG76nG92oP7j6ivVg=\n-----END PUBLIC KEY-----"
     },
-    "rebmit's edge network": {
-      "nodes": ["flandre-m5p", "marisa-7d76", "marisa-j715"],
-      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAXaBaGumao95/j4M7nWNNytd8u8r1KAGSbKDs0aT2mVU=\n-----END PUBLIC KEY-----"
+    "NET-REBMIT-ACCESS": {
+      "nodes": ["marisa-7d76", "marisa-j715"],
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAVaKiu8Aw/eWM9S3ThqNmurI7GT8t7gU0ZC39WUNRNrI=\n-----END PUBLIC KEY-----"
+    },
+    "NET-REBMIT-CORE": {
+      "nodes": ["kanako-ham0", "kogasa-iad0", "suwako-vie1"],
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAeKB/ebQ0H0YnsmV0ExsVHHmxpQjIaV/NbuEI5NKjdDk=\n-----END PUBLIC KEY-----"
+    },
+    "NET-REBMIT-EDGE": {
+      "nodes": ["flandre-m5p"],
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAJG2eJJmtuJboL5ehFsiCnY9VcBOeQygpAOvLBAwY28s=\n-----END PUBLIC KEY-----"
     }
   },
   "nameservers": {
@@ -32,9 +40,9 @@
       "endpoints_v4": [],
       "endpoints_v6": [],
       "enthalpy_node_id": 2595,
-      "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_organization": "NET-REBMIT-EDGE",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:a230::/60",
-      "labels": ["enthalpy/edge"],
+      "labels": ["enthalpy/enta0003"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDVLnLJQLiSquUSKC1aH9+mZuCHJex5B73BGY4TNDlxv"
     },
     "kanako-ham0": {
@@ -42,10 +50,10 @@
       "endpoints": ["91.108.80.168", "2a05:901:6:1015::1"],
       "endpoints_v4": ["91.108.80.168"],
       "endpoints_v6": ["2a05:901:6:1015::1"],
-      "enthalpy_node_id": null,
-      "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
-      "labels": [],
+      "enthalpy_node_id": 728,
+      "enthalpy_node_organization": "NET-REBMIT-CORE",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:2d80::/60",
+      "labels": ["enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGEkLMkzqrWp03DwgLTp+vXhKSfZvvRGdcY7UHhraKtD"
     },
     "kogasa-iad0": {
@@ -53,10 +61,10 @@
       "endpoints": ["152.53.167.21", "2a0a:4cc0:2000:9bab::1"],
       "endpoints_v4": ["152.53.167.21"],
       "endpoints_v6": ["2a0a:4cc0:2000:9bab::1"],
-      "enthalpy_node_id": null,
-      "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
-      "labels": [],
+      "enthalpy_node_id": 1017,
+      "enthalpy_node_organization": "NET-REBMIT-CORE",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:3f90::/60",
+      "labels": ["enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2M0h8k/Xpm0wdvINVu4ABAq8OQgAbzfnHL0ci0C7Ko"
     },
     "marisa-7d76": {
@@ -65,9 +73,9 @@
       "endpoints_v4": [],
       "endpoints_v6": [],
       "enthalpy_node_id": 3449,
-      "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_organization": "NET-REBMIT-ACCESS",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:d790::/60",
-      "labels": ["enthalpy/edge"],
+      "labels": ["enthalpy/enta0004"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBdcVQak4mnur3LpBd9TMWeOdh8LBeWkNQKQtNmK03x"
     },
     "marisa-j715": {
@@ -76,9 +84,9 @@
       "endpoints_v4": [],
       "endpoints_v6": [],
       "enthalpy_node_id": 1394,
-      "enthalpy_node_organization": "rebmit's edge network",
+      "enthalpy_node_organization": "NET-REBMIT-ACCESS",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:5720::/60",
-      "labels": ["enthalpy/edge"],
+      "labels": ["enthalpy/enta0004"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6aUERU0Suxg3ycqs1dCfcnvLkOipQN0NBeUKmqProl"
     },
     "reisen-ewr0": {
@@ -87,9 +95,9 @@
       "endpoints_v4": ["45.77.104.180"],
       "endpoints_v6": ["2001:19f0:1000:b40d:5400:05ff:fe86:3f42"],
       "enthalpy_node_id": 3678,
-      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:e5e0::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
+      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPQe84tnTJ5QsoDmgZpBqpPMcFxCxrnwRgPaHLdCgvei"
     },
     "reisen-fra0": {
@@ -98,9 +106,9 @@
       "endpoints_v4": ["45.76.85.223"],
       "endpoints_v6": ["2001:19f0:6c00:10c5:5400:05ff:fe86:3f43"],
       "enthalpy_node_id": 908,
-      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:38c0::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
+      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO97fEUbBWOTCsmwyjWdu/XAzvsqZ8u9Z2PycKPqZXQ6"
     },
     "reisen-nrt0": {
@@ -109,9 +117,9 @@
       "endpoints_v4": ["45.77.183.85"],
       "endpoints_v6": ["2001:19f0:7002:0f85:5400:05ff:fe35:27dc"],
       "enthalpy_node_id": 1414,
-      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:5860::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
+      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFkqmL+uYIEuN4rNClXuZN7xEnZ8CsZyiNpoVHRprB1i"
     },
     "reisen-sea0": {
@@ -120,9 +128,9 @@
       "endpoints_v4": ["149.28.8.87"],
       "endpoints_v6": ["2001:19f0:8001:09c8:5400:05ff:fe35:27dd"],
       "enthalpy_node_id": 1720,
-      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:6b80::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
+      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjEgqwwhXxVAGXzz0sNuUs5TmLct+qNR/Xe/bcpmn4t"
     },
     "reisen-sin0": {
@@ -131,9 +139,9 @@
       "endpoints_v4": ["45.32.101.163"],
       "endpoints_v6": ["2401:c080:1400:5b6f:5400:05ff:fe83:a4be"],
       "enthalpy_node_id": 596,
-      "enthalpy_node_organization": "rebmit's core network",
+      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:2540::/60",
-      "labels": ["dns/secondary", "enthalpy/core", "bgp/vultr"],
+      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICBN6drAOvIyxUOzqTOvEXL29QDuIfy2Uo1v3M4QQfov"
     },
     "suwako-vie1": {
@@ -141,10 +149,10 @@
       "endpoints": ["46.102.157.144", "2a0d:f302:102:8e05::1"],
       "endpoints_v4": ["46.102.157.144"],
       "endpoints_v6": ["2a0d:f302:102:8e05::1"],
-      "enthalpy_node_id": null,
-      "enthalpy_node_organization": null,
-      "enthalpy_node_prefix": null,
-      "labels": ["dns/primary"],
+      "enthalpy_node_id": 1040,
+      "enthalpy_node_organization": "NET-REBMIT-CORE",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:4100::/60",
+      "labels": ["dns/primary", "enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFI0Y8Hwaoz9fx1MAn+BLWpTxWeoIzwXPLUp3xCcWXN"
     }
   }

@@ -1,7 +1,9 @@
 locals {
   enthalpy_organizations = {
-    core = "rebmit's core network"
-    edge = "rebmit's edge network"
+    enta0001 = "NET-ENTHALPY-ORIGIN"
+    enta0002 = "NET-REBMIT-CORE"
+    enta0003 = "NET-REBMIT-EDGE"
+    enta0004 = "NET-REBMIT-ACCESS"
   }
 }
 
