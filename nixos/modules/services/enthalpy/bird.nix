@@ -36,13 +36,6 @@ in
         List of prefixes that this autonomous system is allowed to announce.
       '';
     };
-    transit = mkOption {
-      type = types.listOf types.str;
-      default = [ ];
-      description = ''
-        List of transit network entities in the enthalpy network.
-      '';
-    };
   };
 
   config = mkIf (cfg.enable && cfg.bird.enable) {

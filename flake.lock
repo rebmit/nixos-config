@@ -64,47 +64,6 @@
         "type": "github"
       }
     },
-    "enthalpy": {
-      "inputs": {
-        "devshell": [
-          "enthalpy",
-          "rebmit",
-          "devshell"
-        ],
-        "flake-parts": [
-          "enthalpy",
-          "rebmit",
-          "flake-parts"
-        ],
-        "git-hooks-nix": [
-          "enthalpy",
-          "rebmit",
-          "git-hooks-nix"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rebmit": [
-          "rebmit"
-        ],
-        "treefmt-nix": [
-          "enthalpy",
-          "rebmit",
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746688825,
-        "narHash": "sha256-nkdZOFipFEU0M09LC+AbRNzrGaslvwtl1rLAQ1Hd9H0=",
-        "rev": "f819d7fc218d3aa72335f2f86c972c63381746c3",
-        "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/enthalpy/archive/f819d7fc218d3aa72335f2f86c972c63381746c3.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -400,7 +359,6 @@
         ],
         "disko": "disko",
         "dns": "dns",
-        "enthalpy": "enthalpy",
         "flake-parts": [
           "rebmit",
           "flake-parts"

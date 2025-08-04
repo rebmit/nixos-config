@@ -2,7 +2,6 @@
 {
   services.enthalpy = {
     enable = true;
-    entity = "rebmit";
     prefix = host.enthalpy_node_prefix;
 
     ipsec = {

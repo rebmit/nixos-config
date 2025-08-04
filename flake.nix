@@ -80,11 +80,6 @@
       url = "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    enthalpy = {
-      url = "https://git.rebmit.moe/rebmit/enthalpy/archive/master.tar.gz";
-      inputs.rebmit.follows = "rebmit";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-utils.url = "github:numtide/flake-utils";
     dns = {
       url = "github:NickCao/dns.nix";

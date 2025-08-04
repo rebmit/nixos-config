@@ -1,7 +1,6 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/gravity/default.nix (MIT License)
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -12,12 +11,9 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.strings) concatStringsSep;
-  inherit (lib.lists) flatten singleton all;
 
   cfg = config.services.enthalpy;
-  organizations = flatten (mapAttrsToList (_name: value: value.organizations) cfg.metadata);
 in
 {
   options.services.enthalpy.ipsec = {
@@ -74,24 +70,9 @@ in
         URL of the registry to be used.
       '';
     };
-    whitelist = mkOption {
-      type = types.listOf types.str;
-      default = organizations;
-      description = ''
-        A list of organizations that are whitelisted.
-      '';
-    };
   };
 
   config = mkIf (cfg.enable && cfg.ipsec.enable) {
-    assertions = singleton {
-      assertion = all (org: builtins.elem org organizations) cfg.ipsec.whitelist;
-      message = ''
-        All organizations listed in the whitelist must exist in
-        `config.services.enthalpy.metadata`.
-      '';
-    };
-
     services.strongswan-swanctl = {
       enable = true;
       strongswan.extraConfig = ''
@@ -132,9 +113,6 @@ in
         address = ep.address;
         port = config.ports.ipsec-nat-traversal;
         updown = pkgs.writeShellScript "updown" ''
-          IFS=, read -ra PEER_ID_DICT <<< "$PLUTO_PEER_ID"
-          ORG=$(echo "''${PEER_ID_DICT[0]}" | cut -d = -f 2-)
-          ENTITY=$(${pkgs.jq}/bin/jq "to_entries | map({ (.value.organizations[]): .key }) | add | .\"$ORG\"" ${inputs.enthalpy}/zones/data.json --raw-output)
           LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")
           case "$PLUTO_VERB" in
             up-client)
