@@ -12,6 +12,9 @@
       size = 12.0;
     };
     settings = {
+      cursor_trail = "1";
+      cursor_trail_decay = "0.1 0.4";
+      cursor_trail_start_threshold = "2";
       background_opacity = "0.95";
       hide_window_decorations = lib.mkIf pkgs.stdenv.hostPlatform.isLinux "yes";
       confirm_os_window_close = "0";
