@@ -14,7 +14,7 @@ local name:
 [macos]
 [group('nix')]
 local name:
-  darwin-rebuild switch --flake .#{{name}} --verbose --show-trace
+  sudo darwin-rebuild switch --flake .#{{name}} --verbose --show-trace
 
 [group('nix')]
 up:

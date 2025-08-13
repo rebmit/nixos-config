@@ -88,6 +88,8 @@
 
   users.knownUsers = [ "rebmit" ];
 
+  system.primaryUser = "rebmit";
+
   nix.settings = {
     experimental-features = "nix-command flakes";
     trusted-users = [
