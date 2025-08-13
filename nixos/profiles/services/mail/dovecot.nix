@@ -17,10 +17,10 @@ in
   };
 
   services.postfix = {
-    config = {
+    settings.main = {
       virtual_transport = "lmtp:unix:/run/dovecot2/lmtp";
     };
-    masterConfig =
+    settings.master =
       let
         mkKeyVal = opt: val: [
           "-o"

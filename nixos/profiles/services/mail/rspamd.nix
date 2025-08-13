@@ -8,7 +8,7 @@
     owner = config.services.rspamd.user;
   };
 
-  services.postfix.config = {
+  services.postfix.settings.main = {
     smtpd_milters = [ "unix:/run/rspamd/postfix.sock" ];
     non_smtpd_milters = [ "unix:/run/rspamd/postfix.sock" ];
   };

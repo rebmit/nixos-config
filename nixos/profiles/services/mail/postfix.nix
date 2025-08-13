@@ -35,19 +35,8 @@
 
   services.postfix = {
     enable = true;
-    hostname = config.networking.fqdn;
-    mapFiles.senders = builtins.toFile "senders" ''
-      rebmit@rebmit.moe      rebmit
-    '';
-    mapFiles.aliases = builtins.toFile "aliases" ''
-      abuse@rebmit.moe       rebmit@rebmit.moe
-      hostmaster@rebmit.link rebmit@rebmit.moe
-      hostmaster@rebmit.moe  rebmit@rebmit.moe
-      noc@rebmit.moe         rebmit@rebmit.moe
-      postmaster@rebmit.link rebmit@rebmit.moe
-      postmaster@rebmit.moe  rebmit@rebmit.moe
-    '';
-    config = {
+    settings.main = {
+      myhostname = config.networking.fqdn;
       smtp_tls_security_level = "may";
 
       smtpd_tls_chain_files = [
@@ -73,7 +62,7 @@
       milter_default_action = "accept";
       internal_mail_filter_classes = [ "bounce" ];
     };
-    masterConfig =
+    settings.master =
       let
         mkKeyVal = opt: val: [
           "-o"
@@ -99,6 +88,17 @@
           };
         };
       };
+    mapFiles.senders = builtins.toFile "senders" ''
+      rebmit@rebmit.moe      rebmit
+    '';
+    mapFiles.aliases = builtins.toFile "aliases" ''
+      abuse@rebmit.moe       rebmit@rebmit.moe
+      hostmaster@rebmit.link rebmit@rebmit.moe
+      hostmaster@rebmit.moe  rebmit@rebmit.moe
+      noc@rebmit.moe         rebmit@rebmit.moe
+      postmaster@rebmit.link rebmit@rebmit.moe
+      postmaster@rebmit.moe  rebmit@rebmit.moe
+    '';
   };
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/postfix" ];
