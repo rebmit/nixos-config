@@ -14,7 +14,6 @@ let
         plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250530154005-4d3c80e89c5f" ];
         hash = "sha256-NLFl+ix36z6X1Anr1F6rdMPwSEysSVl84Ad71zprsbU=";
       };
-      nixos-anywhere = prev.nixos-anywhere.override { nix = prev.nixVersions.nix_2_24; };
     })
   ];
 in

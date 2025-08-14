@@ -3,7 +3,7 @@
   services.greetd = {
     enable = true;
     settings = {
-      default_session.command = "${lib.getExe pkgs.greetd.tuigreet} --cmd wayland-session";
+      default_session.command = "${lib.getExe pkgs.tuigreet} --cmd wayland-session";
     };
   };
 

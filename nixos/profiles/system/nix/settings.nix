@@ -13,7 +13,6 @@
         "auto-allocate-uids"
         "cgroups"
         "ca-derivations"
-        "pipe-operators"
       ];
       auto-allocate-uids = true;
       use-cgroups = true;
