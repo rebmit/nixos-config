@@ -37,17 +37,16 @@
 
       oidc_providers = [
         {
-          idp_id = "keycloak";
+          idp_id = "pocket-id";
           idp_name = "idp.rebmit.moe";
-          issuer = "https://idp.rebmit.moe/realms/rebmit";
-          client_id = "synapse";
+          issuer = "https://idp.rebmit.moe";
+          client_id = "4c95a809-41b1-41a0-91df-c0a30c7807ae";
           client_secret_path = config.sops.secrets."synapse/oidc-client-secret".path;
           scopes = [
             "openid"
             "profile"
           ];
           allow_existing_users = true;
-          backchannel_logout_enabled = true;
           user_mapping_provider.config = {
             confirm_localpart = true;
             localpart_template = "{{ user.preferred_username }}";
