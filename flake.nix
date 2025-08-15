@@ -86,5 +86,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    # misc
+
+    firefox-gnome-theme = {
+      url = "github:/rafaelmardojai/firefox-gnome-theme/v141";
+      flake = false;
+    };
   };
 }

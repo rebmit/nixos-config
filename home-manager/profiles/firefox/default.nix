@@ -1,8 +1,8 @@
 # Portions of this file are sourced from
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/home.nix (MIT License)
 # https://github.com/llakala/nixos/blob/b3c5fbde5a5f78c91ee658250f9b42418b73a7b7/apps/gui/firefox.nix (MIT License)
-# https://gist.github.com/swwind/fe691c06ea53f89e02eb194df6144afa
 {
+  inputs,
   lib,
   pkgs,
   ...
@@ -75,6 +75,10 @@
       installation_mode = "force_installed";
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/containerise/latest.xpi";
     };
+    "{3c078156-979c-498b-8990-85f7987dd929}" = {
+      installation_mode = "force_installed";
+      install_url = "https://addons.mozilla.org/firefox/downloads/latest/sidebery/latest.xpi";
+    };
   };
 
   programs.firefox.policies.Preferences = {
@@ -82,28 +86,9 @@
     "browser.tabs.closeWindowWithLastTab" = false;
     "browser.tabs.inTitlebar" = 0;
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-  };
-
-  programs.firefox.policies.Preferences."browser.uiCustomization.state" = builtins.toJSON {
-    placements = {
-      widget-overflow-fixed-list = [ ];
-      nav-bar = [
-        "back-button"
-        "forward-button"
-        "stop-reload-button"
-        "sidebar-button"
-        "urlbar-container"
-        "downloads-button"
-        "unified-extensions-button"
-        "fxa-toolbar-menu-button"
-      ];
-      toolbar-menubar = [ "menubar-items" ];
-      TabsToolbar = [ ];
-      vertical-tabs = [ "tabbrowser-tabs" ];
-      PersonalToolbar = [ "personal-bookmarks" ];
-    };
-    currentVersion = 20;
-    newElementCount = 0;
+    "svg.context-properties.content.enabled" = true;
+    "browser.theme.dark-private-windows" = false;
+    "widget.gtk.rounded-bottom-corners.enabled" = true;
   };
 
   programs.firefox.profiles.default = {
@@ -120,35 +105,22 @@
         icon = "fingerprint";
       };
     };
-    settings = {
-      "sidebar.revamp" = true;
-      "sidebar.verticalTabs" = true;
-    };
     userChrome = ''
-      #tabbrowser-tabbox {
-        padding-right: var(--space-small);
-        padding-bottom: var(--space-small);
-        outline: none !important;
-        box-shadow: none !important;
-        background-color: var(--toolbar-bgcolor);
-        :root[inDOMFullscreen] & {    
-          padding-right: 0;
-          padding-bottom: 0;
-        }
-      }
+      @import "${inputs.firefox-gnome-theme}/theme/gnome-theme.css";
 
-      #tabbrowser-tabpanels {
-        border-radius: var(--border-radius-medium);
-        box-shadow: var(--content-area-shadow);
-        overflow: hidden;
-        :root[inDOMFullscreen] & {
-          border-radius: 0;
-        }
+      #TabsToolbar {
+        display: none;
       }
+    '';
+    userContent = ''
+      @import "${inputs.firefox-gnome-theme}/theme/variables.css";
+      @import "${inputs.firefox-gnome-theme}/theme/colors/light.css";
+      @import "${inputs.firefox-gnome-theme}/theme/colors/dark.css";
 
-      .browser-toolbox-background {
-        background-color: var(--toolbar-bgcolor) !important;
-      }
+      @import "${inputs.firefox-gnome-theme}/theme/pages/newtab.css";
+      @import "${inputs.firefox-gnome-theme}/theme/pages/privatebrowsing.css";
+
+      @import "${inputs.firefox-gnome-theme}/theme/parts/video-player.css";
     '';
   };
 
