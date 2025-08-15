@@ -64,12 +64,12 @@
         settings.background_opacity = lib.mkForce "1.00";
       };
 
-      programs.helix.settings.theme = lib.mkForce "catppuccin_mocha";
+      programs.helix.settings.theme = lib.mkForce "adwaita-dark";
 
       services.ssh-agent.enable = lib.mkForce false;
 
       xdg.configFile."kitty/theme.conf".source =
-        lib.mkForce "${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf";
+        lib.mkForce "${self}/home-manager/profiles/theme/adwaita/_kitty/adwaita_dark.conf";
 
       disabledModules = [ profiles.preservation ];
 
