@@ -89,6 +89,8 @@
         };
       };
     mapFiles.senders = builtins.toFile "senders" ''
+      abuse@rebmit.moe       rebmit
+      noc@rebmit.moe         rebmit
       rebmit@rebmit.moe      rebmit
     '';
     mapFiles.aliases = builtins.toFile "aliases" ''
