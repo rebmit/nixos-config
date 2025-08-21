@@ -75,6 +75,7 @@ in
               "Newtonsoft.Json"
               "System.Formats.Asn1"
               "System.Reflection.Metadata"
+              "System.Text.Json"
               "ant"
               "aspnetcore-runtime"
               "bazel"
