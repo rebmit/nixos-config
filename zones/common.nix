@@ -17,6 +17,8 @@ in
     "reisen.any.rebmit.link."
     "ns1.he.net."
     "ns2.he.net."
+    "ns3.he.net."
+    "ns4.he.net."
     "suwako-vie1.rebmit.link."
   ];
   DKIM = [
