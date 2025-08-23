@@ -19,7 +19,6 @@ in
     "ns2.he.net."
     "ns3.he.net."
     "ns4.he.net."
-    "suwako-vie1.rebmit.link."
   ];
   DKIM = [
     {
