@@ -13,13 +13,19 @@ in
     expire = 604800;
     minimum = 300;
   };
-  NS = [
-    "reisen.any.rebmit.link."
-    "ns1.he.net."
-    "ns2.he.net."
-    "ns3.he.net."
-    "ns4.he.net."
-  ];
+  NS =
+    builtins.map
+      (ns: {
+        nsdname = ns;
+        ttl = 43200;
+      })
+      [
+        "reisen.any.rebmit.link."
+        "ns1.he.net."
+        "ns2.he.net."
+        "ns3.he.net."
+        "ns4.he.net."
+      ];
   DKIM = [
     {
       selector = "20241219";
