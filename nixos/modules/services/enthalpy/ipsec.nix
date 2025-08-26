@@ -73,6 +73,8 @@ in
   };
 
   config = mkIf (cfg.enable && cfg.ipsec.enable) {
+    environment.systemPackages = [ pkgs.strongswan ];
+
     services.strongswan-swanctl = {
       enable = true;
       strongswan.extraConfig = ''

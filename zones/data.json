@@ -15,7 +15,7 @@
       "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAVaKiu8Aw/eWM9S3ThqNmurI7GT8t7gU0ZC39WUNRNrI=\n-----END PUBLIC KEY-----"
     },
     "NET-REBMIT-CORE": {
-      "nodes": ["kanako-ham0", "kogasa-iad0", "suwako-vie1"],
+      "nodes": ["kanako-ham0", "kogasa-iad0", "kogasa-nue0", "suwako-vie1"],
       "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAeKB/ebQ0H0YnsmV0ExsVHHmxpQjIaV/NbuEI5NKjdDk=\n-----END PUBLIC KEY-----"
     },
     "NET-REBMIT-EDGE": {
@@ -66,6 +66,17 @@
       "enthalpy_node_prefix": "2a0e:aa07:e21c:3f90::/60",
       "labels": ["enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2M0h8k/Xpm0wdvINVu4ABAq8OQgAbzfnHL0ci0C7Ko"
+    },
+    "kogasa-nue0": {
+      "b2_backup_bucket_name": "rebmit-backup-kogasa-nue0",
+      "endpoints": ["152.53.188.16", "2a00:11c0:5f:2a13:28d1:f7ff:fe54:a589"],
+      "endpoints_v4": ["152.53.188.16"],
+      "endpoints_v6": ["2a00:11c0:5f:2a13:28d1:f7ff:fe54:a589"],
+      "enthalpy_node_id": 3063,
+      "enthalpy_node_organization": "NET-REBMIT-CORE",
+      "enthalpy_node_prefix": "2a0e:aa07:e21c:bf70::/60",
+      "labels": ["enthalpy/enta0002"],
+      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJuUv4VbhbOn8RJ1J8HGk6p1KQG29Mirj556gOAtDn4+"
     },
     "marisa-7d76": {
       "b2_backup_bucket_name": "rebmit-backup-marisa-7d76",

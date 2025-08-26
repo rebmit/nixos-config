@@ -28,6 +28,13 @@ locals {
       enthalpy_node_id           = parseint("3f9", 16)
       enthalpy_node_organization = "enta0002"
     }
+    "kogasa-nue0" = {
+      labels                     = ["enthalpy/enta0002"]
+      endpoints_v4               = ["152.53.188.16"]
+      endpoints_v6               = ["2a00:11c0:5f:2a13:28d1:f7ff:fe54:a589"]
+      enthalpy_node_id           = parseint("bf7", 16)
+      enthalpy_node_organization = "enta0002"
+    }
     "kanako-ham0" = {
       labels                     = ["enthalpy/enta0002"]
       endpoints_v4               = ["91.108.80.168"]

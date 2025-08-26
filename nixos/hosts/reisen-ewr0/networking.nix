@@ -1,4 +1,9 @@
-{ profiles, ... }:
+{
+  profiles,
+  config,
+  lib,
+  ...
+}:
 {
   imports = with profiles; [ services.enthalpy ];
 
@@ -17,6 +22,13 @@
       }
     '';
   };
+
+  networking.netns.enthalpy.services.bird.config = lib.mkAfter ''
+    protocol static {
+      ipv6 sadr;
+      route 2a0a:4cc0:2000::/48 from ${config.services.enthalpy.network} via fe80::ff:fe00:2 dev "host";
+    }
+  '';
 
   systemd.network = {
     enable = true;
