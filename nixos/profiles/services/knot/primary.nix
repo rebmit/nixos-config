@@ -168,6 +168,15 @@ in
           );
         }
         {
+          domain = "acme.rebmit.link";
+          file = pkgs.writeText "db.link.rebmit.acme" (
+            import ../../../../zones/acme.rebmit.link.nix {
+              inherit (inputs) dns;
+              inherit lib config mylib;
+            }
+          );
+        }
+        {
           domain = "rebmit.moe";
           acl = [ "he-slave" ];
           file = pkgs.writeText "db.moe.rebmit" (

@@ -53,6 +53,7 @@ dns.lib.toString "rebmit.moe" {
   MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains = {
+    _acme-challenge.CNAME = [ "bbcfea06-685b-469d-b14c-671c11629979.acme.rebmit.link." ];
     chat.CNAME = [ "kogasa-iad0.rebmit.link." ];
     git.CNAME = [ "kogasa-iad0.rebmit.link." ];
     idp.CNAME = [ "kogasa-iad0.rebmit.link." ];
