@@ -41,6 +41,7 @@ in
       "/run/credentials/knot.service/ddns-tsig-conf"
       "/run/credentials/knot.service/he-tsig-conf"
       "/run/credentials/knot.service/reisen-tsig-conf"
+      "/run/credentials/knot.service/acme-tsig-conf"
     ];
     settings = {
       server = {
@@ -86,6 +87,12 @@ in
           update-owner = "name";
           update-owner-match = "sub";
           update-owner-name = "dyn";
+        }
+        {
+          id = "acme";
+          key = "8a71fb98-4439-40be-8f66-56b7414efbe9";
+          action = "update";
+          update-type = [ "TXT" ];
         }
         {
           id = "he-slave";
@@ -169,6 +176,7 @@ in
         }
         {
           domain = "acme.rebmit.link";
+          acl = [ "acme" ];
           file = pkgs.writeText "db.link.rebmit.acme" (
             import ../../../../zones/acme.rebmit.link.nix {
               inherit (inputs) dns;
@@ -215,6 +223,7 @@ in
       "ddns-tsig-conf:${config.sops.templates.knot-ddns-tsig-conf.path}"
       "he-tsig-conf:${config.sops.templates.knot-he-tsig-conf.path}"
       "reisen-tsig-conf:${config.sops.templates.knot-reisen-tsig-conf.path}"
+      "acme-tsig-conf:${config.sops.templates.knot-acme-tsig-conf.path}"
     ];
   };
 
@@ -248,9 +257,20 @@ in
     restartUnits = [ "knot.service" ];
   };
 
+  sops.templates.knot-acme-tsig-conf = {
+    content = ''
+      key:
+      - id: 8a71fb98-4439-40be-8f66-56b7414efbe9
+        algorithm: hmac-sha256
+        secret: ${config.sops.placeholder.knot-acme-tsig-secret}
+    '';
+    restartUnits = [ "knot.service" ];
+  };
+
   sops.secrets.knot-ddns-tsig-secret.opentofu.enable = true;
   sops.secrets.knot-he-tsig-secret.opentofu.enable = true;
   sops.secrets.knot-reisen-tsig-secret.opentofu.enable = true;
+  sops.secrets.knot-acme-tsig-secret.opentofu.enable = true;
 
   preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
 }
