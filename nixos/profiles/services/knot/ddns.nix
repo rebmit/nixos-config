@@ -18,6 +18,15 @@ in
       knot-dns
     ];
     script = ''
+      set -euo pipefail
+
+      NEW_IP=$(curl -s -6 https://icanhazip.com | tr -d '\n')
+      CURRENT_IP=$(kdig "${config.networking.hostName}.dyn.rebmit.link" AAAA +short +tcp @"${builtins.elemAt primary.endpoints_v4 0}" | tr -d '\n' || true)
+
+      if [ "$NEW_IP" = "$CURRENT_IP" ] && [ -n "$CURRENT_IP" ]; then
+        exit 0
+      fi
+
       knsupdate -k ''${CREDENTIALS_DIRECTORY}/ddns-tsig-key << EOT
       server ${builtins.elemAt primary.endpoints_v4 0}
       zone rebmit.link
