@@ -39,6 +39,7 @@ in
       sysctl = {
         "net.ipv6.conf.all.forwarding" = 1;
         "net.ipv6.conf.default.forwarding" = 1;
+        "net.netfilter.nf_hooks_lwtunnel" = 1;
       };
 
       netdevs.enthalpy = {

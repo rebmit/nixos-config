@@ -43,10 +43,6 @@ in
     };
 
     networking.netns.enthalpy = {
-      sysctl = {
-        "net.netfilter.nf_hooks_lwtunnel" = 1;
-      };
-
       interfaces.lo = {
         routes = singleton {
           cidr = "::/0";
