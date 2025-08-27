@@ -92,8 +92,9 @@ in
             interface "enta*" {
               type tunnel;
               link quality etx;
-              rxcost 32;
-              rtt cost 1024;
+              rxcost 8;
+              rtt cost 1016;
+              rtt min 8 ms;
               rtt max 1024 ms;
               rx buffer 2000;
             };
