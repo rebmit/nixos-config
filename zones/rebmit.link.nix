@@ -86,12 +86,6 @@ dns.lib.toString "rebmit.link" {
             "reisen.any.rebmit.link."
             "suwako-vie1.rebmit.link."
           ];
-          DS = lib.singleton {
-            keyTag = 63059;
-            algorithm = 15;
-            digestType = 2;
-            digest = "89819722DB58682F806263DB57CE8E8A14232A81792F34356B52F2999DBF7563";
-          };
         };
         "suwako-vie1".DMARC = [
           {
