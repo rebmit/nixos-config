@@ -8,13 +8,13 @@ remote name:
 
 [linux]
 [group('nix')]
-local name:
-  nixos-rebuild switch --sudo --flake .#{{name}} --verbose --show-trace
+local name *args:
+  nixos-rebuild switch --sudo --flake .#{{name}} --verbose --show-trace {{args}}
 
 [macos]
 [group('nix')]
-local name:
-  sudo darwin-rebuild switch --flake .#{{name}} --verbose --show-trace
+local name *args:
+  sudo darwin-rebuild switch --flake .#{{name}} --verbose --show-trace {{args}}
 
 [group('nix')]
 up:

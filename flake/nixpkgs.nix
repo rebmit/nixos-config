@@ -15,8 +15,8 @@ let
         ];
       });
       caddy-rebmit = prev.caddy.withPlugins {
-        plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250530154005-4d3c80e89c5f" ];
-        hash = "sha256-NLFl+ix36z6X1Anr1F6rdMPwSEysSVl84Ad71zprsbU=";
+        plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250829174953-ad3e83c51edb" ];
+        hash = "sha256-6X8qGPAlKdPnddtmkgZfWrY62/J91OKFzyGSUbPY+6E=";
       };
     })
   ];

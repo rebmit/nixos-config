@@ -54,6 +54,10 @@ in
     };
   };
 
+  networking.hosts = {
+    "2404:6800:4003:c06::be" = [ "scholar.google.com" ];
+  };
+
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;
