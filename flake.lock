@@ -359,13 +359,15 @@
       "locked": {
         "lastModified": 1756730629,
         "narHash": "sha256-HMR8/5SJ1h+SP/ssfoO+JuPUdeq8hE4u5b4Xkt/jVeU=",
+        "owner": "rebmit",
+        "repo": "nix-exprs",
         "rev": "46802f58e00388891e6a491328d36cae70422cf7",
-        "type": "tarball",
-        "url": "https://git.rebmit.moe/api/v1/repos/rebmit/nix-exprs/archive/46802f58e00388891e6a491328d36cae70422cf7.tar.gz"
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://git.rebmit.moe/rebmit/nix-exprs/archive/master.tar.gz"
+        "owner": "rebmit",
+        "repo": "nix-exprs",
+        "type": "github"
       }
     },
     "root": {
