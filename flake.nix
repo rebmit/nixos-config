@@ -90,7 +90,7 @@
     # misc
 
     firefox-gnome-theme = {
-      url = "github:/rafaelmardojai/firefox-gnome-theme/v141";
+      url = "github:/rafaelmardojai/firefox-gnome-theme/v142";
       flake = false;
     };
   };

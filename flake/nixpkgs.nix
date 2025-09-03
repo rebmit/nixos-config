@@ -5,8 +5,15 @@ let
     inputs.nixpkgs-terraform-providers-bin.overlay
 
     (_final: prev: {
-      mautrix-telegram = prev.mautrix-telegram.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [
+      caddy-rebmit = prev.caddy.withPlugins {
+        plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250829174953-ad3e83c51edb" ];
+        hash = "sha256-6X8qGPAlKdPnddtmkgZfWrY62/J91OKFzyGSUbPY+6E=";
+      };
+      fuzzel = prev.fuzzel.override {
+        svgBackend = "librsvg";
+      };
+      mautrix-telegram = prev.mautrix-telegram.overrideAttrs (oldAttrs: {
+        patches = (oldAttrs.patches or [ ]) ++ [
           (prev.fetchpatch2 {
             name = "mautrix-telegram-sticker";
             url = "https://github.com/mautrix/telegram/pull/991/commits/0c2764e3194fb4b029598c575945060019bad236.patch";
@@ -14,10 +21,11 @@ let
           })
         ];
       });
-      caddy-rebmit = prev.caddy.withPlugins {
-        plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250829174953-ad3e83c51edb" ];
-        hash = "sha256-6X8qGPAlKdPnddtmkgZfWrY62/J91OKFzyGSUbPY+6E=";
-      };
+      qt6Packages = prev.qt6Packages.overrideScope (
+        _final': prev': {
+          fcitx5-with-addons = prev'.fcitx5-with-addons.override { libsForQt5.fcitx5-qt = null; };
+        }
+      );
     })
   ];
 in

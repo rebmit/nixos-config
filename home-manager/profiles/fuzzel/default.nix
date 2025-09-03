@@ -39,8 +39,8 @@ in
         layer = "overlay";
       };
       border = {
-        width = "4";
-        radius = "32";
+        width = "3";
+        radius = "16";
       };
     };
   };

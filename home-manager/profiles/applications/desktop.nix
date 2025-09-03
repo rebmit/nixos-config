@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # keep-sorted start
+    bustle
     dmlive
     evolution
     foliate
