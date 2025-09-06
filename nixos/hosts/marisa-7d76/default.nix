@@ -1,6 +1,7 @@
 {
   suites,
   profiles,
+  pkgs,
   mylib,
   ...
 }:
@@ -35,6 +36,8 @@
         };
       };
     };
+
+  boot.kernelPackages = pkgs.linuxPackages_testing;
 
   system.stateVersion = "24.11";
 }

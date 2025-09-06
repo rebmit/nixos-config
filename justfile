@@ -17,12 +17,8 @@ local name *args:
   sudo darwin-rebuild switch --flake .#{{name}} --verbose --show-trace {{args}}
 
 [group('nix')]
-up:
-  nix flake update
-
-[group('nix')]
-upp input:
-  nix flake update {{input}}
+up *args:
+  nix flake update {{args}}
 
 [group('nix')]
 history:

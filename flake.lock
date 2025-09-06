@@ -105,11 +105,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754487366,
-        "narHash": "sha256-pHYj8gUBapuUzKV/kN/tR3Zvqc7o6gdFB9XKXIp1SQ8=",
+        "lastModified": 1756770412,
+        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "af66ad14b28a127c5c0f3bbb298218fc63528a18",
+        "rev": "4524271976b625a4a605beefd893f270620fd751",
         "type": "github"
       },
       "original": {
@@ -309,11 +309,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1756922006,
-        "narHash": "sha256-1tmxuCsDAIURTjUyFsPpDTPajxdJ3S5b0qr1vYW/C2Y=",
+        "lastModified": 1757080796,
+        "narHash": "sha256-TCugz2Z2UT5xgtCz4C0WwnPnmF1lh0D24QqeWgFiuBw=",
         "owner": "rebmit",
         "repo": "nixpkgs",
-        "rev": "b030ce03263bbf687b637770d1f9d0c9952277b3",
+        "rev": "3b48bcd377d96930c4055293bf25917e9445ac84",
         "type": "github"
       },
       "original": {
@@ -357,11 +357,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1756730629,
-        "narHash": "sha256-HMR8/5SJ1h+SP/ssfoO+JuPUdeq8hE4u5b4Xkt/jVeU=",
+        "lastModified": 1757048171,
+        "narHash": "sha256-0zOaN03sYWcLd+2rhfY1pvNzHlSHzUZ5U4ZSgjs/eu4=",
         "owner": "rebmit",
         "repo": "nix-exprs",
-        "rev": "46802f58e00388891e6a491328d36cae70422cf7",
+        "rev": "fbd8c6bb0640849994e5a03963a74880d2483d57",
         "type": "github"
       },
       "original": {
