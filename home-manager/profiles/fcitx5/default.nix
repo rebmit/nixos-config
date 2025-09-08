@@ -28,7 +28,7 @@ in
     recursive = true;
   };
 
-  systemd.user.sessionVariables = {
+  home.sessionVariables = {
     QT_IM_MODULE = "fcitx";
   };
 }

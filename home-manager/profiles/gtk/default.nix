@@ -20,7 +20,7 @@
     text = config.gtk.gtk4.extraCss;
   };
 
-  systemd.user.sessionVariables = {
+  home.sessionVariables = {
     GTK_USE_PORTAL = "1";
   };
 

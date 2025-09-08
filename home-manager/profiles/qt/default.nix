@@ -1,5 +1,5 @@
 {
-  systemd.user.sessionVariables = {
+  home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "xdgdesktopportal";
   };
 }
