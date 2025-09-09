@@ -9,5 +9,6 @@ in
   boot.binfmt.registrations.rosetta.preserveArgvZero = mkForce true;
 
   # TODO: remove workaround for rosetta error: unhandled auxillary vector type 29
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  # https://github.com/utmapp/UTM/discussions/6799
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 }
