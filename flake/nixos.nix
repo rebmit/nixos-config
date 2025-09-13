@@ -123,6 +123,11 @@ in
     })
 
     (mkHost {
+      name = "flandre-t1";
+      system = "x86_64-linux";
+    })
+
+    (mkHost {
       name = "kogasa-iad0";
       system = "x86_64-linux";
     })

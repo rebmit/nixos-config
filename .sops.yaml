@@ -3,6 +3,7 @@ keys:
     - &self0 age1yubikey1qt4k5tkk47fm58cj66s7cr8z9mete4jkyv2xjdfexcfwc0cw9c9jx7xgpwc
     - &self1 age1wg5kd692d3m4mh83qt5smzeu48j8w2gjspxk4l5svlg92fumqefqvkp3kx
     - &flandre-m5p age18ktzczpaufkp34j42plxlyl94yu3tusvpad6mfperpw7stypdfxqdn4au8
+    - &flandre-t1 age1f3z3ueswax09l84nv7rswcm8c7hgtexx3347ey8r3twtc0j6x38s0hqrr0
     - &marisa-7d76 age1zufm5x7xk8xt3pfzfkdj60z9sd7vnmq739udpwwp4h8qd7nujqesusm4vq
     - &marisa-j715 age1mc0nfucl68cswqd9xkcmv4l003wan84yked7tspsjtl4ya40p99q6sx9l3
     - &reisen-ewr0 age1hel53fkhu66gvtfklf25wnq5dt6g808h0tac2sfvdlhc8mtp7uqsrdpzcy
@@ -26,6 +27,7 @@ creation_rules:
           - *self0
           - *self1
           - *flandre-m5p
+          - *flandre-t1
           - *marisa-7d76
           - *marisa-j715
           - *reisen-ewr0
@@ -37,12 +39,27 @@ creation_rules:
           - *kogasa-nue0
           - *suwako-vie1
           - *kanako-ham0
+  - path_regex: secrets/local.*
+    key_groups:
+      - age:
+          - *self0
+          - *self1
+          - *flandre-m5p
+          - *flandre-t1
+          - *marisa-7d76
+          - *marisa-j715
   - path_regex: secrets/hosts/(opentofu/)?flandre-m5p
     key_groups:
       - age:
           - *self0
           - *self1
           - *flandre-m5p
+  - path_regex: secrets/hosts/(opentofu/)?flandre-t1
+    key_groups:
+      - age:
+          - *self0
+          - *self1
+          - *flandre-t1
   - path_regex: secrets/hosts/(opentofu/)?marisa-7d76
     key_groups:
       - age:
