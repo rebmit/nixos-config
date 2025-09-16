@@ -2,7 +2,6 @@
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/nixos/mainframe/home.nix (MIT License)
 # https://github.com/llakala/nixos/blob/b3c5fbde5a5f78c91ee658250f9b42418b73a7b7/apps/gui/firefox.nix (MIT License)
 {
-  inputs,
   lib,
   pkgs,
   ...
@@ -106,21 +105,14 @@
       };
     };
     userChrome = ''
-      @import "${inputs.firefox-gnome-theme}/theme/gnome-theme.css";
+      @import "${pkgs.firefox-gnome-theme}/lib/firefox-gnome-theme/userChrome.css";
 
       #TabsToolbar {
         display: none;
       }
     '';
     userContent = ''
-      @import "${inputs.firefox-gnome-theme}/theme/variables.css";
-      @import "${inputs.firefox-gnome-theme}/theme/colors/light.css";
-      @import "${inputs.firefox-gnome-theme}/theme/colors/dark.css";
-
-      @import "${inputs.firefox-gnome-theme}/theme/pages/newtab.css";
-      @import "${inputs.firefox-gnome-theme}/theme/pages/privatebrowsing.css";
-
-      @import "${inputs.firefox-gnome-theme}/theme/parts/video-player.css";
+      @import "${pkgs.firefox-gnome-theme}/lib/firefox-gnome-theme/userContent.css";
     '';
   };
 

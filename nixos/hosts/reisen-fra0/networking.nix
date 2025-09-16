@@ -28,6 +28,7 @@
       ipv6 sadr;
       route 2a0d:f302::/32 from ${config.services.enthalpy.network} via fe80::ff:fe00:2 dev "host";
       route 2a05:901::/32 from ${config.services.enthalpy.network} via fe80::ff:fe00:2 dev "host";
+      route 2a01:4f8::/32 from ${config.services.enthalpy.network} via fe80::ff:fe00:2 dev "host";
       route 2a00:11c0:5f::/48 from ${config.services.enthalpy.network} via fe80::ff:fe00:2 dev "host";
     }
   '';

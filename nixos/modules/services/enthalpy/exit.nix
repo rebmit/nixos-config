@@ -124,7 +124,7 @@ in
           route ::/0 from ${cfg.network} via fe80::ff:fe00:2 dev "host";
         }
 
-        protocol babel exit {
+        protocol babel {
           ipv6 sadr {
             export filter {
               if !is_safe_prefix() then reject;
