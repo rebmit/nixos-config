@@ -9,6 +9,7 @@
     theme.adwaita
     tmux
     yazi
+    zoxide
     # keep-sorted end
   ];
 }
