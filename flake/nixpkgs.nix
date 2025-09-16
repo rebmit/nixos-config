@@ -21,6 +21,15 @@ let
           })
         ];
       });
+      nheko = prev.nheko.overrideAttrs (oldAttrs: {
+        patches = (oldAttrs.patches or [ ]) ++ [
+          (prev.fetchpatch2 {
+            name = "fix-most-reply-rendering-issue-with-qt-6.9.2";
+            url = "https://github.com/Nheko-Reborn/nheko/commit/2769642d3c7bd3c0d830b2f18ef6b3bf6a710bf4.patch";
+            hash = "sha256-bfoR34d3fM7IKM6qLIPcvxrmYErkJ9XCb5c8VWmCLlY=";
+          })
+        ];
+      });
       qt6Packages = prev.qt6Packages.overrideScope (
         _final': prev': {
           fcitx5-with-addons = prev'.fcitx5-with-addons.override { libsForQt5.fcitx5-qt = null; };
