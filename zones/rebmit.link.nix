@@ -22,7 +22,7 @@ dns.lib.toString "rebmit.link" {
     DMARC
     CAA
     ;
-  MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
+  MX = with mx; [ (mx 10 "kogasa-nue0.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains =
     lib.recursiveUpdate
@@ -84,7 +84,7 @@ dns.lib.toString "rebmit.link" {
         acme = {
           NS = [ "reisen.any.rebmit.link." ];
         };
-        "suwako-vie1".DMARC = [
+        "kogasa-nue0".DMARC = [
           {
             p = "reject";
             sp = "reject";

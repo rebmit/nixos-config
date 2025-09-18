@@ -61,6 +61,8 @@
 
       milter_default_action = "accept";
       internal_mail_filter_classes = [ "bounce" ];
+
+      message_size_limit = 40960000;
     };
     settings.master =
       let

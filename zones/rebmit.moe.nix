@@ -41,16 +41,16 @@ dns.lib.toString "rebmit.moe" {
       service = "imaps";
       proto = "tcp";
       port = config.ports.imap-tls;
-      target = "suwako-vie1.rebmit.link.";
+      target = "kogasa-nue0.rebmit.link.";
     }
     {
       service = "submissions";
       proto = "tcp";
       port = config.ports.smtp-tls;
-      target = "suwako-vie1.rebmit.link.";
+      target = "kogasa-nue0.rebmit.link.";
     }
   ];
-  MX = with mx; [ (mx 10 "suwako-vie1.rebmit.link.") ];
+  MX = with mx; [ (mx 10 "kogasa-nue0.rebmit.link.") ];
   TXT = [ (with spf; soft [ "mx" ]) ];
   subdomains = {
     _acme-challenge.CNAME = [ "bbcfea06-685b-469d-b14c-671c11629979.acme.rebmit.link." ];
