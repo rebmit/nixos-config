@@ -36,7 +36,7 @@ locals {
       enthalpy_node_organization = "enta0002"
     }
     "kogasa-nue0" = {
-      labels                     = ["enthalpy/enta0002"]
+      labels                     = ["dns/primary", "enthalpy/enta0002"]
       endpoints_v4               = ["152.53.188.16"]
       endpoints_v6               = ["2a00:11c0:5f:2a13:28d1:f7ff:fe54:a589"]
       enthalpy_node_id           = parseint("bf7", 16)
@@ -50,7 +50,7 @@ locals {
       enthalpy_node_organization = "enta0002"
     }
     "suwako-vie1" = {
-      labels                     = ["dns/primary", "enthalpy/enta0002"]
+      labels                     = ["enthalpy/enta0002"]
       endpoints_v4               = ["46.102.157.144"]
       endpoints_v6               = ["2a0d:f302:102:8e05::1"]
       enthalpy_node_id           = parseint("410", 16)

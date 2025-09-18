@@ -8,8 +8,5 @@ dns.lib.toString "acme.rebmit.link" {
     CAA
     ;
   TTL = 30;
-  NS = [
-    "reisen.any.rebmit.link."
-    "suwako-vie1.rebmit.link."
-  ];
+  NS = [ "reisen.any.rebmit.link." ];
 }

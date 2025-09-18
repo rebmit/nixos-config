@@ -24,7 +24,7 @@
     }
   },
   "nameservers": {
-    "primary": "suwako-vie1",
+    "primary": "kogasa-nue0",
     "secondary": [
       "reisen-ewr0",
       "reisen-fra0",
@@ -86,7 +86,7 @@
       "enthalpy_node_id": 3063,
       "enthalpy_node_organization": "NET-REBMIT-CORE",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:bf70::/60",
-      "labels": ["enthalpy/enta0002"],
+      "labels": ["dns/primary", "enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJuUv4VbhbOn8RJ1J8HGk6p1KQG29Mirj556gOAtDn4+"
     },
     "marisa-7d76": {
@@ -174,7 +174,7 @@
       "enthalpy_node_id": 1040,
       "enthalpy_node_organization": "NET-REBMIT-CORE",
       "enthalpy_node_prefix": "2a0e:aa07:e21c:4100::/60",
-      "labels": ["dns/primary", "enthalpy/enta0002"],
+      "labels": ["enthalpy/enta0002"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFI0Y8Hwaoz9fx1MAn+BLWpTxWeoIzwXPLUp3xCcWXN"
     }
   }

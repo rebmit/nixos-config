@@ -82,10 +82,7 @@ dns.lib.toString "rebmit.link" {
       ))
       {
         acme = {
-          NS = [
-            "reisen.any.rebmit.link."
-            "suwako-vie1.rebmit.link."
-          ];
+          NS = [ "reisen.any.rebmit.link." ];
         };
         "suwako-vie1".DMARC = [
           {
