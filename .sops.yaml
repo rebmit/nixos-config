@@ -13,7 +13,6 @@ keys:
     - &reisen-sin0 age10jyxva6hwwesdckff5xuhk8d9askpqc605spfxjxpvsqtllqgeps6q9s9m
     - &kogasa-iad0 age1q5rv9w3e33xhkjyacnwjrxe4asm4t6wkpqlstq6ryxherx4f04hsz99t07
     - &kogasa-nue0 age13hzt6sw6v6329cut266h3vcxjwq7f82ydl7y08eajzeghkqrw5uqvmhu86
-    - &suwako-vie1 age10facvdx4y8q8rz9fpf2w566283e9nglhx9tkr90e6uetem8hkyaqffqqa9
     - &kanako-ham0 age1qdunuzv0wwn2xqgt54s64v28488gsz4ky7u5zcv4yt26n7wn8gesx3x3za
 creation_rules:
   - path_regex: infra/.*
@@ -37,7 +36,6 @@ creation_rules:
           - *reisen-sin0
           - *kogasa-iad0
           - *kogasa-nue0
-          - *suwako-vie1
           - *kanako-ham0
   - path_regex: secrets/local.*
     key_groups:
@@ -114,12 +112,6 @@ creation_rules:
           - *self0
           - *self1
           - *kogasa-nue0
-  - path_regex: secrets/hosts/(opentofu/)?suwako-vie1
-    key_groups:
-      - age:
-          - *self0
-          - *self1
-          - *suwako-vie1
   - path_regex: secrets/hosts/(opentofu/)?kanako-ham0
     key_groups:
       - age:
