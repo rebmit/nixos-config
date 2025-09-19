@@ -6,7 +6,17 @@
 
   disko.devices = {
     nodev."/".mountOptions = [ "size=4G" ];
-    disk.main.device = "/dev/disk/by-path/pci-0000:01:00.0-nvme-1";
+    disk.main = {
+      device = "/dev/disk/by-path/pci-0000:01:00.0-nvme-1";
+      content = {
+        partitions.cryptroot.content = {
+          settings = {
+            keyFile = "/dev/disk/by-partuuid/33d86417-4716-4279-8753-89e770bb6ac4";
+            keyFileSize = 512 * 64;
+          };
+        };
+      };
+    };
   };
 
   boot = {
