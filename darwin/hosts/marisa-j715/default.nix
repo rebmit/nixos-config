@@ -6,20 +6,21 @@
 }:
 {
   system.defaults.dock.persistent-apps = [
-    { app = "/Users/rebmit/Applications/Home Manager Apps/kitty.app"; }
+    { app = "/Applications/Nix Apps/kitty.app"; }
     { app = "/Applications/Firefox Developer Edition.app"; }
     { app = "/Applications/Nix Apps/Thunderbird.app"; }
-    { app = "/Users/rebmit/Applications/Home Manager Apps/Cinny.app"; }
+    { app = "/Applications/Nix Apps/Cinny.app"; }
     { app = "/Applications/Nix Apps/UTM.app"; }
-    { app = "/Applications/Nix Apps/Zotero.app"; }
     { app = "/Applications/WeChat.app"; }
   ];
 
   environment.systemPackages = with pkgs; [
+    cinny-desktop
     git
     coreutils
     htop
     openssh
+    kitty
     utm
     zotero
     thunderbird
@@ -60,24 +61,21 @@
       };
 
       programs.kitty = {
+        package = pkgs.emptyDirectory;
         font.size = lib.mkForce 16.0;
         settings.background_opacity = lib.mkForce "1.00";
       };
 
-      programs.helix.settings.theme = lib.mkForce "adwaita-dark";
+      programs.helix.settings.theme = lib.mkForce "adwaita-light";
 
       services.ssh-agent.enable = lib.mkForce false;
 
       xdg.configFile."kitty/theme.conf".source =
-        lib.mkForce "${self}/home-manager/profiles/theme/adwaita/_kitty/adwaita_dark.conf";
+        lib.mkForce "${self}/home-manager/profiles/theme/adwaita/_kitty/adwaita_light.conf";
 
       disabledModules = [ profiles.preservation ];
 
       systemd.user.tmpfiles.rules = lib.mkForce [ ];
-
-      home.packages = with pkgs; [
-        cinny-desktop
-      ];
     };
 
   users.users.rebmit = {
