@@ -8,6 +8,7 @@
   ...
 }:
 let
+  inherit (lib.strings) concatMapStringsSep;
   inherit (lib.lists) singleton;
   inherit (mylib.network) cidr;
 in
@@ -73,15 +74,40 @@ in
     wantedBy = [ "multi-user.target" ];
   };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_l3mdev_accept" = 1;
-    "net.ipv4.udp_l3mdev_accept" = 1;
-    "net.ipv4.raw_l3mdev_accept" = 1;
+  systemd.services.network-srv6 =
+    let
+      routes = [
+        "5f00::1 encap seg6local action End.DT6 vrftable vrf0 dev lan0 table localsid"
+        "5f00::2 encap seg6local action End.DT6 vrftable vrf1 dev lan0 table localsid"
+      ];
+    in
+    {
+      path = with pkgs; [
+        iproute2
+      ];
+      script = concatMapStringsSep "\n" (r: "ip -6 r add ${r}") routes;
+      preStop = concatMapStringsSep "\n" (r: "ip -6 r del ${r}") routes;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+    };
+
+  boot = {
+    kernelModules = [ "vrf" ];
+    kernel.sysctl = {
+      "net.vrf.strict_mode" = 1;
+      "net.ipv4.tcp_l3mdev_accept" = 1;
+      "net.ipv4.udp_l3mdev_accept" = 1;
+      "net.ipv4.raw_l3mdev_accept" = 1;
+    };
   };
 
   systemd.network = {
     enable = true;
-    wait-online.anyInterface = true;
     config = {
       networkConfig = {
         IPv4Forwarding = true;
@@ -89,6 +115,9 @@ in
       };
       routeTables = {
         exit = 200;
+        localsid = 201;
+        vrf0 = 300;
+        vrf1 = 301;
       };
     };
     links = {
@@ -112,7 +141,7 @@ in
           Name = "vrf0";
         };
         vrfConfig = {
-          Table = 300;
+          Table = config.systemd.network.config.routeTables.vrf0;
         };
       };
       "20-vrf1" = {
@@ -121,14 +150,28 @@ in
           Name = "vrf1";
         };
         vrfConfig = {
-          Table = 301;
+          Table = config.systemd.network.config.routeTables.vrf1;
         };
       };
     };
     networks = {
       "30-lo" = {
         matchConfig.Name = "lo";
+        routes = [
+          {
+            Type = "blackhole";
+            Destination = "::/0";
+            Table = config.systemd.network.config.routeTables.localsid;
+          }
+        ];
         routingPolicyRules = [
+          {
+            Priority = 400;
+            Family = "ipv6";
+            Table = config.systemd.network.config.routeTables.localsid;
+            From = cidr.subnet 4 15 host.enthalpy_node_prefix;
+            To = "5f00::/16";
+          }
           {
             Priority = 500;
             Family = "both";
@@ -158,13 +201,16 @@ in
         };
         dhcpServerConfig = {
           ServerAddress = "100.72.45.1/24";
-          UplinkInterface = "wan0";
           EmitDNS = true;
+          DNS = "10.10.0.21";
         };
         ipv6Prefixes = singleton {
           Prefix = cidr.subnet 4 15 host.enthalpy_node_prefix;
           Assign = true;
           Token = "static:::1";
+        };
+        ipv6RoutePrefixes = singleton {
+          Route = "5f00::/16";
         };
       };
       "30-vrf0" = {
@@ -194,6 +240,7 @@ in
           VRF = [ "vrf0" ];
           KeepConfiguration = true;
         };
+        linkConfig.RequiredForOnline = false;
         dhcpV4Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
       };
@@ -206,6 +253,7 @@ in
           VRF = [ "vrf1" ];
           KeepConfiguration = true;
         };
+        linkConfig.RequiredForOnline = false;
         dhcpV4Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
       };
