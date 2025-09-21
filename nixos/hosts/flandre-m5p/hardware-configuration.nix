@@ -6,24 +6,27 @@
 
   disko.devices = {
     nodev."/".mountOptions = [ "size=16G" ];
-    disk.main.device = "/dev/disk/by-path/pci-0000:04:00.0-nvme-1";
+    disk.main = {
+      device = "/dev/disk/by-path/pci-0000:04:00.0-nvme-1";
+      content = {
+        partitions.cryptroot.content = {
+          settings = {
+            keyFile = "/dev/disk/by-partuuid/3a2fec01-b092-4e0f-a20f-03dac6e08f30";
+            keyFileSize = 512 * 64;
+          };
+        };
+      };
+    };
   };
 
   boot = {
-    initrd = {
-      availableKernelModules = [
-        "xhci_pci"
-        "ahci"
-        "usbhid"
-        "usb_storage"
-        "sd_mod"
-      ];
-      # workaround for https://github.com/nix-community/disko/issues/678
-      luks.devices.cryptroot = {
-        keyFile = "/dev/disk/by-id/usb-aigo_U330_80101016-0:0";
-        keyFileSize = 512 * 64;
-      };
-    };
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
     kernelModules = [ "kvm-amd" ];
     loader = {
       efi.canTouchEfiVariables = false;
