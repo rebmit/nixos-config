@@ -64,24 +64,25 @@ in
     networks = {
       "30-enp14s0" = {
         matchConfig.Name = "enp14s0";
+        linkConfig.MTUBytes = 9000;
         networkConfig = {
-          DHCP = "yes";
+          DHCP = "ipv4";
           IPv6AcceptRA = true;
           IPv6PrivacyExtensions = true;
+          KeepConfiguration = true;
         };
         dhcpV4Config.RouteMetric = 1024;
-        dhcpV6Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
       };
       "40-wlan0" = {
         matchConfig.Name = "wlan0";
         networkConfig = {
-          DHCP = "yes";
+          DHCP = "ipv4";
           IPv6AcceptRA = true;
           IPv6PrivacyExtensions = true;
+          KeepConfiguration = true;
         };
         dhcpV4Config.RouteMetric = 2048;
-        dhcpV6Config.RouteMetric = 2048;
         ipv6AcceptRAConfig.RouteMetric = 2048;
       };
     };
