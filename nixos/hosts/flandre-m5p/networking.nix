@@ -77,16 +77,16 @@ in
   systemd.services.network-srv6 =
     let
       routes = [
-        "5f00::1 encap seg6local action End.DT6 vrftable vrf0 dev lan0 table localsid"
-        "5f00::2 encap seg6local action End.DT6 vrftable vrf1 dev lan0 table localsid"
+        "5f00::1 encap seg6local action End.DT46 vrftable vrf0 dev lan0 table localsid"
+        "5f00::2 encap seg6local action End.DT46 vrftable vrf1 dev lan0 table localsid"
       ];
     in
     {
       path = with pkgs; [
         iproute2
       ];
-      script = concatMapStringsSep "\n" (r: "ip -6 r add ${r}") routes;
-      preStop = concatMapStringsSep "\n" (r: "ip -6 r del ${r}") routes;
+      script = concatMapStringsSep "\n" (r: "ip r add ${r}") routes;
+      preStop = concatMapStringsSep "\n" (r: "ip r del ${r}") routes;
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;

@@ -43,6 +43,10 @@ in
               type = types.nullOr types.str;
               default = null;
             };
+            fwmark = mkOption {
+              type = types.nullOr types.str;
+              default = null;
+            };
           };
         }
       );
@@ -112,6 +116,7 @@ in
         serial_number = ep.serialNumber;
         address_family = ep.addressFamily;
         address = ep.address;
+        fwmark = ep.fwmark;
         port = config.ports.ipsec-nat-traversal;
         updown = pkgs.writeShellScript "updown" ''
           LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")

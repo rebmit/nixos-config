@@ -2,16 +2,42 @@
   profiles,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
+  inherit (lib.strings) concatMapStringsSep;
   inherit (lib.lists) singleton;
 in
 {
   imports = with profiles; [ services.enthalpy ];
 
   services.enthalpy = {
-    ipsec.interfaces = [ "enp14s0" ];
+    ipsec = {
+      interfaces = [ "enp14s0" ];
+      endpoints = lib.mkForce [
+        {
+          serialNumber = "0";
+          addressFamily = "ip4";
+          fwmark = toString config.systemd.network.config.routeTables.wan0;
+        }
+        {
+          serialNumber = "1";
+          addressFamily = "ip6";
+          fwmark = toString config.systemd.network.config.routeTables.wan0;
+        }
+        {
+          serialNumber = "2";
+          addressFamily = "ip4";
+          fwmark = toString config.systemd.network.config.routeTables.wan1;
+        }
+        {
+          serialNumber = "3";
+          addressFamily = "ip6";
+          fwmark = toString config.systemd.network.config.routeTables.wan1;
+        }
+      ];
+    };
     clat = {
       enable = true;
       segment = singleton "2a0e:aa07:e21c:2546::3";
@@ -58,10 +84,83 @@ in
     "2404:6800:4003:c06::be" = [ "scholar.google.com" ];
   };
 
+  systemd.services.network-srv6 =
+    let
+      routes = [
+        "0.0.0.0/0 encap seg6 mode encap segs 5f00::1 dev enp14s0 table wan0 mtu 1500 metric 512"
+        "::/0      encap seg6 mode encap segs 5f00::1 dev enp14s0 table wan0 mtu 1500 metric 512"
+        "0.0.0.0/0 encap seg6 mode encap segs 5f00::2 dev enp14s0 table wan1 mtu 1500 metric 512"
+        "::/0      encap seg6 mode encap segs 5f00::2 dev enp14s0 table wan1 mtu 1500 metric 512"
+      ];
+    in
+    {
+      path = with pkgs; [
+        iproute2
+      ];
+      script = concatMapStringsSep "\n" (r: "ip r add ${r}") routes;
+      preStop = concatMapStringsSep "\n" (r: "ip r del ${r} || true") routes;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+    };
+
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;
+    config = {
+      routeTables = {
+        wan0 = 300;
+        wan1 = 301;
+      };
+    };
     networks = {
+      "30-lo" = {
+        matchConfig.Name = "lo";
+        routes = [
+          {
+            Type = "blackhole";
+            Destination = "0.0.0.0/0";
+            Metric = 1024;
+            Table = config.systemd.network.config.routeTables.wan0;
+          }
+          {
+            Type = "blackhole";
+            Destination = "::/0";
+            Metric = 1024;
+            Table = config.systemd.network.config.routeTables.wan0;
+          }
+          {
+            Type = "blackhole";
+            Destination = "0.0.0.0/0";
+            Metric = 1024;
+            Table = config.systemd.network.config.routeTables.wan1;
+          }
+          {
+            Type = "blackhole";
+            Destination = "::/0";
+            Metric = 1024;
+            Table = config.systemd.network.config.routeTables.wan1;
+          }
+        ];
+        routingPolicyRules = [
+          {
+            Priority = 5000;
+            Family = "both";
+            FirewallMark = config.systemd.network.config.routeTables.wan0;
+            Table = config.systemd.network.config.routeTables.wan0;
+          }
+          {
+            Priority = 5000;
+            Family = "both";
+            FirewallMark = config.systemd.network.config.routeTables.wan1;
+            Table = config.systemd.network.config.routeTables.wan1;
+          }
+        ];
+      };
       "30-enp14s0" = {
         matchConfig.Name = "enp14s0";
         linkConfig.MTUBytes = 9000;
@@ -73,6 +172,18 @@ in
         };
         dhcpV4Config.RouteMetric = 1024;
         ipv6AcceptRAConfig.RouteMetric = 1024;
+        routes = [
+          {
+            Destination = "5f00::/16";
+            Gateway = "_ipv6ra";
+            Table = config.systemd.network.config.routeTables.wan0;
+          }
+          {
+            Destination = "5f00::/16";
+            Gateway = "_ipv6ra";
+            Table = config.systemd.network.config.routeTables.wan1;
+          }
+        ];
       };
       "40-wlan0" = {
         matchConfig.Name = "wlan0";
