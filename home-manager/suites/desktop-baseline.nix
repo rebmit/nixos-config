@@ -12,8 +12,8 @@
       fcitx5
       firefox
       fontconfig
+      ghostty
       gtk
-      kitty
       qt
       xdg-user-dirs
       # keep-sorted end

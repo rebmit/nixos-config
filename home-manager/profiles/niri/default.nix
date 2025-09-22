@@ -19,7 +19,7 @@ in
     };
     terminal = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [ "kitty" ];
+      default = [ "ghostty" ];
       description = ''
         The command of the default terminal.
       '';

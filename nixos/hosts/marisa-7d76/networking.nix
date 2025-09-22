@@ -17,24 +17,8 @@ in
       interfaces = [ "enp14s0" ];
       endpoints = lib.mkForce [
         {
-          serialNumber = "0";
-          addressFamily = "ip4";
-          fwmark = toString config.systemd.network.config.routeTables.wan0;
-        }
-        {
           serialNumber = "1";
           addressFamily = "ip6";
-          fwmark = toString config.systemd.network.config.routeTables.wan0;
-        }
-        {
-          serialNumber = "2";
-          addressFamily = "ip4";
-          fwmark = toString config.systemd.network.config.routeTables.wan1;
-        }
-        {
-          serialNumber = "3";
-          addressFamily = "ip6";
-          fwmark = toString config.systemd.network.config.routeTables.wan1;
         }
       ];
     };

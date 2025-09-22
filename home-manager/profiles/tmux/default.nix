@@ -75,4 +75,6 @@
   };
 
   programs.kitty.settings.shell = lib.mkDefault "${config.programs.tmux.package}/bin/tmux";
+
+  programs.ghostty.settings.command = "${config.programs.tmux.package}/bin/tmux";
 }

@@ -6,6 +6,7 @@
     dmlive
     evolution
     foliate
+    ghostty
     gimp3
     libreoffice-fresh
     loupe
