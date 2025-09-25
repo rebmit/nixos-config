@@ -6,7 +6,7 @@
 }:
 {
   system.defaults.dock.persistent-apps = [
-    { app = "/Applications/Nix Apps/kitty.app"; }
+    { app = "/Applications/Ghostty.app"; }
     { app = "/Applications/Firefox Developer Edition.app"; }
     { app = "/Applications/Nix Apps/Thunderbird.app"; }
     { app = "/Applications/Nix Apps/Cinny.app"; }
@@ -14,13 +14,18 @@
     { app = "/Applications/WeChat.app"; }
   ];
 
+  homebrew = {
+    enable = true;
+    casks = [ "ghostty" ];
+    onActivation.cleanup = "uninstall";
+  };
+
   environment.systemPackages = with pkgs; [
     cinny-desktop
     git
     coreutils
     htop
     openssh
-    kitty
     utm
     zotero
     thunderbird
@@ -51,7 +56,7 @@
     {
       imports = [
         suites.workstation
-        profiles.kitty
+        profiles.ghostty
       ];
 
       programs.git = {
@@ -60,18 +65,13 @@
         signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
       };
 
-      programs.kitty = {
-        package = pkgs.emptyDirectory;
-        font.size = lib.mkForce 16.0;
-        settings.background_opacity = lib.mkForce "1.00";
+      programs.ghostty = {
+        package = null;
       };
 
-      programs.helix.settings.theme = lib.mkForce "adwaita-light";
+      programs.helix.settings.theme = lib.mkForce "base16_transparent";
 
       services.ssh-agent.enable = lib.mkForce false;
-
-      xdg.configFile."kitty/theme.conf".source =
-        lib.mkForce "${self}/home-manager/profiles/theme/adwaita/_kitty/adwaita_light.conf";
 
       disabledModules = [ profiles.preservation ];
 
