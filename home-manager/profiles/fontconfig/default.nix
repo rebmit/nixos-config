@@ -28,5 +28,6 @@ in
         <cachedir>${cache}</cachedir>
       </fontconfig>
     '';
+
   xdg.configFile."fontconfig/conf.d/30-default-fonts.conf".source = ./fonts.conf;
 }

@@ -20,12 +20,6 @@ let
         The path to the wallpaper to use.
       '';
     };
-    kittyTheme = mkOption {
-      type = types.str;
-      description = ''
-        The path to the kitty theme to use.
-      '';
-    };
     helixTheme = mkOption {
       type = types.str;
       description = ''
