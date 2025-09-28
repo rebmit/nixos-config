@@ -58,10 +58,6 @@
       installation_mode = "force_installed";
       install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
     };
-    "@testpilot-containers" = {
-      installation_mode = "force_installed";
-      install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
-    };
     "zotero@chnm.gmu.edu" = {
       installation_mode = "force_installed";
       install_url = "https://www.zotero.org/download/connector/dl?browser=firefox";
@@ -97,7 +93,7 @@
       "Underlay" = {
         id = 1;
         color = "green";
-        icon = "fingerprint";
+        icon = "fence";
       };
     };
     userChrome = ''
