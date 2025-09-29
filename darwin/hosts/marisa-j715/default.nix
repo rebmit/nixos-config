@@ -9,6 +9,7 @@
     { app = "/Applications/Ghostty.app"; }
     { app = "/Applications/Firefox Developer Edition.app"; }
     { app = "/Applications/Nix Apps/Thunderbird.app"; }
+    { app = "/Applications/Nix Apps/nheko.app"; }
     { app = "/Applications/Nix Apps/Cinny.app"; }
     { app = "/Applications/Nix Apps/UTM.app"; }
     { app = "/Applications/WeChat.app"; }
@@ -29,6 +30,7 @@
     utm
     zotero
     thunderbird
+    nheko
     (writeShellApplication {
       name = "nixos";
       text = ''
