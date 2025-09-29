@@ -90,6 +90,7 @@
 
   nix.settings = {
     experimental-features = "nix-command flakes";
+    sandbox = true;
     trusted-users = [
       "root"
       "@admin"
