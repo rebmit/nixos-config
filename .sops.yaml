@@ -6,7 +6,6 @@ keys:
     - &flandre-t1 age1f3z3ueswax09l84nv7rswcm8c7hgtexx3347ey8r3twtc0j6x38s0hqrr0
     - &marisa-7d76 age1zufm5x7xk8xt3pfzfkdj60z9sd7vnmq739udpwwp4h8qd7nujqesusm4vq
     - &marisa-j715 age1mc0nfucl68cswqd9xkcmv4l003wan84yked7tspsjtl4ya40p99q6sx9l3
-    - &reisen-ewr0 age1hel53fkhu66gvtfklf25wnq5dt6g808h0tac2sfvdlhc8mtp7uqsrdpzcy
     - &reisen-fra0 age1ufkr0v8pqhpd06tpnpfwr7lphdwke0uagtahp5h5avu82fckzd9qtwpx2e
     - &reisen-nrt0 age1yn8a3m66ccsgdgp9fnguavnx3hz9e0wwz594jk0v8hhq84rs8utq4ggtww
     - &reisen-sea0 age1cy0r5j5m4r98srahv0g6tr4xxhc543sc577y3f49vya7sxs5es4sldp0vt
@@ -29,7 +28,6 @@ creation_rules:
           - *flandre-t1
           - *marisa-7d76
           - *marisa-j715
-          - *reisen-ewr0
           - *reisen-fra0
           - *reisen-nrt0
           - *reisen-sea0
@@ -70,12 +68,6 @@ creation_rules:
           - *self0
           - *self1
           - *marisa-j715
-  - path_regex: secrets/hosts/(opentofu/)?reisen-ewr0
-    key_groups:
-      - age:
-          - *self0
-          - *self1
-          - *reisen-ewr0
   - path_regex: secrets/hosts/(opentofu/)?reisen-fra0
     key_groups:
       - age:

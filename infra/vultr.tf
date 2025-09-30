@@ -4,10 +4,6 @@ provider "vultr" {
 
 locals {
   vultr_nodes = {
-    "reisen-ewr0" = {
-      region = "ewr"
-      plan   = "vhp-1c-1gb-amd"
-    }
     "reisen-fra0" = {
       region = "fra"
       plan   = "vhp-1c-1gb-amd"

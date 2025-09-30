@@ -1,13 +1,7 @@
 {
   "enthalpy": {
     "NET-ENTHALPY-ORIGIN": {
-      "nodes": [
-        "reisen-ewr0",
-        "reisen-fra0",
-        "reisen-nrt0",
-        "reisen-sea0",
-        "reisen-sin0"
-      ],
+      "nodes": ["reisen-fra0", "reisen-nrt0", "reisen-sea0", "reisen-sin0"],
       "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATDD7brJdPxIKbYsbmdHdfZ2u70iG76nG92oP7j6ivVg=\n-----END PUBLIC KEY-----"
     },
     "NET-REBMIT-ACCESS": {
@@ -25,13 +19,7 @@
   },
   "nameservers": {
     "primary": "kogasa-nue0",
-    "secondary": [
-      "reisen-ewr0",
-      "reisen-fra0",
-      "reisen-nrt0",
-      "reisen-sea0",
-      "reisen-sin0"
-    ]
+    "secondary": ["reisen-fra0", "reisen-nrt0", "reisen-sea0", "reisen-sin0"]
   },
   "hosts": {
     "flandre-m5p": {
@@ -110,17 +98,6 @@
       "enthalpy_node_prefix": "2a0e:aa07:e21c:5720::/60",
       "labels": ["enthalpy/enta0004"],
       "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6aUERU0Suxg3ycqs1dCfcnvLkOipQN0NBeUKmqProl"
-    },
-    "reisen-ewr0": {
-      "b2_backup_bucket_name": "rebmit-backup-reisen-ewr0",
-      "endpoints": ["45.77.104.180", "2001:19f0:1000:b40d:5400:05ff:fe86:3f42"],
-      "endpoints_v4": ["45.77.104.180"],
-      "endpoints_v6": ["2001:19f0:1000:b40d:5400:05ff:fe86:3f42"],
-      "enthalpy_node_id": 3678,
-      "enthalpy_node_organization": "NET-ENTHALPY-ORIGIN",
-      "enthalpy_node_prefix": "2a0e:aa07:e21c:e5e0::/60",
-      "labels": ["dns/secondary", "enthalpy/enta0001", "bgp/vultr"],
-      "ssh_host_ed25519_key_pub": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPQe84tnTJ5QsoDmgZpBqpPMcFxCxrnwRgPaHLdCgvei"
     },
     "reisen-fra0": {
       "b2_backup_bucket_name": "rebmit-backup-reisen-fra0",
