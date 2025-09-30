@@ -42,7 +42,7 @@ in
     networking.netns.enthalpy = {
       services.bird = {
         enable = true;
-        package = pkgs.bird3-rebmit;
+        package = pkgs.bird2-rebmit;
         config = ''
           router id ${toString routerId};
 
