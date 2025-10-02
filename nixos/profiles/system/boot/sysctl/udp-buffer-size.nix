@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   # https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
   boot.kernel.sysctl = {

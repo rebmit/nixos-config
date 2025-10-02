@@ -30,7 +30,7 @@ let
   inherit (lib.meta) getExe;
 
   inherit (config.system) nssDatabases;
-  etc = config.environment.etc;
+  inherit (config.environment) etc;
 
   bindMountOptions =
     { name, ... }:
@@ -215,8 +215,8 @@ in
               config =
                 let
                   enabledBindMounts = filter (d: d.enable) (attrValues config.bindMounts);
-                  rwBinds = filter (d: d.isReadOnly == false) enabledBindMounts;
-                  roBinds = filter (d: d.isReadOnly == true) enabledBindMounts;
+                  rwBinds = filter (d: !d.isReadOnly) enabledBindMounts;
+                  roBinds = filter (d: d.isReadOnly) enabledBindMounts;
                 in
                 {
                   serviceConfig = {

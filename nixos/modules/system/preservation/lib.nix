@@ -355,7 +355,7 @@ let
       rules = map (d: {
         "${d}".d = {
           user = username;
-          group = config.users.users.${username}.group;
+          inherit (config.users.users.${username}) group;
           mode = "0700";
         };
       }) parents;

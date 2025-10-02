@@ -15,7 +15,7 @@ in
   options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
-        { ... }:
+        _:
         {
           options = {
             ports = mkOption {

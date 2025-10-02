@@ -5,7 +5,7 @@
   ...
 }:
 let
-  swww = pkgs.swww;
+  inherit (pkgs) swww;
 in
 {
   systemd.user.services.swww-daemon = {

@@ -4,8 +4,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption mkEnableOption;
-in
-let
+
   mountOption = types.submodule {
     options = {
       name = mkOption {
@@ -360,7 +359,7 @@ let
             attrsWith {
               placeholder = "user";
               elemType = submodule [
-                { commonMountOptions = attrs.config.commonMountOptions; }
+                { inherit (attrs.config) commonMountOptions; }
                 userModule
               ];
             };

@@ -14,7 +14,7 @@ let
   inherit (lib.meta) getExe';
 
   inboundOptions =
-    { ... }:
+    _:
     {
       options = {
         netnsPath = mkOption {
@@ -55,7 +55,7 @@ in
     networking.netns = mkOption {
       type = types.attrsOf (
         types.submodule (
-          { ... }:
+          _:
           {
             options.services.proxy = services.proxy;
           }

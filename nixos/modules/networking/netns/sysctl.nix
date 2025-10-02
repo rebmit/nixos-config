@@ -70,7 +70,7 @@ in
           path = with pkgs; [ procps ];
           script = concatStrings (
             mapAttrsToList (
-              n: v: optionalString (v != null) "sysctl -w \"${n}=${if v == false then "0" else toString v}\"\n"
+              n: v: optionalString (v != null) "sysctl -w \"${n}=${if !v then "0" else toString v}\"\n"
             ) cfg.sysctl
           );
           serviceConfig = {

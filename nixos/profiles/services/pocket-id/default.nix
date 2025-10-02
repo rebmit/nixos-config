@@ -1,4 +1,4 @@
-{ ... }:
+_:
 {
   services.pocket-id = {
     enable = true;

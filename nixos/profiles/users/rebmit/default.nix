@@ -37,7 +37,7 @@ in
   };
 
   home-manager.users.${name} =
-    { ... }:
+    _:
     {
       programs.git = {
         userName = "Lu Wang";

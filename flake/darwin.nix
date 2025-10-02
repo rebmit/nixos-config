@@ -35,7 +35,7 @@ let
         sharedModules =
           homeCommonModules name
           ++ singleton (
-            { ... }:
+            _:
             {
               home.stateVersion = "24.11";
             }

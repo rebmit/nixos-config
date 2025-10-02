@@ -85,7 +85,7 @@
             default_server_config = {
               "m.homeserver" = {
                 base_url = config.services.matrix-synapse.settings.public_baseurl;
-                server_name = config.services.matrix-synapse.settings.server_name;
+                inherit (config.services.matrix-synapse.settings) server_name;
               };
             };
             show_labs_settings = true;

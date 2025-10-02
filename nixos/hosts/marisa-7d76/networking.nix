@@ -59,7 +59,7 @@ in
   services.proxy = {
     enable = true;
     inbounds = singleton {
-      netnsPath = config.networking.netns.enthalpy.netnsPath;
+      inherit (config.networking.netns.enthalpy) netnsPath;
       listenPort = config.networking.netns.enthalpy.ports.proxy-init-netns;
     };
   };

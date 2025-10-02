@@ -110,13 +110,13 @@ in
     };
 
     environment.etc."ranet/config.json".source = (pkgs.formats.json { }).generate "config.json" {
-      organization = cfg.ipsec.organization;
+      inherit (cfg.ipsec) organization;
       common_name = cfg.ipsec.commonName;
       endpoints = map (ep: {
         serial_number = ep.serialNumber;
         address_family = ep.addressFamily;
-        address = ep.address;
-        fwmark = ep.fwmark;
+        inherit (ep) address;
+        inherit (ep) fwmark;
         port = config.ports.ipsec-nat-traversal;
         updown = pkgs.writeShellScript "updown" ''
           LINK=enta$(printf '%08x\n' "$PLUTO_IF_ID_OUT")

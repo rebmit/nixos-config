@@ -19,7 +19,7 @@ let
   inherit (lib.lists) flatten;
 
   routeOptions =
-    { ... }:
+    _:
     {
       options = {
         cidr = mkOption {
@@ -84,7 +84,7 @@ let
     };
 
   routingPolicyRuleOptions =
-    { ... }:
+    _:
     {
       options = {
         priority = mkOption {
@@ -129,7 +129,7 @@ let
     };
 
   interfaceOptions =
-    { ... }:
+    _:
     {
       options = {
         addresses = mkOption {
@@ -180,7 +180,7 @@ in
   options.networking.netns = mkOption {
     type = types.attrsOf (
       types.submodule (
-        { ... }:
+        _:
         {
           options = {
             interfaces = mkOption {

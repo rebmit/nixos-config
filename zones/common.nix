@@ -53,5 +53,5 @@ in
     }
   ];
 
-  hosts = data.hosts;
+  inherit (data) hosts;
 }

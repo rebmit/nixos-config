@@ -48,7 +48,7 @@ in
       services.tayga.clat = {
         ipv4Address = "192.0.0.1";
         ipv6Address = "fc00::";
-        prefix = cfg.clat.prefix;
+        inherit (cfg.clat) prefix;
         mappings."192.0.0.2" = cfg.clat.address;
       };
 

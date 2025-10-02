@@ -15,7 +15,7 @@ in
     preserveAt = mkOption {
       type = types.attrsOf (
         types.submodule (
-          { ... }:
+          _:
           {
             options = {
               directories = mkOption {

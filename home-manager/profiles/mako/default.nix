@@ -28,7 +28,7 @@ let
       [urgency=high]
       border-color=#${base09}
     '';
-  mako = pkgs.mako;
+  inherit (pkgs) mako;
 in
 {
   home.packages = lib.singleton mako;

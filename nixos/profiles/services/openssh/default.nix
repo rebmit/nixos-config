@@ -59,7 +59,7 @@ in
   };
 
   programs.ssh = {
-    knownHosts = knownHosts;
+    inherit knownHosts;
     extraConfig = ''
       ServerAliveInterval ${aliveInterval}
       ServerAliveCountMax ${aliveCountMax}

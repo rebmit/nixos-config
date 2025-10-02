@@ -15,6 +15,7 @@
           terraform.enable = true;
           prettier.enable = true;
           keep-sorted.enable = true;
+          statix.enable = true;
         };
         settings.formatter = {
           keep-sorted = {

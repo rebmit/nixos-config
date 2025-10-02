@@ -7,7 +7,7 @@
   ...
 }:
 let
-  cliphist = pkgs.cliphist;
+  inherit (pkgs) cliphist;
 in
 lib.mkMerge [
   {
