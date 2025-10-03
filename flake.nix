@@ -1,30 +1,6 @@
 {
   description = "a nixos configuration collection by rebmit";
 
-  outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { lib, ... }:
-      let
-        inherit (lib.strings) fromJSON;
-        inherit (lib.trivial) readFile;
-
-        data = fromJSON (readFile ./zones/data.json);
-        mylib = inputs.rebmit.lib;
-      in
-      {
-        _module.args = { inherit data mylib; };
-        inherit (mylib) systems;
-        imports = [
-          inputs.devshell.flakeModule
-          inputs.git-hooks-nix.flakeModule
-          inputs.treefmt-nix.flakeModule
-          inputs.rebmit.flakeModule
-        ]
-        ++ mylib.path.buildModuleList ./flake;
-      }
-    );
-
   inputs = {
     # flake-parts
 
@@ -77,11 +53,11 @@
     # libraries
 
     rebmit = {
-      url = "github:rebmit/nix-exprs/c688055a14c3edeae77c3814b20d5430b51c533f";
+      url = "github:rebmit/nix-exprs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rebmit-next = {
-      url = "github:rebmit/nix-exprs";
+    rebmit-legacy = {
+      url = "github:rebmit/nix-exprs/c688055a14c3edeae77c3814b20d5430b51c533f";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
@@ -91,4 +67,27 @@
       inputs.flake-utils.follows = "flake-utils";
     };
   };
+
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      let
+        inherit (lib.strings) fromJSON;
+        inherit (lib.trivial) readFile;
+
+        data = fromJSON (readFile ./zones/data.json);
+        mylib = inputs.rebmit-legacy.lib;
+      in
+      {
+        _module.args = { inherit data mylib; };
+
+        imports = lib.fileset.toList (
+          lib.fileset.unions [
+            (lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name) ./modules)
+            (lib.fileset.fileFilter (file: file.hasExt "nix" && !lib.hasPrefix "_" file.name) ./flake)
+          ]
+        );
+      }
+    );
 }

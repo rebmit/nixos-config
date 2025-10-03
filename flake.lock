@@ -24,7 +24,7 @@
     "devshell_2": {
       "inputs": {
         "nixpkgs": [
-          "rebmit-next",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },
@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756770412,
-        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
+        "lastModified": 1759362264,
+        "narHash": "sha256-wfG0S7pltlYyZTM+qqlhJ7GMw2fTF4mLKCIVhLii/4M=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "4524271976b625a4a605beefd893f270620fd751",
+        "rev": "758cf7296bee11f1706a574c77d072b8a7baa881",
         "type": "github"
       },
       "original": {
@@ -109,16 +109,16 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "rebmit-next",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1759362264,
-        "narHash": "sha256-wfG0S7pltlYyZTM+qqlhJ7GMw2fTF4mLKCIVhLii/4M=",
+        "lastModified": 1756770412,
+        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "758cf7296bee11f1706a574c77d072b8a7baa881",
+        "rev": "4524271976b625a4a605beefd893f270620fd751",
         "type": "github"
       },
       "original": {
@@ -160,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758108966,
-        "narHash": "sha256-ytw7ROXaWZ7OfwHrQ9xvjpUWeGVm86pwnEd1QhzawIo=",
+        "lastModified": 1759523803,
+        "narHash": "sha256-PTod9NG+i3XbbnBKMl/e5uHDBYpwIWivQ3gOWSEuIEM=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "54df955a695a84cd47d4a43e08e1feaf90b1fd9b",
+        "rev": "cfc9f7bb163ad8542029d303e599c0f7eee09835",
         "type": "github"
       },
       "original": {
@@ -176,23 +176,23 @@
     "git-hooks-nix_2": {
       "inputs": {
         "flake-compat": [
-          "rebmit-next"
+          "rebmit-legacy"
         ],
         "gitignore": [
-          "rebmit-next",
+          "rebmit-legacy",
           "gitignore-nix"
         ],
         "nixpkgs": [
-          "rebmit-next",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1759523803,
-        "narHash": "sha256-PTod9NG+i3XbbnBKMl/e5uHDBYpwIWivQ3gOWSEuIEM=",
+        "lastModified": 1758108966,
+        "narHash": "sha256-ytw7ROXaWZ7OfwHrQ9xvjpUWeGVm86pwnEd1QhzawIo=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "cfc9f7bb163ad8542029d303e599c0f7eee09835",
+        "rev": "54df955a695a84cd47d4a43e08e1feaf90b1fd9b",
         "type": "github"
       },
       "original": {
@@ -225,7 +225,7 @@
     "gitignore-nix_2": {
       "inputs": {
         "nixpkgs": [
-          "rebmit-next",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },
@@ -246,7 +246,7 @@
     "haumea": {
       "inputs": {
         "nixpkgs": [
-          "rebmit",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },
@@ -406,11 +406,36 @@
         "flake-parts": "flake-parts",
         "git-hooks-nix": "git-hooks-nix",
         "gitignore-nix": "gitignore-nix",
-        "haumea": "haumea",
         "nixpkgs": [
           "nixpkgs"
         ],
         "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1759529835,
+        "narHash": "sha256-pY0zppKIGKedBTQ3Mto/Qw9Gi2sZBLfc1PY5zk0Y5as=",
+        "owner": "rebmit",
+        "repo": "nix-exprs",
+        "rev": "9397037b09b4c95a1c6fa0dac4f72e82f04760eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rebmit",
+        "repo": "nix-exprs",
+        "type": "github"
+      }
+    },
+    "rebmit-legacy": {
+      "inputs": {
+        "devshell": "devshell_2",
+        "flake-parts": "flake-parts_2",
+        "git-hooks-nix": "git-hooks-nix_2",
+        "gitignore-nix": "gitignore-nix_2",
+        "haumea": "haumea",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1758994358,
@@ -424,31 +449,6 @@
         "owner": "rebmit",
         "repo": "nix-exprs",
         "rev": "c688055a14c3edeae77c3814b20d5430b51c533f",
-        "type": "github"
-      }
-    },
-    "rebmit-next": {
-      "inputs": {
-        "devshell": "devshell_2",
-        "flake-parts": "flake-parts_2",
-        "git-hooks-nix": "git-hooks-nix_2",
-        "gitignore-nix": "gitignore-nix_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": "treefmt-nix_2"
-      },
-      "locked": {
-        "lastModified": 1759529835,
-        "narHash": "sha256-pY0zppKIGKedBTQ3Mto/Qw9Gi2sZBLfc1PY5zk0Y5as=",
-        "owner": "rebmit",
-        "repo": "nix-exprs",
-        "rev": "9397037b09b4c95a1c6fa0dac4f72e82f04760eb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rebmit",
-        "repo": "nix-exprs",
         "type": "github"
       }
     },
@@ -475,7 +475,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-terraform-providers-bin": "nixpkgs-terraform-providers-bin",
         "rebmit": "rebmit",
-        "rebmit-next": "rebmit-next",
+        "rebmit-legacy": "rebmit-legacy",
         "sops-nix": "sops-nix",
         "treefmt-nix": [
           "rebmit",
@@ -542,7 +542,7 @@
     "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
-          "rebmit-next",
+          "rebmit-legacy",
           "nixpkgs"
         ]
       },

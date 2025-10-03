@@ -1,14 +1,16 @@
 {
+  inputs,
+  lib,
+  ...
+}:
+let
+  inherit (lib.attrsets) nameValuePair;
+in
+{
+  imports = [ inputs.devshell.flakeModule ];
+
   perSystem =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      inherit (lib.attrsets) nameValuePair;
-    in
+    { pkgs, ... }:
     {
       devshells.default = {
         packages = with pkgs; [
@@ -30,7 +32,6 @@
         env = [
           (nameValuePair "DEVSHELL_NO_MOTD" 1)
         ];
-        devshell.startup.pre-commit-hook.text = config.pre-commit.installationScript;
       };
     };
 }
