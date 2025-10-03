@@ -72,8 +72,7 @@ in
           script = concatStrings (
             mapAttrsToList (
               n: v:
-              optionalString (v != null)
-                "sysctl -w \"${n}=${if isBool v && !v then "0" else toString v}\"\n"
+              optionalString (v != null) "sysctl -w \"${n}=${if isBool v && !v then "0" else toString v}\"\n"
             ) cfg.sysctl
           );
           serviceConfig = {

@@ -77,6 +77,10 @@
     # libraries
 
     rebmit = {
+      url = "github:rebmit/nix-exprs/c688055a14c3edeae77c3814b20d5430b51c533f";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    rebmit-next = {
       url = "github:rebmit/nix-exprs";
       inputs.nixpkgs.follows = "nixpkgs";
     };

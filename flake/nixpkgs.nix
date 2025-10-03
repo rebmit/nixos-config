@@ -1,7 +1,7 @@
 { inputs, ... }:
 let
   overlays = [
-    inputs.rebmit.overlays.default
+    inputs.rebmit-next.overlays.default
     inputs.nixpkgs-terraform-providers-bin.overlay
 
     (_final: prev: {
