@@ -34,12 +34,9 @@ let
         useUserPackages = true;
         sharedModules =
           homeCommonModules name
-          ++ singleton (
-            _:
-            {
-              home.stateVersion = "24.11";
-            }
-          );
+          ++ singleton (_: {
+            home.stateVersion = "24.11";
+          });
         extraSpecialArgs = homeSpecialArgs name;
       };
     }

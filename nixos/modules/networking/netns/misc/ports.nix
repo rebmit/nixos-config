@@ -14,20 +14,17 @@ in
 {
   options.networking.netns = mkOption {
     type = types.attrsOf (
-      types.submodule (
-        _:
-        {
-          options = {
-            ports = mkOption {
-              type = with types; attrsOf port;
-              default = { };
-              description = ''
-                A mapping of network ports, each identified by a unique name.
-              '';
-            };
+      types.submodule (_: {
+        options = {
+          ports = mkOption {
+            type = with types; attrsOf port;
+            default = { };
+            description = ''
+              A mapping of network ports, each identified by a unique name.
+            '';
           };
-        }
-      )
+        };
+      })
     );
   };
 

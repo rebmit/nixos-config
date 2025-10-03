@@ -18,154 +18,148 @@ let
   inherit (lib.strings) concatStrings concatMapStrings optionalString;
   inherit (lib.lists) flatten;
 
-  routeOptions =
-    _:
-    {
-      options = {
-        cidr = mkOption {
-          type = types.str;
-          description = ''
-            Address block of the network in CIDR representation.
-          '';
+  routeOptions = _: {
+    options = {
+      cidr = mkOption {
+        type = types.str;
+        description = ''
+          Address block of the network in CIDR representation.
+        '';
+      };
+      from = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The source prefix of the route. Only available for IPv6.
+        '';
+      };
+      type = mkOption {
+        type = types.nullOr (
+          types.enum [
+            "unicast"
+            "local"
+            "broadcast"
+            "multicast"
+            "blackhole"
+          ]
+        );
+        default = null;
+        description = ''
+          Type of the route. See the `Route types` section in the
+          {manpage}`ip-route(8)` manual page for the details.
+        '';
+      };
+      via = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The next hop of this route.
+        '';
+      };
+      table = mkOption {
+        type =
+          with types;
+          nullOr (oneOf [
+            str
+            int
+          ]);
+        default = null;
+        description = ''
+          The routing table of this route.
+        '';
+      };
+      extraOptions = mkOption {
+        type = types.submodule {
+          freeformType = (pkgs.formats.json { }).type;
         };
-        from = mkOption {
-          type = types.nullOr types.str;
-          default = null;
-          description = ''
-            The source prefix of the route. Only available for IPv6.
-          '';
-        };
-        type = mkOption {
-          type = types.nullOr (
-            types.enum [
-              "unicast"
-              "local"
-              "broadcast"
-              "multicast"
-              "blackhole"
-            ]
-          );
-          default = null;
-          description = ''
-            Type of the route. See the `Route types` section in the
-            {manpage}`ip-route(8)` manual page for the details.
-          '';
-        };
-        via = mkOption {
-          type = types.nullOr types.str;
-          default = null;
-          description = ''
-            The next hop of this route.
-          '';
-        };
-        table = mkOption {
-          type =
-            with types;
-            nullOr (oneOf [
-              str
-              int
-            ]);
-          default = null;
-          description = ''
-            The routing table of this route.
-          '';
-        };
-        extraOptions = mkOption {
-          type = types.submodule {
-            freeformType = (pkgs.formats.json { }).type;
-          };
-          default = { };
-          description = ''
-            Extra route options. See the symbol `OPTIONS` in the
-            {manpage}`ip-route(8)` manual page for the details.
-          '';
-        };
+        default = { };
+        description = ''
+          Extra route options. See the symbol `OPTIONS` in the
+          {manpage}`ip-route(8)` manual page for the details.
+        '';
       };
     };
+  };
 
-  routingPolicyRuleOptions =
-    _:
-    {
-      options = {
-        priority = mkOption {
-          type = types.int;
-          description = ''
-            Priority of the routing rule in the RPDB.
-          '';
+  routingPolicyRuleOptions = _: {
+    options = {
+      priority = mkOption {
+        type = types.int;
+        description = ''
+          Priority of the routing rule in the RPDB.
+        '';
+      };
+      family = mkOption {
+        type = types.listOf (
+          types.enum [
+            "ipv4"
+            "ipv6"
+          ]
+        );
+        default = [ "ipv6" ];
+        description = ''
+          IP family of the routing policy rule.
+        '';
+      };
+      selector = mkOption {
+        type = types.submodule {
+          freeformType = (pkgs.formats.json { }).type;
         };
-        family = mkOption {
-          type = types.listOf (
-            types.enum [
-              "ipv4"
-              "ipv6"
-            ]
-          );
-          default = [ "ipv6" ];
-          description = ''
-            IP family of the routing policy rule.
-          '';
+        default = { };
+        description = ''
+          Selector options. See the symbol `SELECTOR` in the
+          {manpage}`ip-rule(8)` manual page for the details.
+        '';
+      };
+      action = mkOption {
+        type = types.submodule {
+          freeformType = (pkgs.formats.json { }).type;
         };
-        selector = mkOption {
-          type = types.submodule {
-            freeformType = (pkgs.formats.json { }).type;
-          };
-          default = { };
-          description = ''
-            Selector options. See the symbol `SELECTOR` in the
-            {manpage}`ip-rule(8)` manual page for the details.
-          '';
-        };
-        action = mkOption {
-          type = types.submodule {
-            freeformType = (pkgs.formats.json { }).type;
-          };
-          default = { };
-          description = ''
-            Action options. See the symbol `ACTION` in the
-            {manpage}`ip-rule(8)` manual page for the details.
-          '';
-        };
+        default = { };
+        description = ''
+          Action options. See the symbol `ACTION` in the
+          {manpage}`ip-rule(8)` manual page for the details.
+        '';
       };
     };
+  };
 
-  interfaceOptions =
-    _:
-    {
-      options = {
-        addresses = mkOption {
-          type = types.listOf types.str;
-          default = [ ];
-          description = ''
-            List of addresses in CIDR representation that will be
-            statically assigned to the interface.
-          '';
-        };
-        routes = mkOption {
-          type = types.listOf (types.submodule routeOptions);
-          default = [ ];
-          description = ''
-            List of extra static routes that will be assigned to
-            the interface.
-          '';
-        };
-        routingPolicyRules = mkOption {
-          type = types.listOf (types.submodule routingPolicyRuleOptions);
-          default = [ ];
-          description = ''
-            List of extra routing policy rules that will be assigned to
-            the interface.
-          '';
-        };
-        netdevDependencies = mkOption {
-          type = types.listOf types.str;
-          default = [ ];
-          description = ''
-            A list of additional systemd services that must be active
-            before the network interface configuration takes place.
-          '';
-        };
+  interfaceOptions = _: {
+    options = {
+      addresses = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = ''
+          List of addresses in CIDR representation that will be
+          statically assigned to the interface.
+        '';
+      };
+      routes = mkOption {
+        type = types.listOf (types.submodule routeOptions);
+        default = [ ];
+        description = ''
+          List of extra static routes that will be assigned to
+          the interface.
+        '';
+      };
+      routingPolicyRules = mkOption {
+        type = types.listOf (types.submodule routingPolicyRuleOptions);
+        default = [ ];
+        description = ''
+          List of extra routing policy rules that will be assigned to
+          the interface.
+        '';
+      };
+      netdevDependencies = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        description = ''
+          A list of additional systemd services that must be active
+          before the network interface configuration takes place.
+        '';
       };
     };
+  };
 
   attrsToString =
     attrs:
@@ -179,20 +173,17 @@ in
 {
   options.networking.netns = mkOption {
     type = types.attrsOf (
-      types.submodule (
-        _:
-        {
-          options = {
-            interfaces = mkOption {
-              type = types.attrsOf (types.submodule interfaceOptions);
-              default = { };
-              description = ''
-                Per-network namespace network interfaces configuration.
-              '';
-            };
+      types.submodule (_: {
+        options = {
+          interfaces = mkOption {
+            type = types.attrsOf (types.submodule interfaceOptions);
+            default = { };
+            description = ''
+              Per-network namespace network interfaces configuration.
+            '';
           };
-        }
-      )
+        };
+      })
     );
   };
 

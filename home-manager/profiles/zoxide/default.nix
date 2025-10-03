@@ -1,5 +1,4 @@
-_:
-{
+_: {
   programs.zoxide.enable = true;
 
   preservation.preserveAt."/persist".directories = [

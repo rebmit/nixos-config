@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.zram-generator = {
     enable = true;
     settings.zram0 = {

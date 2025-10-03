@@ -1,5 +1,4 @@
-_:
-{
+_: {
   nix = {
     channel.enable = false;
     settings = {

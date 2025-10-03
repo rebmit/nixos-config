@@ -16,6 +16,7 @@ let
     mapAttrsToList
     ;
   inherit (lib.strings) hasPrefix concatStrings optionalString;
+  inherit (lib.trivial) isBool;
 in
 {
   options.networking.netns = mkOption {
@@ -70,7 +71,9 @@ in
           path = with pkgs; [ procps ];
           script = concatStrings (
             mapAttrsToList (
-              n: v: optionalString (v != null) "sysctl -w \"${n}=${if !v then "0" else toString v}\"\n"
+              n: v:
+              optionalString (v != null)
+                "sysctl -w \"${n}=${if isBool v && !v then "0" else toString v}\"\n"
             ) cfg.sysctl
           );
           serviceConfig = {

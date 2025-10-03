@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.pulseaudio.enable = false;
 
   services.pipewire = {

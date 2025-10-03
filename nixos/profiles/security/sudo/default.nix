@@ -1,5 +1,4 @@
-_:
-{
+_: {
   security.sudo = {
     execWheelOnly = true;
     wheelNeedsPassword = true;

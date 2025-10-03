@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.logrotate = {
     enable = true;
     extraArgs = [

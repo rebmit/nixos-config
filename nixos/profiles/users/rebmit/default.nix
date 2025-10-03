@@ -36,12 +36,10 @@ in
     sopsFile = config.sops.secretFiles.get "common.yaml";
   };
 
-  home-manager.users.${name} =
-    _:
-    {
-      programs.git = {
-        userName = "Lu Wang";
-        userEmail = "rebmit@rebmit.moe";
-      };
+  home-manager.users.${name} = _: {
+    programs.git = {
+      userName = "Lu Wang";
+      userEmail = "rebmit@rebmit.moe";
     };
+  };
 }

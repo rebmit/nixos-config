@@ -1,4 +1,3 @@
-_:
-{
+_: {
   preservation.preserveAt."/persist".directories = [ "Projects" ];
 }

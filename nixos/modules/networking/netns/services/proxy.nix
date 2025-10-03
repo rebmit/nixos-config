@@ -13,31 +13,29 @@ let
   inherit (lib.strings) concatMapStringsSep;
   inherit (lib.meta) getExe';
 
-  inboundOptions =
-    _:
-    {
-      options = {
-        netnsPath = mkOption {
-          type = types.str;
-          description = ''
-            Path to the inbound network namespace.
-          '';
-        };
-        listenAddress = mkOption {
-          type = types.str;
-          default = "[::1]";
-          description = ''
-            Address for reciving connections.
-          '';
-        };
-        listenPort = mkOption {
-          type = types.int;
-          description = ''
-            Port number for incoming connections.
-          '';
-        };
+  inboundOptions = _: {
+    options = {
+      netnsPath = mkOption {
+        type = types.str;
+        description = ''
+          Path to the inbound network namespace.
+        '';
+      };
+      listenAddress = mkOption {
+        type = types.str;
+        default = "[::1]";
+        description = ''
+          Address for reciving connections.
+        '';
+      };
+      listenPort = mkOption {
+        type = types.int;
+        description = ''
+          Port number for incoming connections.
+        '';
       };
     };
+  };
 in
 {
   options = rec {
@@ -54,12 +52,9 @@ in
 
     networking.netns = mkOption {
       type = types.attrsOf (
-        types.submodule (
-          _:
-          {
-            options.services.proxy = services.proxy;
-          }
-        )
+        types.submodule (_: {
+          options.services.proxy = services.proxy;
+        })
       );
     };
   };

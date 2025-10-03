@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.resolved = {
     enable = true;
     llmnr = "false";

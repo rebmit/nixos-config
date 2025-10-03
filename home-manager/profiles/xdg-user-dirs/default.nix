@@ -1,5 +1,4 @@
-_:
-{
+_: {
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
