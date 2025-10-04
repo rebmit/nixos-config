@@ -105,5 +105,5 @@
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/postfix" ];
+  preservation.directories = [ "/var/lib/postfix" ];
 }

@@ -54,7 +54,7 @@ in
     StateDirectoryMode = "0700";
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     "/var/lib/postgresql"
     config.services.postgresqlBackup.location
   ];

@@ -31,7 +31,7 @@
 
   systemd.services.caddy-api.enable = false;
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     config.services.caddy.dataDir
     config.services.caddy.logDir
   ];

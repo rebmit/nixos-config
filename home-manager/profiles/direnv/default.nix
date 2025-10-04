@@ -4,5 +4,5 @@ _: {
     nix-direnv.enable = true;
   };
 
-  preservation.preserveAt."/persist".directories = [ ".local/share/direnv" ];
+  preservation.directories = [ ".local/share/direnv" ];
 }

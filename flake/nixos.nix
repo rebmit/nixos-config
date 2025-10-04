@@ -40,6 +40,7 @@ let
       inputs.home-manager.nixosModules.home-manager
       inputs.sops-nix.nixosModules.sops
       inputs.disko.nixosModules.disko
+      inputs.rebmit.modules.nixos.preservation
 
       {
         home-manager = {

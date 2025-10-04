@@ -105,5 +105,5 @@
     owner = config.systemd.services.matrix-synapse.serviceConfig.User;
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/matrix-synapse" ];
+  preservation.directories = [ "/var/lib/matrix-synapse" ];
 }

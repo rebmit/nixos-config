@@ -21,7 +21,7 @@
     # keep-sorted end
   ];
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     ".zotero"
 
     ".cache/evolution"

@@ -41,5 +41,5 @@ _: {
     ];
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/pocket-id" ];
+  preservation.directories = [ "/var/lib/pocket-id" ];
 }

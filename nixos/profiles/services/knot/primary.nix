@@ -262,5 +262,5 @@ in
   sops.secrets.knot-reisen-tsig-secret.opentofu.enable = true;
   sops.secrets.knot-acme-tsig-secret.opentofu.enable = true;
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/knot" ];
+  preservation.directories = [ "/var/lib/knot" ];
 }

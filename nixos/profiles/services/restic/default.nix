@@ -58,5 +58,5 @@
     B2_ACCOUNT_KEY="${config.sops.placeholder.b2-backup-application-key}"
   '';
 
-  preservation.preserveAt."/persist".directories = [ "/var/cache/restic-backups-b2" ];
+  preservation.directories = [ "/var/cache/restic-backups-b2" ];
 }

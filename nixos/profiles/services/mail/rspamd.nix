@@ -58,7 +58,7 @@
     port = config.ports.rspamd-redis;
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     "/var/lib/rspamd"
     "/var/lib/redis-rspamd"
   ];

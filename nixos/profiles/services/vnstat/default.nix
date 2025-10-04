@@ -11,5 +11,5 @@
     restartTriggers = [ config.environment.etc."vnstat.conf".text ];
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/vnstat" ];
+  preservation.directories = [ "/var/lib/vnstat" ];
 }

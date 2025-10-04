@@ -12,7 +12,7 @@ _: {
     videos = "$HOME/Videos";
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     "Documents"
     "Downloads"
     "Music"

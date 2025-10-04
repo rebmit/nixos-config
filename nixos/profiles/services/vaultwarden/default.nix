@@ -34,7 +34,7 @@ in
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     "/var/lib/vaultwarden"
     config.services.vaultwarden.backupDir
   ];

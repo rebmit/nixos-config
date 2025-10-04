@@ -1,5 +1,5 @@
 _: {
   services.syncthing.enable = true;
 
-  preservation.preserveAt."/persist".directories = [ ".local/state/syncthing" ];
+  preservation.directories = [ ".local/state/syncthing" ];
 }

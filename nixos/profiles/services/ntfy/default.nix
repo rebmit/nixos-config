@@ -33,5 +33,5 @@ in
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/ntfy-sh" ];
+  preservation.directories = [ "/var/lib/ntfy-sh" ];
 }

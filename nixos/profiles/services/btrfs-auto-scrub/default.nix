@@ -13,7 +13,7 @@ in
     fileSystems = btrfsDevices;
   };
 
-  preservation.preserveAt."/persist".directories = singleton {
+  preservation.directories = singleton {
     directory = "/var/lib/btrfs";
     mode = "0700";
     user = "root";

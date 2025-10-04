@@ -57,5 +57,5 @@ in
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/systemd" ];
+  preservation.directories = [ "/var/lib/systemd" ];
 }

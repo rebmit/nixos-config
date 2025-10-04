@@ -169,7 +169,7 @@ in
     ReadWritePaths = [ maildir ];
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     { directory = "/var/lib/dovecot"; }
     {
       directory = maildir;

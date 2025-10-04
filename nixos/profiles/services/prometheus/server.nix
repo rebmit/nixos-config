@@ -245,7 +245,7 @@ in
     restartUnits = [ "alertmanager.service" ];
   };
 
-  preservation.preserveAt."/persist".directories = [
+  preservation.directories = [
     "/var/lib/prometheus2"
     "/var/lib/private/alertmanager"
   ];

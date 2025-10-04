@@ -58,5 +58,5 @@ in
     '';
   };
 
-  preservation.preserveAt."/persist".directories = [ config.services.forgejo.stateDir ];
+  preservation.directories = [ config.services.forgejo.stateDir ];
 }

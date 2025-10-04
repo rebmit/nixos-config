@@ -209,6 +209,6 @@ in
 
     users.groups.cloudflare-warp = { };
 
-    preservation.preserveAt."/persist".directories = [ "/var/lib/warp" ];
+    preservation.directories = [ "/var/lib/warp" ];
   };
 }

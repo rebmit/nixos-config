@@ -11,5 +11,5 @@ _: {
     StateDirectory = "logrotate";
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/logrotate" ];
+  preservation.directories = [ "/var/lib/logrotate" ];
 }

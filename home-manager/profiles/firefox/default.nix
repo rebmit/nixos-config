@@ -148,7 +148,7 @@
     };
   };
 
-  preservation.preserveAt."/persist".directories = [ ".mozilla" ];
+  preservation.directories = [ ".mozilla" ];
 
   programs.niri.browser = lib.mkDefault [ "firefox" ];
 }

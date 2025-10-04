@@ -9,5 +9,5 @@ _: {
     systemWide = true;
   };
 
-  preservation.preserveAt."/persist".directories = [ "/var/lib/pipewire" ];
+  preservation.directories = [ "/var/lib/pipewire" ];
 }

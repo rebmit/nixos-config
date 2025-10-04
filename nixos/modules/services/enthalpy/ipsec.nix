@@ -199,6 +199,6 @@ in
       wantedBy = [ "timers.target" ];
     };
 
-    preservation.preserveAt."/persist".directories = [ "/var/lib/ranet" ];
+    preservation.directories = [ "/var/lib/ranet" ];
   };
 }
