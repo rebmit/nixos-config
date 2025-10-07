@@ -2,14 +2,14 @@ set shell := ["bash", "-c"]
 
 [linux]
 [group('nix')]
-remote name:
+remote subcommand name:
   nix copy --substitute-on-destination --no-check-sigs --to ssh-ng://root@{{name}} .#nixosConfigurations.{{name}}.config.system.build.toplevel --verbose --show-trace
-  nixos-rebuild switch --flake .#{{name}} --target-host root@{{name}} --verbose --show-trace
+  nixos-rebuild {{subcommand}} --flake .#{{name}} --target-host root@{{name}} --verbose --show-trace
 
 [linux]
 [group('nix')]
-local name *args:
-  nixos-rebuild switch --sudo --flake .#{{name}} --verbose --show-trace {{args}}
+local subcommand name *args:
+  nixos-rebuild {{subcommand}} --sudo --flake .#{{name}} --verbose --show-trace {{args}}
 
 [macos]
 [group('nix')]

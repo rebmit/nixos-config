@@ -6,6 +6,7 @@
   ...
 }:
 let
+  inherit (lib.modules) mkMerge mkForce;
   inherit (lib.strings) concatMapStringsSep;
   inherit (lib.lists) singleton;
 in
@@ -28,15 +29,59 @@ in
     };
   };
 
-  systemd.services.nix-daemon = config.networking.netns.enthalpy.config;
-  systemd.services."user@${toString config.users.users.rebmit.uid}" =
-    config.networking.netns.enthalpy.config
-    // {
-      overrideStrategy = "asDropin";
-      restartIfChanged = false;
-    };
+  systemd.services.nix-daemon = {
+    serviceConfig = mkMerge [
+      config.netns.enthalpy.serviceConfig
+      {
+        ProtectSystem = mkForce false;
+        BindPaths = mkForce [
+          "/nix:/nix:rbind"
+          "/var:/var:rbind"
+          "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
+          "/run/binfmt:/run/binfmt:rbind"
+          # "/home:/home:rbind"
+          # "/root:/root:rbind"
+          "/tmp:/tmp:rbind" # TODO: remove and fix ${rootDirectory}/tmp to 1777
+        ];
+        BindReadOnlyPaths = mkForce [ ];
+      }
+    ];
+    unitConfig = config.netns.enthalpy.unitConfig;
+  };
 
-  networking.netns.enthalpy.nftables.tables = {
+  systemd.services."user@${toString config.users.users.rebmit.uid}" = {
+    serviceConfig = mkMerge [
+      config.netns.enthalpy.serviceConfig
+      {
+        ProtectSystem = mkForce false;
+        BindPaths = mkForce [
+          "/nix:/nix:rbind"
+          "/var:/var:rbind"
+          "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
+          "/home:/home:rbind"
+          "/root:/root:rbind"
+          "/run/opengl-driver:/run/opengl-driver:rbind"
+          "/run/dbus:/run/dbus:rbind"
+          "/run/user:/run/user:rbind"
+          "/run/pipewire:/run/pipewire:rbind"
+          "/run/pulse:/run/pulse:rbind"
+          "/run/systemd:/run/systemd:rbind"
+          "/run/udev:/run/udev:rbind"
+          "/run/wrappers:/run/wrappers:rbind"
+          "/tmp:/tmp:rbind" # TODO: remove and fix ${rootDirectory}/tmp to 1777
+        ];
+        BindReadOnlyPaths = mkForce [
+          "/bin:/bin:rbind"
+          "/usr:/usr:rbind"
+        ];
+      }
+    ];
+    unitConfig = config.netns.enthalpy.unitConfig;
+    overrideStrategy = "asDropin";
+    restartIfChanged = false;
+  };
+
+  netns.enthalpy.nftables.tables = {
     filter6 = {
       family = "ip6";
       content = ''
@@ -59,8 +104,8 @@ in
   services.proxy = {
     enable = true;
     inbounds = singleton {
-      inherit (config.networking.netns.enthalpy) netnsPath;
-      listenPort = config.networking.netns.enthalpy.ports.proxy-init-netns;
+      netnsPath = config.netns.enthalpy.netnsPath;
+      listenPort = 3000;
     };
   };
 

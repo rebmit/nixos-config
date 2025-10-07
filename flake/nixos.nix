@@ -41,6 +41,8 @@ let
       inputs.sops-nix.nixosModules.sops
       inputs.disko.nixosModules.disko
       inputs.rebmit.modules.nixos.preservation
+      inputs.rebmit.modules.nixos.netns
+      inputs.rebmit.modules.nixos.enthalpy
 
       {
         home-manager = {
