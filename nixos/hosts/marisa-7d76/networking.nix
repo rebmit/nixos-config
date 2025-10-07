@@ -29,6 +29,8 @@ in
     };
   };
 
+  netns.enthalpy.tmpfiles."20-graphics-driver" = config.systemd.tmpfiles.settings.graphics-driver;
+
   systemd.services.nix-daemon = {
     serviceConfig = mkMerge [
       config.netns.enthalpy.serviceConfig
@@ -39,9 +41,6 @@ in
           "/var:/var:rbind"
           "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
           "/run/binfmt:/run/binfmt:rbind"
-          # "/home:/home:rbind"
-          # "/root:/root:rbind"
-          "/tmp:/tmp:rbind" # TODO: remove and fix ${rootDirectory}/tmp to 1777
         ];
         BindReadOnlyPaths = mkForce [ ];
       }
@@ -60,7 +59,6 @@ in
           "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
           "/home:/home:rbind"
           "/root:/root:rbind"
-          "/run/opengl-driver:/run/opengl-driver:rbind"
           "/run/dbus:/run/dbus:rbind"
           "/run/user:/run/user:rbind"
           "/run/pipewire:/run/pipewire:rbind"
@@ -68,7 +66,6 @@ in
           "/run/systemd:/run/systemd:rbind"
           "/run/udev:/run/udev:rbind"
           "/run/wrappers:/run/wrappers:rbind"
-          "/tmp:/tmp:rbind" # TODO: remove and fix ${rootDirectory}/tmp to 1777
         ];
         BindReadOnlyPaths = mkForce [
           "/bin:/bin:rbind"
