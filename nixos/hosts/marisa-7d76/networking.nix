@@ -63,13 +63,18 @@ in
           "/run/user:/run/user:rbind"
           "/run/pipewire:/run/pipewire:rbind"
           "/run/pulse:/run/pulse:rbind"
-          "/run/systemd:/run/systemd:rbind"
           "/run/udev:/run/udev:rbind"
           "/run/wrappers:/run/wrappers:rbind"
         ];
         BindReadOnlyPaths = mkForce [
           "/bin:/bin:rbind"
           "/usr:/usr:rbind"
+          "/run/systemd/journal:/run/systemd/journal:norbind"
+          "/run/systemd/machines:/run/systemd/machines:norbind"
+          "/run/systemd/seats:/run/systemd/seats:norbind"
+          "/run/systemd/sessions:/run/systemd/sessions:norbind"
+          "/run/systemd/system:/run/systemd/system:norbind"
+          "/run/systemd/users:/run/systemd/users:norbind"
         ];
       }
     ];
