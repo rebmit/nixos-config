@@ -31,19 +31,15 @@ in
 
   netns.enthalpy.tmpfiles."20-graphics-driver" = config.systemd.tmpfiles.settings.graphics-driver;
 
+  netns.enthalpy.bindMounts = {
+    "/nix".isReadOnly = false;
+    "/var".isReadOnly = false;
+  };
+
   systemd.services.nix-daemon = {
     serviceConfig = mkMerge [
       config.netns.enthalpy.serviceConfig
-      {
-        ProtectSystem = mkForce false;
-        BindPaths = mkForce [
-          "/nix:/nix:rbind"
-          "/var:/var:rbind"
-          "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
-          "/run/binfmt:/run/binfmt:rbind"
-        ];
-        BindReadOnlyPaths = mkForce [ ];
-      }
+      { ProtectSystem = mkForce false; }
     ];
     unitConfig = config.netns.enthalpy.unitConfig;
   };
@@ -53,28 +49,12 @@ in
       config.netns.enthalpy.serviceConfig
       {
         ProtectSystem = mkForce false;
-        BindPaths = mkForce [
-          "/nix:/nix:rbind"
-          "/var:/var:rbind"
-          "${config.netns.enthalpy.rootDirectory}/run:/run:rbind"
+        BindPaths = [
           "/home:/home:rbind"
           "/root:/root:rbind"
           "/run/dbus:/run/dbus:rbind"
-          "/run/user:/run/user:rbind"
           "/run/pipewire:/run/pipewire:rbind"
           "/run/pulse:/run/pulse:rbind"
-          "/run/udev:/run/udev:rbind"
-          "/run/wrappers:/run/wrappers:rbind"
-        ];
-        BindReadOnlyPaths = mkForce [
-          "/bin:/bin:rbind"
-          "/usr:/usr:rbind"
-          "/run/systemd/journal:/run/systemd/journal:norbind"
-          "/run/systemd/machines:/run/systemd/machines:norbind"
-          "/run/systemd/seats:/run/systemd/seats:norbind"
-          "/run/systemd/sessions:/run/systemd/sessions:norbind"
-          "/run/systemd/system:/run/systemd/system:norbind"
-          "/run/systemd/users:/run/systemd/users:norbind"
         ];
       }
     ];

@@ -39,12 +39,6 @@ dns.lib.toString "1.2.e.7.0.a.a.e.0.a.2.ip6.arpa" {
   subdomains = lib.listToAttrs (
     lib.mapAttrsToList (
       name: value:
-      lib.nameValuePair "${ipv6ToPtr (cidr.host 0 value.enthalpy_node_prefix)}" {
-        PTR = [ "${name}.enta.rebmit.link." ];
-      }
-    ) enthalpyHosts
-    ++ lib.mapAttrsToList (
-      name: value:
       lib.nameValuePair "${ipv6ToPtr (cidr.host 1 value.enthalpy_node_prefix)}" {
         PTR = [ "${name}.enta.rebmit.link." ];
       }
