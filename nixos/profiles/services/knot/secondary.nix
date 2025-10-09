@@ -2,7 +2,6 @@
 # https://github.com/NickCao/flakes/blob/3b03efb676ea602575c916b2b8bc9d9cd13b0d85/modules/dns/secondary/default.nix (MIT License)
 {
   config,
-  lib,
   data,
   ...
 }:
@@ -87,18 +86,18 @@ in
     };
   };
 
-  services.bird.config =
-    lib.mkIf (config.services.enthalpy.enable && config.services.enthalpy.exit.enable)
-      (
-        lib.mkOrder 1600 ''
-          protocol static {
-            ipv6 sadr {
-              table enthalpy6;
-            };
-            route 2a0e:aa07:e210:100::/56 from ::/0 unreachable;
-          }
-        ''
-      );
+  # services.bird.config =
+  #   lib.mkIf (config.services.enthalpy.enable && config.services.enthalpy.exit.enable)
+  #     (
+  #       lib.mkOrder 1600 ''
+  #         protocol static {
+  #           ipv6 sadr {
+  #             table enthalpy6;
+  #           };
+  #           route 2a0e:aa07:e210:100::/56 from ::/0 unreachable;
+  #         }
+  #       ''
+  #     );
 
   systemd.services.knot.serviceConfig = {
     LoadCredential = [

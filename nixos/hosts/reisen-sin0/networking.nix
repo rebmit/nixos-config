@@ -6,6 +6,7 @@
     ipsec.interfaces = [ "enp1s0" ];
     exit.enable = true;
     srv6.enable = true;
+    warp.enable = true;
   };
 
   networking.nftables.tables.nat4 = {
