@@ -38,6 +38,10 @@
       evdev:input:b*v046Dp4089*
         KEYBOARD_KEY_70039=esc
         KEYBOARD_KEY_70029=capslock
+
+      evdev:input:b*v36B0p3002*
+        KEYBOARD_KEY_70039=esc
+        KEYBOARD_KEY_70029=capslock
     '';
   };
 }
