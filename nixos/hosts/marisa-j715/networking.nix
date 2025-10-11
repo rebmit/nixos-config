@@ -5,6 +5,7 @@
   ...
 }:
 let
+  inherit (lib.modules) mkMerge mkForce;
   inherit (lib.lists) singleton;
 in
 {
@@ -18,15 +19,38 @@ in
     };
   };
 
-  systemd.services.nix-daemon = config.networking.netns.enthalpy.config;
-  systemd.services."user@${toString config.users.users.rebmit.uid}" =
-    config.networking.netns.enthalpy.config
-    // {
-      overrideStrategy = "asDropin";
-      restartIfChanged = false;
-    };
+  netns.enthalpy.bindMounts = {
+    "/nix".isReadOnly = false;
+    "/var".isReadOnly = false;
+    "/run/rosetta".recursive = false;
+  };
 
-  networking.netns.enthalpy.nftables.tables = {
+  systemd.services.nix-daemon = {
+    serviceConfig = mkMerge [
+      config.netns.enthalpy.serviceConfig
+      { ProtectSystem = mkForce false; }
+    ];
+    unitConfig = config.netns.enthalpy.unitConfig;
+  };
+
+  systemd.services."user@${toString config.users.users.rebmit.uid}" = {
+    serviceConfig = mkMerge [
+      config.netns.enthalpy.serviceConfig
+      {
+        ProtectSystem = mkForce false;
+        BindPaths = [
+          "/home:/home:rbind"
+          "/root:/root:rbind"
+          "/run/dbus:/run/dbus:rbind"
+        ];
+      }
+    ];
+    unitConfig = config.netns.enthalpy.unitConfig;
+    overrideStrategy = "asDropin";
+    restartIfChanged = false;
+  };
+
+  netns.enthalpy.nftables.tables = {
     filter6 = {
       family = "ip6";
       content = ''
@@ -46,7 +70,7 @@ in
     };
   };
 
-  networking.netns.enthalpy.services.proxy = {
+  netns.enthalpy.services.proxy = {
     enable = true;
     inbounds = singleton {
       netnsPath = "/proc/1/ns/net";
