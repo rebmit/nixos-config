@@ -22,6 +22,7 @@ in
 {
   programs = {
     command-not-found.enable = false;
+    fish.useBabelfish = true;
     git = {
       enable = true;
       lfs.enable = true;
