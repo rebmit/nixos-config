@@ -5,16 +5,16 @@
   ...
 }:
 let
+  inherit (lib.modules) mkMerge mkForce;
   inherit (lib.lists) singleton;
 in
 {
   imports = with profiles; [ services.enthalpy ];
 
   services.enthalpy = {
-    ipsec.interfaces = [
-      "enp3s0"
-      "wlan0"
-    ];
+    ipsec = {
+      interfaces = [ "enp3s0" ];
+    };
     clat = {
       enable = true;
       segment = singleton "2a0e:aa07:e21c:2546::3";
@@ -22,9 +22,20 @@ in
     srv6.enable = true;
   };
 
-  systemd.services.nix-daemon = config.networking.netns.enthalpy.config;
+  netns.enthalpy.bindMounts = {
+    "/nix".isReadOnly = false;
+    "/var".isReadOnly = false;
+  };
 
-  networking.netns.enthalpy.nftables.tables = {
+  systemd.services.nix-daemon = {
+    serviceConfig = mkMerge [
+      config.netns.enthalpy.serviceConfig
+      { ProtectSystem = mkForce false; }
+    ];
+    unitConfig = config.netns.enthalpy.unitConfig;
+  };
+
+  netns.enthalpy.nftables.tables = {
     filter6 = {
       family = "ip6";
       content = ''
@@ -44,44 +55,23 @@ in
     };
   };
 
-  systemd.tmpfiles.settings = {
-    "10-iwd" = {
-      "/var/lib/iwd/eduroam.8021x".C.argument = config.sops.secrets."wireless/eduroam".path;
-      "/var/lib/iwd/ZJUWLAN-Secure.8021x".C.argument = config.sops.secrets."wireless/eduroam".path;
-    };
-  };
-
-  sops.secrets."wireless/eduroam".sopsFile = config.sops.secretFiles.get "local.yaml";
-
   networking.hosts = {
-    "100.64.0.1" = [ "flandre-m5p.dyn.rebmit.link" ];
+    "100.72.45.1" = [
+      "flandre-m5p.rebmit.link"
+      "flandre-m5p.dyn.rebmit.link"
+    ];
+    "2a0e:aa07:e21c:a23f::1" = [
+      "flandre-m5p.rebmit.link"
+      "flandre-m5p.dyn.rebmit.link"
+    ];
   };
 
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;
     networks = {
-      "30-enp3s0" = {
+      "20-enp3s0" = {
         matchConfig.Name = "enp3s0";
-        networkConfig = {
-          DHCP = "ipv4";
-          IPv6AcceptRA = true;
-          IPv6PrivacyExtensions = true;
-          KeepConfiguration = true;
-        };
-        dhcpV4Config = {
-          UseDNS = false;
-          UseGateway = false;
-          RouteMetric = 2048;
-        };
-        ipv6AcceptRAConfig = {
-          UseDNS = false;
-          UseGateway = false;
-          RouteMetric = 2048;
-        };
-      };
-      "30-wlan0" = {
-        matchConfig.Name = "wlan0";
         networkConfig = {
           DHCP = "ipv4";
           IPv6AcceptRA = true;

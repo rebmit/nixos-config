@@ -92,7 +92,14 @@ in
   };
 
   networking.hosts = {
-    "2404:6800:4003:c06::be" = [ "scholar.google.com" ];
+    "100.72.45.1" = [
+      "flandre-m5p.rebmit.link"
+      "flandre-m5p.dyn.rebmit.link"
+    ];
+    "2a0e:aa07:e21c:a23f::1" = [
+      "flandre-m5p.rebmit.link"
+      "flandre-m5p.dyn.rebmit.link"
+    ];
   };
 
   systemd.services.network-srv6 =
