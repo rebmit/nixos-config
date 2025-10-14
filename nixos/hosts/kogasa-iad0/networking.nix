@@ -1,11 +1,5 @@
-{ profiles, host, ... }:
+{ host, ... }:
 {
-  imports = with profiles; [ services.enthalpy ];
-
-  services.enthalpy = {
-    ipsec.interfaces = [ "ens3" ];
-  };
-
   systemd.network = {
     enable = true;
     wait-online.anyInterface = true;

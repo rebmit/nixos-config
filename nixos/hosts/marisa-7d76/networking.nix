@@ -32,8 +32,8 @@ in
   netns.enthalpy.tmpfiles."20-graphics-driver" = config.systemd.tmpfiles.settings.graphics-driver;
 
   netns.enthalpy.bindMounts = {
-    "/nix".isReadOnly = false;
-    "/var".isReadOnly = false;
+    "/nix".readOnly = false;
+    "/var".readOnly = false;
   };
 
   systemd.services.nix-daemon = {

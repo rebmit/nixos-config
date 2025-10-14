@@ -23,8 +23,8 @@ in
   };
 
   netns.enthalpy.bindMounts = {
-    "/nix".isReadOnly = false;
-    "/var".isReadOnly = false;
+    "/nix".readOnly = false;
+    "/var".readOnly = false;
   };
 
   systemd.services.nix-daemon = {
