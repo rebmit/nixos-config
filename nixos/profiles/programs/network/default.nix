@@ -7,7 +7,7 @@
   environment.systemPackages = with pkgs; [
     # keep-sorted start
     aria2
-    curlHTTP3
+    curl
     dnsutils
     ethtool
     ipcalc

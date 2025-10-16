@@ -21,10 +21,10 @@ in
           nixos-anywhere
           (opentofu.withPlugins (
             ps: with ps; [
-              sops
-              tls
-              random
-              vultr
+              carlpett_sops
+              hashicorp_tls
+              hashicorp_random
+              vultr_vultr
               terraform-providers-bin.providers.Backblaze.b2
             ]
           ))

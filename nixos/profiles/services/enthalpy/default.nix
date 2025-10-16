@@ -39,6 +39,8 @@
     ];
   };
 
+  netns.enthalpy.domain = "enta.rebmit.link";
+
   sops.secrets.enthalpy-node-private-key-pem.opentofu = {
     enable = true;
     useHostOutput = true;
