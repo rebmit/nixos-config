@@ -1,7 +1,8 @@
-{ profiles, ... }:
+{ profiles, flake, ... }:
 {
   imports = with profiles; [
     # keep-sorted start
+    flake.flake.modules.nixos."users/root"
     programs.common
     security.polkit
     security.sudo
@@ -23,7 +24,6 @@
     system.nix.settings
     system.nix.version
     system.preservation
-    users.root
     # keep-sorted end
   ];
 }

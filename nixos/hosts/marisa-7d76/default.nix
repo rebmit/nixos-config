@@ -2,13 +2,14 @@
   suites,
   profiles,
   mylib,
+  flake,
   ...
 }:
 {
   imports = [
     suites.workstation
     profiles.virtualization.qemu-user-static
-    profiles.users.rebmit
+    flake.flake.modules.nixos."users/rebmit"
   ]
   ++ (mylib.path.scanPaths ./. "default.nix");
 

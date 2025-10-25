@@ -31,6 +31,7 @@ let
     profiles = nixosProfiles;
     suites = nixosSuites;
     host = data.hosts."${name}";
+    flake = config;
   };
 
   nixosCommonModules =
