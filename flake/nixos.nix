@@ -46,6 +46,10 @@ let
       inputs.rebmit.modules.nixos.enthalpy
 
       {
+        disabledModules = [ "hardware/facter/system.nix" ];
+      }
+
+      {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;

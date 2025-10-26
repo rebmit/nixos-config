@@ -29,6 +29,23 @@ in
     };
   };
 
+  networking.getaddrinfo = {
+    label = {
+      "::1/128" = 0;
+      "::/0" = 1;
+      "2002::/16" = 2;
+      "::/96" = 3;
+      "::ffff:0:0/96" = 4;
+    };
+    precedence = {
+      "::1/128" = 50;
+      "::/0" = 40;
+      "2002::/16" = 30;
+      "::/96" = 20;
+      "::ffff:0:0/96" = 100;
+    };
+  };
+
   netns.enthalpy.tmpfiles."20-graphics-driver" = config.systemd.tmpfiles.settings.graphics-driver;
 
   netns.enthalpy.bindMounts = {

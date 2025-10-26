@@ -70,7 +70,7 @@ in
             # keep-sorted end
           ]
           || (any (pattern: match pattern name != null) [
-            "^(runtime\\..*\\.)?Microsoft\\.(AspNetCore|DotNet|NET|NETCore)\\..*$"
+            "^(runtime\\..*\\.)?Microsoft\\.(AspNetCore|Build|DotNet|NET|NETCore|VisualStudio)\\..*$"
             "^Newtonsoft.Json$"
             "^System.Formats.Asn1$"
             "^System.Reflection.Metadata$"
