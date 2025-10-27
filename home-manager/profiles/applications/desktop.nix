@@ -1,7 +1,16 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # keep-sorted start
+    # keep-sorted start block=yes
+    (mpv.override {
+      scripts = with pkgs.mpvScripts; [
+        # keep-sorted start
+        modernz
+        mpris
+        thumbfast
+        # keep-sorted end
+      ];
+    })
     bustle
     dmlive
     evolution
@@ -10,7 +19,6 @@
     gimp3
     libreoffice-fresh
     loupe
-    mpv
     nautilus
     nheko
     papers
