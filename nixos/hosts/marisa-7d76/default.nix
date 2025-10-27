@@ -37,5 +37,18 @@
       };
     };
 
+  documentation = {
+    enable = true;
+    doc.enable = false;
+    info.enable = false;
+    man = {
+      enable = true;
+      generateCaches = false;
+    };
+    nixos.enable = false;
+  };
+
+  environment.defaultPackages = [ ];
+
   system.stateVersion = "24.11";
 }
