@@ -13,7 +13,7 @@ in
   };
 
   flake.modules.nixos."users/rebmit" =
-    { config, pkgs, ... }:
+    { config, ... }:
     {
       programs.fish.enable = true;
 
@@ -21,7 +21,7 @@ in
 
       users.users.rebmit = {
         uid = config.ids.uids.rebmit;
-        shell = pkgs.fish;
+        shell = config.programs.fish.package;
         openssh.authorizedKeys.keys = meta.users.rebmit.authorizedKeys;
         isNormalUser = true;
         hashedPasswordFile = config.sops.secrets."user-password/rebmit".path;

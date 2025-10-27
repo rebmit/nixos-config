@@ -67,6 +67,7 @@ in
             "temurin-bin"
             "utm"
             "zotero"
+            "zulu-ca-jdk"
             # keep-sorted end
           ]
           || (any (pattern: match pattern name != null) [
