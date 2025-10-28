@@ -1,4 +1,7 @@
-{ inputs, ... }:
 {
-  imports = [ inputs.rebmit.modules.flake.systems ];
+  systems = [
+    "x86_64-linux"
+    "aarch64-linux"
+    "aarch64-darwin"
+  ];
 }

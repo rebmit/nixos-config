@@ -41,9 +41,9 @@ let
       inputs.home-manager.nixosModules.home-manager
       inputs.sops-nix.nixosModules.sops
       inputs.disko.nixosModules.disko
-      inputs.rebmit.modules.nixos.preservation
-      inputs.rebmit.modules.nixos.netns
-      inputs.rebmit.modules.nixos.enthalpy
+      inputs.rebmit.nixosModules.preservation
+      inputs.rebmit.nixosModules.netns
+      inputs.rebmit.nixosModules.enthalpy
 
       {
         disabledModules = [ "hardware/facter/system.nix" ];

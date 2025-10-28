@@ -9,8 +9,8 @@ let
 in
 {
   imports = [
-    inputs.rebmit.modules.flake.nixpkgs
-    inputs.rebmit.modules.flake.nixpkgsPredicates
+    inputs.rebmit.flakeModules.nixpkgs
+    inputs.rebmit.flakeModules.nixpkgsPredicates
   ];
 
   perSystem = {
