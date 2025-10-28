@@ -4,13 +4,13 @@
   ...
 }:
 let
-  inherit (lib.lists) elem any;
-  inherit (lib.strings) getName match;
+  inherit (lib.lists) elem;
+  inherit (lib.strings) getName;
 in
 {
   imports = [
     inputs.rebmit.modules.flake.nixpkgs
-    inputs.rebmit.modules.flake.nixpkgsAllowedPredicates
+    inputs.rebmit.modules.flake.nixpkgsPredicates
   ];
 
   perSystem = {
@@ -46,13 +46,10 @@ in
           );
         })
       ];
-      allowedPredicates = {
-        nonSource =
+      predicates = {
+        allowNonSource =
           p:
-          let
-            name = getName p;
-          in
-          elem name [
+          elem (getName p) [
             # keep-sorted start
             "ant"
             "cargo-bootstrap"
@@ -69,20 +66,10 @@ in
             "zotero"
             "zulu-ca-jdk"
             # keep-sorted end
-          ]
-          || (any (pattern: match pattern name != null) [
-            "^(runtime\\..*\\.)?Microsoft\\.(AspNetCore|Build|DotNet|NET|NETCore|VisualStudio)\\..*$"
-            "^Newtonsoft.Json$"
-            "^System.Formats.Asn1$"
-            "^System.Reflection.Metadata$"
-            "^System.Text.Json$"
-          ]);
-        insecure =
+          ];
+        allowInsecure =
           p:
-          let
-            name = getName p;
-          in
-          elem name [
+          elem (getName p) [
             # keep-sorted start
             "olm"
             # keep-sorted end
