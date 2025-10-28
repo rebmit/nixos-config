@@ -2,14 +2,19 @@
   lib,
   pkgs,
   self,
+  flake,
   ...
 }:
 {
+  imports = [
+    flake.flake.modules.darwin."users/rebmit"
+  ];
+
   system.defaults.dock.persistent-apps = [
     { app = "/Applications/Ghostty.app"; }
     { app = "/Applications/Firefox Developer Edition.app"; }
     { app = "/Applications/Nix Apps/Thunderbird.app"; }
-    { app = "/Applications/Nix Apps/nheko.app"; }
+    # { app = "/Applications/Nix Apps/nheko.app"; }
     { app = "/Applications/Nix Apps/Cinny.app"; }
     { app = "/Applications/Nix Apps/UTM.app"; }
     { app = "/Applications/WeChat.app"; }
@@ -30,7 +35,7 @@
     utm
     zotero
     thunderbird
-    nheko
+    # nheko
     (writeShellApplication {
       name = "nixos";
       text = ''
@@ -62,8 +67,6 @@
       ];
 
       programs.git = {
-        userName = "Lu Wang";
-        userEmail = "rebmit@rebmit.moe";
         signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
       };
 
@@ -80,30 +83,16 @@
       systemd.user.tmpfiles.rules = lib.mkForce [ ];
     };
 
-  users.users.rebmit = {
-    uid = 501;
-    home = "/Users/rebmit";
-    shell = pkgs.fish;
-  };
-
-  users.knownUsers = [ "rebmit" ];
-
-  system.primaryUser = "rebmit";
-
   nix.settings = {
     experimental-features = "nix-command flakes";
     sandbox = true;
-    trusted-users = [
-      "root"
-      "@admin"
-    ];
   };
-
-  programs.fish.enable = true;
 
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
   system.stateVersion = 6;
+
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   system.keyboard = {
     enableKeyMapping = true;

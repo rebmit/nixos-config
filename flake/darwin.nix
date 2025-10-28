@@ -23,6 +23,7 @@ let
       mylib
       ;
     host = data.hosts."${name}";
+    flake = config;
   };
 
   darwinCommonModules = name: [
