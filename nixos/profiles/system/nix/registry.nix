@@ -1,20 +1,15 @@
-{
-  inputs,
-  self,
-  lib,
-  ...
-}:
-let
-  inherit (lib.attrsets) filterAttrs mapAttrs;
-
-  flakes = filterAttrs (_name: value: value ? _type && value._type == "flake") inputs;
-  nixRegistry = mapAttrs (_name: value: { flake = value; }) flakes;
-in
+{ inputs, self, ... }:
 {
   nix = {
-    registry = nixRegistry // {
-      p.flake = self;
+    registry.p.flake = self;
+    settings = {
+      flake-registry = "/etc/nix/registry.json";
+      nix-path = [ "nixpkgs=${inputs.nixpkgs}" ];
     };
-    settings.flake-registry = "/etc/nix/registry.json";
+  };
+
+  nixpkgs.flake = {
+    setNixPath = false;
+    setFlakeRegistry = true;
   };
 }
