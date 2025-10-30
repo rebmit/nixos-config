@@ -7,6 +7,9 @@
 {
   imports = with profiles; [
     # keep-sorted start
+    flake.flake.modules.nixos."system/nix/gc"
+    flake.flake.modules.nixos."system/nix/registry"
+    flake.flake.modules.nixos."system/nix/settings"
     flake.flake.modules.nixos."users/root"
     inputs.rebmit.modules.nixos.immutable
     programs.common
@@ -21,10 +24,6 @@
     services.zram-generator
     system.boot.kernel.latest
     system.common
-    system.nix.gc
-    system.nix.registry
-    system.nix.settings
-    system.nix.version
     system.preservation
     # keep-sorted end
   ];
