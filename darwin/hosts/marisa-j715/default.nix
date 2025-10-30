@@ -8,6 +8,9 @@
 {
   imports = [
     flake.flake.modules.darwin."users/rebmit"
+    flake.flake.modules.darwin."system/nix/gc"
+    flake.flake.modules.darwin."system/nix/registry"
+    flake.flake.modules.darwin."system/nix/settings"
   ];
 
   system.defaults.dock.persistent-apps = [
@@ -82,11 +85,6 @@
 
       systemd.user.tmpfiles.rules = lib.mkForce [ ];
     };
-
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    sandbox = true;
-  };
 
   system.configurationRevision = self.rev or self.dirtyRev or null;
 
