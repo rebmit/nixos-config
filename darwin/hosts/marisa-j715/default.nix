@@ -39,7 +39,7 @@
     (writeShellApplication {
       name = "nixos";
       text = ''
-        ssh -t rebmit@nixos systemd-run --user --pipe --pty --same-dir --wait -S
+        ssh -t rebmit@nixos systemd-run --user --pipe --pty --same-dir --wait -E SSH_AUTH_SOCK -S
       '';
     })
   ];
