@@ -1,7 +1,8 @@
 {
   suites,
-  profiles,
+  lib,
   mylib,
+  flake,
   ...
 }:
 {
@@ -9,9 +10,7 @@
     suites.baseline
     suites.network
     suites.backup
-    profiles.services.nixseparatedebuginfod
-    profiles.virtualization.rosetta
-    profiles.users.rebmit
+    flake.flake.modules.nixos."users/rebmit"
   ]
   ++ (mylib.path.scanPaths ./. "default.nix");
 
@@ -22,6 +21,10 @@
         suites.workstation
         profiles.syncthing
       ];
+
+      programs.git = {
+        signing.key = lib.mkForce "~/.ssh/id_ed25519_sk_rk.pub";
+      };
     };
 
   system.stateVersion = "24.11";

@@ -22,7 +22,6 @@ in
   netns.enthalpy.bindMounts = {
     "/nix".readOnly = false;
     "/var".readOnly = false;
-    "/run/rosetta".recursive = false;
   };
 
   systemd.services.nix-daemon = {
