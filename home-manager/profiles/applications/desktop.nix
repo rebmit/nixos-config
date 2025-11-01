@@ -24,7 +24,7 @@
     papers
     seahorse
     swappy
-    tdesktop
+    telegram-desktop
     zotero
     # keep-sorted end
   ];
