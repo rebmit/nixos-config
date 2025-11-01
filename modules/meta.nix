@@ -21,8 +21,4 @@ in
       '';
     };
   };
-
-  config = {
-    flake.meta.uri = "github:rebmit/nixos-config";
-  };
 }

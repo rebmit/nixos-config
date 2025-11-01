@@ -8,10 +8,7 @@ let
   inherit (lib.strings) getName;
 in
 {
-  imports = [
-    inputs.rebmit.flakeModules.nixpkgs
-    inputs.rebmit.flakeModules.nixpkgsPredicates
-  ];
+  imports = [ inputs.rebmit.flakeModules.nixpkgs ];
 
   perSystem = {
     nixpkgs = {
@@ -54,7 +51,6 @@ in
             "ant"
             "cargo-bootstrap"
             "dart"
-            "dotnet-sdk"
             "go"
             "gradle"
             "libreoffice"
